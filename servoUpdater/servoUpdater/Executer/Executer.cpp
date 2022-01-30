@@ -9,12 +9,16 @@
 
 void Executer::init(){
 	
-	servoUpdater.configTask("servoUpdate", 50,50);	//20ms execution period, priority of 50
+	trajectoryGenerator.configTask("trajectoryGenerator",50,50);
+	
+	servoUpdater.configTask("servoUpdate", 250,50);	//250ms execution period, priority of 50
 	servoUpdater.init();
 	
 }
 
 void Executer::execution(){
+	
+	if (trajectoryGenerator.getExecutionFlag()) trajectoryGenerator.generateTrajectory();
 	
 	if (servoUpdater.getExecutionFlag()) servoUpdater.update();
 	

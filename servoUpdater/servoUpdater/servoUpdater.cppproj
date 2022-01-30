@@ -522,6 +522,12 @@
     </VisualMicroSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Actuators\MG996R.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Actuators\MG996R.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Actuators\trialTrajectoryGenerator.cpp">
       <SubType>compile</SubType>
     </Compile>

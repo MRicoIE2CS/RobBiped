@@ -9,8 +9,18 @@
 	#include "WProgram.h"
 #endif
 
+#include "UpdateServos.h"
 
 
+class trialTrajectoryGenerator  : public I_Task{
+	public:
+		
+		void generateTrajectory();
+		
+		void init();
+		
+		void update();
+	};
 
 
 

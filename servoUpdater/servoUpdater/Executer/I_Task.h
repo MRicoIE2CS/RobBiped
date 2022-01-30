@@ -16,16 +16,16 @@ class I_Task{
 	protected:
 		
 		String task_ID;		// useful?
-		uint16_t executionPeriod;
-		uint8_t priority;	// useful?
-		uint16_t lastTimeExecutedMillis;
+		unsigned int executionPeriod;
+		unsigned short priority;	// useful?
+		unsigned long lastTimeExecutedMillis;
 		
 	public:
 	
-		void configTask(String _task_ID, uint16_t _period_ms, uint8_t _priority);
+		void configTask(String _task_ID, unsigned int _period_ms, unsigned short _priority);
 		
-		uint16_t getExecutionPeriod();
-		uint16_t getLastMillisExecuted();
+		unsigned int getExecutionPeriod();
+		unsigned long getLastMillisExecuted();
 		bool getExecutionFlag();
 		
 		

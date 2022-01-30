@@ -16,6 +16,7 @@
 //#include "I_Task.h"
 //#include "../Communications/I2C.h"
 #include "../Actuators/UpdateServos.h"
+#include "../Actuators/trialTrajectoryGenerator.h"
 
 
 
@@ -25,6 +26,7 @@ class Executer {
 	
 	private:
 	
+	trialTrajectoryGenerator trajectoryGenerator;
 	UpdateServos servoUpdater;
 	
 	public:

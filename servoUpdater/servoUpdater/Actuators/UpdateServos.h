@@ -11,8 +11,11 @@
 
 #include "../Executer/I_Task.h"
 #include "trialTrajectoryGenerator.h"
+#include "MG996R.h"
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
+#include <map>
+using namespace std;
 
 class UpdateServos : public I_Task{
 	
@@ -22,31 +25,35 @@ class UpdateServos : public I_Task{
 		
 		#define SERVOMIN  100 // this is the 'minimum' pulse length count (out of 4096)
 		#define SERVOMAX  510 // this is the 'maximum' pulse length count (out of 4096)
-		// 	#define SERVOMIN  125 // this is the 'minimum' pulse length count (out of 4096)
-		// 	#define SERVOMAX  575 // this is the 'maximum' pulse length count (out of 4096)
-
-		int servoNumber = 0;
 		
-		int angleToPulse(int ang);
+		
+		
+
+		unsigned short servoNumber = 0;
+		
+		int angleToPulse(double ang);
 		
 		struct ServoValueAssigned
 		{
-			uint8_t index;
-			int angle;
+			unsigned short index;
+			double angle;
 		};
 		
-		ServoValueAssigned servo0;
+		//ServoValueAssigned servo0;
 		
 		struct ServoAngleTable
 		{
 			ServoValueAssigned servo0;
+			ServoValueAssigned servo1;
 		}servoAngleTable;
+		
+		std::map<int,int> servomap;
 	
 	public:
 	
 	void init();
 	
-	bool setNextAngleValues(uint8_t servoNumber, int _ang);
+	bool setNextAngleValues(uint8_t servoNumber, double _ang);
 	
 	void update();
 	
