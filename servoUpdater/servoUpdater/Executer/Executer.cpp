@@ -9,7 +9,7 @@
 
 void Executer::init(){
 	
-	servoUpdater.configTask("servoUpdate", 4000,50);	//20ms execution period, priority of 50
+	servoUpdater.configTask("servoUpdate", 50,50);	//20ms execution period, priority of 50
 	servoUpdater.init();
 	
 }

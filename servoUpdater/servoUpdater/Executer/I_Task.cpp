@@ -25,10 +25,14 @@ uint16_t I_Task::getLastMillisExecuted(){
 bool I_Task::getExecutionFlag(){
 	
 	uint16_t currentMillis = millis();
-	if ((currentMillis - lastTimeExecutedMillis) > executionPeriod)
+	Serial.println("_______________");
+	Serial.println("currentMillis: " + (String)currentMillis);
+	Serial.println("lastTimeExecutedMillis: " + (String)lastTimeExecutedMillis);
+	if (abs(currentMillis - lastTimeExecutedMillis) >= executionPeriod) {
+		lastTimeExecutedMillis = currentMillis;
 		return true;
-	else
-		return false;
+	}
+	else return false;
 }
 
 void I_Task::update(){

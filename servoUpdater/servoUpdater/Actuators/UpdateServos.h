@@ -10,6 +10,7 @@
 #endif
 
 #include "../Executer/I_Task.h"
+#include "trialTrajectoryGenerator.h"
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 
