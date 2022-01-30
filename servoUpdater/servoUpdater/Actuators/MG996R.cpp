@@ -31,17 +31,22 @@ int MG996R::getPulseWidth(){
 	return pulseWidth;
 }
 
+int MG996R::angleToPulse(int _ang){
+	int pulse = minPulse + (_ang * (maxPulse-minPulse) / maxAngle);
+	return pulse;
+}
+
 int MG996R::angleToPulse(double _ang){
-	int pulse = map((int)_ang,0, 180, minPulse, maxPulse);
+	double pulse = angleToPulse(radToDeg(_ang));
 	return pulse;
 }
 
 double MG996R::degToRad(int _ang){
-	double ang_rad = _ang /180 * PI;
+	double ang_rad = (double)(_ang* PI) /180 ;
 	return ang_rad;
 }
 
-double MG996R::radToDeg(double _ang){
-	double ang_deg = _ang /PI * 180;
+int MG996R::radToDeg(double _ang){
+	int ang_deg = _ang /PI * 180;
 	return ang_deg;
 }

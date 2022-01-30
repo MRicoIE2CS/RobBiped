@@ -11,7 +11,7 @@ void Executer::init(){
 	
 	trajectoryGenerator.configTask("trajectoryGenerator",50,50);
 	
-	servoUpdater.configTask("servoUpdate", 250,50);	//250ms execution period, priority of 50
+	servoUpdater.configTask("servoUpdate", 50,50);	//250ms execution period, priority of 50
 	servoUpdater.init();
 	
 }

@@ -26,28 +26,30 @@ bool direction = false;
 void UpdateServos::update(){
 	
 	if (!direction)	{
-		targetAngle_--;
-		if (targetAngle_ < 0) direction = true;
+		targetAngle_ = targetAngle_ - 1;
+		if (targetAngle_ <= 0) {
+			direction = true;
+		}
 	}
 	else {
-		targetAngle_++;
-		if (targetAngle_ > 180) direction = false;
+		targetAngle_ = targetAngle_ + 1;
+		if (targetAngle_ >= 180) {
+			direction = false;
+		}
 	}
 	
+	//Serial.println("targetAngle_: " + (String)targetAngle_);
 	
 	
-// 	std::map<unsigned short,MG996R> PCA9685_1_servoMap;
-// 	
-// 	PCA9685_1_servoMap[0].setAngleTarget(targetAngle_);
 	
+	std::map<unsigned short,MG996R>::iterator itMap;
 	
-	Serial.println("targetAngle_: " + (String)targetAngle_);
-	int pulse = angleToPulse(targetAngle_);
-	Serial.println("pulse: " + (String)pulse);
-	PCA9685_1.setPWM(0, 0, pulse );
-	
-	
-	//PCA9685_1.setPWM(1, 0, PCA9685_1_servoMap[1].getPulseWidth() );
+	for (itMap = PCA9685_1_servoMap.begin(); itMap!=PCA9685_1_servoMap.end(); ++itMap){
+		
+		itMap->second.setAngleTarget(targetAngle_);
+		
+		PCA9685_1.setPWM(itMap->first, 0, itMap->second.getPulseWidth() );
+	}
 }
 
 

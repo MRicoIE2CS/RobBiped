@@ -16,15 +16,17 @@ class MG996R {
 	
 		uint16_t minPulse = 100;
 		uint16_t maxPulse = 510;
+		uint8_t maxAngle = 180;
 		
 		uint8_t index = 0;
 		
-		double angleAssigned = 0;
 		
+		int angleToPulse(int _ang);
 		int angleToPulse(double _ang);
 		
+		
 		double degToRad(int _ang);
-		double radToDeg(double _ang);
+		int radToDeg(double _ang);
 	
 	public:
 		
@@ -35,6 +37,8 @@ class MG996R {
 		
 		bool setAngleTarget(double _ang);
 		bool setAngleTarget(int _ang);
+		
+		double angleAssigned = 0;
 	
 	};
 
