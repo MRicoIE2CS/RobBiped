@@ -9,18 +9,21 @@ void UpdateServos::init(){
 	
 	
 
-	board1.begin();
-	board1.setPWMFreq(50);  // Analog servos run at ~50 Hz updates
+	PCA9685_1.begin();
+	PCA9685_1.setPWMFreq(50);  // Analog servos run at ~50 Hz updates
 	
-	
-	servoAngleTable.servo0.index = 0;
-	servoAngleTable.servo0.angle = 90;
+	MG996R servoInitializer;
+	servoInitializer.setAngleTarget(90);
+	PCA9685_1_servoMap[0] = servoInitializer;
+	servoInitializer.setAngleTarget(90);
+	PCA9685_1_servoMap[1] = servoInitializer;
 	
 }
 
 void UpdateServos::update(){
 	
-	board1.setPWM(servoAngleTable.servo0.index, 0, angleToPulse(servoAngleTable.servo0.angle) );
+	PCA9685_1.setPWM(0, 0, PCA9685_1_servoMap[0].getPulseWidth() );
+	PCA9685_1.setPWM(1, 0, PCA9685_1_servoMap[1].getPulseWidth() );
 }
 
 int UpdateServos::angleToPulse(double ang){

@@ -21,33 +21,13 @@ class UpdateServos : public I_Task{
 	
 	private:
 	
-		Adafruit_PWMServoDriver board1 = Adafruit_PWMServoDriver(0x40);
+		Adafruit_PWMServoDriver PCA9685_1 = Adafruit_PWMServoDriver(0x40);
 		
 		#define SERVOMIN  100 // this is the 'minimum' pulse length count (out of 4096)
 		#define SERVOMAX  510 // this is the 'maximum' pulse length count (out of 4096)
 		
 		
-		
-
-		unsigned short servoNumber = 0;
-		
-		int angleToPulse(double ang);
-		
-		struct ServoValueAssigned
-		{
-			unsigned short index;
-			double angle;
-		};
-		
-		//ServoValueAssigned servo0;
-		
-		struct ServoAngleTable
-		{
-			ServoValueAssigned servo0;
-			ServoValueAssigned servo1;
-		}servoAngleTable;
-		
-		std::map<int,int> servomap;
+		std::map<unsigned short,MG996R> PCA9685_1_servoMap;
 	
 	public:
 	
