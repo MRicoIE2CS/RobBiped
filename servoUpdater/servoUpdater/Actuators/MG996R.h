@@ -24,7 +24,7 @@ class MG996R {
 		int angleToPulse(double _ang);
 		
 		double degToRad(int _ang);
-		double radToDeg(int _ang);
+		double radToDeg(double _ang);
 	
 	public:
 		

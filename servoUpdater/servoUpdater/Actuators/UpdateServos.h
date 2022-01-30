@@ -28,6 +28,8 @@ class UpdateServos : public I_Task{
 		
 		
 		std::map<unsigned short,MG996R> PCA9685_1_servoMap;
+		
+		int angleToPulse(int _ang);
 	
 	public:
 	
