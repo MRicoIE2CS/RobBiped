@@ -44,15 +44,30 @@ void UpdateServos::update(){
 	
 	std::map<unsigned short,MG996R>::iterator itMap;
 	
+	
+	
+	
+	
 	for (itMap = PCA9685_1_servoMap.begin(); itMap!=PCA9685_1_servoMap.end(); ++itMap){
 		
-		itMap->second.setAngleTarget(targetAngle_);
+		//itMap->second.setAngleTarget(targetAngle_);
 		
-		PCA9685_1.setPWM(itMap->first, 0, itMap->second.getPulseWidth() );
+		if (itMap->second.isNewPulseWidth()) {
+			PCA9685_1.setPWM(itMap->first, 0, itMap->second.getPulseWidthToSend() );
+		}
+		
 	}
 }
 
+void UpdateServos::setAngleToServo(unsigned short servoIndex, double servoAngle){
+	
+	PCA9685_1_servoMap[servoIndex].setAngleTarget(servoAngle);
+}
 
+void UpdateServos::setAngleToServo(unsigned short servoIndex, int servoAngle){
+	
+	PCA9685_1_servoMap[servoIndex].setAngleTarget(servoAngle);
+}
 
 
 

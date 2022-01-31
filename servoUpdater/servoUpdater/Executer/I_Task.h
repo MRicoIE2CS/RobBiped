@@ -13,16 +13,10 @@
 
 class I_Task{
 	
-	protected:
-		
-		String task_ID;		// useful?
-		unsigned int executionPeriod;
-		unsigned short priority;	// useful?
-		unsigned long lastTimeExecutedMillis;
-		
 	public:
-	
-		void configTask(String _task_ID, unsigned int _period_ms, unsigned short _priority);
+		
+		enum class execType { inMillis, inMicros };
+		void setExecutionPeriod(execType _timerType, unsigned int _period);
 		
 		unsigned int getExecutionPeriod();
 		unsigned long getLastMillisExecuted();
@@ -30,6 +24,16 @@ class I_Task{
 		
 		
 		void update();
+		
+	protected:
+	
+	
+		execType timerType = execType::inMillis;
+		unsigned int executionPeriod;
+		unsigned long lastTimeExecuted;
+		
+		unsigned long currentMillis;
+		unsigned long currentMicros;
 	
 	};
 

@@ -4,30 +4,43 @@
 
 #include "I_Task.h"
 
-void I_Task::configTask(String _task_ID, unsigned int _period_ms, unsigned short _priority){
+void I_Task::setExecutionPeriod(execType _timerType, unsigned int _period){
 	
-	task_ID = _task_ID;
-	executionPeriod = _period_ms;
-	priority = _priority;
-	lastTimeExecutedMillis = millis();
+	timerType = _timerType;
+	executionPeriod = _period;
+	lastTimeExecuted = millis();
 }
 
 unsigned int I_Task::getExecutionPeriod(){
-	
 	return executionPeriod;
 }
 
 unsigned long I_Task::getLastMillisExecuted(){
-	
-	return lastTimeExecutedMillis;
+	return lastTimeExecuted;
 }
 
 bool I_Task::getExecutionFlag(){
+	bool return_val;
 	
-	unsigned long currentMillis = millis();
-	if (abs(currentMillis - lastTimeExecutedMillis) >= executionPeriod) {
-		lastTimeExecutedMillis = currentMillis;
-		return true;
+	switch (timerType) {
+		case execType::inMillis:
+			currentMillis = millis();
+			if (abs(currentMillis - lastTimeExecuted) >= executionPeriod) {
+				lastTimeExecuted = currentMillis;
+				return_val = true;
+			}
+			else return_val = false;
+			break;
+			
+		case execType::inMicros:
+			currentMicros = micros();
+			if (abs(currentMicros - lastTimeExecuted) >= executionPeriod) {
+				lastTimeExecuted = currentMicros;
+				return_val = true;
+			}
+			else return_val = false;
+			break;
 	}
-	else return false;
+	
+	return return_val;
 }

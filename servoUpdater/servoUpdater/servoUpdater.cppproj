@@ -528,10 +528,10 @@
     <Compile Include="Actuators\MG996R.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Actuators\trialTrajectoryGenerator.cpp">
+    <Compile Include="Actuators\SignalGenerator.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Actuators\trialTrajectoryGenerator.h">
+    <Compile Include="Actuators\SignalGenerator.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Actuators\UpdateServos.cpp">

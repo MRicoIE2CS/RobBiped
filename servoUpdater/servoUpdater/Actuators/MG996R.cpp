@@ -12,6 +12,7 @@ bool MG996R::setAngleTarget(double _ang){
 	}
 	else {
 		angleAssigned = _ang;
+		pulseWidthAssigned = angleToPulse(_ang);
 		return false;
 	}
 }
@@ -22,22 +23,29 @@ bool MG996R::setAngleTarget(int _ang){
 	}
 	else {
 		angleAssigned = degToRad(_ang);
+		pulseWidthAssigned = angleToPulse(_ang);
 		return false;
 	}
 }
 
-int MG996R::getPulseWidth(){
-	int pulseWidth = angleToPulse(angleAssigned);
-	return pulseWidth;
+int MG996R::getPulseWidthToSend(){
+	pulseWidthApplied = pulseWidthAssigned;
+	return pulseWidthAssigned;
+}
+
+bool MG996R::isNewPulseWidth(){
+	int pulseWidthassigned = angleToPulse(angleAssigned);
+	bool out = pulseWidthassigned != pulseWidthApplied;
+	return out;
 }
 
 int MG996R::angleToPulse(int _ang){
-	int pulse = minPulse + (_ang * (maxPulse-minPulse) / maxAngle);
+	int pulse = minPulse + (_ang * (maxPulse-minPulse) / maxAngle_deg);
 	return pulse;
 }
 
 int MG996R::angleToPulse(double _ang){
-	double pulse = angleToPulse(radToDeg(_ang));
+	int pulse = minPulse + (_ang * (double)(maxPulse-minPulse) / (double)maxAngle_rad);
 	return pulse;
 }
 

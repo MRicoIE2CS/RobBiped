@@ -13,10 +13,10 @@
 
 
 
-//#include "I_Task.h"
+#include "I_Task.h"
 //#include "../Communications/I2C.h"
 #include "../Actuators/UpdateServos.h"
-#include "../Actuators/trialTrajectoryGenerator.h"
+#include "../Actuators/SignalGenerator.h"
 
 
 
@@ -26,7 +26,8 @@ class Executer {
 	
 	private:
 	
-	trialTrajectoryGenerator trajectoryGenerator;
+	SignalGenerator signalGenerator_0;
+	SignalGenerator signalGenerator_1;
 	UpdateServos servoUpdater;
 	
 	public:

@@ -10,7 +10,7 @@
 #endif
 
 #include "../Executer/I_Task.h"
-#include "trialTrajectoryGenerator.h"
+//#include "SignalGenerator.h"
 #include "MG996R.h"
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
@@ -23,19 +23,17 @@ class UpdateServos : public I_Task{
 	
 		Adafruit_PWMServoDriver PCA9685_1 = Adafruit_PWMServoDriver(0x40);
 		
-		#define SERVOMIN  100 // this is the 'minimum' pulse length count (out of 4096)
-		#define SERVOMAX  510 // this is the 'maximum' pulse length count (out of 4096)
-		
 		
 		std::map<unsigned short,MG996R> PCA9685_1_servoMap;
 		
-		int angleToPulse(int _ang);
+		int angleToPulse(int _ang);	// debug
 	
 	public:
 	
 	void init();
 	
-	bool setNextAngleValues(uint8_t servoNumber, double _ang);
+	void setAngleToServo(unsigned short servoIndex, double servoAngle);
+	void setAngleToServo(unsigned short servoIndex, int servoAngle);
 	
 	void update();
 	
