@@ -5,7 +5,7 @@
  *  Author: MRICO
  */ 
 
-#include "Main/Executer.h"
+#include "Executer.h"
 
 void Executer::IOs_setup(){
 	
@@ -13,6 +13,7 @@ void Executer::IOs_setup(){
 	pinMode(2,INPUT);	// Thin button 1
 	pinMode(4,INPUT);	// Thin button 2
 	
-	
+	adcAttachPin(36);	// Potentiometer 1
+	adcAttachPin(39);	// Potentiometer 2
 	
 }

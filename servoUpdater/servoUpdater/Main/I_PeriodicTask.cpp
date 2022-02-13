@@ -2,7 +2,7 @@
 // 
 // 
 
-#include "I_Task.h"
+#include "I_PeriodicTask.h"
 
 void I_PeriodicTask::setExecutionPeriod(execType _timerType, unsigned int _period){
 	
