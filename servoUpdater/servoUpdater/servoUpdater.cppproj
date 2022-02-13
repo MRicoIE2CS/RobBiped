@@ -540,16 +540,22 @@
     <Compile Include="Actuators\UpdateServos.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Executer\Executer.cpp">
+    <Compile Include="Main\Configs.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Executer\Executer.h">
+    <Compile Include="Main\Executer.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Executer\I_Task.cpp">
+    <Compile Include="Main\Executer.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Executer\I_Task.h">
+    <Compile Include="Main\Setups.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Main\I_PeriodicTask.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Main\I_PeriodicTask.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="servoUpdater.ino">
@@ -561,7 +567,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Actuators\" />
-    <Folder Include="Executer\" />
+    <Folder Include="Main" />
     <Folder Include="__vm\" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />

@@ -9,7 +9,9 @@
 
 void Executer::init(){
 	
-	signalGenerator_0.setExecutionPeriod(I_Task::execType::inMillis, 5);
+	setup();
+	
+	signalGenerator_0.setExecutionPeriod(I_PeriodicTask::execType::inMillis, 5);
 	//signalGenerator_0.setExecutionPeriod(I_Task::execType::inMillis,2);	
 	signalGenerator_0.configureSignal(SignalGenerator::SignalType::sine,500,1,0,0);
 	signalGenerator_0.init();
@@ -18,9 +20,14 @@ void Executer::init(){
 // 	signalGenerator_1.init();
 	
 	//servoUpdater.setExecutionPeriod(I_Task::execType::inMillis,2);	
-	servoUpdater.setExecutionPeriod(I_Task::execType::inMillis,20);	
+	servoUpdater.setExecutionPeriod(I_PeriodicTask::execType::inMillis,20);	
 	servoUpdater.init();
 	
+}
+
+void Executer::setup(){
+	
+	IOs_setup();
 }
 
 void Executer::execution(){

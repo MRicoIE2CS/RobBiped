@@ -11,7 +11,7 @@
 
 
 
-class I_Task{
+class I_PeriodicTask{
 	
 	public:
 		

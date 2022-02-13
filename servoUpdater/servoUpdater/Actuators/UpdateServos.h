@@ -9,7 +9,7 @@
 	#include "WProgram.h"
 #endif
 
-#include "../Executer/I_Task.h"
+#include "../Main/I_PeriodicTask.h"
 //#include "SignalGenerator.h"
 #include "MG996R.h"
 #include <Wire.h>
@@ -17,7 +17,7 @@
 #include <map>
 using namespace std;
 
-class UpdateServos : public I_Task{
+class UpdateServos : public I_PeriodicTask{
 	
 	private:
 	
