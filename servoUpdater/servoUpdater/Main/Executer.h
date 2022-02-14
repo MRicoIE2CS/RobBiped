@@ -17,6 +17,7 @@
 //#include "../Communications/I2C.h"
 #include "../Actuators/UpdateServos.h"
 #include "../Actuators/SignalGenerator.h"
+#include "Configs.h"
 
 
 
@@ -25,7 +26,12 @@
 class Executer {
 	
 	private:
-	
+		
+		
+		/////____________ OBJECTS: __//
+		Configs config;
+		/////____________ END OBJECTS: __//
+		
 		/////____________ OBJECT TASKS: __//
 		SignalGenerator signalGenerator_0;
 		SignalGenerator signalGenerator_1;

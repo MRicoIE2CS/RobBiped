@@ -9,11 +9,11 @@
 
 void Executer::IOs_setup(){
 	
-	pinMode(15,INPUT);	// Square button
-	pinMode(2,INPUT);	// Thin button 1
-	pinMode(4,INPUT);	// Thin button 2
+	pinMode(config.gpio.squareButton,INPUT);	// Square button
+	pinMode(config.gpio.thinButton1,INPUT);	// Thin button 1
+	pinMode(config.gpio.thinButton2,INPUT);	// Thin button 2
 	
-	adcAttachPin(36);	// Potentiometer 1
-	adcAttachPin(39);	// Potentiometer 2
+	adcAttachPin(config.gpio.potentiometer1);	// Potentiometer 1
+	adcAttachPin(config.gpio.potentiometer2);	// Potentiometer 2
 	
 }
