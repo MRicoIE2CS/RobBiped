@@ -33,6 +33,10 @@ int MG996R::getPulseWidthToSend(){
 	return pulseWidthAssigned;
 }
 
+int MG996R::getPulseWidthApplied(){
+	return pulseWidthApplied;
+}
+
 bool MG996R::isNewPulseWidth(){
 	int pulseWidthassigned = angleToPulse(angleAssigned);
 	bool out = pulseWidthassigned != pulseWidthApplied;

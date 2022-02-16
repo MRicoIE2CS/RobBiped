@@ -561,6 +561,12 @@
     <Compile Include="servoUpdater.ino">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Utils\ExponentialFilter.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\ExponentialFilter.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="__vm\.servoUpdater.vsarduino.h">
       <SubType>compile</SubType>
     </Compile>
@@ -568,6 +574,7 @@
   <ItemGroup>
     <Folder Include="Actuators\" />
     <Folder Include="Main" />
+    <Folder Include="Utils" />
     <Folder Include="__vm\" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />

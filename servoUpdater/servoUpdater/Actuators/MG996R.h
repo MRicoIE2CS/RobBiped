@@ -14,8 +14,8 @@ class MG996R {
 	
 	private:
 	
-		uint16_t minPulse = 100;
-		uint16_t maxPulse = 510;
+		uint16_t minPulse = 80;
+		uint16_t maxPulse = 530;
 		uint8_t maxAngle_deg = 180;
 		uint8_t maxAngle_rad = PI;
 		
@@ -38,6 +38,7 @@ class MG996R {
 		void setMaxPulse(uint16_t _pulse);
 		
 		int getPulseWidthToSend();
+		int getPulseWidthApplied();
 		bool isNewPulseWidth();
 		
 		bool setAngleTarget(double _ang);

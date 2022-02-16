@@ -18,6 +18,7 @@
 #include "../Actuators/UpdateServos.h"
 #include "../Actuators/SignalGenerator.h"
 #include "Configs.h"
+#include "../Utils/ExponentialFilter.h"
 
 
 
@@ -30,6 +31,7 @@ class Executer {
 		
 		/////____________ OBJECTS: __//
 		Configs config;
+		ExpFilter pot1Filter;
 		/////____________ END OBJECTS: __//
 		
 		/////____________ OBJECT TASKS: __//
