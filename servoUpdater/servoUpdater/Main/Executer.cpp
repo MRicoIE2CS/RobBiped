@@ -32,6 +32,8 @@ void Executer::setup(){
 
 void Executer::execution(){
 	
+	if (digitalRead(config.gpio.squareButton)) servoUpdater.changeState();	// run/sleep to servos
+	
 	if (signalGenerator_0.getExecutionFlag()) {
 		//Serial.println("____________");
 		unsigned int pot1Val = analogRead(config.gpio.potentiometer1);
@@ -48,10 +50,10 @@ void Executer::execution(){
 			readingAngle_0 = (double)(pot1Val - 1000) / (double)2000 * PI;
 		}
 		double nextAngle_0;
-		readingAngle_0 = pot1Filter.filter(readingAngle_0);
+		nextAngle_0 = pot1Filter.filter(readingAngle_0);
 		//nextAngle_0 = HALF_PI + 3*HALF_PI/4 * signalGenerator_0.generateTrajectory();
 		//Serial.println("readingAngle_0: " + (String)readingAngle_0);
-		servoUpdater.setAngleToServo(0,readingAngle_0);
+		servoUpdater.setAngleToServo(0,nextAngle_0);
 // 		double nextAngle_1 = HALF_PI + 3*HALF_PI/4 * signalGenerator_1.generateTrajectory();
 // 		servoUpdater.setAngleToServo(1,nextAngle_1);
 	}

@@ -23,14 +23,18 @@ class UpdateServos : public I_PeriodicTask{
 	
 		Adafruit_PWMServoDriver PCA9685_1 = Adafruit_PWMServoDriver(0x40);
 		
-		
 		std::map<unsigned short,MG996R> PCA9685_1_servoMap;
 		
-		int angleToPulse(int _ang);	// debug
+		enum class state { running , sleep } currentState;
+			
+		unsigned long lastMillisChangedState;
 	
 	public:
 	
 	void init();
+	void sleep();
+	void wakeup();
+	void changeState();
 	
 	void setAngleToServo(unsigned short servoIndex, double servoAngle);
 	void setAngleToServo(unsigned short servoIndex, int servoAngle);

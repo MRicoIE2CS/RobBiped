@@ -11,6 +11,7 @@ void UpdateServos::init(){
 
 	PCA9685_1.begin();
 	PCA9685_1.setPWMFreq(50);  // Analog servos run at ~50 Hz updates
+	PCA9685_1.sleep();
 	
 	MG996R servoInitializer;
 	servoInitializer.setAngleTarget(90);
@@ -20,7 +21,34 @@ void UpdateServos::init(){
 	
 }
 
+void UpdateServos::sleep(){
+	
+	PCA9685_1.sleep();
+	currentState = state::sleep;
+}
+
+void UpdateServos::wakeup(){
+	
+	PCA9685_1.wakeup();
+	currentState = state::running;
+}
+
+void UpdateServos::changeState(){
+	
+	unsigned long currentMillis = millis();
+	if (currentMillis - lastMillisChangedState > 2000){
+		if (currentState == state::running){
+			this->sleep();
+		}
+		else if (currentState == state::sleep){
+			this->wakeup();
+		}
+		lastMillisChangedState = currentMillis;
+	}
+}
+	
 void UpdateServos::update(){
+	if (currentState == state::sleep) return;
 	
 	std::map<unsigned short,MG996R>::iterator itMap;
 	
@@ -44,7 +72,7 @@ void UpdateServos::setAngleToServo(unsigned short servoIndex, int servoAngle){
 
 
 
-int UpdateServos::angleToPulse(int _ang){
-	int pulse = 100 + (_ang * 410 / 180);
-	return pulse;
-}
+// int UpdateServos::angleToPulse(int _ang){
+// 	int pulse = 100 + (_ang * 410 / 180);
+// 	return pulse;
+// }
