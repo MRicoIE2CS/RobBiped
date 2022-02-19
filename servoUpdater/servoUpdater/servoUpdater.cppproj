@@ -522,16 +522,16 @@
     </VisualMicroSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Actuators\Joint.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Actuators\Joint.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Actuators\MG996R.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Actuators\MG996R.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Actuators\SignalGenerator.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Actuators\SignalGenerator.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Actuators\UpdateServos.cpp">
@@ -561,10 +561,22 @@
     <Compile Include="servoUpdater.ino">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="UserInput\Potentiometer.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UserInput\Potentiometer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Utils\ExponentialFilter.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Utils\ExponentialFilter.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\SignalGenerator.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\SignalGenerator.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="__vm\.servoUpdater.vsarduino.h">
@@ -574,6 +586,8 @@
   <ItemGroup>
     <Folder Include="Actuators\" />
     <Folder Include="Main" />
+    <Folder Include="Units" />
+    <Folder Include="UserInput" />
     <Folder Include="Utils" />
     <Folder Include="__vm\" />
   </ItemGroup>

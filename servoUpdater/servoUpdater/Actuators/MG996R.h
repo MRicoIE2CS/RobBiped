@@ -14,35 +14,44 @@ class MG996R {
 	
 	private:
 	
-		unsigned int minPulse = 100;
-		unsigned int maxPulse = 510;//520
-		unsigned short maxAngle_deg = 180;
-		unsigned short maxAngle_rad = PI;
+		uint16_t minPulse = 100; //110 is 0 calibrated
+		uint16_t maxPulse = 510;//513 is PI calibrated
+		uint8_t maxAngle_deg = 180;
+		uint8_t maxAngle_rad = PI;
 		
-		unsigned short index = 0;
+// 		struct class point {
+// 			uint16_t pulseWidth;
+// 			double angle_rad;
+// 			};
+// 		point calibration_Point1;
+// 		point calibration_Point2;
 		
-		double angleAssigned = 0;
-		unsigned int pulseWidthAssigned; 
-		unsigned int pulseWidthApplied;
+//		uint8_t calibrationZero_pulse = 310;
 		
-		unsigned int angleToPulse(int _ang);
-		unsigned int angleToPulse(double _ang);
+		//double angleAssigned = 0;
+		uint16_t pulseWidthAssigned; 
+		uint16_t pulseWidthApplied;
+		
+		uint16_t angleToPulse(int16_t _ang);
+		uint16_t angleToPulse(double _ang);
 		
 		
-		double degToRad(int _ang);
-		int radToDeg(double _ang);
+		double degToRad(int16_t _ang);
+		int16_t radToDeg(double _ang);
 	
 	public:
 		
-		void setMinPulse(unsigned int _pulse);
-		void setMaxPulse(unsigned int _pulse);
 		
-		unsigned int getPulseWidthToSend();
-		unsigned int getPulseWidthApplied();
+		//void calibration_setPoint1(double _currentangle);
+		//void calibration_setPoint2(double _currentangle);
+		
+		void setTargetAngle(double _targetAngle);
+		
+		uint16_t getPulseWidthAssigned();
+		//unsigned int getPulseWidthApplied();
 		bool isNewPulseWidth();
 		
-		bool setAngleTarget(double _ang);
-		bool setAngleTarget(int _ang);
+		
 	
 	};
 

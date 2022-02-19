@@ -10,28 +10,33 @@
 #endif
 
 #include "../Main/I_PeriodicTask.h"
-//#include "SignalGenerator.h"
+#include "Joint.h"
 #include "MG996R.h"
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 #include <map>
 using namespace std;
 
-class UpdateServos : public I_PeriodicTask{
+class Servos : public I_PeriodicTask{
 	
 	private:
 	
 		Adafruit_PWMServoDriver PCA9685_1 = Adafruit_PWMServoDriver(0x40);
 		
-		std::map<unsigned short,MG996R> PCA9685_1_servoMap;
+		std::map<unsigned short,Joint> PCA9685_1_servoMap;
 		
-		enum class state { running , sleep } currentState;
+		enum class state { running , calibrating, sleeping } currentState;
 			
 		unsigned long lastMillisChangedState;
+		
+		uint8_t pinbutton1;
+		uint8_t pinbutton2;
 	
 	public:
 	
 	void init();
+	void assocButtons(uint8_t _pinbutton1, uint8_t _pinbutton2);
+	
 	void sleep();
 	void wakeup();
 	void changeState();

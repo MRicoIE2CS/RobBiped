@@ -16,7 +16,7 @@
 #include "I_PeriodicTask.h"
 //#include "../Communications/I2C.h"
 #include "../Actuators/UpdateServos.h"
-#include "../Actuators/SignalGenerator.h"
+#include "../Utils/SignalGenerator.h"
 #include "Configs.h"
 #include "../Utils/ExponentialFilter.h"
 
@@ -32,18 +32,19 @@ class Executer {
 		/////____________ OBJECTS: __//
 		Configs config;
 		ExpFilter pot1Filter;
-		/////____________ END OBJECTS: __//
+		///// END OBJECTS: __//
 		
 		/////____________ OBJECT TASKS: __//
 		SignalGenerator signalGenerator_0;
 		SignalGenerator signalGenerator_1;
-		UpdateServos servoUpdater;
-		/////____________ END OBJECT TASKS __//
+		Servos servoUpdater;
+		///// END OBJECT TASKS __//
 	
 		/////____________ PRIVATE FUNCTIONS: __//
 		void setup();
 		void IOs_setup();
-		/////____________ END PRIVATE FUNCTIONS: __//
+		void associations();
+		///// END PRIVATE FUNCTIONS: __//
 	
 	public:
 		

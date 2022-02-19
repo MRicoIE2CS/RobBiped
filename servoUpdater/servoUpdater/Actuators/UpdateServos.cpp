@@ -5,7 +5,7 @@
 #include "UpdateServos.h"
 
 
-void UpdateServos::init(){
+void Servos::init(){
 	
 	
 
@@ -13,62 +13,68 @@ void UpdateServos::init(){
 	PCA9685_1.setPWMFreq(50);  // Analog servos run at ~50 Hz updates
 	PCA9685_1.sleep();
 	
-	MG996R servoInitializer;
-	servoInitializer.setAngleTarget(90);
-	PCA9685_1_servoMap[0] = servoInitializer;
-// 	servoInitializer.setAngleTarget(0);
-// 	PCA9685_1_servoMap[1] = servoInitializer;
+	Joint jointInitializer;
+	jointInitializer.setAngleTarget_rad(0.0);
+	PCA9685_1_servoMap[0] = jointInitializer;
+// 	jointInitializer.setAngleTarget(0);
+// 	PCA9685_1_servoMap[1] = jointInitializer;
 	
 }
 
-void UpdateServos::sleep(){
+void Servos::assocButtons(uint8_t _pinbutton1, uint8_t _pinbutton2){
+	
+	pinbutton1 = _pinbutton1;
+	pinbutton2 = _pinbutton2;
+}
+
+void Servos::sleep(){
 	
 	PCA9685_1.sleep();
-	currentState = state::sleep;
+	currentState = state::sleeping;
 }
 
-void UpdateServos::wakeup(){
+void Servos::wakeup(){
 	
 	PCA9685_1.wakeup();
 	currentState = state::running;
 }
 
-void UpdateServos::changeState(){
+void Servos::changeState(){
 	
 	unsigned long currentMillis = millis();
 	if (currentMillis - lastMillisChangedState > 2000){
 		if (currentState == state::running){
 			this->sleep();
 		}
-		else if (currentState == state::sleep){
+		else if (currentState == state::sleeping){
 			this->wakeup();
 		}
 		lastMillisChangedState = currentMillis;
 	}
 }
 	
-void UpdateServos::update(){
-	if (currentState == state::sleep) return;
+void Servos::update(){
+	if (currentState == state::sleeping) return;
 	
-	std::map<unsigned short,MG996R>::iterator itMap;
+	std::map<unsigned short,Joint>::iterator itMap;
 	
 	for (itMap = PCA9685_1_servoMap.begin(); itMap!=PCA9685_1_servoMap.end(); ++itMap){
-		if (itMap->second.isNewPulseWidth()) {
-			PCA9685_1.setPWM(itMap->first, 0, itMap->second.getPulseWidthToSend() );
+		if (itMap->second.isUpdateNeeded()) {
+			PCA9685_1.setPWM(itMap->first, 0, itMap->second.getPWMPulseWidthUpdate() );
 			//Serial.println("PulseWidthApplied: " + (String)itMap->second.getPulseWidthApplied());
 		}
 	}
 }
 
-void UpdateServos::setAngleToServo(unsigned short servoIndex, double servoAngle){
+void Servos::setAngleToServo(unsigned short servoIndex, double servoAngle){
 	
-	PCA9685_1_servoMap[servoIndex].setAngleTarget(servoAngle);
+	PCA9685_1_servoMap[servoIndex].setAngleTarget_rad(servoAngle);
 }
 
-void UpdateServos::setAngleToServo(unsigned short servoIndex, int servoAngle){
-	
-	PCA9685_1_servoMap[servoIndex].setAngleTarget(servoAngle);
-}
+// void Servos::setAngleToServo(unsigned short servoIndex, int servoAngle){
+// 	
+// 	PCA9685_1_servoMap[servoIndex].setAngleTarget_deg(servoAngle);
+// }
 
 
 

@@ -17,3 +17,8 @@ void Executer::IOs_setup(){
 	adcAttachPin(config.gpio.potentiometer2);	// Potentiometer 2
 	
 }
+
+void Executer::associations(){
+	
+	servoUpdater.assocButtons(config.gpio.thinButton1, config.gpio.thinButton2);
+}

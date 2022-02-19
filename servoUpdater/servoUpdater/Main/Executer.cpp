@@ -28,6 +28,7 @@ void Executer::init(){
 void Executer::setup(){
 	
 	IOs_setup();
+	associations();
 }
 
 void Executer::execution(){
