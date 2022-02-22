@@ -21,31 +21,20 @@ class Joint {
 	
 	MG996R servo;
 	
-	double maxAngleAllowed = HALF_PI/2;
-	double minAngleAllowed = -HALF_PI/2;
+	double maxAngleAllowed = PI/2;
+	double minAngleAllowed = -PI/2;
+	double calibration_offsetAngle = 0;
+	bool invertDirection = false;
 	
 	double angleAssigned = 0;
 	
-// 	struct class point {
-// 		uint16_t pulseWidth;
-// 		double angle_rad;
-// 	};
-// 	point calibration_Point1;
-// 	point calibration_Point2;
-	
-//	uint8_t calibrationZero_pulse = 310;
-	
-	
-	double degToRad(int _ang);
-	int16_t radToDeg(double _ang);
-	
 	public:
 	
-	void calibration_setMinAngleNow();
-	void calibration_setMaxAngleNow();
-	void calibration_setZeroNow();
-	void calibration_ZeroFineAdjust();	//How to do?
 	void invertAngleSign(bool yes_no);
+	void calibration_setMinAngle(bool catchCurrentAngle, double _angle);
+	void calibration_setMaxAngle(bool catchCurrentAngle, double _angle);
+	void calibration_setZero(bool catchCurrentAngle, double _angle);
+	void calibration_ZeroFineAdjust();	//How to do?	
 	
 	uint16_t getPWMPulseWidthUpdate();
 	//unsigned int getPulseWidthApplied();

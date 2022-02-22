@@ -561,10 +561,22 @@
     <Compile Include="servoUpdater.ino">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="UserInput\Button.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UserInput\Button.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="UserInput\Potentiometer.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="UserInput\Potentiometer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UserInput\UserInput.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UserInput\UserInput.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Utils\ExponentialFilter.cpp">
@@ -577,6 +589,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Utils\SignalGenerator.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\UnitsConverter.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\UnitsConverter.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="__vm\.servoUpdater.vsarduino.h">

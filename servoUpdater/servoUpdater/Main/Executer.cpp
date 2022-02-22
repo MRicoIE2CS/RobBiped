@@ -11,6 +11,8 @@ void Executer::init(){
 	
 	setup();
 	
+	usrInput.setExecutionPeriod(I_PeriodicTask::execType::inMillis, 5);
+	
 	signalGenerator_0.setExecutionPeriod(I_PeriodicTask::execType::inMillis, 20);
 	//signalGenerator_0.setExecutionPeriod(I_Task::execType::inMillis,2);	
 	signalGenerator_0.configureSignal(SignalGenerator::SignalType::sine,500,1,0,0);
@@ -25,19 +27,16 @@ void Executer::init(){
 	
 }
 
-void Executer::setup(){
-	
-	IOs_setup();
-	associations();
-}
-
 void Executer::execution(){
 	
-	if (digitalRead(config.gpio.squareButton)) servoUpdater.changeState();	// run/sleep to servos
+	if (usrInput.getExecutionFlag()) usrInput.update();
+	
+	//if (digitalRead(config.gpio.squareButton)) servoUpdater.changeState();	// run/sleep to servos
+	if (usrInput.getDigitalValue(UserInput::DigitalInputList::squareButton)) servoUpdater.changeState();	// run/sleep to servos
 	
 	if (signalGenerator_0.getExecutionFlag()) {
 		//Serial.println("____________");
-		unsigned int pot1Val = analogRead(config.gpio.potentiometer1);
+		uint16_t pot1Val = usrInput.getAnalogValue(UserInput::AnalogInputList::potentiometer1);// analogRead(config.gpio.potentiometer1);
 		//Serial.println("pot1Val: " + (String)pot1Val);
 		
 		double readingAngle_0;
@@ -50,10 +49,12 @@ void Executer::execution(){
 		else {
 			readingAngle_0 = (double)(pot1Val - 1000) / (double)2000 * PI;
 		}
-		double nextAngle_0;
-		nextAngle_0 = pot1Filter.filter(readingAngle_0);
-		//nextAngle_0 = HALF_PI + 3*HALF_PI/4 * signalGenerator_0.generateTrajectory();
 		//Serial.println("readingAngle_0: " + (String)readingAngle_0);
+		double nextAngle_0 = readingAngle_0 - HALF_PI;
+		//nextAngle_0 = pot1Filter.filter(readingAngle_0 - HALF_PI);
+		
+		//nextAngle_0 = HALF_PI + 3*HALF_PI/4 * signalGenerator_0.generateTrajectory();
+		//Serial.println("nextAngle_0   : " + (String)nextAngle_0);
 		servoUpdater.setAngleToServo(0,nextAngle_0);
 // 		double nextAngle_1 = HALF_PI + 3*HALF_PI/4 * signalGenerator_1.generateTrajectory();
 // 		servoUpdater.setAngleToServo(1,nextAngle_1);

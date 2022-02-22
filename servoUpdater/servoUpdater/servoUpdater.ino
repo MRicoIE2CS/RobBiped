@@ -15,7 +15,7 @@ Executer executer;
 
 void setup()
 {
-	Serial.begin(9600);
+	Serial.begin(500000);
 	
 	executer.init();
 
@@ -23,7 +23,10 @@ void setup()
 
 void loop()
 {
+	//uint32_t initMicros = micros();
 	
 	executer.execution();
-
+	
+	//uint32_t finalMicros = micros();
+	//Serial.println("cycleTime: " + (String)(finalMicros - initMicros));
 }

@@ -19,9 +19,7 @@
 #include "../Utils/SignalGenerator.h"
 #include "Configs.h"
 #include "../Utils/ExponentialFilter.h"
-
-
-
+#include "../UserInput/UserInput.h"
 
 
 class Executer {
@@ -38,11 +36,11 @@ class Executer {
 		SignalGenerator signalGenerator_0;
 		SignalGenerator signalGenerator_1;
 		Servos servoUpdater;
+		UserInput usrInput;
 		///// END OBJECT TASKS __//
 	
 		/////____________ PRIVATE FUNCTIONS: __//
 		void setup();
-		void IOs_setup();
 		void associations();
 		///// END PRIVATE FUNCTIONS: __//
 	

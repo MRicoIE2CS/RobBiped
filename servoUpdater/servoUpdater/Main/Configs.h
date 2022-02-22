@@ -5,6 +5,14 @@
  *  Author: MRICO
  */ 
 
+#ifndef _CONFIGS_h
+#define _CONFIGS_h
+
+#if defined(ARDUINO) && ARDUINO >= 100
+#include "Arduino.h"
+#else
+#include "WProgram.h"
+#endif
 
 // TODO: Config objects in this file+
 	
@@ -18,3 +26,5 @@ struct Configs
 		unsigned short potentiometer2 = 39;
 		}gpio;
 };
+
+#endif

@@ -13,18 +13,16 @@ void Servos::init(){
 	PCA9685_1.setPWMFreq(50);  // Analog servos run at ~50 Hz updates
 	PCA9685_1.sleep();
 	
+	servosConfig();
+}
+
+void Servos::servosConfig(){
+	
 	Joint jointInitializer;
 	jointInitializer.setAngleTarget_rad(0.0);
 	PCA9685_1_servoMap[0] = jointInitializer;
-// 	jointInitializer.setAngleTarget(0);
-// 	PCA9685_1_servoMap[1] = jointInitializer;
-	
-}
-
-void Servos::assocButtons(uint8_t _pinbutton1, uint8_t _pinbutton2){
-	
-	pinbutton1 = _pinbutton1;
-	pinbutton2 = _pinbutton2;
+	// 	jointInitializer.setAngleTarget(0);
+	// 	PCA9685_1_servoMap[1] = jointInitializer;
 }
 
 void Servos::sleep(){
@@ -43,13 +41,14 @@ void Servos::changeState(){
 	
 	unsigned long currentMillis = millis();
 	if (currentMillis - lastMillisChangedState > 2000){
+		lastMillisChangedState = currentMillis;
+		
 		if (currentState == state::running){
 			this->sleep();
 		}
 		else if (currentState == state::sleeping){
 			this->wakeup();
 		}
-		lastMillisChangedState = currentMillis;
 	}
 }
 	
@@ -61,7 +60,7 @@ void Servos::update(){
 	for (itMap = PCA9685_1_servoMap.begin(); itMap!=PCA9685_1_servoMap.end(); ++itMap){
 		if (itMap->second.isUpdateNeeded()) {
 			PCA9685_1.setPWM(itMap->first, 0, itMap->second.getPWMPulseWidthUpdate() );
-			//Serial.println("PulseWidthApplied: " + (String)itMap->second.getPulseWidthApplied());
+			Serial.println("PulseWidthApplied: " + (String)itMap->second.getPWMPulseWidthUpdate());
 		}
 	}
 }

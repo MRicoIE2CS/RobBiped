@@ -35,6 +35,7 @@ class Servos : public I_PeriodicTask{
 	public:
 	
 	void init();
+	void servosConfig();
 	void assocButtons(uint8_t _pinbutton1, uint8_t _pinbutton2);
 	
 	void sleep();

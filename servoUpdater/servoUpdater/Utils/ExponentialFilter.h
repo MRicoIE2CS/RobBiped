@@ -18,13 +18,13 @@ class ExpFilter {
 	private:
 		
 		double lastFilteredValue = 0;
-		double expK = 0.87;
+		double expK = 0.9;
 		
 	public:
 		
 		double setExpConstant(double k);
 		double filter(double rawValue);
-	
+		double filter(uint16_t rawValue);
 	};
 
 

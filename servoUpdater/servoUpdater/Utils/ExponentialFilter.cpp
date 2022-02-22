@@ -15,3 +15,10 @@ double ExpFilter::filter(double rawValue){
 	lastFilteredValue = filteredValue;
 	return filteredValue;
 }
+
+double ExpFilter::filter(uint16_t rawValue){
+	double filteredValue;
+	filteredValue = lastFilteredValue*expK + (1.0-expK)*(double)rawValue;
+	lastFilteredValue = filteredValue;
+	return filteredValue;
+}

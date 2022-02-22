@@ -7,18 +7,15 @@
 
 #include "Executer.h"
 
-void Executer::IOs_setup(){
+void Executer::setup(){
 	
-	pinMode(config.gpio.squareButton,INPUT_PULLDOWN);	// Square button
-	pinMode(config.gpio.thinButton1,INPUT_PULLDOWN);	// Thin button 1
-	pinMode(config.gpio.thinButton2,INPUT_PULLDOWN);	// Thin button 2
-	
-	adcAttachPin(config.gpio.potentiometer1);	// Potentiometer 1
-	adcAttachPin(config.gpio.potentiometer2);	// Potentiometer 2
+	associations();
 	
 }
 
 void Executer::associations(){
 	
-	servoUpdater.assocButtons(config.gpio.thinButton1, config.gpio.thinButton2);
+	usrInput.assocGPIO(config.gpio);
+	//TODO: Associate buttons to servo updater calibration
+	//servoUpdater.assocButtons(config.gpio.thinButton1, config.gpio.thinButton2);
 }
