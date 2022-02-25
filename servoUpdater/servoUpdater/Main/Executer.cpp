@@ -11,33 +11,35 @@ void Executer::init(){
 	
 	setup();
 	
-	usrInput.setExecutionPeriod(I_PeriodicTask::execType::inMillis, 5);
+	//______TASKS CONFIGURATION_____//
+	
+	userInput.setExecutionPeriod(I_PeriodicTask::execType::inMillis, 5);
 	
 	signalGenerator_0.setExecutionPeriod(I_PeriodicTask::execType::inMillis, 20);
-	//signalGenerator_0.setExecutionPeriod(I_Task::execType::inMillis,2);	
 	signalGenerator_0.configureSignal(SignalGenerator::SignalType::sine,500,1,0,0);
 	signalGenerator_0.init();
-// 	signalGenerator_1.setExecutionPeriod(I_Task::execType::inMillis,1);
-// 	signalGenerator_1.configureSignal(SignalGenerator::SignalType::sine,500,1,0,250);
-// 	signalGenerator_1.init();
 	
-	//servoUpdater.setExecutionPeriod(I_Task::execType::inMillis,2);	
 	servoUpdater.setExecutionPeriod(I_PeriodicTask::execType::inMillis,20);	
 	servoUpdater.init();
+	
+	// END TASKS CONFIGURATION
+	
 	
 }
 
 void Executer::execution(){
 	
-	if (usrInput.getExecutionFlag()) usrInput.update();
+	// INPUTS:
 	
-	//if (digitalRead(config.gpio.squareButton)) servoUpdater.changeState();	// run/sleep to servos
-	if (usrInput.getDigitalValue(UserInput::DigitalInputList::squareButton)) servoUpdater.changeState();	// run/sleep to servos
+	if (userInput.getExecutionFlag()) userInput.update();
+	
+	// MAIN EXECUTION:
+	
+	//if (userInput.getDigitalValue(UserInput::DigitalInputList::squareButton)) servoUpdater.changeState();	// run/sleep to servos
 	
 	if (signalGenerator_0.getExecutionFlag()) {
-		//Serial.println("____________");
-		uint16_t pot1Val = usrInput.getAnalogValue(UserInput::AnalogInputList::potentiometer1);// analogRead(config.gpio.potentiometer1);
-		//Serial.println("pot1Val: " + (String)pot1Val);
+		
+		uint16_t pot1Val = userInput.getAnalogValue(UserInput::AnalogInputList::potentiometer2);
 		
 		double readingAngle_0;
 		if (pot1Val < 1000){
@@ -49,17 +51,14 @@ void Executer::execution(){
 		else {
 			readingAngle_0 = (double)(pot1Val - 1000) / (double)2000 * PI;
 		}
-		//Serial.println("readingAngle_0: " + (String)readingAngle_0);
 		double nextAngle_0 = readingAngle_0 - HALF_PI;
-		//nextAngle_0 = pot1Filter.filter(readingAngle_0 - HALF_PI);
 		
 		//nextAngle_0 = HALF_PI + 3*HALF_PI/4 * signalGenerator_0.generateTrajectory();
-		//Serial.println("nextAngle_0   : " + (String)nextAngle_0);
 		servoUpdater.setAngleToServo(0,nextAngle_0);
-// 		double nextAngle_1 = HALF_PI + 3*HALF_PI/4 * signalGenerator_1.generateTrajectory();
-// 		servoUpdater.setAngleToServo(1,nextAngle_1);
 	}
 	
-	if (servoUpdater.getExecutionFlag()) servoUpdater.update();
+	// OUTPUTS:
+	
+	if (servoUpdater.getExecutionFlag()) servoUpdater.update(userInput);
 	
 }

@@ -36,7 +36,7 @@ class Executer {
 		SignalGenerator signalGenerator_0;
 		SignalGenerator signalGenerator_1;
 		Servos servoUpdater;
-		UserInput usrInput;
+		UserInput userInput;
 		///// END OBJECT TASKS __//
 	
 		/////____________ PRIVATE FUNCTIONS: __//

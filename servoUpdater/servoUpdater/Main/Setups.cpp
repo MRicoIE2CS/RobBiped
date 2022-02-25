@@ -15,7 +15,7 @@ void Executer::setup(){
 
 void Executer::associations(){
 	
-	usrInput.assocGPIO(config.gpio);
+	userInput.assocGPIO(config.gpio);
 	//TODO: Associate buttons to servo updater calibration
 	//servoUpdater.assocButtons(config.gpio.thinButton1, config.gpio.thinButton2);
 }

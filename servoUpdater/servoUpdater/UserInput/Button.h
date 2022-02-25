@@ -17,6 +17,8 @@ class Button {
 		
 		uint8_t HWpin;
 		bool value;
+		uint32_t valueChangeTrigggerTime;
+		uint32_t valueChangeDelay_ms = 250;
 		
 		void setup(uint8_t _pin, uint8_t _mode);
 		

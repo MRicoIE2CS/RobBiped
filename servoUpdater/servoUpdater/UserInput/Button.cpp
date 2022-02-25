@@ -13,7 +13,15 @@ void Button::setup(uint8_t _pin, uint8_t _mode){
 
 bool Button::readHWvalue(){
 	
-	value = digitalRead(HWpin);
+	bool currentValue = digitalRead(HWpin);
+	uint32_t currentMillis = millis();
+	uint32_t timeSinceLastChange = abs(valueChangeTrigggerTime - currentMillis);
+	
+	if (value != currentValue && (timeSinceLastChange > valueChangeDelay_ms)) {
+		value = currentValue;
+		valueChangeTrigggerTime = currentMillis;
+	}
+	
 	return value;
 }
 
