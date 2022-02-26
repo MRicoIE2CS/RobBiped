@@ -21,15 +21,16 @@ class Joint {
 	
 	MG996R servo;
 	
-	double maxAngleAllowed = PI/2;
-	double minAngleAllowed = -PI/2;
+	double maxAngleAllowed = PI;
+	double minAngleAllowed = -PI;
 	double calibration_offsetAngle = 0;
 	bool invertDirection = false;
 	
-	double angleAssigned = 0;
+	double assignedAngle = 0;
 	
 	public:
 	
+	void cleanCalibrationValues();
 	void invertAngleSign(bool yes_no);
 	void calibration_setMinAngle(bool catchCurrentAngle, double _angle);
 	void calibration_setMaxAngle(bool catchCurrentAngle, double _angle);
@@ -41,7 +42,8 @@ class Joint {
 	bool isUpdateNeeded();
 	
 	bool setAngleTarget_rad(double _ang);
-	//bool setAngleTarget_deg(double _ang);
+	double getAssignedAnlge();
+	double getZeroOffset();
 	
 };
 

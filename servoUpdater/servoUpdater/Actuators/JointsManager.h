@@ -18,7 +18,7 @@
 using namespace std;
 #include "../UserInput/UserInput.h"
 
-class Servos : public I_PeriodicTask{
+class JointsManager : public I_PeriodicTask{
 	
 	private:
 	
@@ -33,8 +33,10 @@ class Servos : public I_PeriodicTask{
 			CalibrationState calibrationState;
 			int8_t selectedServo = 0;
 			uint32_t lastMillisChangedCalibrationState;
-			uint32_t valueChangeDelay_ms = 1000;
+			uint32_t valueChangeDelay_ms = 2000;
 			bool calibrationStateButtonChangeFlag;
+			uint32_t SerialPrint_LastMillis;
+			uint32_t SerialPrint_Period_ms = 400;
 		} calibrationData;
 		
 		void checkState(bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
@@ -45,17 +47,18 @@ class Servos : public I_PeriodicTask{
 		void calibration_zeroCalibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
 		void calibration_firstPointCalibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
 		void calibration_secondPointCalibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
+		void calibration_SerialPrint(uint32_t currentMillis);
 		void sleep();
 		void wakeup();
 		void changeState(uint32_t currentMillis);
 		
-		void calibration_setAngleToServo(UserInput _userInput);
-		double calibration_getAngleFromPotentiometer(UserInput _userInput);
+		void calibration_setAngleToServo(uint16_t potentiometerVal);
+		double calibration_getAngleFromPotentiometer(uint16_t potentiometerVal);
 	
 	public:
 	
 		void init();
-		void servosConfig();
+		void jointsConfig();
 		void assocButtons(uint8_t _pinbutton1, uint8_t _pinbutton2);
 		
 		void setAngleToServo(unsigned short servoIndex, double servoAngle);

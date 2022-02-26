@@ -528,16 +528,22 @@
     <Compile Include="Actuators\Joint.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Actuators\JointCalibration.cpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Actuators\MG996R.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Actuators\MG996R.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Actuators\UpdateServos.cpp">
+    <Compile Include="Actuators\JointsConfig.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Actuators\UpdateServos.h">
+    <Compile Include="Actuators\JointsManager.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Actuators\JointsManager.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Main\Configs.h">

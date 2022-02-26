@@ -15,7 +15,7 @@
 
 #include "I_PeriodicTask.h"
 //#include "../Communications/I2C.h"
-#include "../Actuators/UpdateServos.h"
+#include "../Actuators/JointsManager.h"
 #include "../Utils/SignalGenerator.h"
 #include "Configs.h"
 #include "../Utils/ExponentialFilter.h"
@@ -35,7 +35,7 @@ class Executer {
 		/////____________ OBJECT TASKS: __//
 		SignalGenerator signalGenerator_0;
 		SignalGenerator signalGenerator_1;
-		Servos servoUpdater;
+		JointsManager servoUpdater;
 		UserInput userInput;
 		///// END OBJECT TASKS __//
 	
