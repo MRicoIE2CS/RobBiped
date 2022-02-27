@@ -10,10 +10,10 @@
 #endif
 
 //#include "UpdateServos.h"
-#include "../Executer/I_Task.h"
+#include "../Main/I_PeriodicTask.h"
 
 
-class SignalGenerator : public I_Task{
+class SignalGenerator : public I_PeriodicTask{
 	
 	public:
 		

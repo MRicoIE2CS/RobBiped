@@ -13,35 +13,24 @@
 class MG996R {
 	
 	private:
-	
-		uint16_t minPulse = 100;
-		uint16_t maxPulse = 510;
-		uint8_t maxAngle_deg = 180;
-		uint8_t maxAngle_rad = PI;
 		
-		uint8_t index = 0;
+		// minPulse and maxPulse are calibrated so that all the range covers 180deg (PI rads) with relative precision
+		uint16_t minPulse = 111;	
+		uint16_t maxPulse = 508;
+		double maxAngle_rad = PI;
 		
-		double angleAssigned = 0;
-		int pulseWidthAssigned; 
-		int pulseWidthApplied;
+		uint16_t pulseWidthAssigned; 
+		uint16_t pulseWidthApplied;
 		
-		int angleToPulse(int _ang);
-		int angleToPulse(double _ang);
-		
-		
-		double degToRad(int _ang);
-		int radToDeg(double _ang);
+		uint16_t angleToPulse(int16_t _ang);
+		uint16_t angleToPulse(double _ang);
 	
 	public:
 		
-		void setMinPulse(uint16_t _pulse);
-		void setMaxPulse(uint16_t _pulse);
+		bool setTargetAngle(double _targetAngle);	//Input angle from 0 to PI rads
 		
-		int getPulseWidthToSend();
+		uint16_t getPulseWidthAssigned();
 		bool isNewPulseWidth();
-		
-		bool setAngleTarget(double _ang);
-		bool setAngleTarget(int _ang);
 	
 	};
 
