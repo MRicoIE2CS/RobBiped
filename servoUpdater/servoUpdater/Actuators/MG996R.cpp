@@ -7,6 +7,7 @@
 
 bool MG996R::setTargetAngle(double _ang){
 	if (_ang < 0 || _ang > maxAngle_rad) {
+		Serial.println("Joint overlimit! | Angle: " + (String)_ang);
 		return true;
 	}
 	else {

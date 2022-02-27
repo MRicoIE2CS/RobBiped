@@ -24,7 +24,7 @@ double JointsManager::calibration_getAngleFromPotentiometer(uint16_t potentiomet
 	else {
 		readingAngle_0 = (double)(potentiometerVal - 1000) / (double)2000 * PI;
 	}
-	double nextAngle_0 = readingAngle_0 /*- HALF_PI*/;
+	double nextAngle_0 = readingAngle_0 - HALF_PI;
 	
 	return nextAngle_0;
 }
@@ -32,18 +32,18 @@ double JointsManager::calibration_getAngleFromPotentiometer(uint16_t potentiomet
 void JointsManager::calibrationModeEnterExitConditions(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
 	
 	bool conditionsToEnterCalibration = (currentState == State::running) && (ThinButton1Pressed && ThinButton2Pressed);
+	bool conditionsToExitCalibration = (currentState == State::calibrating) &&(calibrationData.calibrationState == CalibrationState::servoSelection) && (ThinButton1Pressed && ThinButton2Pressed);
 	if (conditionsToEnterCalibration && calibrationData.calibrationStateButtonChangeFlag == false) {
 		currentState = State::calibrating;
 		calibrationData.calibrationState = CalibrationState::servoSelection;
 		calibrationData.calibrationStateButtonChangeFlag = true;
 		calibrationData.lastMillisChangedCalibrationState = currentMillis;
 	}
-	// 	bool conditionsToExitCalibration = (currentState == State::calibrating) &&(calibrationData.calibrationState == CalibrationState::servoSelection) && (ThinButton1Pressed && ThinButton2Pressed);
-	// 	if (conditionsToExitCalibration && calibrationData.calibrationStateButtonChangeFlag == false){
-	// 		currentState = State::running;
-	// 		calibrationData.calibrationStateButtonChangeFlag = true;
-	// 		calibrationData.lastMillisChangedCalibrationState = currentMillis;
-	// 	}
+	else if (conditionsToExitCalibration && calibrationData.calibrationStateButtonChangeFlag == false){
+		currentState = State::running;
+		calibrationData.calibrationStateButtonChangeFlag = true;
+		calibrationData.lastMillisChangedCalibrationState = currentMillis;
+	}
 }
 
 void JointsManager::calibrationButtonPressedFlagMechanism(uint32_t currentMillis){
@@ -165,6 +165,6 @@ void JointsManager::calibration_secondPointCalibration(uint32_t currentMillis, b
 	if (squareButtonPressed){
 		calibrationData.calibrationState = CalibrationState::servoSelection;
 		PCA9685_1_servoMap[calibrationData.selectedServo].calibration_setMaxAngle(true,0);
-		currentState = State::sleeping;
+		currentState = State::running;
 	}
 }

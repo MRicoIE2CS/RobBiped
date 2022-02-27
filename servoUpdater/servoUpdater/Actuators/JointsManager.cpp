@@ -32,7 +32,7 @@ void JointsManager::update(UserInput _userInput){
 void JointsManager::checkState(bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
 	uint32_t currentMillis = millis();
 	
-	if (squareButtonPressed && (currentState != State::calibrating)) changeState(currentMillis);	// run/sleep to servos
+	if (changeStateConditions(currentMillis, squareButtonPressed)) changeState(currentMillis);	// run/sleep to servos
 	
 	calibrationModeEnterExitConditions(currentMillis, squareButtonPressed, ThinButton1Pressed, ThinButton2Pressed);
 	if (currentState == State::calibrating) calibrationStateMachine(currentMillis, squareButtonPressed, ThinButton1Pressed, ThinButton2Pressed);
@@ -40,17 +40,22 @@ void JointsManager::checkState(bool squareButtonPressed, bool ThinButton1Pressed
 	
 }
 
-void JointsManager::changeState(uint32_t currentMillis){
+bool JointsManager::changeStateConditions(uint32_t currentMillis, bool squareButtonPressed){
 	
-	if (abs(currentMillis - lastMillisChangedState) > 2000){
-		lastMillisChangedState = currentMillis;
-		
-		if (currentState == State::running){
-			this->sleep();
-		}
-		else if (currentState == State::sleeping){
-			this->wakeup();
-		}
+	bool conditions = squareButtonPressed && (currentState != State::calibrating) 
+						&& (calibrationData.calibrationStateButtonChangeFlag == false)
+						&& (abs(currentMillis - lastMillisChangedState) > 2000);
+	return conditions;
+}
+
+void JointsManager::changeState(uint32_t currentMillis){
+	lastMillisChangedState = currentMillis;
+	
+	if (currentState == State::running){
+		this->sleep();
+	}
+	else if (currentState == State::sleeping){
+		this->wakeup();
 	}
 }
 
@@ -82,6 +87,7 @@ void JointsManager::servoUpdate(){
 void JointsManager::setAngleToServo(unsigned short servoIndex, double servoAngle){
 	
 	if (currentState == State::running){
+		Serial.println("Running: " + (String)servoAngle);
 		PCA9685_1_servoMap[servoIndex].setAngleTarget_rad(servoAngle);
 	}
 	

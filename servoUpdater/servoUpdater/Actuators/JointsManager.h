@@ -50,6 +50,7 @@ class JointsManager : public I_PeriodicTask{
 		void calibration_SerialPrint(uint32_t currentMillis);
 		void sleep();
 		void wakeup();
+		bool changeStateConditions(uint32_t currentMillis, bool squareButtonPressed);
 		void changeState(uint32_t currentMillis);
 		
 		void calibration_setAngleToServo(uint16_t potentiometerVal);

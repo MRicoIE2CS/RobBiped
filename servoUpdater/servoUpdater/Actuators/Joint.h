@@ -23,7 +23,7 @@ class Joint {
 	
 	double maxAngleAllowed = PI;
 	double minAngleAllowed = -PI;
-	double calibration_offsetAngle = 0;
+	double calibration_offsetAngle = HALF_PI;
 	bool invertDirection = false;
 	
 	double assignedAngle = 0;
