@@ -16,6 +16,8 @@ bool Joint::isUpdateNeeded(){
 }
 
 bool Joint::setAngleTarget_rad(double _ang){
+	if (invertDirection) _ang = - _ang;
+	
 	if (_ang < -PI || _ang > PI
 	|| (_ang < minAngleAllowed || _ang > maxAngleAllowed)
 	) {
@@ -27,7 +29,9 @@ bool Joint::setAngleTarget_rad(double _ang){
 		//assignedAngle = _ang + calibration_offsetAngle /*+ HALF_PI*/;		// HALF_PI offset due to difference between joint's coordinate frame and servo's
 		assignedAngle = _ang ;		
 		
+		
 		servo.setTargetAngle(assignedAngle + calibration_offsetAngle);
+		
 		return false;
 	}
 }

@@ -52,9 +52,12 @@ void Executer::execution(){
 			readingAngle_0 = (double)(pot1Val - 1000) / (double)2000 * PI;
 		}
 		double nextAngle_0 = readingAngle_0 - HALF_PI;
-		
+		nextAngle_0 = 0.0;
 		//nextAngle_0 = HALF_PI + 3*HALF_PI/4 * signalGenerator_0.generateTrajectory();
 		servoUpdater.setAngleToServo(0,nextAngle_0);
+		servoUpdater.setAngleToServo(1,nextAngle_0);
+		servoUpdater.setAngleToServo(2,nextAngle_0);
+		servoUpdater.setAngleToServo(3,nextAngle_0);
 	}
 	
 	// OUTPUTS:
