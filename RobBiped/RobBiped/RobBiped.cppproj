@@ -1,0 +1,619 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>7.0</ProjectVersion>
+    <ToolchainName>com.Atmel.ARMGCC.CPP</ToolchainName>
+    <ProjectGuid>{6fcc8c11-094c-4e8d-821d-90d9df242911}</ProjectGuid>
+    <avrdevice>ATSAM3X8E</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>CPP</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>servoUpdater</AssemblyName>
+    <Name>RobBiped</Name>
+    <RootNamespace>servoUpdater</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <CacheFlash>true</CacheFlash>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
+    <UncachedRange />
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
+    <BootSegment>2</BootSegment>
+    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <AsfFrameworkConfig>
+      <framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.42.0" />
+        </dependencies>
+      </framework-data>
+    </AsfFrameworkConfig>
+    <preserveEEPROM>true</preserveEEPROM>
+    <ResetRule>0</ResetRule>
+    <EraseKey />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <ArmGccCpp>
+  <armgcc.common.outputfiles.hex>True</armgcc.common.outputfiles.hex>
+  <armgcc.common.outputfiles.lss>True</armgcc.common.outputfiles.lss>
+  <armgcc.common.outputfiles.eep>True</armgcc.common.outputfiles.eep>
+  <armgcc.common.outputfiles.bin>True</armgcc.common.outputfiles.bin>
+  <armgcc.common.outputfiles.srec>True</armgcc.common.outputfiles.srec>
+  <armgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>__ESP32_ESp32__</Value>
+      <Value>__ESP32_ESP32__</Value>
+      <Value>ARDUINO=108013</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=240000000L</Value>
+      <Value>printf=iprintf</Value>
+      <Value>__ESP32__</Value>
+      <Value>ESP_PLATFORM</Value>
+      <Value>HAVE_CONFIG_H</Value>
+      <Value>GCC_NOT_5_2_0=0</Value>
+      <Value>WITH_POSIX</Value>
+      <Value>ARDUINO_ESP32_DEV</Value>
+      <Value>ARDUINO_ARCH_ESP32</Value>
+      <Value>CORE_DEBUG_LEVEL=0</Value>
+    </ListValues>
+  </armgcc.compiler.symbols.DefSymbols>
+  <armgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>../../../RobBiped</Value>
+      <Value>C:/Users/MRICO/Documents/Arduino/libraries/Adafruit_PWM_Servo_Driver_Library</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries</Value>
+      <Value>C:/Users/MRICO/Documents/Arduino/libraries</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/apps</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/libb64</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/variants/doitESP32devkitV1</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/config</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_trace</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_update</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/asio</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bootloader_support</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bt</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/coap</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/console</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/driver</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/efuse</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-tls</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_adc_cal</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_event</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_client</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_server</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_ota</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_server</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_ringbuf</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_websocket_client</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/espcoredump</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ethernet</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/expat</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fatfs</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freemodbus</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freertos</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/heap</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/idf_test</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/jsmn</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/json</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/libsodium</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/log</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/lwip</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mbedtls</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mdns</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/micro-ecc</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mqtt</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/newlib</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nghttp</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nvs_flash</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/openssl</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protobuf-c</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protocomm</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/pthread</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/sdmmc</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/smartconfig_ack</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/soc</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spi_flash</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spiffs</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcp_transport</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcpip_adapter</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ulp</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/unity</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/vfs</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wear_levelling</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wifi_provisioning</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wpa_supplicant</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/xtensa-debug-module</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-face</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32-camera</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fb_gfx</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32</Value>
+    </ListValues>
+  </armgcc.compiler.directories.IncludePaths>
+  <armgcc.compiler.optimization.level>Optimize debugging experience (-Og)</armgcc.compiler.optimization.level>
+  <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcc.compiler.optimization.DebugLevel>Maximum (-g3)</armgcc.compiler.optimization.DebugLevel>
+  <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
+  <armgcccpp.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>__ESP32_ESp32__</Value>
+      <Value>__ESP32_ESP32__</Value>
+      <Value>ARDUINO=108013</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=240000000L</Value>
+      <Value>printf=iprintf</Value>
+      <Value>__ESP32__</Value>
+      <Value>ESP_PLATFORM</Value>
+      <Value>HAVE_CONFIG_H</Value>
+      <Value>GCC_NOT_5_2_0=0</Value>
+      <Value>WITH_POSIX</Value>
+      <Value>ARDUINO_ESP32_DEV</Value>
+      <Value>ARDUINO_ARCH_ESP32</Value>
+      <Value>CORE_DEBUG_LEVEL=0</Value>
+    </ListValues>
+  </armgcccpp.compiler.symbols.DefSymbols>
+  <armgcccpp.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>../../../RobBiped</Value>
+      <Value>C:/Users/MRICO/Documents/Arduino/libraries/Adafruit_PWM_Servo_Driver_Library</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries</Value>
+      <Value>C:/Users/MRICO/Documents/Arduino/libraries</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/apps</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/libb64</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/variants/doitESP32devkitV1</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/config</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_trace</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_update</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/asio</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bootloader_support</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bt</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/coap</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/console</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/driver</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/efuse</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-tls</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_adc_cal</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_event</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_client</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_server</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_ota</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_server</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_ringbuf</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_websocket_client</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/espcoredump</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ethernet</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/expat</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fatfs</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freemodbus</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freertos</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/heap</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/idf_test</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/jsmn</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/json</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/libsodium</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/log</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/lwip</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mbedtls</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mdns</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/micro-ecc</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mqtt</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/newlib</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nghttp</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nvs_flash</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/openssl</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protobuf-c</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protocomm</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/pthread</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/sdmmc</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/smartconfig_ack</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/soc</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spi_flash</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spiffs</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcp_transport</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcpip_adapter</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ulp</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/unity</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/vfs</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wear_levelling</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wifi_provisioning</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wpa_supplicant</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/xtensa-debug-module</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-face</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32-camera</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fb_gfx</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32</Value>
+    </ListValues>
+  </armgcccpp.compiler.directories.IncludePaths>
+  <armgcccpp.compiler.optimization.level>Optimize debugging experience (-Og)</armgcccpp.compiler.optimization.level>
+  <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcccpp.compiler.optimization.DebugLevel>Maximum (-g3)</armgcccpp.compiler.optimization.DebugLevel>
+  <armgcccpp.compiler.warnings.AllWarnings>True</armgcccpp.compiler.warnings.AllWarnings>
+  <armgcccpp.linker.libraries.Libraries>
+    <ListValues>
+      <Value>libm</Value>
+    </ListValues>
+  </armgcccpp.linker.libraries.Libraries>
+  <armgcccpp.linker.libraries.LibrarySearchPaths>
+    <ListValues>
+      <Value>%24(ProjectDir)\Device_Startup</Value>
+    </ListValues>
+  </armgcccpp.linker.libraries.LibrarySearchPaths>
+  <armgcccpp.linker.optimization.GarbageCollectUnusedSections>True</armgcccpp.linker.optimization.GarbageCollectUnusedSections>
+  <armgcccpp.linker.miscellaneous.LinkerFlags>-Tsam3x8e_flash.ld</armgcccpp.linker.miscellaneous.LinkerFlags>
+  <armgcccpp.assembler.general.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAM3X_DFP\1.0.50\include</Value>
+    </ListValues>
+  </armgcccpp.assembler.general.IncludePaths>
+  <armgcccpp.assembler.debugging.DebugLevel>Default (-g)</armgcccpp.assembler.debugging.DebugLevel>
+  <armgcccpp.preprocessingassembler.general.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAM3X_DFP\1.0.50\include</Value>
+    </ListValues>
+  </armgcccpp.preprocessingassembler.general.IncludePaths>
+  <armgcccpp.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcccpp.preprocessingassembler.debugging.DebugLevel>
+</ArmGccCpp>
+    </ToolchainSettings>
+    <VMSETTING_IncludePaths>../../../servoUpdater;C:/Program Files (x86)/Arduino/libraries;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries;C:/Users/MRICO/Documents/Arduino/libraries;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/apps;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/libb64;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/variants/doitESP32devkitV1;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/config;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_trace;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_update;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/asio;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bootloader_support;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bt;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/coap;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/console;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/driver;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/efuse;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-tls;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_adc_cal;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_event;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_client;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_server;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_ota;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_server;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_ringbuf;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_websocket_client;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/espcoredump;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ethernet;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/expat;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fatfs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freemodbus;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freertos;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/heap;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/idf_test;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/jsmn;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/json;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/libsodium;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/log;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/lwip;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mbedtls;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mdns;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/micro-ecc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mqtt;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/newlib;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nghttp;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nvs_flash;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/openssl;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protobuf-c;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protocomm;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/pthread;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/sdmmc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/smartconfig_ack;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/soc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spi_flash;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spiffs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcp_transport;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcpip_adapter;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ulp;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/unity;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/vfs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wear_levelling;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wifi_provisioning;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wpa_supplicant;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/xtensa-debug-module;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-face;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32-camera;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fb_gfx;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries/Wire/src;C:/Users/MRICO/Documents/Arduino/libraries/Adafruit_PWM_Servo_Driver_Library;../../../RobBiped;</VMSETTING_IncludePaths>
+    <VisualMicroSettings>
+      <VisualMicroSettings>
+        <ValidatedAS7>1</ValidatedAS7>
+        <arduino.upload.port>COM8</arduino.upload.port>
+      </VisualMicroSettings>
+    </VisualMicroSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <ArmGccCpp>
+  <armgcc.common.outputfiles.hex>True</armgcc.common.outputfiles.hex>
+  <armgcc.common.outputfiles.lss>True</armgcc.common.outputfiles.lss>
+  <armgcc.common.outputfiles.eep>True</armgcc.common.outputfiles.eep>
+  <armgcc.common.outputfiles.bin>True</armgcc.common.outputfiles.bin>
+  <armgcc.common.outputfiles.srec>True</armgcc.common.outputfiles.srec>
+  <armgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>__ESP32_ESp32__</Value>
+      <Value>__ESP32_ESP32__</Value>
+      <Value>ARDUINO=108013</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=240000000L</Value>
+      <Value>printf=iprintf</Value>
+      <Value>__ESP32__</Value>
+      <Value>ESP_PLATFORM</Value>
+      <Value>HAVE_CONFIG_H</Value>
+      <Value>GCC_NOT_5_2_0=0</Value>
+      <Value>WITH_POSIX</Value>
+      <Value>ARDUINO_ESP32_DEV</Value>
+      <Value>ARDUINO_ARCH_ESP32</Value>
+      <Value>CORE_DEBUG_LEVEL=0</Value>
+    </ListValues>
+  </armgcc.compiler.symbols.DefSymbols>
+  <armgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>../../../RobBiped</Value>
+      <Value>C:/Users/MRICO/Documents/Arduino/libraries/Adafruit_PWM_Servo_Driver_Library</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries</Value>
+      <Value>C:/Users/MRICO/Documents/Arduino/libraries</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/apps</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/libb64</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/variants/doitESP32devkitV1</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/config</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_trace</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_update</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/asio</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bootloader_support</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bt</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/coap</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/console</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/driver</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/efuse</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-tls</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_adc_cal</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_event</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_client</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_server</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_ota</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_server</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_ringbuf</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_websocket_client</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/espcoredump</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ethernet</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/expat</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fatfs</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freemodbus</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freertos</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/heap</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/idf_test</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/jsmn</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/json</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/libsodium</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/log</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/lwip</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mbedtls</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mdns</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/micro-ecc</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mqtt</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/newlib</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nghttp</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nvs_flash</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/openssl</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protobuf-c</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protocomm</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/pthread</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/sdmmc</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/smartconfig_ack</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/soc</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spi_flash</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spiffs</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcp_transport</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcpip_adapter</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ulp</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/unity</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/vfs</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wear_levelling</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wifi_provisioning</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wpa_supplicant</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/xtensa-debug-module</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-face</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32-camera</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fb_gfx</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32</Value>
+    </ListValues>
+  </armgcc.compiler.directories.IncludePaths>
+  <armgcc.compiler.optimization.level>Optimize debugging experience (-Og)</armgcc.compiler.optimization.level>
+  <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcc.compiler.optimization.DebugLevel>Maximum (-g3)</armgcc.compiler.optimization.DebugLevel>
+  <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
+  <armgcccpp.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>__ESP32_ESp32__</Value>
+      <Value>__ESP32_ESP32__</Value>
+      <Value>ARDUINO=108013</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=240000000L</Value>
+      <Value>printf=iprintf</Value>
+      <Value>__ESP32__</Value>
+      <Value>ESP_PLATFORM</Value>
+      <Value>HAVE_CONFIG_H</Value>
+      <Value>GCC_NOT_5_2_0=0</Value>
+      <Value>WITH_POSIX</Value>
+      <Value>ARDUINO_ESP32_DEV</Value>
+      <Value>ARDUINO_ARCH_ESP32</Value>
+      <Value>CORE_DEBUG_LEVEL=0</Value>
+    </ListValues>
+  </armgcccpp.compiler.symbols.DefSymbols>
+  <armgcccpp.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>../../../RobBiped</Value>
+      <Value>C:/Users/MRICO/Documents/Arduino/libraries/Adafruit_PWM_Servo_Driver_Library</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries/Wire/src</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries</Value>
+      <Value>C:/Users/MRICO/Documents/Arduino/libraries</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/apps</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/libb64</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/variants/doitESP32devkitV1</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/config</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_trace</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_update</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/asio</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bootloader_support</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bt</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/coap</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/console</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/driver</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/efuse</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-tls</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_adc_cal</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_event</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_client</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_server</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_ota</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_server</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_ringbuf</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_websocket_client</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/espcoredump</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ethernet</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/expat</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fatfs</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freemodbus</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freertos</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/heap</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/idf_test</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/jsmn</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/json</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/libsodium</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/log</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/lwip</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mbedtls</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mdns</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/micro-ecc</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mqtt</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/newlib</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nghttp</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nvs_flash</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/openssl</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protobuf-c</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protocomm</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/pthread</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/sdmmc</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/smartconfig_ack</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/soc</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spi_flash</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spiffs</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcp_transport</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcpip_adapter</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ulp</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/unity</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/vfs</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wear_levelling</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wifi_provisioning</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wpa_supplicant</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/xtensa-debug-module</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-face</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32-camera</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fb_gfx</Value>
+      <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32</Value>
+    </ListValues>
+  </armgcccpp.compiler.directories.IncludePaths>
+  <armgcccpp.compiler.optimization.level>Optimize debugging experience (-Og)</armgcccpp.compiler.optimization.level>
+  <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcccpp.compiler.optimization.DebugLevel>Maximum (-g3)</armgcccpp.compiler.optimization.DebugLevel>
+  <armgcccpp.compiler.warnings.AllWarnings>True</armgcccpp.compiler.warnings.AllWarnings>
+  <armgcccpp.linker.libraries.Libraries>
+    <ListValues>
+      <Value>libm</Value>
+    </ListValues>
+  </armgcccpp.linker.libraries.Libraries>
+  <armgcccpp.linker.libraries.LibrarySearchPaths>
+    <ListValues>
+      <Value>%24(ProjectDir)\Device_Startup</Value>
+    </ListValues>
+  </armgcccpp.linker.libraries.LibrarySearchPaths>
+  <armgcccpp.linker.optimization.GarbageCollectUnusedSections>True</armgcccpp.linker.optimization.GarbageCollectUnusedSections>
+  <armgcccpp.linker.miscellaneous.LinkerFlags>-Tsam3x8e_flash.ld</armgcccpp.linker.miscellaneous.LinkerFlags>
+  <armgcccpp.assembler.general.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAM3X_DFP\1.0.50\include</Value>
+    </ListValues>
+  </armgcccpp.assembler.general.IncludePaths>
+  <armgcccpp.assembler.debugging.DebugLevel>Default (-g)</armgcccpp.assembler.debugging.DebugLevel>
+  <armgcccpp.preprocessingassembler.general.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+      <Value>%24(PackRepoDir)\atmel\SAM3X_DFP\1.0.50\include</Value>
+    </ListValues>
+  </armgcccpp.preprocessingassembler.general.IncludePaths>
+  <armgcccpp.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcccpp.preprocessingassembler.debugging.DebugLevel>
+</ArmGccCpp>
+    </ToolchainSettings>
+    <VMSETTING_IncludePaths>../../../servoUpdater;C:/Program Files (x86)/Arduino/libraries;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries;C:/Users/MRICO/Documents/Arduino/libraries;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/apps;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/libb64;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/variants/doitESP32devkitV1;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/config;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_trace;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_update;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/asio;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bootloader_support;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bt;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/coap;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/console;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/driver;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/efuse;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-tls;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_adc_cal;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_event;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_client;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_server;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_ota;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_server;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_ringbuf;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_websocket_client;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/espcoredump;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ethernet;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/expat;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fatfs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freemodbus;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freertos;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/heap;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/idf_test;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/jsmn;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/json;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/libsodium;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/log;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/lwip;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mbedtls;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mdns;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/micro-ecc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mqtt;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/newlib;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nghttp;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nvs_flash;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/openssl;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protobuf-c;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protocomm;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/pthread;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/sdmmc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/smartconfig_ack;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/soc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spi_flash;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spiffs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcp_transport;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcpip_adapter;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ulp;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/unity;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/vfs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wear_levelling;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wifi_provisioning;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wpa_supplicant;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/xtensa-debug-module;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-face;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32-camera;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fb_gfx;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries/Wire/src;C:/Users/MRICO/Documents/Arduino/libraries/Adafruit_PWM_Servo_Driver_Library;../../../RobBiped;</VMSETTING_IncludePaths>
+    <VisualMicroSettings>
+      <VisualMicroSettings>
+        <ValidatedAS7>1</ValidatedAS7>
+        <arduino.upload.port>COM8</arduino.upload.port>
+      </VisualMicroSettings>
+    </VisualMicroSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Actuators\Joint.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Actuators\Joint.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Actuators\JointCalibration.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Actuators\MG996R.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Actuators\MG996R.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Actuators\JointsConfig.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Actuators\JointsManager.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Actuators\JointsManager.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Main\Configs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Main\Executer.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Main\Executer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Main\Setups.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Main\I_PeriodicTask.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Main\I_PeriodicTask.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="RobBiped.ino">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UserInput\Button.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UserInput\Button.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UserInput\Potentiometer.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UserInput\Potentiometer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UserInput\UserInput.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UserInput\UserInput.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\ExponentialFilter.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\ExponentialFilter.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\SignalGenerator.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\SignalGenerator.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\UnitsConverter.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\UnitsConverter.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="__vm\.RobBiped.vsarduino.h">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Actuators\" />
+    <Folder Include="Main" />
+    <Folder Include="Units" />
+    <Folder Include="UserInput" />
+    <Folder Include="Utils" />
+    <Folder Include="__vm\" />
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>

@@ -1,0 +1,21 @@
+/*
+ * servoUpdater.cpp
+ *
+ * Created: 28/01/2022 20:02:13
+ * Author : MRICO
+ */ 
+
+
+#include "sam.h"
+
+
+int main(void)
+{
+    /* Initialize the SAM system */
+    SystemInit();
+
+    /* Replace with your application code */
+    while (1) 
+    {
+    }
+}
