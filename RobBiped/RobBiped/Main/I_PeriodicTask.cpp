@@ -24,9 +24,9 @@ bool I_PeriodicTask::getExecutionFlag(){
 	
 	switch (timerType) {
 		case execType::inMillis:
-			currentMillis = millis();
-			if (abs(currentMillis - lastTimeExecuted) >= executionPeriod) {
-				lastTimeExecuted = currentMillis;
+			currentMicros = millis();
+			if (abs(currentMicros - lastTimeExecuted) >= executionPeriod) {
+				lastTimeExecuted = currentMicros;
 				return_val = true;
 			}
 			else return_val = false;

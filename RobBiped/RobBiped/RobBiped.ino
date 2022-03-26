@@ -1,5 +1,4 @@
 
-
 /*
  * RobBiped.ino
  *
@@ -15,8 +14,8 @@
 
 #define SCKpin 18
 #define DOpin 19
-HX711 scale(DOpin, SCKpin);
-float calibration_factor = 2230; // this calibration factor is adjusted according to my load cell
+HX711 hx711(DOpin, SCKpin);
+float calibration_factor = 1;//2230; // this calibration factor is adjusted according to my load cell
 float units;
 float ounces;
 
@@ -30,23 +29,21 @@ void setup()
 	
 	Serial.println("Initial delay...");
 	delay(3000);
-	
-	Serial.println("HX711 calibration sketch");
-	Serial.println("Remove all weight from scale");
-	Serial.println("After readings begin, place known weight on scale");
-	Serial.println("Press + or a to increase calibration factor");
-	Serial.println("Press - or z to decrease calibration factor");
+	Serial.println("3");
+	delay(1000);
+	Serial.println("2");
+	delay(1000);
+	Serial.println("1");
+	delay(1000);
 
-	scale.set_scale();
-	scale.tare();  //Reset the scale to 0
-
-	long zero_factor = scale.read_average(); //Get a baseline reading
-	Serial.print("Zero factor: "); //This can be used to remove the need to tare the scale. Useful in permanent scale projects.
-	Serial.println(zero_factor);
-	
-	
+	//hx711.set_scale(calibration_factor);
+	hx711.setActiveChannels(false,true,true);
+	hx711.power_up();
 
 }
+
+uint32_t currentMicros;
+uint32_t elapsedMicros;
 
 void loop()
 {
@@ -57,28 +54,56 @@ void loop()
 	//uint32_t finalMicros = micros();
 	//Serial.println("cycleTime: " + (String)(finalMicros - initMicros));
 	
-	scale.set_scale(calibration_factor); //Adjust to this calibration factor
-
-	Serial.print("Reading: ");
-	units = scale.get_units(), 10;
-	if (units < 0)
-	{
-		units = 0.00;
-	}
-	ounces = units * 0.035274;
-	Serial.print(units);
-	Serial.print(" grams");
-	Serial.print(" calibration_factor: ");
-	Serial.print(calibration_factor);
-	Serial.println();
+	// wait for the chip to become ready
+	if (hx711.is_ready()) {
+		
+		currentMicros = micros();
+		hx711.update();
+		elapsedMicros = micros() - currentMicros;
+		
+		long Ax128ChannelValue = hx711.getAx128ChannelValue();
+		long Ax64ChannelValue = hx711.getAx64ChannelValue();
+		long Bx32ChannelValue = hx711.getBx32ChannelValue();
+		
+		unsigned long timeBetweenReadings = hx711.getLastElapsedTimeBetweenReadings();
+		
+		Serial.print("Reading Ax128: ");
+		Serial.print(Ax128ChannelValue);
+		Serial.print("; Ax64: ");
+		Serial.print(Ax64ChannelValue);
+		Serial.print("; Bx32: ");
+		Serial.print(Bx32ChannelValue);
+		Serial.print("; calibration_factor: ");
+		Serial.print(calibration_factor);
+		Serial.print("; readingTime (us): ");
+		Serial.print(elapsedMicros);
+		Serial.print("; Time between readings (us): ");
+		Serial.print(timeBetweenReadings);
+		Serial.println();
+		
+		};
+	
+	
 
 	if(Serial.available())
 	{
 		char temp = Serial.read();
-		if(temp == '+' || temp == 'a')
-		calibration_factor += 1;
-		else if(temp == '-' || temp == 'z')
-		calibration_factor -= 1;
+		if(temp == '+')
+		{
+			calibration_factor += 1;
+			hx711.set_scale(calibration_factor); //Adjust to this calibration factor
+		}
+		else if(temp == '-')
+		{
+			calibration_factor -= 1;
+			hx711.set_scale(calibration_factor); //Adjust to this calibration factor
+		}
+		else if(temp == 'z')
+		hx711.tare_Ax128();
+		else if(temp == 'x')
+		hx711.tare_Ax64();
+		else if(temp == 'c')
+		hx711.tare_Bx32();
 	}
 	
 }

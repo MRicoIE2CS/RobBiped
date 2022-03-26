@@ -617,6 +617,18 @@
     <Compile Include="RobBiped.ino">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Sensors\ForceSensors\ForceSensors.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\ForceSensors\ForceSensors.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\ForceSensors\HX711twoForceSensors.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\ForceSensors\HX711twoForceSensors.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="UserInput\Button.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -660,6 +672,8 @@
   <ItemGroup>
     <Folder Include="Actuators\" />
     <Folder Include="Main" />
+    <Folder Include="Sensors" />
+    <Folder Include="Sensors\ForceSensors" />
     <Folder Include="Units" />
     <Folder Include="UserInput" />
     <Folder Include="Utils" />
