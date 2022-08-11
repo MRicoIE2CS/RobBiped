@@ -1,4 +1,5 @@
 
+
 /*
  * RobBiped.ino
  *
@@ -10,12 +11,13 @@
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 
-#include "HX711.h"
+//#include "HX711.h"
+#include "Sensors/HX711/HX711.h"
 
 #define SCKpin 18
 #define DOpin 19
 HX711 hx711(DOpin, SCKpin);
-float calibration_factor = 1;//2230; // this calibration factor is adjusted according to my load cell
+float calibration_factor = 1;
 float units;
 float ounces;
 
@@ -26,6 +28,7 @@ void setup()
 	Serial.begin(500000);
 	
 	//executer.init();
+	while(!(Serial.available())){};
 	
 	Serial.println("Initial delay...");
 	delay(3000);
