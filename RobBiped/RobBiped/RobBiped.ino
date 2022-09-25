@@ -28,7 +28,7 @@ void setup()
 	Serial.begin(500000);
 	
 	//executer.init();
-	while(!(Serial.available())){};
+	//while(!(Serial.available())){};
 	
 	Serial.println("Initial delay...");
 	delay(3000);
