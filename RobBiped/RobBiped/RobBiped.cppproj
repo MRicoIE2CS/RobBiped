@@ -627,6 +627,12 @@
     <Compile Include="Sensors\HX711\HX711.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Sensors\HX711\multiple_HX711.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\HX711\multiple_HX711.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="UserInput\Button.cpp">
       <SubType>compile</SubType>
     </Compile>

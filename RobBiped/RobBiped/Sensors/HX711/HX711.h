@@ -70,7 +70,7 @@ class HX711
 	
 	// NEW: doesn't wait for the chip to be ready, returns a reading, and sets channel for next one
 	CombinedOutputData readAndConmuteNextChannel();
-	Channel conmuteNextChannel(bool forceNextChannel = false, Channel _channel = Channel::Ax128);
+	Channel conmuteNextChannel(bool forceNextChannel = false, Channel _channel = Channel::Ax64);
 	byte setChannelSelectionBits(Channel _nextChannel, bool forceNextSelection = false, short _sel =1);
 	
 	// NEW: Get each channel's value
