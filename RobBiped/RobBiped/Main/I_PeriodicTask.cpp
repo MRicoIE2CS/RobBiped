@@ -4,29 +4,40 @@
 
 #include "I_PeriodicTask.h"
 
-void I_PeriodicTask::setExecutionPeriod(execType _timerType, unsigned int _period){
-	
+void I_PeriodicTask::setExecutionPeriod(execType _timerType, unsigned int _period)
+{
 	timerType = _timerType;
 	executionPeriod = _period;
-	lastTimeExecuted = millis();
+	switch (timerType) {
+		case execType::inMillis:
+			lastTimeExecuted = millis();
+		break;
+		
+		case execType::inMicros:
+			lastTimeExecuted = micros();
+		break;
+	}
 }
 
-unsigned int I_PeriodicTask::getExecutionPeriod(){
+unsigned int I_PeriodicTask::getExecutionPeriod()
+{
 	return executionPeriod;
 }
 
-unsigned long I_PeriodicTask::getLastMillisExecuted(){
+unsigned long I_PeriodicTask::getLastMillisExecuted()
+{
 	return lastTimeExecuted;
 }
 
-bool I_PeriodicTask::getExecutionFlag(){
+bool I_PeriodicTask::getExecutionFlag()
+{
 	bool return_val;
 	
 	switch (timerType) {
 		case execType::inMillis:
-			currentMicros = millis();
-			if (abs(currentMicros - lastTimeExecuted) >= executionPeriod) {
-				lastTimeExecuted = currentMicros;
+			currentMillis = millis();
+			if (abs(currentMillis - lastTimeExecuted) >= executionPeriod) {
+				lastTimeExecuted = currentMillis;
 				return_val = true;
 			}
 			else return_val = false;

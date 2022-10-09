@@ -75,7 +75,7 @@ private:
 	void readAndCommuteNextChannel();
 	
 	uint16_t historyLength = 10;
-	void recordNewReading(uint16_t hx711_idx, Channel channel, long _reading);
+	void historyAppend(uint16_t hx711_idx, Channel channel, long _reading);
 
  public:
 	

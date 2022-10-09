@@ -7,8 +7,8 @@
 
 #include "Executer.h"
 
-void Executer::init(){
-	
+void Executer::init()
+{
 	setup();
 	
 	//______TASKS CONFIGURATION_____//
@@ -23,12 +23,10 @@ void Executer::init(){
 	servoUpdater.init();
 	
 	// END TASKS CONFIGURATION
-	
-	
 }
 
-void Executer::execution(){
-	
+void Executer::execution()
+{
 	// INPUTS:
 	
 	if (userInput.getExecutionFlag()) userInput.update();
@@ -75,5 +73,4 @@ void Executer::execution(){
 	// OUTPUTS:
 	
 	if (servoUpdater.getExecutionFlag()) servoUpdater.update(userInput);
-	
 }

@@ -1,7 +1,8 @@
 //#include <Arduino.h>
 #include "multiple_HX711.h"
 
-Multiple_HX711::Multiple_HX711(byte _DINs[], byte pd_sck) {
+Multiple_HX711::Multiple_HX711(byte _DINs[], byte pd_sck)
+{
 	PD_SCK 	= pd_sck;
 
 	pinMode(PD_SCK, OUTPUT);
@@ -23,11 +24,13 @@ Multiple_HX711::Multiple_HX711(byte _DINs[], byte pd_sck) {
 	}
 }
 
-Multiple_HX711::~Multiple_HX711() {
+Multiple_HX711::~Multiple_HX711()
+{
 
 }
 
-bool Multiple_HX711::are_xh711_ready() {
+bool Multiple_HX711::are_xh711_ready()
+{
 	bool are_ready = true;
 	for (uint8_t _idx = 0; _idx < hx711_number; _idx++)
 	{
@@ -38,7 +41,8 @@ bool Multiple_HX711::are_xh711_ready() {
 	return are_ready;
 }
 
-void Multiple_HX711::update(){
+void Multiple_HX711::update()
+{
 	if (are_xh711_ready())
 	{
 		readAndCommuteNextChannel();
@@ -52,7 +56,8 @@ void Multiple_HX711::setActiveChannels(bool _Ax128, bool _Ax64, bool _Bx32)
 	activeChannels.Bx32 = _Bx32;
 }
 
-Multiple_HX711::Channel Multiple_HX711::commuteNextChannel(bool forceNextChannel, Channel _channel) {
+Multiple_HX711::Channel Multiple_HX711::commuteNextChannel(bool forceNextChannel, Channel _channel)
+{
 	Channel nextChannel;
 	
 	if (forceNextChannel) {nextChannel = _channel;}
@@ -80,7 +85,8 @@ Multiple_HX711::Channel Multiple_HX711::commuteNextChannel(bool forceNextChannel
 	return nextChannel;
 }
 
-byte Multiple_HX711::setChannelSelectionBits(Channel _nextChannel, bool forceNextSelection, short _sel) {
+byte Multiple_HX711::setChannelSelectionBits(Channel _nextChannel, bool forceNextSelection, short _sel)
+{
 	byte selBits;
 	
 	if (forceNextSelection) {selBits = _sel;}
@@ -111,7 +117,8 @@ void Multiple_HX711::get_DIN_pins_array(byte *_array)
 	}
 }
 
-void Multiple_HX711::read_shiftIn(uint8_t clockPin, byte *DIN_array, bool _readings[hx711_number][8]) {
+void Multiple_HX711::read_shiftIn(uint8_t clockPin, byte *DIN_array, bool _readings[hx711_number][8])
+{
 	uint8_t value = 0;
 	uint8_t i;
 	
@@ -129,7 +136,8 @@ void Multiple_HX711::read_shiftIn(uint8_t clockPin, byte *DIN_array, bool _readi
 	
 }
 
-void Multiple_HX711::construct_read(uint8_t idx_byte_sel, uint8_t clockPin, uint8_t bitOrder, byte _arr_data[hx711_number][3], bool _readings[hx711_number][8]) {
+void Multiple_HX711::construct_read(uint8_t idx_byte_sel, uint8_t clockPin, uint8_t bitOrder, byte _arr_data[hx711_number][3], bool _readings[hx711_number][8])
+{
 	uint8_t value = 0;
 	uint8_t i;
 
@@ -235,15 +243,15 @@ void Multiple_HX711::readAndCommuteNextChannel()
 		{
 			case (Channel::Ax128):
 			_hx711->storedReadings.ReadingAx128 = static_cast<long>(value);
-			recordNewReading(_idx, Channel::Ax128, static_cast<long>(value));
+			historyAppend(_idx, Channel::Ax128, static_cast<long>(value));
 			break;
 			case (Channel::Ax64):
 			_hx711->storedReadings.ReadingAx64 = static_cast<long>(value);
-			recordNewReading(_idx, Channel::Ax64, static_cast<long>(value));
+			historyAppend(_idx, Channel::Ax64, static_cast<long>(value));
 			break;
 			case (Channel::Bx32):
 			_hx711->storedReadings.ReadingBx32 = static_cast<long>(value);
-			recordNewReading(_idx, Channel::Bx32, static_cast<long>(value));
+			historyAppend(_idx, Channel::Bx32, static_cast<long>(value));
 			break;
 		}
 	}
@@ -253,7 +261,7 @@ void Multiple_HX711::readAndCommuteNextChannel()
 	lastReadingMicros = currentMicros;
 }
 
-void Multiple_HX711::recordNewReading(uint16_t hx711_idx, Channel channel, long _reading)
+void Multiple_HX711::historyAppend(uint16_t hx711_idx, Channel channel, long _reading)
 {
 	Single_HX711 *_hx711 = &v_HX711[hx711_idx];
 	switch (channel)
@@ -282,22 +290,26 @@ void Multiple_HX711::recordNewReading(uint16_t hx711_idx, Channel channel, long 
 	}
 }
 
-long Multiple_HX711::getAx128ChannelValue(uint16_t hx711_idx){
+long Multiple_HX711::getAx128ChannelValue(uint16_t hx711_idx)
+{
 	Single_HX711 *_hx711 = &v_HX711[hx711_idx];
 	return _hx711->storedReadings.ReadingAx128 - _hx711->offsetPerChannel.Ax128;
 }
 
-long Multiple_HX711::getAx64ChannelValue(uint16_t hx711_idx){
+long Multiple_HX711::getAx64ChannelValue(uint16_t hx711_idx)
+{
 	Single_HX711 *_hx711 = &v_HX711[hx711_idx];
 	return _hx711->storedReadings.ReadingAx64 - _hx711->offsetPerChannel.Ax64;
 }
 
-long Multiple_HX711::getBx32ChannelValue(uint16_t hx711_idx){
+long Multiple_HX711::getBx32ChannelValue(uint16_t hx711_idx)
+{
 	Single_HX711 *_hx711 = &v_HX711[hx711_idx];
 	return _hx711->storedReadings.ReadingBx32 - _hx711->offsetPerChannel.Bx32;
 }
 
-void Multiple_HX711::tare_Ax128(uint16_t hx711_idx){
+void Multiple_HX711::tare_Ax128(uint16_t hx711_idx)
+{
 	Single_HX711 *_hx711 = &v_HX711[hx711_idx];
 	long _sum = 0;
 	long sizeofvector = _hx711->historyStoredReadings.v_Ax128.size();
@@ -315,12 +327,14 @@ void Multiple_HX711::tare_Ax128(uint16_t hx711_idx){
 	set_offset_Ax128(hx711_idx, _average);
 }
 
-void Multiple_HX711::set_offset_Ax128(uint16_t hx711_idx, double offset){
+void Multiple_HX711::set_offset_Ax128(uint16_t hx711_idx, double offset)
+{
 	Single_HX711 *_hx711 = &v_HX711[hx711_idx];
 	_hx711->offsetPerChannel.Ax128 = offset;
 }
 
-void Multiple_HX711::tare_Ax64(uint16_t hx711_idx){
+void Multiple_HX711::tare_Ax64(uint16_t hx711_idx)
+{
 	Single_HX711 *_hx711 = &v_HX711[hx711_idx];
 	long _sum = 0;
 	short sizeofvector = _hx711->historyStoredReadings.v_Ax64.size();
@@ -336,12 +350,14 @@ void Multiple_HX711::tare_Ax64(uint16_t hx711_idx){
 	set_offset_Ax64(hx711_idx, _average);
 }
 
-void Multiple_HX711::set_offset_Ax64(uint16_t hx711_idx, double offset){
+void Multiple_HX711::set_offset_Ax64(uint16_t hx711_idx, double offset)
+{
 	Single_HX711 *_hx711 = &v_HX711[hx711_idx];
 	_hx711->offsetPerChannel.Ax64 = offset;
 }
 
-void Multiple_HX711::tare_Bx32(uint16_t hx711_idx){
+void Multiple_HX711::tare_Bx32(uint16_t hx711_idx)
+{
 	Single_HX711 *_hx711 = &v_HX711[hx711_idx];
 	long _sum = 0;
 	long sizeofvector = _hx711->historyStoredReadings.v_Bx32.size();
@@ -358,20 +374,24 @@ void Multiple_HX711::tare_Bx32(uint16_t hx711_idx){
 	set_offset_Bx32(hx711_idx, _average);
 }
 
-void Multiple_HX711::set_offset_Bx32(uint16_t hx711_idx, double offset){
+void Multiple_HX711::set_offset_Bx32(uint16_t hx711_idx, double offset)
+{
 	Single_HX711 *_hx711 = &v_HX711[hx711_idx];
 	_hx711->offsetPerChannel.Bx32 = offset;
 }
 
-unsigned long Multiple_HX711::getLastElapsedTimeBetweenReadings(){
+unsigned long Multiple_HX711::getLastElapsedTimeBetweenReadings()
+{
 	return lastElapsedMicros;
 }
 
-void Multiple_HX711::power_down() {
+void Multiple_HX711::power_down()
+{
 	digitalWrite(PD_SCK, LOW);
 	digitalWrite(PD_SCK, HIGH);
 }
 
-void Multiple_HX711::power_up() {
+void Multiple_HX711::power_up()
+{
 	digitalWrite(PD_SCK, LOW);
 }

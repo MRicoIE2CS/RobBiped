@@ -24,7 +24,14 @@ class ExpFilter {
 		
 		double setExpConstant(double k);
 		double filter(double rawValue);
+		double filter(uint8_t rawValue);
+		double filter(int8_t rawValue);
 		double filter(uint16_t rawValue);
+		double filter(int16_t rawValue);
+		double filter(uint32_t rawValue);
+		double filter(int32_t rawValue);
+		double filter(uint64_t rawValue);
+		double filter(int64_t rawValue);
 	};
 
 
