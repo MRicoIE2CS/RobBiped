@@ -13,8 +13,6 @@
 #else
 #include "WProgram.h"
 #endif
-
-// TODO: Config objects in this file+
 	
 struct Configs 
 {

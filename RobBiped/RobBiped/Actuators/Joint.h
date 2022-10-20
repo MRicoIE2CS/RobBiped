@@ -11,9 +11,6 @@
 
 #include "MG996R.h"
 
-//TODO: Joint class includes MG996R servo, all public methods for assigning angle values, calibrating joints...
-// MG996R includes the transformation of the angle to PWM pulses 
-
 
 class Joint {
 	
