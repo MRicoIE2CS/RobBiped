@@ -14,6 +14,8 @@
 #include "Potentiometer.h"
 #include "Button.h"
 
+using namespace Configuration;
+
 class UserInput : public I_PeriodicTask {
 	
 	private:
@@ -26,9 +28,9 @@ class UserInput : public I_PeriodicTask {
 		Button thinButton2;
 		Button squareButton;
 		
-		Configs::GPIO_defs *gpio;
+		Configs::UserInputPins *gpio;
 		
-		void assocGPIO(Configs::GPIO_defs &_gpio);
+		void assocGPIO(Configs::UserInputPins &_gpio);
 		void configuration();
 		
 		void update();

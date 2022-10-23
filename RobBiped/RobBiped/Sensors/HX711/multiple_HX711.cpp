@@ -1,7 +1,24 @@
-//#include <Arduino.h>
+
+/*
+ * multiple_HX711.cpp
+ *
+ * Created: 20/03/2022
+ * Author: MRICO
+ */ 
+
 #include "multiple_HX711.h"
 
-Multiple_HX711::Multiple_HX711(byte _DINs[], byte pd_sck)
+Multiple_HX711::Multiple_HX711()
+{
+	_hx711_number = hx711_number;
+}
+
+Multiple_HX711::~Multiple_HX711()
+{
+
+}
+
+void Multiple_HX711::configure(byte _DINs[], byte pd_sck)
 {
 	PD_SCK 	= pd_sck;
 
@@ -12,7 +29,7 @@ Multiple_HX711::Multiple_HX711(byte _DINs[], byte pd_sck)
 	activeChannels.Bx32 = true;
 	ChSelBits = 3;
 	
-	for (uint8_t _idx = 0; _idx < hx711_number; _idx++)
+	for (uint8_t _idx = 0; _idx < _hx711_number; _idx++)
 	{
 		Single_HX711 hx711 = {0};
 		hx711.DIN = _DINs[_idx];
@@ -24,15 +41,10 @@ Multiple_HX711::Multiple_HX711(byte _DINs[], byte pd_sck)
 	}
 }
 
-Multiple_HX711::~Multiple_HX711()
-{
-
-}
-
 bool Multiple_HX711::are_xh711_ready()
 {
 	bool are_ready = true;
-	for (uint8_t _idx = 0; _idx < hx711_number; _idx++)
+	for (uint8_t _idx = 0; _idx < _hx711_number; _idx++)
 	{
 		if (digitalRead(v_HX711[_idx].DIN) == LOW) continue;
 		are_ready = false;
@@ -41,12 +53,14 @@ bool Multiple_HX711::are_xh711_ready()
 	return are_ready;
 }
 
-void Multiple_HX711::update()
+bool Multiple_HX711::update()
 {
 	if (are_xh711_ready())
 	{
 		readAndCommuteNextChannel();
+		return true;
 	}
+	else return false;
 }
 
 void Multiple_HX711::setActiveChannels(bool _Ax128, bool _Ax64, bool _Bx32)
@@ -111,13 +125,13 @@ byte Multiple_HX711::setChannelSelectionBits(Channel _nextChannel, bool forceNex
 void Multiple_HX711::get_DIN_pins_array(byte *_array)
 {
 	uint16_t _idx = 0;
-	for (uint8_t _idx = 0; _idx < hx711_number; _idx++)
+	for (uint8_t _idx = 0; _idx < _hx711_number; _idx++)
 	{
 		*(_array + _idx) = v_HX711[_idx].DIN;
 	}
 }
 
-void Multiple_HX711::read_shiftIn(uint8_t clockPin, byte *DIN_array, bool _readings[hx711_number][8])
+void Multiple_HX711::read_shiftIn(uint8_t clockPin, byte *DIN_array, bool _readings[Configuration::hx711_number][8])
 {
 	uint8_t value = 0;
 	uint8_t i;
@@ -126,8 +140,8 @@ void Multiple_HX711::read_shiftIn(uint8_t clockPin, byte *DIN_array, bool _readi
 	for (i = 0; i < 8; ++i)
 	{
 		digitalWrite(clockPin, HIGH);
-		delayMicroseconds(1);	// Needed to give time for the chip to change state of its output
-		for (uint8_t _idx = 0; _idx < hx711_number; _idx++)
+		delayMicroseconds(2);	// Needed to give time for the chip to change state of its output
+		for (uint8_t _idx = 0; _idx < _hx711_number; _idx++)
 		{
 			_readings[_idx][i] = digitalRead(DIN_array[_idx]);
 		}
@@ -136,7 +150,7 @@ void Multiple_HX711::read_shiftIn(uint8_t clockPin, byte *DIN_array, bool _readi
 	
 }
 
-void Multiple_HX711::construct_read(uint8_t idx_byte_sel, uint8_t clockPin, uint8_t bitOrder, byte _arr_data[hx711_number][3], bool _readings[hx711_number][8])
+void Multiple_HX711::construct_read(uint8_t idx_byte_sel, uint8_t clockPin, uint8_t bitOrder, byte _arr_data[Configuration::hx711_number][3], bool _readings[Configuration::hx711_number][8])
 {
 	uint8_t value = 0;
 	uint8_t i;
@@ -146,7 +160,7 @@ void Multiple_HX711::construct_read(uint8_t idx_byte_sel, uint8_t clockPin, uint
 		if (bitOrder == LSBFIRST)
 		{
 			uint8_t _idx = 0;
-			for (uint8_t _idx = 0; _idx < hx711_number; _idx++)
+			for (uint8_t _idx = 0; _idx < _hx711_number; _idx++)
 			{
 				bool _read = _readings[_idx][i];
 				_arr_data[_idx][idx_byte_sel] |= _read << i;
@@ -155,7 +169,7 @@ void Multiple_HX711::construct_read(uint8_t idx_byte_sel, uint8_t clockPin, uint
 		else
 		{
 			uint8_t _idx = 0;
-			for (uint8_t _idx = 0; _idx < hx711_number; _idx++)
+			for (uint8_t _idx = 0; _idx < _hx711_number; _idx++)
 			{
 				bool _read = _readings[_idx][i];
 				_arr_data[_idx][idx_byte_sel] |= _read << (7 - i);
@@ -172,7 +186,7 @@ void Multiple_HX711::readAndCommuteNextChannel()
 	ChSelBits = setChannelSelectionBits(channel);
 	
 	// Auxiliary data storage objects construction
-	byte arr_data[hx711_number][3] = { 0 };
+	byte arr_data[_hx711_number][3] = { 0 };
 
 	// Pulse the clock pin 24 times to read the data.
 	// [[[The reading operation needs to be fast, due to IC specifications
@@ -180,10 +194,10 @@ void Multiple_HX711::readAndCommuteNextChannel()
 	// store the readings during clock signal commutation
 	// That is done afterwards.]]]
 	
-	bool readings_array_2[hx711_number][8];
-	bool readings_array_1[hx711_number][8];
-	bool readings_array_0[hx711_number][8];
-	byte DIN_array[hx711_number];
+	bool readings_array_2[_hx711_number][8];
+	bool readings_array_1[_hx711_number][8];
+	bool readings_array_0[_hx711_number][8];
+	byte DIN_array[_hx711_number];
 	
 	get_DIN_pins_array(DIN_array);
 	
@@ -204,7 +218,7 @@ void Multiple_HX711::readAndCommuteNextChannel()
 	construct_read(1, PD_SCK, MSBFIRST, arr_data, readings_array_1);
 	construct_read(0, PD_SCK, MSBFIRST, arr_data, readings_array_0);
 
-	for (uint8_t _idx = 0; _idx < hx711_number; _idx++)
+	for (uint8_t _idx = 0; _idx < _hx711_number; _idx++)
 	{
 		byte _data[3];
 		byte filler = 0x00;

@@ -22,6 +22,9 @@ void Executer::init()
 	servoUpdater.setExecutionPeriod(I_PeriodicTask::execType::inMillis,20);	
 	servoUpdater.init();
 	
+	forceSensorsManager.setExecutionPeriod(I_PeriodicTask::execType::inMicros, 500);
+	forceSensorsManager.init();
+	
 	// END TASKS CONFIGURATION
 }
 
@@ -30,6 +33,8 @@ void Executer::execution()
 	// INPUTS:
 	
 	if (userInput.getExecutionFlag()) userInput.update();
+	
+	if (forceSensorsManager.getExecutionFlag()) forceSensorsManager.update();
 	
 	// MAIN EXECUTION:
 	

@@ -13,16 +13,32 @@
 #else
 #include "WProgram.h"
 #endif
+
+namespace Configuration
+{
+
+static const uint8_t hx711_number = 2;	// forceSensors configuration
 	
 struct Configs 
 {
-	struct GPIO_defs {
+	struct UserInputPins {
 		unsigned short squareButton = 15;
 		unsigned short thinButton1 = 2;
 		unsigned short thinButton2 = 4;
 		unsigned short potentiometer1 = 36;
 		unsigned short potentiometer2 = 39;
-		}gpio;
+		}userInputPins;
+	
+	struct ForceSensors {
+		struct GPIO {
+			uint8_t clock = 18;
+			uint8_t din_1 = 19;
+			uint8_t din_2 = 5;
+			}gpio;
+		double filter_exp_constant = 0.5;
+		}forceSensors;		// Dependent on static const Configuration::hx711_number
 };
+
+} // End namespace Configuration
 
 #endif

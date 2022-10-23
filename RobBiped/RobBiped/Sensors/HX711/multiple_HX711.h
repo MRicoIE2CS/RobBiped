@@ -1,3 +1,11 @@
+
+/*
+ * multiple_HX711.h
+ *
+ * Created: 20/03/2022
+ * Author: MRICO
+ */ 
+
 #ifndef MULTIPLE_HX711_h
 #define MULTIPLE_HX711_h
 
@@ -10,15 +18,17 @@
 #include <vector>
 #include <array>
 #include <string>
+#include "../../Main/Configs.h"		// Dependant on Configuration::hx711_number
 
 using std::vector;
 using std::array;
-
-const uint8_t hx711_number = 2;
+using Configuration::hx711_number;
 
 class Multiple_HX711
 {
 private:
+	uint8_t _hx711_number = 0;
+
 	byte PD_SCK;	// Power Down and Serial Clock Input Pin (Common to all HX711)
 	
 	enum class Channel { Ax128, Bx32, Ax64 };
@@ -80,9 +90,11 @@ private:
  public:
 	
 	// Define clock and data pin
-	Multiple_HX711(byte _DINs[], byte pd_sck);
+	Multiple_HX711();
 
 	virtual ~Multiple_HX711();
+	
+	void configure(byte _DINs[], byte pd_sck);
 
 	// Check if HX711s are ready
 	// from the datasheet: When output data is not ready for retrieval, digital output pin DOUT is high. Serial clock
@@ -90,7 +102,7 @@ private:
 	bool are_xh711_ready();
 	
 	// Read if available and update
-	void update();
+	bool update();
 	
 	// Set active channels
 	void setActiveChannels(bool _Ax128, bool _Ax64, bool _Bx32);
