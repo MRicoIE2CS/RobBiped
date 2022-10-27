@@ -14,8 +14,7 @@ void ForceSensorsManager::assocConfig(Configs::ForceSensors &_config){
 
 void ForceSensorsManager::init()
 {
-	byte DOs[] = { config->gpio.din_1, config->gpio.din_2 };
-	multiple_hx711.configure(DOs, config->gpio.clock);
+	multiple_hx711.configure(config->gpio.dINs, config->gpio.clock);
 	
 	multiple_hx711.setActiveChannels(false,true,true);
 	multiple_hx711.power_up();
@@ -24,6 +23,10 @@ void ForceSensorsManager::init()
 	filter_ch0_Bx32.setExpConstant(config->filter_exp_constant);
 	filter_ch1_Ax64.setExpConstant(config->filter_exp_constant);
 	filter_ch1_Bx32.setExpConstant(config->filter_exp_constant);
+	filter_ch2_Ax64.setExpConstant(config->filter_exp_constant);
+	filter_ch2_Bx32.setExpConstant(config->filter_exp_constant);
+	filter_ch3_Ax64.setExpConstant(config->filter_exp_constant);
+	filter_ch3_Bx32.setExpConstant(config->filter_exp_constant);
 }
 
 void ForceSensorsManager::update()
@@ -36,6 +39,10 @@ void ForceSensorsManager::update()
 		Bx32ChannelValue_0 = filter_ch0_Bx32.filter(static_cast<int32_t>(multiple_hx711.getBx32ChannelValue(0)));
 		Ax64ChannelValue_1 = filter_ch1_Ax64.filter(static_cast<int32_t>(multiple_hx711.getAx64ChannelValue(1)));
 		Bx32ChannelValue_1 = filter_ch1_Bx32.filter(static_cast<int32_t>(multiple_hx711.getBx32ChannelValue(1)));
+		Ax64ChannelValue_2 = filter_ch2_Ax64.filter(static_cast<int32_t>(multiple_hx711.getAx64ChannelValue(2)));
+		Bx32ChannelValue_2 = filter_ch2_Bx32.filter(static_cast<int32_t>(multiple_hx711.getBx32ChannelValue(2)));
+		Ax64ChannelValue_3 = filter_ch3_Ax64.filter(static_cast<int32_t>(multiple_hx711.getAx64ChannelValue(3)));
+		Bx32ChannelValue_3 = filter_ch3_Bx32.filter(static_cast<int32_t>(multiple_hx711.getBx32ChannelValue(3)));
 		
 		unsigned long timeBetweenReadings = multiple_hx711.getLastElapsedTimeBetweenReadings();
 		
@@ -52,6 +59,15 @@ void ForceSensorsManager::update()
 		Serial.print(Ax64ChannelValue_1/2);
 		Serial.print("\tHX711[1] Bx32: \t\t");
 		Serial.print(Bx32ChannelValue_1);
+		
+		Serial.print("HX711[2] Ax64: \t\t");
+		Serial.print(Ax64ChannelValue_2/2);
+		Serial.print("\tHX711[2] Bx32: \t\t");
+		Serial.println(Bx32ChannelValue_2);
+		Serial.print("HX711[3] Ax64: \t\t");
+		Serial.print(Ax64ChannelValue_3/2);
+		Serial.print("\tHX711[3] Bx32: \t\t");
+		Serial.print(Bx32ChannelValue_3);
 
 // 		Serial.print("\treadingTime (us): \t");
 // 		Serial.print(elapsedMicros);
@@ -68,6 +84,8 @@ void ForceSensorsManager::update()
 				//hx711.tare_Ax64(10);
 				multiple_hx711.tare_Ax64(0u);
 				multiple_hx711.tare_Ax64(1u);
+				multiple_hx711.tare_Ax64(2u);
+				multiple_hx711.tare_Ax64(3u);
 			}
 			else if(temp == 'c')
 			{
@@ -75,6 +93,8 @@ void ForceSensorsManager::update()
 				//hx711.tare_Bx32(10);
 				multiple_hx711.tare_Bx32(0u);
 				multiple_hx711.tare_Bx32(1u);
+				multiple_hx711.tare_Bx32(2u);
+				multiple_hx711.tare_Bx32(3u);
 			}
 		}
 		

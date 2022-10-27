@@ -7,9 +7,6 @@
  */ 
 
 #include "Main/Executer.h"
-//#include <Wire.h>
-//#include <Adafruit_PWMServoDriver.h>
-//#include <vector>
 
 Executer executer;
 
@@ -18,8 +15,8 @@ void setup()
 	Serial.begin(500000);
 	
 	executer.init();
-	//while(!(Serial.available())){};
 	
+	delay(1000);
 	Serial.println("Initial delay...");
 	delay(3000);
 	Serial.println("3");
@@ -30,15 +27,7 @@ void setup()
 	delay(1000);
 }
 
-uint32_t currentMicros;
-uint32_t elapsedMicros;
-
 void loop()
 {
-	currentMicros = micros();
-	
 	executer.execution();
-	
-	elapsedMicros = micros() - currentMicros;
-	//Serial.println("cycleTime: " + (String)(elapsedMicros));
 }

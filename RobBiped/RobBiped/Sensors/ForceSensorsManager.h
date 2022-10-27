@@ -32,15 +32,26 @@ class ForceSensorsManager : public I_PeriodicTask
 private:
 	
 	Multiple_HX711 multiple_hx711;
+	
+	// TODO: Create dynamically depending on hx711_number
 	ExpFilter filter_ch0_Ax64;
 	ExpFilter filter_ch0_Bx32;
 	ExpFilter filter_ch1_Ax64;
 	ExpFilter filter_ch1_Bx32;
+	ExpFilter filter_ch2_Ax64;
+	ExpFilter filter_ch2_Bx32;
+	ExpFilter filter_ch3_Ax64;
+	ExpFilter filter_ch3_Bx32;
 	
+	// TODO: Create dynamically depending on hx711_number
 	long Ax64ChannelValue_0;
 	long Bx32ChannelValue_0;
 	long Ax64ChannelValue_1;
 	long Bx32ChannelValue_1;
+	long Ax64ChannelValue_2;
+	long Bx32ChannelValue_2;
+	long Ax64ChannelValue_3;
+	long Bx32ChannelValue_3;
 	
 	Configuration::Configs::ForceSensors *config;
 	

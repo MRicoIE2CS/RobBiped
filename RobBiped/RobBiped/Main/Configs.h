@@ -17,7 +17,7 @@
 namespace Configuration
 {
 
-static const uint8_t hx711_number = 2;	// forceSensors configuration
+static const uint8_t hx711_number = 4;	// forceSensors configuration
 	
 struct Configs 
 {
@@ -32,10 +32,9 @@ struct Configs
 	struct ForceSensors {
 		struct GPIO {
 			uint8_t clock = 18;
-			uint8_t din_1 = 19;
-			uint8_t din_2 = 5;
+			uint8_t dINs[4] = {19, 5, 13, 12};	// Search upper for hx711_number static const
 			}gpio;
-		double filter_exp_constant = 0.5;
+		double filter_exp_constant = 0.3;
 		}forceSensors;		// Dependent on static const Configuration::hx711_number
 };
 
