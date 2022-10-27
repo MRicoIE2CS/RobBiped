@@ -27,6 +27,9 @@ using Configuration::hx711_number;
 class Multiple_HX711
 {
 private:
+
+	friend class ForceSensorsManager;
+
 	uint8_t _hx711_number = 0;
 
 	byte PD_SCK;	// Power Down and Serial Clock Input Pin (Common to all HX711)

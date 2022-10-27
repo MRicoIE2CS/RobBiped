@@ -34,6 +34,11 @@ struct Configs
 			uint8_t clock = 18;
 			uint8_t dINs[4] = {19, 5, 13, 12};	// Search upper for hx711_number static const
 			}gpio;
+		struct ActiveChannels {
+			bool Ax128 = false;
+			bool Ax64 = true;
+			bool Bx32 = true;
+		}activeChannels;
 		double filter_exp_constant = 0.3;
 		}forceSensors;		// Dependent on static const Configuration::hx711_number
 };
