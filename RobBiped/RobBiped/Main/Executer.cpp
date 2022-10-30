@@ -44,22 +44,22 @@ void Executer::execution()
 			Serial.println("Reading____________________________");
 			Serial.print("LeftFoot_LeftFrontSensor: \t\t");
 			Serial.print(forceSensorsManager.getValue_LeftFoot_LeftFrontSensor());
-// 			if (abs(forceSensorsManager.getValue_LeftFoot_LeftFrontSensor()) > 4000) {
-// 				Serial.println("\n MALA! _____________________________________LeftFoot_LeftFrontSensor_________________________________________________");
-// 				delay(2000);
-// 			}
+			if (abs(forceSensorsManager.getValue_LeftFoot_LeftFrontSensor()) > 4000) {
+				Serial.println("\n MALA! _____________________________________LeftFoot_LeftFrontSensor_________________________________________________");
+				//delay(2000);
+			}
 			Serial.print("\tLeftFoot_RightFrontSensor: \t\t");
 			Serial.println(forceSensorsManager.getValue_LeftFoot_RightFrontSensor());
-// 			if (abs(forceSensorsManager.getValue_LeftFoot_RightFrontSensor()) > 4000) {
-// 				Serial.println("\n MALA! _____________________________________LeftFoot_RightFrontSensor_________________________________________________");
-// 				delay(2000);
-// 			}
+			if (abs(forceSensorsManager.getValue_LeftFoot_RightFrontSensor()) > 4000) {
+				Serial.println("\n MALA! _____________________________________LeftFoot_RightFrontSensor_________________________________________________");
+				//delay(2000);
+			}
 			Serial.print("LeftFoot_LeftBackSensor: \t\t");
 			Serial.print(forceSensorsManager.getValue_LeftFoot_LeftBackSensor());
-// 			if (abs(forceSensorsManager.getValue_LeftFoot_LeftBackSensor()) > 4000) Serial.println("\n MALA! _____________________________________getValue_LeftFoot_LeftBackSensor_________________________________________________");
+ 			if (abs(forceSensorsManager.getValue_LeftFoot_LeftBackSensor()) > 4000) Serial.println("\n MALA! _____________________________________getValue_LeftFoot_LeftBackSensor_________________________________________________");
 			Serial.print("\tLeftFoot_RightBackSensor: \t\t");
 			Serial.println(forceSensorsManager.getValue_LeftFoot_RightBackSensor());
-// 			if (abs(forceSensorsManager.getValue_LeftFoot_RightBackSensor()) > 4000) Serial.println("\n MALA! _____________________________________getValue_LeftFoot_RightBackSensor_________________________________________________");
+ 			if (abs(forceSensorsManager.getValue_LeftFoot_RightBackSensor()) > 4000) Serial.println("\n MALA! _____________________________________getValue_LeftFoot_RightBackSensor_________________________________________________");
 			
 			
 			
@@ -70,16 +70,16 @@ void Executer::execution()
 		
 			Serial.print("RightFoot_LeftFrontSensor: \t\t");
 			Serial.print(forceSensorsManager.getValue_RightFoot_LeftFrontSensor());
-// 			if (abs(forceSensorsManager.getValue_RightFoot_LeftFrontSensor()) > 4000) Serial.println("\n MALA! _____________________________________getValue_RightFoot_LeftFrontSensor_________________________________________________");
+ 			if (abs(forceSensorsManager.getValue_RightFoot_LeftFrontSensor()) > 4000) Serial.println("\n MALA! _____________________________________getValue_RightFoot_LeftFrontSensor_________________________________________________");
 			Serial.print("\tRightFoot_RightFrontSensor: \t\t");
 			Serial.println(forceSensorsManager.getValue_RightFoot_RightFrontSensor());
-// 			if (abs(forceSensorsManager.getValue_RightFoot_RightFrontSensor()) > 4000) Serial.println("\n MALA! _____________________________________getValue_RightFoot_RightFrontSensor_________________________________________________");
+ 			if (abs(forceSensorsManager.getValue_RightFoot_RightFrontSensor()) > 4000) Serial.println("\n MALA! _____________________________________getValue_RightFoot_RightFrontSensor_________________________________________________");
 			Serial.print("RightFoot_LeftBackSensor: \t\t");
 			Serial.print(forceSensorsManager.getValue_RightFoot_LeftBackSensor());
-// 			if (abs(forceSensorsManager.getValue_RightFoot_LeftBackSensor()) > 4000) Serial.println("\n MALA! _____________________________________getValue_RightFoot_LeftBackSensor_________________________________________________");
+ 			if (abs(forceSensorsManager.getValue_RightFoot_LeftBackSensor()) > 4000) Serial.println("\n MALA! _____________________________________getValue_RightFoot_LeftBackSensor_________________________________________________");
 			Serial.print("\tRightFoot_RightBackSensor: \t\t");
 			Serial.println(forceSensorsManager.getValue_RightFoot_RightBackSensor());
-// 			if (abs(forceSensorsManager.getValue_RightFoot_RightBackSensor()) > 4000) Serial.println("\n MALA! _____________________________________getValue_RightFoot_RightBackSensor_________________________________________________");
+ 			if (abs(forceSensorsManager.getValue_RightFoot_RightBackSensor()) > 4000) Serial.println("\n MALA! _____________________________________getValue_RightFoot_RightBackSensor_________________________________________________");
 			
 // 			Serial.println((int32_t)forceSensorsManager.getValue_RightFoot_LeftFrontSensor(),BIN);
 // 			Serial.println((int32_t)forceSensorsManager.getValue_RightFoot_RightFrontSensor(),BIN);

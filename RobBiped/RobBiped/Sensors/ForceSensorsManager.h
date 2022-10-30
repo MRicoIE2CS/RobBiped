@@ -18,7 +18,7 @@
 #include "../Main/I_PeriodicTask.h"
 #include "../Main/Configs.h"
 #include "HX711/multiple_HX711.h"
-#include "../Utils/ExponentialFilter.h"
+#include "../Utils/ExponentialFilterWithPeakRejection.h"
 
 using namespace Configuration;
 
@@ -46,14 +46,14 @@ private:
 	int32_t Bx32ChannelValue_3;
 	
 	// One filter per each measured magnitude
-	ExpFilter filter_ch0_Ax64;
-	ExpFilter filter_ch0_Bx32;
-	ExpFilter filter_ch1_Ax64;
-	ExpFilter filter_ch1_Bx32;
-	ExpFilter filter_ch2_Ax64;
-	ExpFilter filter_ch2_Bx32;
-	ExpFilter filter_ch3_Ax64;
-	ExpFilter filter_ch3_Bx32;
+	ExpFilterPeakReject filter_ch0_Ax64;
+	ExpFilterPeakReject filter_ch0_Bx32;
+	ExpFilterPeakReject filter_ch1_Ax64;
+	ExpFilterPeakReject filter_ch1_Bx32;
+	ExpFilterPeakReject filter_ch2_Ax64;
+	ExpFilterPeakReject filter_ch2_Bx32;
+	ExpFilterPeakReject filter_ch3_Ax64;
+	ExpFilterPeakReject filter_ch3_Bx32;
 	
 	Configuration::Configs::ForceSensors *config;
 	

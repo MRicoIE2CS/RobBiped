@@ -34,7 +34,8 @@ struct Configs
 			uint8_t clock = 18;
 			uint8_t dINs[hx711_number] = {19, 5, 35, 34};	// Search upper for hx711_number static const
 			}gpio;
-		double filter_exp_constant = 0.8;
+		double filter_exp_constant = 0.2;
+		uint16_t filter_threshold_value = 500000;
 		double calibration_LeftFoot_LeftFrontSensor = 0.091844;
 		double calibration_LeftFoot_RightFrontSensor = 0.092108;
 		double calibration_LeftFoot_LeftBackSensor = 0.094531;

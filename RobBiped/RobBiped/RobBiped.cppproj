@@ -651,6 +651,12 @@
     <Compile Include="Utils\ExponentialFilter.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Utils\ExponentialFilterWithPeakRejection.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\ExponentialFilterWithPeakRejection.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Utils\SignalGenerator.cpp">
       <SubType>compile</SubType>
     </Compile>

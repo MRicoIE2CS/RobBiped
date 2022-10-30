@@ -15,7 +15,7 @@
 
 class ExpFilter {
 	
-	private:
+	protected:
 		
 		double lastFilteredValue = 0;
 		double expK = 0.9;

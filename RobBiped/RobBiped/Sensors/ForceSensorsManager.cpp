@@ -38,6 +38,15 @@ void ForceSensorsManager::init()
 	filter_ch2_Bx32.setExpConstant(config->filter_exp_constant);
 	filter_ch3_Ax64.setExpConstant(config->filter_exp_constant);
 	filter_ch3_Bx32.setExpConstant(config->filter_exp_constant);
+	
+	filter_ch0_Ax64.setThresholdValue(config->filter_threshold_value);
+	filter_ch0_Bx32.setThresholdValue(config->filter_threshold_value);
+	filter_ch1_Ax64.setThresholdValue(config->filter_threshold_value);
+	filter_ch1_Bx32.setThresholdValue(config->filter_threshold_value);
+	filter_ch2_Ax64.setThresholdValue(config->filter_threshold_value);
+	filter_ch2_Bx32.setThresholdValue(config->filter_threshold_value);
+	filter_ch3_Ax64.setThresholdValue(config->filter_threshold_value);
+	filter_ch3_Bx32.setThresholdValue(config->filter_threshold_value);
 }
 
 bool ForceSensorsManager::update()
@@ -47,14 +56,14 @@ bool ForceSensorsManager::update()
 	if (updated)
 	{
 		// Readings obtention
-		Ax64ChannelValue_0 = filter_ch0_Ax64.filter(multiple_hx711.getAx64ChannelValue(0u));
-		Bx32ChannelValue_0 = filter_ch0_Bx32.filter(multiple_hx711.getBx32ChannelValue(0u));
-		Ax64ChannelValue_1 = filter_ch1_Ax64.filter(multiple_hx711.getAx64ChannelValue(1u));
-		Bx32ChannelValue_1 = filter_ch1_Bx32.filter(multiple_hx711.getBx32ChannelValue(1u));
-		Ax64ChannelValue_2 = filter_ch2_Ax64.filter(multiple_hx711.getAx64ChannelValue(2u));
-		Bx32ChannelValue_2 = filter_ch2_Bx32.filter(multiple_hx711.getBx32ChannelValue(2u));
-		Ax64ChannelValue_3 = filter_ch3_Ax64.filter(multiple_hx711.getAx64ChannelValue(3u));
-		Bx32ChannelValue_3 = filter_ch3_Bx32.filter(multiple_hx711.getBx32ChannelValue(3u));
+		Ax64ChannelValue_0 = filter_ch0_Ax64.filter_pr(multiple_hx711.getAx64ChannelValue(0u));
+		Bx32ChannelValue_0 = filter_ch0_Bx32.filter_pr(multiple_hx711.getBx32ChannelValue(0u));
+		Ax64ChannelValue_1 = filter_ch1_Ax64.filter_pr(multiple_hx711.getAx64ChannelValue(1u));
+		Bx32ChannelValue_1 = filter_ch1_Bx32.filter_pr(multiple_hx711.getBx32ChannelValue(1u));
+		Ax64ChannelValue_2 = filter_ch2_Ax64.filter_pr(multiple_hx711.getAx64ChannelValue(2u));
+		Bx32ChannelValue_2 = filter_ch2_Bx32.filter_pr(multiple_hx711.getBx32ChannelValue(2u));
+		Ax64ChannelValue_3 = filter_ch3_Ax64.filter_pr(multiple_hx711.getAx64ChannelValue(3u));
+		Bx32ChannelValue_3 = filter_ch3_Bx32.filter_pr(multiple_hx711.getBx32ChannelValue(3u));
 	}
 	
 	return updated;
@@ -105,15 +114,23 @@ uint32_t ForceSensorsManager::getLastElapsedTimeBetweenReadings()
 void ForceSensorsManager::tare_LeftFoot()
 {
 	multiple_hx711.tare_Ax64(0u);
+	filter_ch0_Ax64.filter_pr(multiple_hx711.getAx64ChannelValue(0u), true);	// This is done for the peak reject filter to accept this calibration step
 	multiple_hx711.tare_Bx32(0u);
+	filter_ch0_Bx32.filter_pr(multiple_hx711.getBx32ChannelValue(0u), true);
 	multiple_hx711.tare_Ax64(1u);
+	filter_ch1_Ax64.filter_pr(multiple_hx711.getAx64ChannelValue(1u), true);
 	multiple_hx711.tare_Bx32(1u);
+	filter_ch1_Bx32.filter_pr(multiple_hx711.getBx32ChannelValue(1u), true);
 }
 
 void ForceSensorsManager::tare_RightFoot()
 {
 	multiple_hx711.tare_Ax64(2u);
+	filter_ch2_Ax64.filter_pr(multiple_hx711.getAx64ChannelValue(2u), true);
 	multiple_hx711.tare_Bx32(2u);
+	filter_ch2_Bx32.filter_pr(multiple_hx711.getBx32ChannelValue(2u), true);
 	multiple_hx711.tare_Ax64(3u);
+	filter_ch3_Ax64.filter_pr(multiple_hx711.getAx64ChannelValue(3u), true);
 	multiple_hx711.tare_Bx32(3u);
+	filter_ch3_Bx32.filter_pr(multiple_hx711.getBx32ChannelValue(3u), true);
 }
