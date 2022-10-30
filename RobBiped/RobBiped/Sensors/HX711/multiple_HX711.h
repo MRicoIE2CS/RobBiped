@@ -36,7 +36,7 @@ private:
 	
 	enum class Channel { Ax128, Bx32, Ax64 };
 		
-	struct CombinedOutputData { uint16_t hx711_idx; Channel _channel; long _valueRead; };
+	struct CombinedOutputData { uint16_t hx711_idx; Channel _channel; int32_t _valueRead; };
 	
 	struct ActiveChannels {
 		bool Ax128 = false;
@@ -44,19 +44,19 @@ private:
 		bool Bx32 = true;
 	};
 	struct OffsetPerChannel{
-		long Ax128;
-		long Ax64;
-		long Bx32;
+		int32_t Ax128;
+		int32_t Ax64;
+		int32_t Bx32;
 	};
 	struct StoredReadings {
-		long ReadingAx128;
-		long ReadingAx64;
-		long ReadingBx32;
+		int32_t ReadingAx128;
+		int32_t ReadingAx64;
+		int32_t ReadingBx32;
 	};
 	struct LastStoredReadings{
-		vector<long> v_Ax128;
-		vector<long> v_Ax64;
-		vector<long> v_Bx32;
+		vector<int32_t> v_Ax128;
+		vector<int32_t> v_Ax64;
+		vector<int32_t> v_Bx32;
 	};
 	
 	struct Single_HX711 
@@ -74,8 +74,8 @@ private:
 	
 	std::vector<Single_HX711> v_HX711;	// Vector of HX711 structs
 	
-	unsigned long lastReadingMicros;
-	unsigned long lastElapsedMicros;
+	uint32_t lastReadingMicros;
+	uint32_t lastElapsedMicros;
 	
 	Channel commuteNextChannel(bool forceNextChannel = false, Channel _channel = Channel::Ax64);
 	byte setChannelSelectionBits(Channel _nextChannel, bool forceNextSelection = false, short _sel = 3);
@@ -88,7 +88,7 @@ private:
 	void readAndCommuteNextChannel();
 	
 	uint16_t historyLength = 10;
-	void historyAppend(uint16_t hx711_idx, Channel channel, long _reading);
+	void historyAppend(uint16_t hx711_idx, Channel channel, int32_t _reading);
 
  public:
 	
@@ -112,9 +112,9 @@ private:
 	
 	
 	// Get each channel's value
-	long getAx128ChannelValue(uint16_t hx711_idx);
-	long getAx64ChannelValue(uint16_t hx711_idx);
-	long getBx32ChannelValue(uint16_t hx711_idx);
+	int32_t getAx128ChannelValue(uint16_t hx711_idx);
+	int32_t getAx64ChannelValue(uint16_t hx711_idx);
+	int32_t getBx32ChannelValue(uint16_t hx711_idx);
 	
 	// Tare: set the OFFSET value for tare weight; times = how many times to read the tare value
 	void tare_Ax128(uint16_t hx711_idx);
@@ -125,7 +125,7 @@ private:
 	void set_offset_Bx32(uint16_t hx711_idx, double offset);
 	
 	// Get last elapsed time between readings
-	unsigned long getLastElapsedTimeBetweenReadings();
+	uint32_t getLastElapsedTimeBetweenReadings();
 
 	// Puts the chip into power down mode
 	void power_down();

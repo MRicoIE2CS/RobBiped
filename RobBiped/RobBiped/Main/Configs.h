@@ -32,14 +32,17 @@ struct Configs
 	struct ForceSensors {
 		struct GPIO {
 			uint8_t clock = 18;
-			uint8_t dINs[4] = {19, 5, 13, 12};	// Search upper for hx711_number static const
+			uint8_t dINs[hx711_number] = {19, 5, 35, 34};	// Search upper for hx711_number static const
 			}gpio;
-		struct ActiveChannels {
-			bool Ax128 = false;
-			bool Ax64 = true;
-			bool Bx32 = true;
-		}activeChannels;
-		double filter_exp_constant = 0.3;
+		double filter_exp_constant = 0.8;
+		double calibration_LeftFoot_LeftFrontSensor = 0.091844;
+		double calibration_LeftFoot_RightFrontSensor = 0.092108;
+		double calibration_LeftFoot_LeftBackSensor = 0.094531;
+		double calibration_LeftFoot_RightBackSensor = 0.092348;
+		double calibration_RightFoot_LeftFrontSensor = 0.094735;
+		double calibration_RightFoot_RightFrontSensor = 0.092529;
+		double calibration_RightFoot_LeftBackSensor = 0.093087;
+		double calibration_RightFoot_RightBackSensor = 0.094197;
 		}forceSensors;		// Dependent on static const Configuration::hx711_number
 };
 

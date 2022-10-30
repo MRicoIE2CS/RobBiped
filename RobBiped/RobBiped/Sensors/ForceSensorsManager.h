@@ -22,8 +22,7 @@
 
 using namespace Configuration;
 
-// TODO: Fine calibration mechanism
-// TODO: Units translation
+// TODO: Sophisticated filter for electromagnetic noise
 
 // This class manages the use of multiple HX711 ICs in one object, filtering, adjusting and interpreting the obtained values.
 // As the use of multiple HX711 and interpretation of the measured magnitudes hardly depends on the HW setup configured for the robot,
@@ -37,14 +36,14 @@ private:
 	Multiple_HX711 multiple_hx711;
 	
 	// Readings
-	long Ax64ChannelValue_0;
-	long Bx32ChannelValue_0;
-	long Ax64ChannelValue_1;
-	long Bx32ChannelValue_1;
-	long Ax64ChannelValue_2;
-	long Bx32ChannelValue_2;
-	long Ax64ChannelValue_3;
-	long Bx32ChannelValue_3;
+	int32_t Ax64ChannelValue_0;
+	int32_t Bx32ChannelValue_0;
+	int32_t Ax64ChannelValue_1;
+	int32_t Bx32ChannelValue_1;
+	int32_t Ax64ChannelValue_2;
+	int32_t Bx32ChannelValue_2;
+	int32_t Ax64ChannelValue_3;
+	int32_t Bx32ChannelValue_3;
 	
 	// One filter per each measured magnitude
 	ExpFilter filter_ch0_Ax64;
@@ -59,6 +58,15 @@ private:
 	Configuration::Configs::ForceSensors *config;
 	
 	void configuration();
+	
+	double *calibration_LeftFoot_LeftFrontSensor;
+	double *calibration_LeftFoot_RightFrontSensor;
+	double *calibration_LeftFoot_LeftBackSensor;
+	double *calibration_LeftFoot_RightBackSensor;
+	double *calibration_RightFoot_LeftFrontSensor;
+	double *calibration_RightFoot_RightFrontSensor;
+	double *calibration_RightFoot_LeftBackSensor;
+	double *calibration_RightFoot_RightBackSensor;
 
 public:
 
@@ -68,16 +76,17 @@ public:
 
 	bool update();
 	
-	long getValue_LeftFoot_LeftFrontSensor();
-	long getValue_LeftFoot_RightFrontSensor();
-	long getValue_LeftFoot_LeftBackSensor();
-	long getValue_LeftFoot_RightBackSensor();
-	long getValue_RightFoot_LeftFrontSensor();
-	long getValue_RightFoot_RightFrontSensor();
-	long getValue_RightFoot_LeftBackSensor();
-	long getValue_RightFoot_RightBackSensor();
+	// Readings obtention in gr.
+	int32_t getValue_LeftFoot_LeftFrontSensor();
+	int32_t getValue_LeftFoot_RightFrontSensor();
+	int32_t getValue_LeftFoot_LeftBackSensor();
+	int32_t getValue_LeftFoot_RightBackSensor();
+	int32_t getValue_RightFoot_LeftFrontSensor();
+	int32_t getValue_RightFoot_RightFrontSensor();
+	int32_t getValue_RightFoot_LeftBackSensor();
+	int32_t getValue_RightFoot_RightBackSensor();
 	
-	unsigned long getLastElapsedTimeBetweenReadings();
+	uint32_t getLastElapsedTimeBetweenReadings();
 	
 	void tare_LeftFoot();
 	void tare_RightFoot();
