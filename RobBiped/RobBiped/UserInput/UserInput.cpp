@@ -4,7 +4,7 @@
 
 #include "UserInput.h"
 
-void UserInput::assocGPIO(Configs::GPIO_defs &_gpio){
+void UserInput::assocGPIO(Configs::UserInputPins &_gpio){
 	gpio = &_gpio;
 	configuration();
 }

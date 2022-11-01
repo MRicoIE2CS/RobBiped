@@ -1,5 +1,4 @@
 
-
 /*
  * RobBiped.ino
  *
@@ -8,8 +7,6 @@
  */ 
 
 #include "Main/Executer.h"
-#include <Wire.h>
-#include <Adafruit_PWMServoDriver.h>
 
 Executer executer;
 
@@ -18,15 +15,19 @@ void setup()
 	Serial.begin(500000);
 	
 	executer.init();
-
+	
+	delay(1000);
+	Serial.println("Initial delay...");
+	delay(3000);
+	Serial.println("3");
+	delay(1000);
+	Serial.println("2");
+	delay(1000);
+	Serial.println("1");
+	delay(1000);
 }
 
 void loop()
 {
-	//uint32_t initMicros = micros();
-	
 	executer.execution();
-	
-	//uint32_t finalMicros = micros();
-	//Serial.println("cycleTime: " + (String)(finalMicros - initMicros));
 }

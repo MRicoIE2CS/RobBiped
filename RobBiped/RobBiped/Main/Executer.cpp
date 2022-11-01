@@ -7,8 +7,8 @@
 
 #include "Executer.h"
 
-void Executer::init(){
-	
+void Executer::init()
+{
 	setup();
 	
 	//______TASKS CONFIGURATION_____//
@@ -22,20 +22,71 @@ void Executer::init(){
 	servoUpdater.setExecutionPeriod(I_PeriodicTask::execType::inMillis,20);	
 	servoUpdater.init();
 	
+	forceSensorsManager.setExecutionPeriod(I_PeriodicTask::execType::inMillis, 5);
+	forceSensorsManager.init();
+	
 	// END TASKS CONFIGURATION
-	
-	
 }
 
-void Executer::execution(){
-	
+void Executer::execution()
+{
 	// INPUTS:
 	
 	if (userInput.getExecutionFlag()) userInput.update();
 	
+	if (forceSensorsManager.getExecutionFlag()) 
+	{
+		bool updated = forceSensorsManager.update();
+	
+		if (updated) {
+			// DEBUG:
+		
+			Serial.println("Reading____________________________");
+			Serial.print("LeftFoot_LeftFrontSensor: \t\t");
+			Serial.print(forceSensorsManager.getValue_LeftFoot_LeftFrontSensor());
+			Serial.print("\tLeftFoot_RightFrontSensor: \t\t");
+			Serial.println(forceSensorsManager.getValue_LeftFoot_RightFrontSensor());
+			Serial.print("LeftFoot_LeftBackSensor: \t\t");
+			Serial.print(forceSensorsManager.getValue_LeftFoot_LeftBackSensor());
+			Serial.print("\tLeftFoot_RightBackSensor: \t\t");
+			Serial.println(forceSensorsManager.getValue_LeftFoot_RightBackSensor());
+			
+		
+			Serial.print("RightFoot_LeftFrontSensor: \t\t");
+			Serial.print(forceSensorsManager.getValue_RightFoot_LeftFrontSensor());
+			Serial.print("\tRightFoot_RightFrontSensor: \t\t");
+			Serial.println(forceSensorsManager.getValue_RightFoot_RightFrontSensor());
+			Serial.print("RightFoot_LeftBackSensor: \t\t");
+			Serial.print(forceSensorsManager.getValue_RightFoot_LeftBackSensor());
+			Serial.print("\tRightFoot_RightBackSensor: \t\t");
+			Serial.println(forceSensorsManager.getValue_RightFoot_RightBackSensor());
+			
+			Serial.println("\tTime between readings (us): \t");
+			Serial.print(forceSensorsManager.getLastElapsedTimeBetweenReadings());
+			Serial.println();
+		
+			if(Serial.available())
+			{
+				char temp = Serial.read();
+				if(temp == 'x')
+				{
+					Serial.println("TARE");
+					forceSensorsManager.tare_LeftFoot();
+				}
+				else if(temp == 'c')
+				{
+					Serial.println("TARE");
+					forceSensorsManager.tare_RightFoot();
+				}
+			}
+		
+			// END DEBUG
+		}
+	}
+	
 	// MAIN EXECUTION:
 	
-	//if (userInput.getDigitalValue(UserInput::DigitalInputList::squareButton)) servoUpdater.changeState();	// run/sleep to servos
+	if (userInput.getDigitalValue(UserInput::DigitalInputList::squareButton)) servoUpdater.changeState();	// run/sleep to servos
 	
 	if (signalGenerator_0.getExecutionFlag()) {
 		
@@ -75,5 +126,4 @@ void Executer::execution(){
 	// OUTPUTS:
 	
 	if (servoUpdater.getExecutionFlag()) servoUpdater.update(userInput);
-	
 }

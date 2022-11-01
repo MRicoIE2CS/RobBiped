@@ -14,13 +14,12 @@
 
 
 #include "I_PeriodicTask.h"
-//#include "../Communications/I2C.h"
 #include "../Actuators/JointsManager.h"
 #include "../Utils/SignalGenerator.h"
 #include "Configs.h"
 #include "../Utils/ExponentialFilter.h"
 #include "../UserInput/UserInput.h"
-
+#include "../Sensors/ForceSensorsManager.h"
 
 class Executer {
 	
@@ -28,15 +27,16 @@ class Executer {
 		
 		
 		/////____________ OBJECTS: __//
-		Configs config;
+		Configuration::Configs config;
 		ExpFilter pot1Filter;
 		///// END OBJECTS: __//
 		
 		/////____________ OBJECT TASKS: __//
+		UserInput userInput;
 		SignalGenerator signalGenerator_0;
 		SignalGenerator signalGenerator_1;
 		JointsManager servoUpdater;
-		UserInput userInput;
+		ForceSensorsManager forceSensorsManager;
 		///// END OBJECT TASKS __//
 	
 		/////____________ PRIVATE FUNCTIONS: __//

@@ -82,7 +82,7 @@ void Joint::calibration_setZero(bool catchCurrentAngle, double _angle){
 
 void Joint::calibration_ZeroFineAdjust(){
 	
-	// Useful?
+	// TODO: Useful?
 }
 
 void Joint::invertAngleSign(bool yes_no){

@@ -7,10 +7,7 @@
 
 double SignalGenerator::generateTrajectory(){
 	
-	//TODO: 
-	
 	unsigned long currentMillis = millis();
-	//unsigned long timeIncrement = currentMillis - lastTimeExecutedMillis;
 	
 	double nextOutput = offset + amplitude * sin( (double)currentMillis/(double)period_ms + (double)phaseShift) ;
 	
