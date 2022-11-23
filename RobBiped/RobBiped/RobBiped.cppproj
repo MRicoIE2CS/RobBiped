@@ -615,6 +615,33 @@
     <Compile Include="Sensors\ForceSensorsManager.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Sensors\GyroscopeAccelerometerManager.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\GyroscopeAccelerometerManager.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\GyroAcc\Grove\ITG3200.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\GyroAcc\Grove\ITG3200.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\GyroAcc\MPU6050\helper_3dmath.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\GyroAcc\MPU6050\I2Cdev.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\GyroAcc\MPU6050\I2Cdev.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\GyroAcc\MPU6050\MPU6050.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\GyroAcc\MPU6050\MPU6050.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Sensors\HX711\HX711.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -677,7 +704,10 @@
     <Folder Include="Actuators\" />
     <Folder Include="Main" />
     <Folder Include="Sensors" />
+    <Folder Include="Sensors\GyroAcc\MPU6050" />
+    <Folder Include="Sensors\GyroAcc\Grove" />
     <Folder Include="Sensors\HX711" />
+    <Folder Include="Sensors\GyroAcc" />
     <Folder Include="Units" />
     <Folder Include="UserInput" />
     <Folder Include="Utils" />

@@ -19,6 +19,7 @@ void setup()
 	delay(1000);
 	Serial.println("Initial delay...");
 	delay(3000);
+	
 	Serial.println("3");
 	delay(1000);
 	Serial.println("2");
