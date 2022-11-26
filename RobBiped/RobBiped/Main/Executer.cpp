@@ -25,7 +25,7 @@ void Executer::init()
 	forceSensorsManager.setExecutionPeriod(I_PeriodicTask::execType::inMillis, 5);
 	forceSensorsManager.init();
 	
-	gyroscopeAccelerometerManager.setExecutionPeriod(I_PeriodicTask::execType::inMillis, 100);
+	gyroscopeAccelerometerManager.setExecutionPeriod(I_PeriodicTask::execType::inMillis, 2);
 	gyroscopeAccelerometerManager.init();
 	
 	// END TASKS CONFIGURATION
