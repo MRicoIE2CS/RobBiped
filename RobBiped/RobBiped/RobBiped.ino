@@ -7,8 +7,11 @@
  */ 
 
 #include "Main/Executer.h"
+#include "UserInput/SerialCommand.h"
 
 Executer executer;
+
+SerialCommand* serialCommand = SerialCommand::getInstance();
 
 void setup()
 {
@@ -16,19 +19,18 @@ void setup()
 	
 	executer.init();
 	
-	delay(1000);
-	Serial.println("Initial delay...");
-	delay(3000);
-	
-	Serial.println("3");
-	delay(1000);
-	Serial.println("2");
-	delay(1000);
-	Serial.println("1");
-	delay(1000);
+	while (!serialCommand->commands.init)
+	{
+		Serial.println("type in 'init' to initialize");
+		serialCommand->listenForCommands();
+		delay(1000);
+	}
+	Serial.println("Initialize execution!");
 }
 
 void loop()
 {
 	executer.execution();
+	
+	serialCommand->listenForCommands();
 }
