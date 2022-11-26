@@ -52,13 +52,13 @@ private:
 	
 	// Rotation of sensor, obtained from gyroscope
 	long tiempo_prev, dt;
-	float girosc_ang_x, girosc_ang_y;
-	float girosc_ang_x_prev, girosc_ang_y_prev;
+	float ang_x, ang_y;
+	float ang_x_prev, ang_y_prev;
 	
 	void getReadings();
 	void unitsConversion();
 	void calculateAccAngle();
-	void calculateGyroRotation();
+	void complementaryFilter_Angle();
 	void processReadings();
 	
 	// Calibration variables

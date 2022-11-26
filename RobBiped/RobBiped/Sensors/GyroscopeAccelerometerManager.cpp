@@ -63,24 +63,24 @@ void GyroscopeAccelerometerManager::calculateAccAngle()
 	accel_ang_y = atan( ay/ sqrt( pow(ax,2) + pow(az,2) ) ) * (180.0/3.14);
 }
 
-void GyroscopeAccelerometerManager::calculateGyroRotation()
+void GyroscopeAccelerometerManager::complementaryFilter_Angle()
 {
 	auto currentMillis = millis();
 	dt = currentMillis - tiempo_prev;
 	tiempo_prev = currentMillis;
 	
-	girosc_ang_x = gx_deg_s * dt / 1000.0 + girosc_ang_x_prev;
-	girosc_ang_y = gy_deg_s * dt / 1000.0 + girosc_ang_y_prev;
+	ang_x = 0.98 * (gx_deg_s * dt / 1000.0 + ang_x_prev) + 0.02 * accel_ang_x;
+	ang_y = 0.98 * (gy_deg_s * dt / 1000.0 + ang_y_prev) + 0.02 * accel_ang_y;
 
-	girosc_ang_x_prev = girosc_ang_x;
-	girosc_ang_y_prev = girosc_ang_y;
+	ang_x_prev = ang_x;
+	ang_y_prev = ang_y;
 }
 
 void GyroscopeAccelerometerManager::processReadings()
 {
 	unitsConversion();
 	calculateAccAngle();
-	calculateGyroRotation();
+	complementaryFilter_Angle();
 }
 
 void GyroscopeAccelerometerManager::readOffsets()
@@ -211,9 +211,9 @@ void GyroscopeAccelerometerManager::printValues()
 	Serial.println(accel_ang_y);
 	
 	Serial.print("X rotation:  ");
-	Serial.print(girosc_ang_x);
+	Serial.print(ang_x);
 	Serial.print("Y rotation: ");
-	Serial.println(girosc_ang_y);
+	Serial.println(ang_y);
 }
 
 
