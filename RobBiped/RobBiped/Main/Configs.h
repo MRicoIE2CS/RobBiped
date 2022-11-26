@@ -45,6 +45,17 @@ struct Configs
 		double calibration_RightFoot_LeftBackSensor = 0.093087;
 		double calibration_RightFoot_RightBackSensor = 0.094197;
 		}forceSensors;		// Dependent on static const Configuration::hx711_number
+	
+	struct GyroscpeAccelerometer {
+		struct Offsets {
+			int ax_o = -35;	// Accelerometer offsets
+			int ay_o = -234;
+			int az_o = 919;
+			int gx_o = 7;		// Gyroscope offsets
+			int gy_o = -35;
+			int gz_o = -13;
+			}offsets;
+		}gyroAcc;
 };
 
 } // End namespace Configuration

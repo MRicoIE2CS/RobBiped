@@ -23,7 +23,9 @@
 
 #include "../Main/I_PeriodicTask.h"
 #include "../UserInput/SerialCommand.h"
-//#include "../Main/Configs.h"
+#include "../Main/Configs.h"
+
+using namespace Configuration;
 
 class GyroscopeAccelerometerManager : public I_PeriodicTask
 {
@@ -31,8 +33,10 @@ private:
 
 	// Serial Commands pointer
  	SerialCommand* serialCommand;
+	 
+	Configuration::Configs::GyroscpeAccelerometer* config;
 
-	MPU6050 mu6050;
+	MPU6050 mpu5060;
 	
 	// Raw values of accelerometer and gyroscope
 	int16_t ax, ay, az;
@@ -42,8 +46,20 @@ private:
 	float ax_m_s2, ay_m_s2, az_m_s2;
 	float gx_deg_s, gy_deg_s, gz_deg_s;
 	
+	// Inclination angle of sensor, obtained from accelerometer
+	float accel_ang_x;
+	float accel_ang_y;
+	
+	// Rotation of sensor, obtained from gyroscope
+	long tiempo_prev, dt;
+	float girosc_ang_x, girosc_ang_y;
+	float girosc_ang_x_prev, girosc_ang_y_prev;
+	
 	void getReadings();
-	void getReadings_ISUnits();
+	void unitsConversion();
+	void calculateAccAngle();
+	void calculateGyroRotation();
+	void processReadings();
 	
 	// Calibration variables
 	long f_ax,f_ay, f_az;	// Used in filter
@@ -51,17 +67,22 @@ private:
 	long f_gx,f_gy, f_gz;	// Used in filter
 	int p_gx, p_gy, p_gz;	// Used in filter
 	int counter=0;	// Used in filter
-	int ax_o,ay_o,az_o;	// Accelerometer offsets
-	int gx_o,gy_o,gz_o;	// Gyroscope offsets
+	int* ax_o = nullptr;	// Accelerometer offsets
+	int* ay_o = nullptr;
+	int* az_o = nullptr;
+	int* gx_o = nullptr;	// Gyroscope offsets
+	int* gy_o = nullptr;
+	int* gz_o = nullptr;
 	bool calibrate_first_run = true;
-	void readPreviousOffsets();
+	void readOffsets();
+	void printOffsets();
 	void calibrate();
 
 	void printValues();
 
 public:
 
-	//void assocConfig(Configs::ForceSensors &_config);
+	void assocConfig(Configs::GyroscpeAccelerometer &_config);
 
 	void init();
 

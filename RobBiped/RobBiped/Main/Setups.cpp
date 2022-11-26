@@ -18,4 +18,5 @@ void Executer::associations()
 	//TODO: Associate buttons to servo updater calibration
 	//servoUpdater.assocButtons(config.gpio.thinButton1, config.gpio.thinButton2);
 	forceSensorsManager.assocConfig(config.forceSensors);
+	gyroscopeAccelerometerManager.assocConfig(config.gyroAcc);
 }
