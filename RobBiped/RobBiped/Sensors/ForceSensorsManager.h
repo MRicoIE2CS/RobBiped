@@ -86,6 +86,8 @@ public:
 	
 	void tare_LeftFoot();
 	void tare_RightFoot();
+	
+	// TODO: ZMP obtention
 };
 
 #endif

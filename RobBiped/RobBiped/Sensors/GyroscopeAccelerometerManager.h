@@ -36,7 +36,7 @@ private:
 	 
 	Configuration::Configs::GyroscpeAccelerometer* config;
 
-	MPU6050 mpu5060;
+	MPU6050 mpu6050;
 	
 	// Raw values of accelerometer and gyroscope
 	int16_t ax, ay, az;
@@ -88,15 +88,21 @@ public:
 
 	bool update();
 	
-	void getValues(float* ax_m_s2, float* ay_m_s2, float* az_m_s2, float* gx_deg_s, float* gy_deg_s, float* gz_deg_s);
+	void getValues(float* _ax_m_s2, float* _ay_m_s2, float* _az_m_s2, float* _gx_deg_s, float* _gy_deg_s, float* _gz_deg_s);
 	
-	void getValue_ax_m_s2(float* ax_m_s2);
-	void getValue_ay_m_s2(float* ay_m_s2);
-	void getValue_az_m_s2(float* az_m_s2);
+	void getValue_ax_m_s2(float* _ax_m_s2);
+	float getValue_ax_m_s2();
+	void getValue_ay_m_s2(float* _ay_m_s2);
+	float getValue_ay_m_s2();
+	void getValue_az_m_s2(float* _az_m_s2);
+	float getValue_az_m_s2();
 	
-	void getValue_gx_deg_s(float* gx_deg_s);
-	void getValue_gy_deg_s(float* gy_deg_s);
-	void getValue_gz_deg_s(float* gz_deg_s);
+	void getValue_gx_deg_s(float* _gx_deg_s);
+	float getValue_gx_deg_s();
+	void getValue_gy_deg_s(float* _gy_deg_s);
+	float getValue_gy_deg_s();
+	void getValue_gz_deg_s(float* _gz_deg_s);
+	float getValue_gz_deg_s();
 };
 
 
