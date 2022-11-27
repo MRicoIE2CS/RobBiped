@@ -55,8 +55,6 @@ private:
 	
 	Configuration::Configs::ForceSensors *config;
 	
-	void configuration();
-	
 	double *calibration_LeftFoot_LeftFrontSensor;
 	double *calibration_LeftFoot_RightFrontSensor;
 	double *calibration_LeftFoot_LeftBackSensor;
@@ -88,6 +86,8 @@ public:
 	
 	void tare_LeftFoot();
 	void tare_RightFoot();
+	
+	// TODO: ZMP obtention
 };
 
 #endif

@@ -20,6 +20,7 @@
 #include "../Utils/ExponentialFilter.h"
 #include "../UserInput/UserInput.h"
 #include "../Sensors/ForceSensorsManager.h"
+#include "../Sensors/GyroscopeAccelerometerManager.h"
 
 class Executer {
 	
@@ -37,11 +38,16 @@ class Executer {
 		SignalGenerator signalGenerator_1;
 		JointsManager servoUpdater;
 		ForceSensorsManager forceSensorsManager;
+		GyroscopeAccelerometerManager gyroscopeAccelerometerManager;
 		///// END OBJECT TASKS __//
 	
 		/////____________ PRIVATE FUNCTIONS: __//
 		void setup();
 		void associations();
+		
+		void inputs();
+		void mainExecution();
+		void outputs();
 		///// END PRIVATE FUNCTIONS: __//
 	
 	public:

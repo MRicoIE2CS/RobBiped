@@ -27,10 +27,6 @@ class ExpFilterPeakReject: public ExpFilter {
 		double filter_pr(int32_t rawValue, bool acceptStep = false);
 		double filter_pr(uint64_t rawValue, bool acceptStep = false);
 		double filter_pr(int64_t rawValue, bool acceptStep = false);
-		
-		
 	};
 
-
 #endif
-
