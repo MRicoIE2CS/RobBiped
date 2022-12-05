@@ -7,11 +7,11 @@
  */ 
 
 #include "Main/Executer.h"
-#include "UserInput/SerialCommand.h"
+#include "UserInput/Command.h"
 
 Executer executer;
 
-SerialCommand* serialCommand = SerialCommand::getInstance();
+Command* serialCommand = Command::getInstance();
 
 void setup()
 {

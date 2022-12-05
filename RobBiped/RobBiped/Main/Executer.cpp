@@ -43,51 +43,6 @@ void Executer::inputs()
 	if (forceSensorsManager.getExecutionFlag())
 	{
 		bool updated = forceSensorsManager.update();
-		
-		if (updated) {
-			// DEBUG:
-			
-			// 			Serial.println("Reading____________________________");
-			// 			Serial.print("LeftFoot_LeftFrontSensor: \t\t");
-			// 			Serial.print(forceSensorsManager.getValue_LeftFoot_LeftFrontSensor());
-			// 			Serial.print("\tLeftFoot_RightFrontSensor: \t\t");
-			// 			Serial.println(forceSensorsManager.getValue_LeftFoot_RightFrontSensor());
-			// 			Serial.print("LeftFoot_LeftBackSensor: \t\t");
-			// 			Serial.print(forceSensorsManager.getValue_LeftFoot_LeftBackSensor());
-			// 			Serial.print("\tLeftFoot_RightBackSensor: \t\t");
-			// 			Serial.println(forceSensorsManager.getValue_LeftFoot_RightBackSensor());
-			//
-			//
-			// 			Serial.print("RightFoot_LeftFrontSensor: \t\t");
-			// 			Serial.print(forceSensorsManager.getValue_RightFoot_LeftFrontSensor());
-			// 			Serial.print("\tRightFoot_RightFrontSensor: \t\t");
-			// 			Serial.println(forceSensorsManager.getValue_RightFoot_RightFrontSensor());
-			// 			Serial.print("RightFoot_LeftBackSensor: \t\t");
-			// 			Serial.print(forceSensorsManager.getValue_RightFoot_LeftBackSensor());
-			// 			Serial.print("\tRightFoot_RightBackSensor: \t\t");
-			// 			Serial.println(forceSensorsManager.getValue_RightFoot_RightBackSensor());
-			//
-			// 			Serial.println("\tTime between readings (us): \t");
-			// 			Serial.print(forceSensorsManager.getLastElapsedTimeBetweenReadings());
-			// 			Serial.println();
-			//
-			// 			if(Serial.available())
-			// 			{
-			// 				char temp = Serial.read();
-			// 				if(temp == 'x')
-			// 				{
-			// 					Serial.println("TARE");
-			// 					forceSensorsManager.tare_LeftFoot();
-			// 				}
-			// 				else if(temp == 'c')
-			// 				{
-			// 					Serial.println("TARE");
-			// 					forceSensorsManager.tare_RightFoot();
-			// 				}
-			// 			}
-			
-			// END DEBUG
-		}
 	}
 }
 

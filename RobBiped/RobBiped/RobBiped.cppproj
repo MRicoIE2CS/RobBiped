@@ -666,10 +666,10 @@
     <Compile Include="UserInput\Potentiometer.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="UserInput\SerialCommand.cpp">
+    <Compile Include="UserInput\Command.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="UserInput\SerialCommand.h">
+    <Compile Include="UserInput\Command.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="UserInput\UserInput.cpp">

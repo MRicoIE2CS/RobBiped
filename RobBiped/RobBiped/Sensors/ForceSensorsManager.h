@@ -17,6 +17,7 @@
 
 #include "../Main/I_PeriodicTask.h"
 #include "../Main/Configs.h"
+#include "../UserInput/Command.h"
 #include "HX711/multiple_HX711.h"
 #include "../Utils/ExponentialFilterWithPeakRejection.h"
 
@@ -30,28 +31,31 @@ using namespace Configuration;
 class ForceSensorsManager : public I_PeriodicTask
 {
 private:
+
+	// Serial Commands pointer
+	Command* command;
 	
 	Multiple_HX711 multiple_hx711;
-	
+
 	// Readings
-	int32_t Ax64ChannelValue_0;
-	int32_t Bx32ChannelValue_0;
-	int32_t Ax64ChannelValue_1;
-	int32_t Bx32ChannelValue_1;
-	int32_t Ax64ChannelValue_2;
-	int32_t Bx32ChannelValue_2;
-	int32_t Ax64ChannelValue_3;
-	int32_t Bx32ChannelValue_3;
+	int32_t value_LeftFoot_LeftBack;
+	int32_t value_LeftFoot_LeftFront;
+	int32_t value_LeftFoot_RightBack;
+	int32_t value_LeftFoot_RightFront;
+	int32_t value_RightFoot_LeftBack;
+	int32_t value_RightFoot_LeftFront;
+	int32_t value_RightFoot_RightBack;
+	int32_t value_RightFoot_RightFront;
 	
 	// One filter per each measured magnitude
-	ExpFilterPeakReject filter_ch0_Ax64;
-	ExpFilterPeakReject filter_ch0_Bx32;
-	ExpFilterPeakReject filter_ch1_Ax64;
-	ExpFilterPeakReject filter_ch1_Bx32;
-	ExpFilterPeakReject filter_ch2_Ax64;
-	ExpFilterPeakReject filter_ch2_Bx32;
-	ExpFilterPeakReject filter_ch3_Ax64;
-	ExpFilterPeakReject filter_ch3_Bx32;
+	ExpFilterPeakReject filter_LeftFoot_LeftBack;
+	ExpFilterPeakReject filter_LeftFoot_LeftFront;
+	ExpFilterPeakReject filter_LeftFoot_RightBack;
+	ExpFilterPeakReject filter_LeftFoot_RightFront;
+	ExpFilterPeakReject filter_RightFoot_LeftBack;
+	ExpFilterPeakReject filter_RightFoot_LeftFront;
+	ExpFilterPeakReject filter_RightFoot_RightBack;
+	ExpFilterPeakReject filter_RightFoot_RightFront;
 	
 	Configuration::Configs::ForceSensors *config;
 	
@@ -63,6 +67,8 @@ private:
 	double *calibration_RightFoot_RightFrontSensor;
 	double *calibration_RightFoot_LeftBackSensor;
 	double *calibration_RightFoot_RightBackSensor;
+	
+	void printValues();
 
 public:
 
@@ -88,6 +94,8 @@ public:
 	void tare_RightFoot();
 	
 	// TODO: ZMP obtention
+	void getValues_ZMP_leftFoot(int16_t& x_mm, int16_t& y_mm);
+	void getValues_ZMP_rightFoot(int16_t& x_mm, int16_t& y_mm);
 };
 
 #endif

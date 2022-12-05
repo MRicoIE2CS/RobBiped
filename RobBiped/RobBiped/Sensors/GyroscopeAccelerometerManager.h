@@ -22,7 +22,7 @@
 #include "GyroAcc/MPU6050/MPU6050.h"
 
 #include "../Main/I_PeriodicTask.h"
-#include "../UserInput/SerialCommand.h"
+#include "../UserInput/Command.h"
 #include "../Main/Configs.h"
 
 using namespace Configuration;
@@ -32,7 +32,7 @@ class GyroscopeAccelerometerManager : public I_PeriodicTask
 private:
 
 	// Serial Commands pointer
- 	SerialCommand* serialCommand;
+ 	Command* command;
 	 
 	Configuration::Configs::GyroscpeAccelerometer* config;
 

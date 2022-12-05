@@ -1,13 +1,13 @@
 /*
- * SerialCommand.h
+ * Command.h
  *
  * Created: 24/11/2022 21:56:52
  *  Author: MRICO
  */ 
 
 
-#ifndef _SERIALCOMMAND_h
-#define _SERIALCOMMAND_h
+#ifndef _COMMAND_h
+#define _COMMAND_h
 
 #if defined(ARDUINO) && ARDUINO >= 100
 #include "Arduino.h"
@@ -16,15 +16,19 @@
 #endif
 
 
-struct SerialCommand
+struct Command
 {
-	static SerialCommand* getInstance();
+	static Command* getInstance();
 
 	void listenForCommands();
 	
 	struct CommandsList
 	{
 		bool init = false;
+		bool force_tare_left = false;
+		bool force_tare_right = false;
+		bool force_debug_on = false;
+		bool force_debug_off = false;
 		bool gyroacc_calibrate_on = false;
 		bool gyroacc_calibrate_off = false;
 		bool gyroacc_debug_on = false;
@@ -33,11 +37,11 @@ struct SerialCommand
 	
 private:
 
-	SerialCommand(){};
-	SerialCommand(const SerialCommand&); // Disabling copy-ctor
-	SerialCommand& operator=(const SerialCommand&);
+	Command(){};
+	Command(const Command&); // Disabling copy-ctor
+	Command& operator=(const Command&);
 
-	static SerialCommand* _pointer;
+	static Command* _pointer;
 };
 
 #endif
