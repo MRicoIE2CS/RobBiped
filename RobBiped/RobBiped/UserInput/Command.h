@@ -29,6 +29,8 @@ struct Command
 		bool force_tare_right = false;
 		bool force_debug_on = false;
 		bool force_debug_off = false;
+		bool zmp_debug_on = false;
+		bool zmp_debug_off = false;
 		bool gyroacc_calibrate_on = false;
 		bool gyroacc_calibrate_off = false;
 		bool gyroacc_debug_on = false;

@@ -68,7 +68,16 @@ private:
 	double *calibration_RightFoot_LeftBackSensor;
 	double *calibration_RightFoot_RightBackSensor;
 	
+	int16_t *separation_frontBack_mm;
+	int16_t *separation_leftRight_mm;
+	int16_t zmp_left_foot_x_mm;
+	int16_t zmp_left_foot_y_mm;
+	int16_t zmp_right_foot_x_mm;
+	int16_t zmp_right_foot_y_mm;
+	void calculate_ZMP();
+	
 	void printValues();
+	void printZMP();
 
 public:
 
@@ -79,21 +88,20 @@ public:
 	bool update();
 	
 	// Readings obtention in gr.
-	int32_t getValue_LeftFoot_LeftFrontSensor();
-	int32_t getValue_LeftFoot_RightFrontSensor();
-	int32_t getValue_LeftFoot_LeftBackSensor();
-	int32_t getValue_LeftFoot_RightBackSensor();
-	int32_t getValue_RightFoot_LeftFrontSensor();
-	int32_t getValue_RightFoot_RightFrontSensor();
-	int32_t getValue_RightFoot_LeftBackSensor();
-	int32_t getValue_RightFoot_RightBackSensor();
+	int32_t getValue_gr_LeftFoot_LeftFrontSensor();
+	int32_t getValue_gr_LeftFoot_RightFrontSensor();
+	int32_t getValue_gr_LeftFoot_LeftBackSensor();
+	int32_t getValue_gr_LeftFoot_RightBackSensor();
+	int32_t getValue_gr_RightFoot_LeftFrontSensor();
+	int32_t getValue_gr_RightFoot_RightFrontSensor();
+	int32_t getValue_gr_RightFoot_LeftBackSensor();
+	int32_t getValue_gr_RightFoot_RightBackSensor();
 	
 	uint32_t getLastElapsedTimeBetweenReadings();
 	
 	void tare_LeftFoot();
 	void tare_RightFoot();
 	
-	// TODO: ZMP obtention
 	void getValues_ZMP_leftFoot(int16_t& x_mm, int16_t& y_mm);
 	void getValues_ZMP_rightFoot(int16_t& x_mm, int16_t& y_mm);
 };

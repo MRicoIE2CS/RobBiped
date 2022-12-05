@@ -9,6 +9,14 @@
 
 Command* Command::_pointer = nullptr;
 
+Command* Command::getInstance()
+{
+	if(_pointer == nullptr){
+		_pointer = new Command();
+	}
+	return _pointer;
+}
+
 void Command::listenForCommands()
 {
 	if(Serial.available()){
@@ -23,11 +31,21 @@ void Command::listenForCommands()
 		else if (command.equals("force.tar.right")){
 			commands.force_tare_right = true;
 		}
+		else if (command.equals("force.tar.all")){
+			commands.force_tare_left = true;
+			commands.force_tare_right = true;
+		}
 		else if (command.equals("force.deb.on")){
 			commands.force_debug_on = true;
 		}
 		else if (command.equals("force.deb.off")){
 			commands.force_debug_off = true;
+		}
+		else if (command.equals("zmp.deb.on")){
+			commands.zmp_debug_on = true;
+		}
+		else if (command.equals("zmp.deb.off")){
+			commands.zmp_debug_off = true;
 		}
 		else if (command.equals("gyro.cal.on")){
 			commands.gyroacc_calibrate_on = true;
@@ -45,12 +63,4 @@ void Command::listenForCommands()
 		{
 		}
 	}
-}
-
-Command* Command::getInstance()
-{
-	if(_pointer==nullptr){
-		_pointer = new Command();
-	}
-	return _pointer;
 }
