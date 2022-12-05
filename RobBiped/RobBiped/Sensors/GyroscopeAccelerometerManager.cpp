@@ -32,8 +32,8 @@ void GyroscopeAccelerometerManager::init()
 	mpu6050.setYGyroOffset(*gy_o);
 	mpu6050.setZGyroOffset(*gz_o);
 	
-	// Get SerialCommand singleton instance
-	serialCommand = SerialCommand::getInstance();
+	// Get Command singleton instance
+	command = Command::getInstance();
 
 	if (mpu6050.testConnection()) Serial.println("mpu6050 iniciado correctamente");
 	else Serial.println("Error al iniciar el mpu6050");
@@ -164,7 +164,7 @@ void GyroscopeAccelerometerManager::calibrate()
 bool GyroscopeAccelerometerManager::update()
 {
 	
-	if (serialCommand->commands.gyroacc_calibrate_on)
+	if (command->commands.gyroacc_calibrate_on)
 	{
 		if (calibrate_first_run){
 			calibrate_first_run = false;
@@ -172,10 +172,10 @@ bool GyroscopeAccelerometerManager::update()
 		}
 		calibrate();
 
-		if (serialCommand->commands.gyroacc_calibrate_off)
+		if (command->commands.gyroacc_calibrate_off)
 		{
-			serialCommand->commands.gyroacc_calibrate_on = false;
-			serialCommand->commands.gyroacc_calibrate_off = false;
+			command->commands.gyroacc_calibrate_on = false;
+			command->commands.gyroacc_calibrate_off = false;
 			calibrate_first_run = true;
 			printOffsets();
 		}
@@ -189,20 +189,20 @@ bool GyroscopeAccelerometerManager::update()
 		//Serial.println("Elapsed micros: " + (String)(micros() - previousMicros));		// just 52us elapsed here
 	}
 	
-	if (serialCommand->commands.gyroacc_debug_on)
+	if (command->commands.gyroacc_debug_on)
 	{
 		printValues();
-		if (serialCommand->commands.gyroacc_debug_off)
+		if (command->commands.gyroacc_debug_off)
 		{
-			serialCommand->commands.gyroacc_debug_on = false;
-			serialCommand->commands.gyroacc_debug_off = false;
+			command->commands.gyroacc_debug_on = false;
+			command->commands.gyroacc_debug_off = false;
 		}
 	}
 }
 
 void GyroscopeAccelerometerManager::printValues()
 {
-	Serial.println("_________________________________");
+	Serial.println("Reading GYROSCOPE ACCELEROMETER SENSOR____________________________");
 	Serial.print("a[x y z](m/s2) g[x y z](deg/s):\t");
 	Serial.print(ax_m_s2); Serial.print("\t");
 	Serial.print(ay_m_s2); Serial.print("\t");

@@ -31,8 +31,8 @@ struct Configs
 	
 	struct ForceSensors {
 		struct GPIO {
-			uint8_t clock = 18;
-			uint8_t dINs[hx711_number] = {19, 5, 35, 34};	// Search upper for hx711_number static const
+			uint8_t clock = 27;
+			uint8_t dINs[hx711_number] = {33, 32, 35, 34};	// Search upper for hx711_number static const
 			}gpio;
 		double filter_exp_constant = 0.2;
 		uint16_t filter_threshold_value = 500000;
@@ -44,6 +44,10 @@ struct Configs
 		double calibration_RightFoot_RightFrontSensor = 0.092529;
 		double calibration_RightFoot_LeftBackSensor = 0.093087;
 		double calibration_RightFoot_RightBackSensor = 0.094197;
+		struct Location {
+			int16_t frontBack_separation = 103;
+			int16_t leftRight_separation = 37;
+			}location_mm;
 		}forceSensors;		// Dependent on static const Configuration::hx711_number
 	
 	struct GyroscpeAccelerometer {
