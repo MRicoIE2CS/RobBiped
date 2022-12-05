@@ -185,13 +185,13 @@ void ForceSensorsManager::calculate_ZMP()
 			value_LeftFoot_LeftBack + (value_LeftFoot_LeftFront * *separation_frontBack_mm) + value_LeftFoot_RightBack + (value_LeftFoot_RightFront * *separation_frontBack_mm);
 	
 	// ZMP X coordinate of the left foot, in mm, from the left-back sensor
-	zmp_left_foot_x_mm = (force_sum == 0) ? 0 : force_ponderatedSum / force_sum;
+	zmp_left_foot_x_mm = filter_zmp_left_foot_x_mm.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
 	
 	force_ponderatedSum =
 			value_LeftFoot_LeftBack + value_LeftFoot_LeftFront + (value_LeftFoot_RightBack * *separation_leftRight_mm) + (value_LeftFoot_RightFront * *separation_leftRight_mm);
 	
 	// ZMP Y coordinate of the left foot, in mm, from the left-back sensor
-	zmp_left_foot_y_mm = (force_sum == 0) ? 0 : force_ponderatedSum / force_sum;
+	zmp_left_foot_y_mm = filter_zmp_left_foot_y_mm.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
 	
 	force_sum =
 			value_RightFoot_LeftBack + value_RightFoot_LeftFront + value_RightFoot_RightBack + value_RightFoot_RightFront;
@@ -199,13 +199,13 @@ void ForceSensorsManager::calculate_ZMP()
 			value_RightFoot_LeftBack + (value_RightFoot_LeftFront * *separation_frontBack_mm) + value_RightFoot_RightBack + (value_RightFoot_RightFront * *separation_frontBack_mm);
 	
 	// ZMP X coordinate of the right foot, in mm, from the left-back sensor
-	zmp_right_foot_x_mm = (force_sum == 0) ? 0 : force_ponderatedSum / force_sum;
+	zmp_right_foot_x_mm = filter_zmp_right_foot_x_mm.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
 	
 	force_ponderatedSum =
 			value_RightFoot_LeftBack + value_RightFoot_LeftFront + (value_RightFoot_RightBack * *separation_leftRight_mm) + (value_RightFoot_RightFront * *separation_leftRight_mm);
 	
 	// ZMP Y coordinate of the right foot, in mm, from the left-back sensor
-	zmp_right_foot_y_mm = (force_sum == 0) ? 0 : force_ponderatedSum / force_sum;
+	zmp_right_foot_y_mm = filter_zmp_right_foot_y_mm.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
 }
 
 void ForceSensorsManager::getValues_ZMP_leftFoot(int16_t& x_mm, int16_t& y_mm)
@@ -250,7 +250,7 @@ void ForceSensorsManager::printZMP()
 {
 	Serial.println("Reading ZMP coordinates____________________________");
 	Serial.print("Left foot X mm(): \t\t");
-	Serial.println(zmp_right_foot_x_mm);
+	Serial.println(zmp_left_foot_x_mm);
 	Serial.print("Left foot Y mm(): \t\t");
 	Serial.println(zmp_left_foot_y_mm);
 	Serial.print("Right foot X mm(): \t\t");

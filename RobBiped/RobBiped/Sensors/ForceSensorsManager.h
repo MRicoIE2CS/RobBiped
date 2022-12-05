@@ -19,6 +19,7 @@
 #include "../Main/Configs.h"
 #include "../UserInput/Command.h"
 #include "HX711/multiple_HX711.h"
+#include "../Utils/ExponentialFilter.h"
 #include "../Utils/ExponentialFilterWithPeakRejection.h"
 
 using namespace Configuration;
@@ -74,6 +75,12 @@ private:
 	int16_t zmp_left_foot_y_mm;
 	int16_t zmp_right_foot_x_mm;
 	int16_t zmp_right_foot_y_mm;
+	ExpFilter filter_zmp_left_foot_x_mm;
+	ExpFilter filter_zmp_left_foot_y_mm;
+	ExpFilter filter_zmp_right_foot_x_mm;
+	ExpFilter filter_zmp_right_foot_y_mm;
+	// TODO: In future will be needed to filter noise when values are low (although this will happen only when foot is not on ground)
+	// and also a manner to obtain if foot is touching ground (with a threshold, for instance)
 	void calculate_ZMP();
 	
 	void printValues();
