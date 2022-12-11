@@ -25,6 +25,8 @@ struct Command
 	struct CommandsList
 	{
 		bool init = false;
+		bool servo_onoff_toggle = false;
+		bool servo_selection_button_emulation = false;
 		bool force_tare_left = false;
 		bool force_tare_right = false;
 		bool force_debug_on = false;

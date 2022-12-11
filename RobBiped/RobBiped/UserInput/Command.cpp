@@ -25,6 +25,12 @@ void Command::listenForCommands()
 		if (command.equals("init")){
 			commands.init = true;
 		}
+		else if (command.equals("servo.pwr")){
+			commands.servo_onoff_toggle = true;
+		}
+		else if (command.equals("servo.sel")){
+			commands.servo_selection_button_emulation = true;
+		}
 		else if (command.equals("force.tar.left")){
 			commands.force_tare_left = true;
 		}
