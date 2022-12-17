@@ -35,7 +35,7 @@ void JointsManager::jointsConfig(){
 
 // LEFT HIP - PITCH
 	jointInitializer.invertAngleSign(false);
-	jointInitializer.calibration_setZero(false, 1.79);
+	jointInitializer.calibration_setZero(false, 1.84);
 	jointInitializer.calibration_setMinAngle(false, -0.45);
 	jointInitializer.calibration_setMaxAngle(false, 1);
 	PCA9685_1_servoMap[3] = jointInitializer;
@@ -67,13 +67,13 @@ void JointsManager::jointsConfig(){
 
 // RIGHT SHOULDER
 	jointInitializer.invertAngleSign(true);
-	jointInitializer.calibration_setZero(false, 1.27);
+	jointInitializer.calibration_setZero(false, 1.67);
 	jointInitializer.calibration_setMinAngle(false, -0.45);
 	jointInitializer.calibration_setMaxAngle(false, 0.45);
 	PCA9685_1_servoMap[9] = jointInitializer;
 // RIGHT SHOULDER
 	jointInitializer.invertAngleSign(true);
-	jointInitializer.calibration_setZero(false, 1.27);
+	jointInitializer.calibration_setZero(false, 1.67);
 	jointInitializer.calibration_setMinAngle(false, -0.45);
 	jointInitializer.calibration_setMaxAngle(false, 0.45);
 	PCA9685_1_servoMap[10] = jointInitializer;
@@ -91,16 +91,12 @@ void JointsManager::jointsConfig(){
 	jointInitializer.calibration_setMaxAngle(false, 0.45);
 	PCA9685_1_servoMap[12] = jointInitializer;
 	
-	
-// ESTROPEADO!!!!!
 // RIGHT KNEE
 	jointInitializer.invertAngleSign(false);
-	jointInitializer.calibration_setZero(false, 1.64);
-	jointInitializer.calibration_setMinAngle(false, -0.45);
-	jointInitializer.calibration_setMaxAngle(false, 0.45);
-	jointInitializer.cleanCalibrationValues();
+	jointInitializer.calibration_setZero(false, 1.87);
+	jointInitializer.calibration_setMinAngle(false, -1.5);
+	jointInitializer.calibration_setMaxAngle(false, 0.2);
 	PCA9685_1_servoMap[13] = jointInitializer;
-	
 	
 //RIGHT FOOT - ROLL
 	jointInitializer.invertAngleSign(true);
