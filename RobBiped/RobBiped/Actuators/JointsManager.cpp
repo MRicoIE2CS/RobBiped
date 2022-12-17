@@ -90,7 +90,6 @@ void JointsManager::servoUpdate(){
 void JointsManager::setAngleToServo(unsigned short servoIndex, double servoAngle){
 	
 	if (currentState == State::running){
-		Serial.println("Running: " + (String)servoAngle);
 		PCA9685_1_servoMap[servoIndex].setAngleTarget_rad(servoAngle);
 	}
 	

@@ -61,15 +61,19 @@ void Executer::outputs()
 // 		uint16_t pot1Val = userInput.getAnalogValue(UserInput::AnalogInputList::potentiometer2);
 // 		
 // 		double readingAngle_0;
+// 		double max_val = 0.2;
+// 		double min_val = -0.2;
+// 		double ampl = max_val - min_val;
 // 		if (pot1Val < 1000){
 // 			readingAngle_0 = 0;
 // 		}
 // 		else if (pot1Val > 3000){
-// 			readingAngle_0 = PI;
+// 			readingAngle_0 = ampl;
 // 		}
 // 		else {
-// 			readingAngle_0 = (double)(pot1Val - 1000) / (double)2000 * PI;
+// 			readingAngle_0 = (double)(pot1Val - 1000) / (double)2000 * ampl;
 // 		}
+// 		double nextAngle_0 = readingAngle_0 - ampl / 2;
 		double nextAngle_0 = 0.0;
 		// END Example
 		
