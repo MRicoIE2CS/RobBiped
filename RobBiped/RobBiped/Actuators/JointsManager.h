@@ -9,18 +9,22 @@
 	#include "WProgram.h"
 #endif
 
-#include "../Main/I_PeriodicTask.h"
-#include "Joint.h"
-#include "MG996R.h"
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 #include <map>
-using namespace std;
+
+#include "../Main/I_PeriodicTask.h"
+#include "Joint.h"
+#include "MG996R.h"
 #include "../UserInput/UserInput.h"
+#include "../UserInput/Command.h"
 
 class JointsManager : public I_PeriodicTask{
 	
 	private:
+	
+		// Serial Commands pointer
+		Command* command;
 	
 		Adafruit_PWMServoDriver PCA9685_1 = Adafruit_PWMServoDriver(0x40);
 		
@@ -39,7 +43,7 @@ class JointsManager : public I_PeriodicTask{
 			uint32_t SerialPrint_Period_ms = 400;
 		} calibrationData;
 		
-		void checkState(bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
+		void checkState(bool& sel_button_pressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
 		void calibrationModeEnterExitConditions(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
 		void calibrationStateMachine(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
 		void calibrationButtonPressedFlagMechanism(uint32_t currentMillis);
@@ -50,7 +54,8 @@ class JointsManager : public I_PeriodicTask{
 		void calibration_SerialPrint(uint32_t currentMillis);
 		void sleep();
 		void wakeup();
-		bool changeStateConditions(uint32_t currentMillis, bool squareButtonPressed);
+		bool changeStateConditions(uint32_t& currentMillis, bool& switchCommand);
+		void changeState(uint32_t& currentMillis);
 		
 		void calibration_setAngleToServo(uint16_t potentiometerVal);
 		double calibration_getAngleFromPotentiometer(uint16_t potentiometerVal);
@@ -63,8 +68,6 @@ class JointsManager : public I_PeriodicTask{
 		
 		void setAngleToServo(unsigned short servoIndex, double servoAngle);
 		void setAngleToServo(unsigned short servoIndex, int servoAngle);
-		
-		void changeState(uint32_t currentMillis);
 		
 		void update(UserInput _userInput);
 		void servoUpdate();

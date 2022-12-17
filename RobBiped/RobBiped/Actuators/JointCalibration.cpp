@@ -32,7 +32,7 @@ double JointsManager::calibration_getAngleFromPotentiometer(uint16_t potentiomet
 void JointsManager::calibrationModeEnterExitConditions(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
 	
 	bool conditionsToEnterCalibration = (currentState == State::running) && (ThinButton1Pressed && ThinButton2Pressed);
-	bool conditionsToExitCalibration = (currentState == State::calibrating) &&(calibrationData.calibrationState == CalibrationState::servoSelection) && (ThinButton1Pressed && ThinButton2Pressed);
+	bool conditionsToExitCalibration = (currentState == State::calibrating) && (calibrationData.calibrationState == CalibrationState::servoSelection) && (ThinButton1Pressed && ThinButton2Pressed);
 	if (conditionsToEnterCalibration && calibrationData.calibrationStateButtonChangeFlag == false) {
 		currentState = State::calibrating;
 		calibrationData.calibrationState = CalibrationState::servoSelection;

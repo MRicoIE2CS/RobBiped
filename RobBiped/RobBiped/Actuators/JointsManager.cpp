@@ -7,7 +7,8 @@
 
 void JointsManager::init(){
 	
-	
+	// Get Command singleton instance
+	command = Command::getInstance();
 
 	PCA9685_1.begin();
 	PCA9685_1.setPWMFreq(50);  // Analog servos run at ~50 Hz updates
@@ -18,7 +19,7 @@ void JointsManager::init(){
 	
 void JointsManager::update(UserInput _userInput){
 	
-	checkState(_userInput.getDigitalValue(UserInput::DigitalInputList::squareButton),
+	checkState(command->commands.servo_selection_button_emulation,
 				_userInput.getDigitalValue(UserInput::DigitalInputList::thinButton1),
 				_userInput.getDigitalValue(UserInput::DigitalInputList::thinButton2));
 				
@@ -29,33 +30,35 @@ void JointsManager::update(UserInput _userInput){
 	servoUpdate();
 }
 
-void JointsManager::checkState(bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
+void JointsManager::checkState(bool& sel_button_pressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
 	uint32_t currentMillis = millis();
 	
-	if (changeStateConditions(currentMillis, squareButtonPressed)) changeState(currentMillis);	// run/sleep to servos
+	if (changeStateConditions(currentMillis, command->commands.servo_onoff_toggle)) changeState(currentMillis);	// run/sleep to servos
 	
-	calibrationModeEnterExitConditions(currentMillis, squareButtonPressed, ThinButton1Pressed, ThinButton2Pressed);
-	if (currentState == State::calibrating) calibrationStateMachine(currentMillis, squareButtonPressed, ThinButton1Pressed, ThinButton2Pressed);
+	calibrationModeEnterExitConditions(currentMillis, sel_button_pressed, ThinButton1Pressed, ThinButton2Pressed);
+	if (currentState == State::calibrating) calibrationStateMachine(currentMillis, sel_button_pressed, ThinButton1Pressed, ThinButton2Pressed);
 	calibrationButtonPressedFlagMechanism(currentMillis);
 	
+	sel_button_pressed = false;
 }
 
-bool JointsManager::changeStateConditions(uint32_t currentMillis, bool squareButtonPressed){
+bool JointsManager::changeStateConditions(uint32_t& currentMillis, bool& switchCommand){
 	
-	bool conditions = squareButtonPressed && (currentState != State::calibrating) 
-						&& (calibrationData.calibrationStateButtonChangeFlag == false)
-						&& (abs(currentMillis - lastMillisChangedState) > 2000);
+	bool conditions = switchCommand && (currentState != State::calibrating);
+						//&& (calibrationData.calibrationStateButtonChangeFlag == false)
+						//&& (abs(currentMillis - lastMillisChangedState) > 2000);
+	if (conditions) switchCommand = false;
 	return conditions;
 }
 
-void JointsManager::changeState(uint32_t currentMillis){
+void JointsManager::changeState(uint32_t& currentMillis){
 	lastMillisChangedState = currentMillis;
 	
 	if (currentState == State::running){
-		this->sleep();
+		sleep();
 	}
 	else if (currentState == State::sleeping){
-		this->wakeup();
+		wakeup();
 	}
 }
 
@@ -87,7 +90,6 @@ void JointsManager::servoUpdate(){
 void JointsManager::setAngleToServo(unsigned short servoIndex, double servoAngle){
 	
 	if (currentState == State::running){
-		Serial.println("Running: " + (String)servoAngle);
 		PCA9685_1_servoMap[servoIndex].setAngleTarget_rad(servoAngle);
 	}
 	
