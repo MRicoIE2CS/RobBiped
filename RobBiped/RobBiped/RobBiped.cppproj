@@ -591,10 +591,10 @@
     <Compile Include="Main\Configs.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Main\Executer.cpp">
+    <Compile Include="Main\Executor.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Main\Executer.h">
+    <Compile Include="Main\Executor.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Main\Setups.cpp">

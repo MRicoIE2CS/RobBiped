@@ -1,13 +1,13 @@
 /*
- * Executer.cpp
+ * Executor.cpp
  *
  * Created: 27/01/2022 11:28:19
  *  Author: MRICO
  */ 
 
-#include "Executer.h"
+#include "Executor.h"
 
-void Executer::init()
+void Executor::init()
 {
 	setup();
 	
@@ -31,7 +31,7 @@ void Executer::init()
 	// END TASKS CONFIGURATION
 }
 
-void Executer::inputs()
+void Executor::inputs()
 {
 	if (userInput.getExecutionFlag()) userInput.update();
 	
@@ -46,14 +46,14 @@ void Executer::inputs()
 	}
 }
 
-void Executer::mainExecution()
+void Executor::mainExecution()
 {
 	
 	
 	
 }
 
-void Executer::outputs()
+void Executor::outputs()
 {
 	if (servoUpdater.getExecutionFlag())
 	{
@@ -100,7 +100,7 @@ void Executer::outputs()
 	}
 }
 
-void Executer::execution()
+void Executor::execution()
 {
 	inputs();
 	

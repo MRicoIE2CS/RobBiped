@@ -20,7 +20,7 @@ class UserInput : public I_PeriodicTask {
 	
 	private:
 		
-		friend class Executer;
+		friend class Executor;
 		
 		Potentiometer potentiometer1;
 		Potentiometer potentiometer2;

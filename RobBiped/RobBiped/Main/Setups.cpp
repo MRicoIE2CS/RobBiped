@@ -5,14 +5,14 @@
  *  Author: MRICO
  */ 
 
-#include "Executer.h"
+#include "Executor.h"
 
-void Executer::setup()
+void Executor::setup()
 {
 	associations();
 }
 
-void Executer::associations()
+void Executor::associations()
 {
 	userInput.assocGPIO(config.userInputPins);
 	//TODO: Associate buttons to servo updater calibration
