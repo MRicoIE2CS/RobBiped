@@ -6,10 +6,10 @@
  * Author: MRICO
  */ 
 
-#include "Main/Executer.h"
+#include "Main/Executor.h"
 #include "UserInput/Command.h"
 
-Executer executer;
+Executor executor;
 
 Command* serialCommand = Command::getInstance();
 
@@ -17,7 +17,7 @@ void setup()
 {
 	Serial.begin(500000);
 	
-	executer.init();
+	executor.init();
 	
 	while (!serialCommand->commands.init)
 	{
@@ -30,7 +30,7 @@ void setup()
 
 void loop()
 {
-	executer.execution();
+	executor.execution();
 	
 	serialCommand->listenForCommands();
 }

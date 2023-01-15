@@ -1,9 +1,9 @@
-// Executer.h
+// Executor.h
 
 
 
-#ifndef _EXECUTER_h
-#define _EXECUTER_h
+#ifndef _EXECUTOR_h
+#define _EXECUTOR_h
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "Arduino.h"
@@ -22,7 +22,7 @@
 #include "../Sensors/ForceSensorsManager.h"
 #include "../Sensors/GyroscopeAccelerometerManager.h"
 
-class Executer {
+class Executor {
 	
 	private:
 		
