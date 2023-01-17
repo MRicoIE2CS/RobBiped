@@ -32,10 +32,10 @@ class I_PeriodicTask{
 	public:
 		
 		enum class execType { inMillis, inMicros };
-		void setExecutionPeriod(execType _timerType, unsigned int _period);
+		void setExecutionPeriod(execType _timerType, uint16_t _period);
 		
-		unsigned int getExecutionPeriod();
-		unsigned long getLastMillisExecuted();
+		uint16_t getExecutionPeriod();
+		uint64_t getLastMillisExecuted();
 		bool getExecutionFlag();
 		
 		
@@ -45,11 +45,11 @@ class I_PeriodicTask{
 	
 	
 		execType timerType = execType::inMillis;
-		unsigned int executionPeriod;
-		unsigned long lastTimeExecuted;
+		uint16_t executionPeriod;
+		uint64_t lastTimeExecuted;
 		
-		unsigned long currentMillis;
-		unsigned long currentMicros;
+		uint64_t currentMillis;
+		uint64_t currentMicros;
 	
 	};
 

@@ -18,7 +18,7 @@
 
 #include "I_PeriodicTask.h"
 
-void I_PeriodicTask::setExecutionPeriod(execType _timerType, unsigned int _period)
+void I_PeriodicTask::setExecutionPeriod(execType _timerType, uint16_t _period)
 {
 	timerType = _timerType;
 	executionPeriod = _period;
@@ -33,12 +33,12 @@ void I_PeriodicTask::setExecutionPeriod(execType _timerType, unsigned int _perio
 	}
 }
 
-unsigned int I_PeriodicTask::getExecutionPeriod()
+uint16_t I_PeriodicTask::getExecutionPeriod()
 {
 	return executionPeriod;
 }
 
-unsigned long I_PeriodicTask::getLastMillisExecuted()
+uint64_t I_PeriodicTask::getLastMillisExecuted()
 {
 	return lastTimeExecuted;
 }
