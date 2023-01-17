@@ -77,12 +77,12 @@ private:
 	int64_t f_gx,f_gy, f_gz;	// Used in filter
 	int32_t p_gx, p_gy, p_gz;	// Used in filter
 	int32_t counter=0;	// Used in filter
-	int32_t* ax_o = nullptr;	// Accelerometer offsets
-	int32_t* ay_o = nullptr;
-	int32_t* az_o = nullptr;
-	int32_t* gx_o = nullptr;	// Gyroscope offsets
-	int32_t* gy_o = nullptr;
-	int32_t* gz_o = nullptr;
+	int16_t* ax_o = nullptr;	// Accelerometer offsets
+	int16_t* ay_o = nullptr;
+	int16_t* az_o = nullptr;
+	int16_t* gx_o = nullptr;	// Gyroscope offsets
+	int16_t* gy_o = nullptr;
+	int16_t* gz_o = nullptr;
 	bool calibrate_first_run = true;
 	void readOffsets();
 	void printOffsets();

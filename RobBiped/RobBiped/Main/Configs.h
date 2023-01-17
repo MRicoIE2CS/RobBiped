@@ -33,11 +33,11 @@ static const uint8_t hx711_number = 4;	// forceSensors configuration
 struct Configs 
 {
 	struct UserInputPins {
-		unsigned short squareButton = 15;
-		unsigned short thinButton1 = 2;
-		unsigned short thinButton2 = 4;
-		unsigned short potentiometer1 = 36;
-		unsigned short potentiometer2 = 39;
+		uint8_t squareButton = 15;
+		uint8_t thinButton1 = 2;
+		uint8_t thinButton2 = 4;
+		uint8_t potentiometer1 = 36;
+		uint8_t potentiometer2 = 39;
 		}userInputPins;
 	
 	struct ForceSensors {
@@ -63,12 +63,12 @@ struct Configs
 	
 	struct GyroscpeAccelerometer {
 		struct Offsets {
-			int ax_o = -35;	// Accelerometer offsets
-			int ay_o = -234;
-			int az_o = 919;
-			int gx_o = 7;		// Gyroscope offsets
-			int gy_o = -35;
-			int gz_o = -13;
+			int16_t ax_o = -35;	// Accelerometer offsets
+			int16_t ay_o = -234;
+			int16_t az_o = 919;
+			int16_t gx_o = 7;		// Gyroscope offsets
+			int16_t gy_o = -35;
+			int16_t gz_o = -13;
 			}offsets;
 		}gyroAcc;
 };

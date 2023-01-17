@@ -25,32 +25,29 @@
 	#include "WProgram.h"
 #endif
 
-
-
 class I_PeriodicTask{
-	
+
 	public:
-		
+
 		enum class execType { inMillis, inMicros };
 		void setExecutionPeriod(execType _timerType, uint16_t _period);
-		
+
+		bool getExecutionFlag();
+
+		void update();
+
+	protected:
+
 		uint16_t getExecutionPeriod();
 		uint64_t getLastMillisExecuted();
-		bool getExecutionFlag();
-		
-		
-		void update();
-		
-	protected:
-	
-	
+
 		execType timerType = execType::inMillis;
 		uint16_t executionPeriod;
 		uint64_t lastTimeExecuted;
-		
+
 		uint64_t currentMillis;
 		uint64_t currentMicros;
-	
+
 	};
 
 #endif
