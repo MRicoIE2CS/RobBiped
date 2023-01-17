@@ -25,7 +25,6 @@
 	#include "WProgram.h"
 #endif
 
-//#include "UpdateServos.h"
 #include "../Main/I_PeriodicTask.h"
 
 
@@ -41,22 +40,22 @@ class SignalGenerator : public I_PeriodicTask{
 		
 		enum class SignalType { sine, triangular, square, saw };
 			
-		void configureSignal(SignalType _type, unsigned int _period, unsigned int _amplitude, unsigned int _offset, unsigned int _phaseShift);
+		void configureSignal(SignalType _type, uint16_t _period, uint16_t _amplitude, uint16_t _offset, uint16_t _phaseShift);
 		
 		
 	private:
 	
-		unsigned long lastCalculatedTime;
+		uint64_t lastCalculatedTime;
 		
 		SignalType signalType = SignalType::sine;
 		
-		unsigned int period_ms = 500;
+		uint16_t period_ms = 500;
 		
 		double amplitude = 1;
 		
 		double offset = 0;
 		
-		unsigned int phaseShift = 0;
+		uint16_t phaseShift = 0;
 		
 		double last_output = 0;
 		

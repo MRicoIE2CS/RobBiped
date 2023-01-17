@@ -21,7 +21,7 @@
 
 double SignalGenerator::generateTrajectory(){
 	
-	unsigned long currentMillis = millis();
+	uint64_t currentMillis = millis();
 	
 	double nextOutput = offset + amplitude * sin( (double)currentMillis/(double)period_ms + (double)phaseShift) ;
 	
@@ -30,7 +30,7 @@ double SignalGenerator::generateTrajectory(){
 	return nextOutput;
 }
 
-void SignalGenerator::configureSignal(SignalGenerator::SignalType _type, unsigned int _period, unsigned int _amplitude, unsigned int _offset, unsigned int _phaseShift){
+void SignalGenerator::configureSignal(SignalGenerator::SignalType _type, uint16_t _period, uint16_t _amplitude, uint16_t _offset, uint16_t _phaseShift){
 	signalType = _type;
 	period_ms = _period;
 	amplitude = _amplitude;
