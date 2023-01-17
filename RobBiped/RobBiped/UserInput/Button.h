@@ -41,8 +41,7 @@ class Button {
 		bool readHWvalue();
 		
 	public:
-	
-		
+
 		bool getValue();
 };
 

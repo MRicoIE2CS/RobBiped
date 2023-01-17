@@ -61,7 +61,7 @@ private:
 	float accel_ang_y;
 	
 	// Rotation of sensor, obtained from gyroscope
-	long tiempo_prev, dt;
+	int64_t tiempo_prev, dt;
 	float ang_x, ang_y;
 	float ang_x_prev, ang_y_prev;
 	
@@ -72,17 +72,17 @@ private:
 	void processReadings();
 	
 	// Calibration variables
-	long f_ax,f_ay, f_az;	// Used in filter
-	int p_ax, p_ay, p_az;	// Used in filter
-	long f_gx,f_gy, f_gz;	// Used in filter
-	int p_gx, p_gy, p_gz;	// Used in filter
-	int counter=0;	// Used in filter
-	int* ax_o = nullptr;	// Accelerometer offsets
-	int* ay_o = nullptr;
-	int* az_o = nullptr;
-	int* gx_o = nullptr;	// Gyroscope offsets
-	int* gy_o = nullptr;
-	int* gz_o = nullptr;
+	int64_t f_ax,f_ay, f_az;	// Used in filter
+	int32_t p_ax, p_ay, p_az;	// Used in filter
+	int64_t f_gx,f_gy, f_gz;	// Used in filter
+	int32_t p_gx, p_gy, p_gz;	// Used in filter
+	int32_t counter=0;	// Used in filter
+	int32_t* ax_o = nullptr;	// Accelerometer offsets
+	int32_t* ay_o = nullptr;
+	int32_t* az_o = nullptr;
+	int32_t* gx_o = nullptr;	// Gyroscope offsets
+	int32_t* gy_o = nullptr;
+	int32_t* gz_o = nullptr;
 	bool calibrate_first_run = true;
 	void readOffsets();
 	void printOffsets();

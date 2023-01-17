@@ -169,7 +169,7 @@ void GyroscopeAccelerometerManager::calibrate()
 	counter++;
 }
 
-//unsigned long previousMicros = micros();
+//unsigned long previousMicros = micros();	// This line is here just in case anyone wants to analyze the processing time
 
 bool GyroscopeAccelerometerManager::update()
 {
