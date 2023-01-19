@@ -25,9 +25,9 @@ void Executor::setup()
 
 void Executor::associations()
 {
-	userInput.assocGPIO(config.userInputPins);
+	user_input_.assoc_GPIO(config_.userInputPins);
 	//TODO: Associate buttons to servo updater calibration
 	//servoUpdater.assocButtons(config.gpio.thinButton1, config.gpio.thinButton2);
-	forceSensorsManager.assocConfig(config.forceSensors);
-	gyroscopeAccelerometerManager.assocConfig(config.gyroAcc);
+	force_sensors_manager_.assoc_config(config_.forceSensors);
+	gyroscope_accelerometer_manager_.assoc_config(config_.gyroAcc);
 }

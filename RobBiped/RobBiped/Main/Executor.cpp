@@ -24,36 +24,36 @@ void Executor::init()
 	
 	//______TASKS CONFIGURATION_____//
 	
-	userInput.setExecutionPeriod(I_PeriodicTask::execType::inMillis, 5);
+	user_input_.set_execution_period(I_PeriodicTask::execType::inMillis, 5);
 	
-	servoUpdater.setExecutionPeriod(I_PeriodicTask::execType::inMillis,20);	
-	servoUpdater.init();
+	servo_updater_.set_execution_period(I_PeriodicTask::execType::inMillis,20);	
+	servo_updater_.init();
 	
-	forceSensorsManager.setExecutionPeriod(I_PeriodicTask::execType::inMillis, 5);
-	forceSensorsManager.init();
+	force_sensors_manager_.set_execution_period(I_PeriodicTask::execType::inMillis, 5);
+	force_sensors_manager_.init();
 	
-	gyroscopeAccelerometerManager.setExecutionPeriod(I_PeriodicTask::execType::inMillis, 4);
-	gyroscopeAccelerometerManager.init();
+	gyroscope_accelerometer_manager_.set_execution_period(I_PeriodicTask::execType::inMillis, 4);
+	gyroscope_accelerometer_manager_.init();
 	
 	// END TASKS CONFIGURATION
 }
 
 void Executor::inputs()
 {
-	if (userInput.getExecutionFlag()) userInput.update();
+	if (user_input_.get_execution_flag()) user_input_.update();
 	
-	if (gyroscopeAccelerometerManager.getExecutionFlag())
+	if (gyroscope_accelerometer_manager_.get_execution_flag())
 	{
-		bool updated = gyroscopeAccelerometerManager.update();
+		bool updated = gyroscope_accelerometer_manager_.update();
 	}
 	
-	if (forceSensorsManager.getExecutionFlag())
+	if (force_sensors_manager_.get_execution_flag())
 	{
-		bool updated = forceSensorsManager.update();
+		bool updated = force_sensors_manager_.update();
 	}
 }
 
-void Executor::mainExecution()
+void Executor::main_execution()
 {
 	
 	
@@ -62,7 +62,7 @@ void Executor::mainExecution()
 
 void Executor::outputs()
 {
-	if (servoUpdater.getExecutionFlag())
+	if (servo_updater_.get_execution_flag())
 	{
 // 		// INIT Example of using potentiometer to command servos
 // 		uint16_t pot1Val = userInput.getAnalogValue(UserInput::AnalogInputList::potentiometer2);
@@ -85,25 +85,25 @@ void Executor::outputs()
 		// END Example
 		
 		// Servo setpoint assignation
-		servoUpdater.setAngleToServo(0,nextAngle_0);
-		servoUpdater.setAngleToServo(1,nextAngle_0);
-		servoUpdater.setAngleToServo(2,nextAngle_0);
-		servoUpdater.setAngleToServo(3,nextAngle_0);
-		servoUpdater.setAngleToServo(4,nextAngle_0);
-		servoUpdater.setAngleToServo(5,nextAngle_0);
-		servoUpdater.setAngleToServo(6,nextAngle_0);
-		servoUpdater.setAngleToServo(7,nextAngle_0);
-		servoUpdater.setAngleToServo(8,nextAngle_0);
-		servoUpdater.setAngleToServo(9,nextAngle_0);
-		servoUpdater.setAngleToServo(10,nextAngle_0);
-		servoUpdater.setAngleToServo(11,nextAngle_0);
-		servoUpdater.setAngleToServo(12,nextAngle_0);
-		servoUpdater.setAngleToServo(13,nextAngle_0);
-		servoUpdater.setAngleToServo(14,nextAngle_0);
-		servoUpdater.setAngleToServo(15,nextAngle_0);
+		servo_updater_.set_angle_to_servo(0,nextAngle_0);
+		servo_updater_.set_angle_to_servo(1,nextAngle_0);
+		servo_updater_.set_angle_to_servo(2,nextAngle_0);
+		servo_updater_.set_angle_to_servo(3,nextAngle_0);
+		servo_updater_.set_angle_to_servo(4,nextAngle_0);
+		servo_updater_.set_angle_to_servo(5,nextAngle_0);
+		servo_updater_.set_angle_to_servo(6,nextAngle_0);
+		servo_updater_.set_angle_to_servo(7,nextAngle_0);
+		servo_updater_.set_angle_to_servo(8,nextAngle_0);
+		servo_updater_.set_angle_to_servo(9,nextAngle_0);
+		servo_updater_.set_angle_to_servo(10,nextAngle_0);
+		servo_updater_.set_angle_to_servo(11,nextAngle_0);
+		servo_updater_.set_angle_to_servo(12,nextAngle_0);
+		servo_updater_.set_angle_to_servo(13,nextAngle_0);
+		servo_updater_.set_angle_to_servo(14,nextAngle_0);
+		servo_updater_.set_angle_to_servo(15,nextAngle_0);
 		
 		// Servo setpoint command
-		servoUpdater.update(userInput);
+		servo_updater_.update(user_input_);
 	}
 }
 
@@ -111,7 +111,7 @@ void Executor::execution()
 {
 	inputs();
 	
-	mainExecution();
+	main_execution();
 	
 	outputs();
 }

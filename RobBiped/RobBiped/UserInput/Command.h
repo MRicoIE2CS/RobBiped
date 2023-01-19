@@ -29,9 +29,9 @@
 
 struct Command
 {
-	static Command* getInstance();
+	static Command* get_instance();
 
-	void listenForCommands();
+	void listen_for_commands();
 	
 	struct CommandsList
 	{
@@ -56,7 +56,7 @@ private:
 	Command(const Command&); // Disabling copy-ctor
 	Command& operator=(const Command&);
 
-	static Command* _pointer;
+	static Command* pointer_;
 };
 
 #endif

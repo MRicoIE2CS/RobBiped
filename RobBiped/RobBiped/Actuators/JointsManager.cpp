@@ -22,89 +22,89 @@
 void JointsManager::init(){
 	
 	// Get Command singleton instance
-	command = Command::getInstance();
+	command_ = Command::get_instance();
 
-	PCA9685_1.begin();
-	PCA9685_1.setPWMFreq(50);  // Analog servos run at ~50 Hz updates
+	PCA9685_1_.begin();
+	PCA9685_1_.setPWMFreq(50);  // Analog servos run at ~50 Hz updates
 	sleep();
 	
-	jointsConfig();
+	joints_config();
 }
 	
-void JointsManager::update(UserInput _userInput){
+void JointsManager::update(UserInput& _userInput){
 	
-	checkState(command->commands.servo_selection_button_emulation,
-				_userInput.getDigitalValue(UserInput::DigitalInputList::thinButton1),
-				_userInput.getDigitalValue(UserInput::DigitalInputList::thinButton2));
+	check_state(command_->commands.servo_selection_button_emulation,
+				_userInput.get_digital_value(UserInput::DigitalInputList::thinButton1),
+				_userInput.get_digital_value(UserInput::DigitalInputList::thinButton2));
 				
-	if (currentState == State::calibrating){
-		calibration_setAngleToServo(_userInput.getAnalogValue(UserInput::AnalogInputList::potentiometer1));
+	if (current_state_ == State::calibrating){
+		calibration_set_angle_to_servo(_userInput.get_analog_value(UserInput::AnalogInputList::potentiometer1));
 	}
 	
-	servoUpdate();
+	servo_update();
 }
 
-void JointsManager::checkState(bool& sel_button_pressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
+void JointsManager::check_state(bool& sel_button_pressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
 	uint32_t currentMillis = millis();
 	
-	if (changeStateConditions(currentMillis, command->commands.servo_onoff_toggle)) changeState(currentMillis);	// run/sleep to servos
+	if (change_state_conditions(currentMillis, command_->commands.servo_onoff_toggle)) change_state(currentMillis);	// run/sleep to servos
 	
-	calibrationModeEnterExitConditions(currentMillis, sel_button_pressed, ThinButton1Pressed, ThinButton2Pressed);
-	if (currentState == State::calibrating) calibrationStateMachine(currentMillis, sel_button_pressed, ThinButton1Pressed, ThinButton2Pressed);
-	calibrationButtonPressedFlagMechanism(currentMillis);
+	calibration_mode_enter_exit_conditions(currentMillis, sel_button_pressed, ThinButton1Pressed, ThinButton2Pressed);
+	if (current_state_ == State::calibrating) calibration_state_machine(currentMillis, sel_button_pressed, ThinButton1Pressed, ThinButton2Pressed);
+	calibration_button_pressed_flag_mechanism(currentMillis);
 	
 	sel_button_pressed = false;
 }
 
-bool JointsManager::changeStateConditions(uint32_t& currentMillis, bool& switchCommand){
+bool JointsManager::change_state_conditions(uint32_t& currentMillis, bool& switchCommand){
 	
-	bool conditions = switchCommand && (currentState != State::calibrating);
+	bool conditions = switchCommand && (current_state_ != State::calibrating);
 						//&& (calibrationData.calibrationStateButtonChangeFlag == false)
 						//&& (abs(currentMillis - lastMillisChangedState) > 2000);
 	if (conditions) switchCommand = false;
 	return conditions;
 }
 
-void JointsManager::changeState(uint32_t& currentMillis){
-	lastMillisChangedState = currentMillis;
+void JointsManager::change_state(uint32_t& currentMillis){
+	last_millis_changed_state_ = currentMillis;
 	
-	if (currentState == State::running){
+	if (current_state_ == State::running){
 		sleep();
 	}
-	else if (currentState == State::sleeping){
+	else if (current_state_ == State::sleeping){
 		wakeup();
 	}
 }
 
 void JointsManager::sleep(){
 	
-	PCA9685_1.sleep();
-	currentState = State::sleeping;
+	PCA9685_1_.sleep();
+	current_state_ = State::sleeping;
 }
 
 void JointsManager::wakeup(){
 	
-	PCA9685_1.wakeup();
-	currentState = State::running;
+	PCA9685_1_.wakeup();
+	current_state_ = State::running;
 }
 
-void JointsManager::servoUpdate(){
+void JointsManager::servo_update(){
 	
-	if (currentState == State::sleeping) return;
+	if (current_state_ == State::sleeping) return;
 	
 	std::map<unsigned short,Joint>::iterator itMap;
 	
-	for (itMap = PCA9685_1_servoMap.begin(); itMap!=PCA9685_1_servoMap.end(); ++itMap){
-		if (itMap->second.isUpdateNeeded()) {
-			PCA9685_1.setPWM(itMap->first, 0, itMap->second.getPWMPulseWidthUpdate() );
+	for (itMap = PCA9685_1_servoMap_.begin(); itMap!=PCA9685_1_servoMap_.end(); ++itMap){
+		if (itMap->second.is_update_needed()) {
+			PCA9685_1_.setPWM(itMap->first, 0, itMap->second.get_PWM_pulse_width_update() );
 		}
 	}
 }
 
-void JointsManager::setAngleToServo(unsigned short servoIndex, double servoAngle){
+void JointsManager::set_angle_to_servo(unsigned short servoIndex, double servoAngle){
 	
-	if (currentState == State::running){
-		PCA9685_1_servoMap[servoIndex].setAngleTarget_rad(servoAngle);
+	if (current_state_ == State::running){
+		PCA9685_1_servoMap_[servoIndex].set_angle_target_rad(servoAngle);
 	}
 	
 }

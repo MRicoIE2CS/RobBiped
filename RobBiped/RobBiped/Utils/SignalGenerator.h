@@ -36,29 +36,27 @@ class SignalGenerator : public I_PeriodicTask{
 		
 		void update();
 		
-		double generateTrajectory();
+		double generate_trajectory();
 		
 		enum class SignalType { sine, triangular, square, saw };
 			
-		void configureSignal(SignalType _type, uint16_t _period, uint16_t _amplitude, uint16_t _offset, uint16_t _phaseShift);
-		
+		void configure_signal(SignalType _type, uint16_t _period, uint16_t _amplitude, uint16_t _offset, uint16_t _phase_shift);
 		
 	private:
 	
-		uint64_t lastCalculatedTime;
+		uint64_t last_calculated_time_;
 		
-		SignalType signalType = SignalType::sine;
+		SignalType signal_type_ = SignalType::sine;
 		
-		uint16_t period_ms = 500;
+		uint16_t period_ms_ = 500;
 		
-		double amplitude = 1;
+		double amplitude_ = 1;
 		
-		double offset = 0;
+		double offset_ = 0;
 		
-		uint16_t phaseShift = 0;
+		uint16_t phase_shift_ = 0;
 		
-		double last_output = 0;
-		
+		double last_output_ = 0;
 	};
 
 

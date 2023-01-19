@@ -18,12 +18,12 @@
 
 #include "JointsManager.h"
 
-void JointsManager::calibration_setAngleToServo(uint16_t potentiometerVal){
+void JointsManager::calibration_set_angle_to_servo(uint16_t potentiometerVal){
 	
-	PCA9685_1_servoMap[calibrationData.selectedServo].setAngleTarget_rad(calibration_getAngleFromPotentiometer(potentiometerVal));
+	PCA9685_1_servoMap_[calibration_data_.selectedServo].set_angle_target_rad(calibration_get_angle_from_potentiometer(potentiometerVal));
 }
 
-double JointsManager::calibration_getAngleFromPotentiometer(uint16_t potentiometerVal){
+double JointsManager::calibration_get_angle_from_potentiometer(uint16_t potentiometerVal){
 	
 	double readingAngle_0;
 	if (potentiometerVal < 1000){
@@ -40,65 +40,65 @@ double JointsManager::calibration_getAngleFromPotentiometer(uint16_t potentiomet
 	return nextAngle_0;
 }
 
-void JointsManager::calibrationModeEnterExitConditions(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
+void JointsManager::calibration_mode_enter_exit_conditions(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
 	
-	bool conditionsToEnterCalibration = (currentState == State::running) && (ThinButton1Pressed && ThinButton2Pressed);
-	bool conditionsToExitCalibration = (currentState == State::calibrating) && (calibrationData.calibrationState == CalibrationState::servoSelection) && (ThinButton1Pressed && ThinButton2Pressed);
-	if (conditionsToEnterCalibration && calibrationData.calibrationStateButtonChangeFlag == false) {
-		currentState = State::calibrating;
-		calibrationData.calibrationState = CalibrationState::servoSelection;
-		calibrationData.calibrationStateButtonChangeFlag = true;
-		calibrationData.lastMillisChangedCalibrationState = currentMillis;
+	bool conditionsToEnterCalibration = (current_state_ == State::running) && (ThinButton1Pressed && ThinButton2Pressed);
+	bool conditionsToExitCalibration = (current_state_ == State::calibrating) && (calibration_data_.calibrationState == CalibrationState::servoSelection) && (ThinButton1Pressed && ThinButton2Pressed);
+	if (conditionsToEnterCalibration && calibration_data_.calibrationStateButtonChangeFlag == false) {
+		current_state_ = State::calibrating;
+		calibration_data_.calibrationState = CalibrationState::servoSelection;
+		calibration_data_.calibrationStateButtonChangeFlag = true;
+		calibration_data_.lastMillisChangedCalibrationState = currentMillis;
 	}
-	else if (conditionsToExitCalibration && calibrationData.calibrationStateButtonChangeFlag == false){
-		currentState = State::running;
-		calibrationData.calibrationStateButtonChangeFlag = true;
-		calibrationData.lastMillisChangedCalibrationState = currentMillis;
+	else if (conditionsToExitCalibration && calibration_data_.calibrationStateButtonChangeFlag == false){
+		current_state_ = State::running;
+		calibration_data_.calibrationStateButtonChangeFlag = true;
+		calibration_data_.lastMillisChangedCalibrationState = currentMillis;
 	}
 }
 
-void JointsManager::calibrationButtonPressedFlagMechanism(uint32_t currentMillis){
+void JointsManager::calibration_button_pressed_flag_mechanism(uint32_t currentMillis){
 	
-	if (calibrationData.calibrationStateButtonChangeFlag
-	&& (abs(currentMillis - calibrationData.lastMillisChangedCalibrationState) > calibrationData.valueChangeDelay_ms)
+	if (calibration_data_.calibrationStateButtonChangeFlag
+	&& (abs(currentMillis - calibration_data_.lastMillisChangedCalibrationState) > calibration_data_.valueChangeDelay_ms)
 	){
-		calibrationData.calibrationStateButtonChangeFlag = false;
+		calibration_data_.calibrationStateButtonChangeFlag = false;
 	}
 }
 
-void JointsManager::calibrationStateMachine(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
+void JointsManager::calibration_state_machine(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
 	
-	calibration_SerialPrint(currentMillis);
+	calibration_serial_print(currentMillis);
 	
-	if (calibrationData.calibrationStateButtonChangeFlag == false){
+	if (calibration_data_.calibrationStateButtonChangeFlag == false){
 		
 		if (squareButtonPressed || ThinButton1Pressed || ThinButton2Pressed){
-			calibrationData.calibrationStateButtonChangeFlag = true;
-			calibrationData.lastMillisChangedCalibrationState = currentMillis;
+			calibration_data_.calibrationStateButtonChangeFlag = true;
+			calibration_data_.lastMillisChangedCalibrationState = currentMillis;
 		}
 		
-		switch (calibrationData.calibrationState) {
+		switch (calibration_data_.calibrationState) {
 			case CalibrationState::servoSelection:
-			calibration_servoSelection(currentMillis, squareButtonPressed, ThinButton1Pressed, ThinButton2Pressed);
+			calibration_servo_selection(currentMillis, squareButtonPressed, ThinButton1Pressed, ThinButton2Pressed);
 			break;
 			case CalibrationState::zeroCalibration:
-			calibration_zeroCalibration(currentMillis, squareButtonPressed, ThinButton1Pressed, ThinButton2Pressed);
+			calibration_zero_calibration(currentMillis, squareButtonPressed, ThinButton1Pressed, ThinButton2Pressed);
 			break;
 			case CalibrationState::firstPointCalibration:
-			calibration_firstPointCalibration(currentMillis, squareButtonPressed, ThinButton1Pressed, ThinButton2Pressed);
+			calibration_first_point_calibration(currentMillis, squareButtonPressed, ThinButton1Pressed, ThinButton2Pressed);
 			break;
 			case CalibrationState::secondPointCalibration:
-			calibration_secondPointCalibration(currentMillis, squareButtonPressed, ThinButton1Pressed, ThinButton2Pressed);
+			calibration_second_point_calibration(currentMillis, squareButtonPressed, ThinButton1Pressed, ThinButton2Pressed);
 			break;
 		}
 	}
 }
 
-void JointsManager::calibration_SerialPrint(uint32_t currentMillis){
+void JointsManager::calibration_serial_print(uint32_t currentMillis){
 	
-	if (abs(currentMillis - calibrationData.SerialPrint_LastMillis) > calibrationData.SerialPrint_Period_ms){
+	if (abs(currentMillis - calibration_data_.SerialPrint_LastMillis) > calibration_data_.SerialPrint_Period_ms){
 		String calibrationStage;
-		switch (calibrationData.calibrationState) {
+		switch (calibration_data_.calibrationState) {
 			case CalibrationState::servoSelection:
 			calibrationStage = "sel";
 			break;
@@ -114,68 +114,68 @@ void JointsManager::calibration_SerialPrint(uint32_t currentMillis){
 		}
 		
 		Serial.println( "Calib. " + calibrationStage + " :"
-		+ " | ang:" + (String)PCA9685_1_servoMap[calibrationData.selectedServo].getAssignedAnlge()
-		+ " | zer:" + (String)PCA9685_1_servoMap[calibrationData.selectedServo].getZeroOffset()
+		+ " | ang:" + (String)PCA9685_1_servoMap_[calibration_data_.selectedServo].get_assigned_anlge()
+		+ " | zer:" + (String)PCA9685_1_servoMap_[calibration_data_.selectedServo].get_zero_offset()
 		);
 		
-		calibrationData.SerialPrint_LastMillis = currentMillis;
+		calibration_data_.SerialPrint_LastMillis = currentMillis;
 	}
 }
 
-void JointsManager::calibration_servoSelection(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
+void JointsManager::calibration_servo_selection(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
 	
 	if (ThinButton1Pressed){
-		calibrationData.selectedServo = calibrationData.selectedServo + 1;
-		if (calibrationData.selectedServo > PCA9685_1_servoMap.size() - 1) calibrationData.selectedServo = 0;
+		calibration_data_.selectedServo = calibration_data_.selectedServo + 1;
+		if (calibration_data_.selectedServo > PCA9685_1_servoMap_.size() - 1) calibration_data_.selectedServo = 0;
 	}
 	else if (ThinButton2Pressed){
-		calibrationData.selectedServo = calibrationData.selectedServo - 1;
-		if (calibrationData.selectedServo < 0) calibrationData.selectedServo = PCA9685_1_servoMap.size() - 1;
+		calibration_data_.selectedServo = calibration_data_.selectedServo - 1;
+		if (calibration_data_.selectedServo < 0) calibration_data_.selectedServo = PCA9685_1_servoMap_.size() - 1;
 	}
 	if (squareButtonPressed){
-		calibrationData.calibrationState = CalibrationState::zeroCalibration;
+		calibration_data_.calibrationState = CalibrationState::zeroCalibration;
 	}
 }
 
-void JointsManager::calibration_zeroCalibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
+void JointsManager::calibration_zero_calibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
 	
 	if (ThinButton1Pressed){
-		PCA9685_1_servoMap[calibrationData.selectedServo].cleanCalibrationValues();
+		PCA9685_1_servoMap_[calibration_data_.selectedServo].clean_calibration_values();
 	}
 	if (ThinButton2Pressed){
-		calibrationData.calibrationState = CalibrationState::servoSelection;
+		calibration_data_.calibrationState = CalibrationState::servoSelection;
 	}
 	if (squareButtonPressed){
-		calibrationData.calibrationState = CalibrationState::firstPointCalibration;
-		PCA9685_1_servoMap[calibrationData.selectedServo].calibration_setZero(true,0);
+		calibration_data_.calibrationState = CalibrationState::firstPointCalibration;
+		PCA9685_1_servoMap_[calibration_data_.selectedServo].calibration_set_zero(true,0);
 	}
 }
 
-void JointsManager::calibration_firstPointCalibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
-	
-	if (ThinButton1Pressed){
-		
-	}
-	if (ThinButton2Pressed){
-		calibrationData.calibrationState = CalibrationState::zeroCalibration;
-	}
-	if (squareButtonPressed){
-		calibrationData.calibrationState = CalibrationState::secondPointCalibration;
-		PCA9685_1_servoMap[calibrationData.selectedServo].calibration_setMinAngle(true,0);
-	}
-}
-
-void JointsManager::calibration_secondPointCalibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
+void JointsManager::calibration_first_point_calibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
 	
 	if (ThinButton1Pressed){
 		
 	}
 	if (ThinButton2Pressed){
-		calibrationData.calibrationState = CalibrationState::firstPointCalibration;
+		calibration_data_.calibrationState = CalibrationState::zeroCalibration;
 	}
 	if (squareButtonPressed){
-		calibrationData.calibrationState = CalibrationState::servoSelection;
-		PCA9685_1_servoMap[calibrationData.selectedServo].calibration_setMaxAngle(true,0);
-		currentState = State::running;
+		calibration_data_.calibrationState = CalibrationState::secondPointCalibration;
+		PCA9685_1_servoMap_[calibration_data_.selectedServo].calibration_set_min_angle(true,0);
+	}
+}
+
+void JointsManager::calibration_second_point_calibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
+	
+	if (ThinButton1Pressed){
+		
+	}
+	if (ThinButton2Pressed){
+		calibration_data_.calibrationState = CalibrationState::firstPointCalibration;
+	}
+	if (squareButtonPressed){
+		calibration_data_.calibrationState = CalibrationState::servoSelection;
+		PCA9685_1_servoMap_[calibration_data_.selectedServo].calibration_set_max_angle(true,0);
+		current_state_ = State::running;
 	}
 }

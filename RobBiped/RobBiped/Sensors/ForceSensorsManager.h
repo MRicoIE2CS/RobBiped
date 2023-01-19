@@ -44,61 +44,61 @@ class ForceSensorsManager : public I_PeriodicTask
 private:
 
 	// Serial Commands pointer
-	Command* command;
+	Command* command_;
 	
-	Multiple_HX711 multiple_hx711;
+	Multiple_HX711 multiple_hx711_;
 
 	// Readings
-	int32_t value_LeftFoot_LeftBack;
-	int32_t value_LeftFoot_LeftFront;
-	int32_t value_LeftFoot_RightBack;
-	int32_t value_LeftFoot_RightFront;
-	int32_t value_RightFoot_LeftBack;
-	int32_t value_RightFoot_LeftFront;
-	int32_t value_RightFoot_RightBack;
-	int32_t value_RightFoot_RightFront;
+	int32_t value_LeftFoot_LeftBack_;
+	int32_t value_LeftFoot_LeftFront_;
+	int32_t value_LeftFoot_RightBack_;
+	int32_t value_LeftFoot_RightFront_;
+	int32_t value_RightFoot_LeftBack_;
+	int32_t value_RightFoot_LeftFront_;
+	int32_t value_RightFoot_RightBack_;
+	int32_t value_RightFoot_RightFront_;
 	
 	// One filter per each measured magnitude
-	ExpFilterPeakReject filter_LeftFoot_LeftBack;
-	ExpFilterPeakReject filter_LeftFoot_LeftFront;
-	ExpFilterPeakReject filter_LeftFoot_RightBack;
-	ExpFilterPeakReject filter_LeftFoot_RightFront;
-	ExpFilterPeakReject filter_RightFoot_LeftBack;
-	ExpFilterPeakReject filter_RightFoot_LeftFront;
-	ExpFilterPeakReject filter_RightFoot_RightBack;
-	ExpFilterPeakReject filter_RightFoot_RightFront;
+	ExpFilterPeakReject filter_LeftFoot_LeftBack_;
+	ExpFilterPeakReject filter_LeftFoot_LeftFront_;
+	ExpFilterPeakReject filter_LeftFoot_RightBack_;
+	ExpFilterPeakReject filter_LeftFoot_RightFront_;
+	ExpFilterPeakReject filter_RightFoot_LeftBack_;
+	ExpFilterPeakReject filter_RightFoot_LeftFront_;
+	ExpFilterPeakReject filter_RightFoot_RightBack_;
+	ExpFilterPeakReject filter_RightFoot_RightFront_;
 	
-	Configuration::Configs::ForceSensors *config;
+	Configuration::Configs::ForceSensors *config_;
 	
-	double *calibration_LeftFoot_LeftFrontSensor;
-	double *calibration_LeftFoot_RightFrontSensor;
-	double *calibration_LeftFoot_LeftBackSensor;
-	double *calibration_LeftFoot_RightBackSensor;
-	double *calibration_RightFoot_LeftFrontSensor;
-	double *calibration_RightFoot_RightFrontSensor;
-	double *calibration_RightFoot_LeftBackSensor;
-	double *calibration_RightFoot_RightBackSensor;
+	double *calibration_LeftFoot_LeftFrontSensor_;
+	double *calibration_LeftFoot_RightFrontSensor_;
+	double *calibration_LeftFoot_LeftBackSensor_;
+	double *calibration_LeftFoot_RightBackSensor_;
+	double *calibration_RightFoot_LeftFrontSensor_;
+	double *calibration_RightFoot_RightFrontSensor_;
+	double *calibration_RightFoot_LeftBackSensor_;
+	double *calibration_RightFoot_RightBackSensor_;
 	
-	int16_t *separation_frontBack_mm;
-	int16_t *separation_leftRight_mm;
-	int16_t zmp_left_foot_x_mm;
-	int16_t zmp_left_foot_y_mm;
-	int16_t zmp_right_foot_x_mm;
-	int16_t zmp_right_foot_y_mm;
-	ExpFilter filter_zmp_left_foot_x_mm;
-	ExpFilter filter_zmp_left_foot_y_mm;
-	ExpFilter filter_zmp_right_foot_x_mm;
-	ExpFilter filter_zmp_right_foot_y_mm;
+	int16_t *separation_FrontBack_mm_;
+	int16_t *separation_LeftRight_mm_;
+	int16_t zmp_left_foot_x_mm_;
+	int16_t zmp_left_foot_y_mm_;
+	int16_t zmp_right_foot_x_mm_;
+	int16_t zmp_right_foot_y_mm_;
+	ExpFilter filter_zmp_left_foot_x_mm_;
+	ExpFilter filter_zmp_left_foot_y_mm_;
+	ExpFilter filter_zmp_right_foot_x_mm_;
+	ExpFilter filter_zmp_right_foot_y_mm_;
 	// TODO: In future will be needed to filter noise when values are low (although this will happen only when foot is not on ground)
 	// and also a manner to obtain if foot is touching ground (with a threshold, for instance)
 	void calculate_ZMP();
 	
-	void printValues();
-	void printZMP();
+	void print_values();
+	void print_ZMP();
 
 public:
 
-	void assocConfig(Configs::ForceSensors &_config);
+	void assoc_config(Configs::ForceSensors &_config);
 
 	void init();
 
@@ -114,13 +114,13 @@ public:
 	int32_t getValue_gr_RightFoot_LeftBackSensor();
 	int32_t getValue_gr_RightFoot_RightBackSensor();
 	
-	uint32_t getLastElapsedTimeBetweenReadings();
+	uint32_t get_last_elapsed_time_between_readings();
 	
 	void tare_LeftFoot();
 	void tare_RightFoot();
 	
-	void getValues_ZMP_leftFoot(int16_t& x_mm, int16_t& y_mm);
-	void getValues_ZMP_rightFoot(int16_t& x_mm, int16_t& y_mm);
+	void get_values_ZMP_LeftFoot(int16_t& x_mm, int16_t& y_mm);
+	void get_values_ZMP_RightFoot(int16_t& x_mm, int16_t& y_mm);
 };
 
 #endif

@@ -29,11 +29,11 @@
 
 
 class ExpFilterPeakReject: public ExpFilter {
-	protected:
-		double threshold_value;
+	private:
+		double threshold_value_;
 		
 	public:
-		void setThresholdValue(double value);
+		void set_thresholdvalue(double value);
 		double filter_pr(double rawValue, bool acceptStep = false);
 		double filter_pr(uint8_t rawValue, bool acceptStep = false);
 		double filter_pr(int8_t rawValue, bool acceptStep = false);

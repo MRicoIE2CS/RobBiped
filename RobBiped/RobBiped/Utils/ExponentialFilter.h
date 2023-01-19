@@ -33,12 +33,12 @@ class ExpFilter {
 	
 	protected:
 		
-		double lastFilteredValue = 0;
-		double expK = 0.9;
+		double last_filtered_value_ = 0;
+		double exp_K_ = 0.9;
 		
 	public:
 		
-		double setExpConstant(double k);
+		double set_exp_constant(double k);
 		double filter(double rawValue);
 		double filter(uint8_t rawValue);
 		double filter(int8_t rawValue);

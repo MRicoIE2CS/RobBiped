@@ -18,16 +18,16 @@
 
 #include "ExponentialFilterWithPeakRejection.h"
 
-void ExpFilterPeakReject::setThresholdValue(double value)
+void ExpFilterPeakReject::set_thresholdvalue(double value)
 {
-	threshold_value = value;
+	threshold_value_ = value;
 }
 
 double ExpFilterPeakReject::filter_pr(double rawValue, bool acceptStep)
 {
-	if (abs(abs(rawValue) - abs(lastFilteredValue) > threshold_value) && !(acceptStep))
+	if (abs(abs(rawValue) - abs(last_filtered_value_) > threshold_value_) && !(acceptStep))
 	{
-		return lastFilteredValue;
+		return last_filtered_value_;
 	} 
 	else
 	{
@@ -37,9 +37,9 @@ double ExpFilterPeakReject::filter_pr(double rawValue, bool acceptStep)
 
 double ExpFilterPeakReject::filter_pr(uint8_t rawValue, bool acceptStep)
 {
-	if (abs(abs(rawValue) - abs(lastFilteredValue) > threshold_value) && !(acceptStep))
+	if (abs(abs(rawValue) - abs(last_filtered_value_) > threshold_value_) && !(acceptStep))
 	{
-		return lastFilteredValue;
+		return last_filtered_value_;
 	}
 	else
 	{
@@ -49,9 +49,9 @@ double ExpFilterPeakReject::filter_pr(uint8_t rawValue, bool acceptStep)
 
 double ExpFilterPeakReject::filter_pr(int8_t rawValue, bool acceptStep)
 {
-	if (abs(abs(rawValue) - abs(lastFilteredValue) > threshold_value) && !(acceptStep))
+	if (abs(abs(rawValue) - abs(last_filtered_value_) > threshold_value_) && !(acceptStep))
 	{
-		return lastFilteredValue;
+		return last_filtered_value_;
 	}
 	else
 	{
@@ -61,9 +61,9 @@ double ExpFilterPeakReject::filter_pr(int8_t rawValue, bool acceptStep)
 
 double ExpFilterPeakReject::filter_pr(uint16_t rawValue, bool acceptStep)
 {
-	if (abs(abs(rawValue) - abs(lastFilteredValue) > threshold_value) && !(acceptStep))
+	if (abs(abs(rawValue) - abs(last_filtered_value_) > threshold_value_) && !(acceptStep))
 	{
-		return lastFilteredValue;
+		return last_filtered_value_;
 	}
 	else
 	{
@@ -73,9 +73,9 @@ double ExpFilterPeakReject::filter_pr(uint16_t rawValue, bool acceptStep)
 
 double ExpFilterPeakReject::filter_pr(int16_t rawValue, bool acceptStep)
 {
-	if (abs(abs(rawValue) - abs(lastFilteredValue) > threshold_value) && !(acceptStep))
+	if (abs(abs(rawValue) - abs(last_filtered_value_) > threshold_value_) && !(acceptStep))
 	{
-		return lastFilteredValue;
+		return last_filtered_value_;
 	}
 	else
 	{
@@ -85,9 +85,9 @@ double ExpFilterPeakReject::filter_pr(int16_t rawValue, bool acceptStep)
 
 double ExpFilterPeakReject::filter_pr(uint32_t rawValue, bool acceptStep)
 {
-	if (abs(abs(rawValue) - abs(lastFilteredValue) > threshold_value) && !(acceptStep))
+	if (abs(abs(rawValue) - abs(last_filtered_value_) > threshold_value_) && !(acceptStep))
 	{
-		return lastFilteredValue;
+		return last_filtered_value_;
 	}
 	else
 	{
@@ -97,9 +97,9 @@ double ExpFilterPeakReject::filter_pr(uint32_t rawValue, bool acceptStep)
 
 double ExpFilterPeakReject::filter_pr(int32_t rawValue, bool acceptStep)
 {
-	if (abs(abs(rawValue) - abs(lastFilteredValue) > threshold_value) && !(acceptStep))
+	if (abs(abs(rawValue) - abs(last_filtered_value_) > threshold_value_) && !(acceptStep))
 	{
-		return lastFilteredValue;
+		return last_filtered_value_;
 	}
 	else
 	{
@@ -109,9 +109,9 @@ double ExpFilterPeakReject::filter_pr(int32_t rawValue, bool acceptStep)
 
 double ExpFilterPeakReject::filter_pr(uint64_t rawValue, bool acceptStep)
 {
-	if (abs(abs(rawValue) - abs(lastFilteredValue) > threshold_value) && !(acceptStep))
+	if (abs(abs(rawValue) - abs(last_filtered_value_) > threshold_value_) && !(acceptStep))
 	{
-		return lastFilteredValue;
+		return last_filtered_value_;
 	}
 	else
 	{
@@ -121,9 +121,9 @@ double ExpFilterPeakReject::filter_pr(uint64_t rawValue, bool acceptStep)
 
 double ExpFilterPeakReject::filter_pr(int64_t rawValue, bool acceptStep)
 {
-	if (abs(abs(rawValue) - abs(lastFilteredValue) > threshold_value) && !(acceptStep))
+	if (abs(abs(rawValue) - abs(last_filtered_value_) > threshold_value_) && !(acceptStep))
 	{
-		return lastFilteredValue;
+		return last_filtered_value_;
 	}
 	else
 	{

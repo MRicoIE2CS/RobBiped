@@ -40,14 +40,14 @@ class JointsManager : public I_PeriodicTask{
 	private:
 	
 		// Serial Commands pointer
-		Command* command;
+		Command* command_;
 	
-		Adafruit_PWMServoDriver PCA9685_1 = Adafruit_PWMServoDriver(0x40);
+		Adafruit_PWMServoDriver PCA9685_1_ = Adafruit_PWMServoDriver(0x40);
 		
-		std::map<unsigned short,Joint> PCA9685_1_servoMap;
+		std::map<unsigned short,Joint> PCA9685_1_servoMap_;
 		
-		enum class State { running , calibrating, sleeping } currentState;
-		unsigned long lastMillisChangedState;
+		enum class State { running , calibrating, sleeping } current_state_;
+		unsigned long last_millis_changed_state_;
 		enum class CalibrationState { servoSelection, zeroCalibration, firstPointCalibration, secondPointCalibration };
 		struct Calibration {
 			CalibrationState calibrationState;
@@ -57,36 +57,34 @@ class JointsManager : public I_PeriodicTask{
 			bool calibrationStateButtonChangeFlag;
 			uint32_t SerialPrint_LastMillis;
 			uint32_t SerialPrint_Period_ms = 400;
-		} calibrationData;
+		} calibration_data_;
 		
-		void checkState(bool& sel_button_pressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
-		void calibrationModeEnterExitConditions(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
-		void calibrationStateMachine(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
-		void calibrationButtonPressedFlagMechanism(uint32_t currentMillis);
-		void calibration_servoSelection(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
-		void calibration_zeroCalibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
-		void calibration_firstPointCalibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
-		void calibration_secondPointCalibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
-		void calibration_SerialPrint(uint32_t currentMillis);
+		void check_state(bool& sel_button_pressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
+		void calibration_mode_enter_exit_conditions(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
+		void calibration_state_machine(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
+		void calibration_button_pressed_flag_mechanism(uint32_t currentMillis);
+		void calibration_servo_selection(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
+		void calibration_zero_calibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
+		void calibration_first_point_calibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
+		void calibration_second_point_calibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
+		void calibration_serial_print(uint32_t currentMillis);
 		void sleep();
 		void wakeup();
-		bool changeStateConditions(uint32_t& currentMillis, bool& switchCommand);
-		void changeState(uint32_t& currentMillis);
+		bool change_state_conditions(uint32_t& currentMillis, bool& switchCommand);
+		void change_state(uint32_t& currentMillis);
 		
-		void calibration_setAngleToServo(uint16_t potentiometerVal);
-		double calibration_getAngleFromPotentiometer(uint16_t potentiometerVal);
+		void calibration_set_angle_to_servo(uint16_t potentiometerVal);
+		double calibration_get_angle_from_potentiometer(uint16_t potentiometerVal);
 	
 	public:
 	
 		void init();
-		void jointsConfig();
-		void assocButtons(uint8_t _pinbutton1, uint8_t _pinbutton2);
+		void joints_config();
 		
-		void setAngleToServo(unsigned short servoIndex, double servoAngle);
-		void setAngleToServo(unsigned short servoIndex, int servoAngle);
+		void set_angle_to_servo(unsigned short servoIndex, double servoAngle);
 		
-		void update(UserInput _userInput);
-		void servoUpdate();
+		void update(UserInput& _userInput);
+		void servo_update();
 	
 };
 

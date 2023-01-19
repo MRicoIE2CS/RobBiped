@@ -21,7 +21,7 @@
 
 Executor executor;
 
-Command* serialCommand = Command::getInstance();
+Command* serial_command = Command::get_instance();
 
 void setup()
 {
@@ -29,10 +29,10 @@ void setup()
 	
 	executor.init();
 	
-	while (!serialCommand->commands.init)
+	while (!serial_command->commands.init)
 	{
 		Serial.println("type in 'init' to initialize");
-		serialCommand->listenForCommands();
+		serial_command->listen_for_commands();
 		delay(1000);
 	}
 	Serial.println("Initialize execution!");
@@ -42,5 +42,5 @@ void loop()
 {
 	executor.execution();
 	
-	serialCommand->listenForCommands();
+	serial_command->listen_for_commands();
 }

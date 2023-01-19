@@ -18,17 +18,17 @@
 
 #include "Command.h"
 
-Command* Command::_pointer = nullptr;
+Command* Command::pointer_ = nullptr;
 
-Command* Command::getInstance()
+Command* Command::get_instance()
 {
-	if(_pointer == nullptr){
-		_pointer = new Command();
+	if(pointer_ == nullptr){
+		pointer_ = new Command();
 	}
-	return _pointer;
+	return pointer_;
 }
 
-void Command::listenForCommands()
+void Command::listen_for_commands()
 {
 	if(Serial.available()){
 		String command = Serial.readStringUntil('\n');

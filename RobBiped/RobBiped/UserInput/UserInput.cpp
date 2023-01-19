@@ -18,54 +18,54 @@
 
 #include "UserInput.h"
 
-void UserInput::assocGPIO(Configs::UserInputPins &_gpio){
+void UserInput::assoc_GPIO(Configs::UserInputPins &_gpio){
 	gpio = &_gpio;
 	configuration();
 }
 
 void UserInput::configuration(){
 	
-	squareButton.setup(gpio->squareButton, INPUT_PULLDOWN);
-	thinButton1.setup(gpio->thinButton1, INPUT_PULLDOWN);
-	thinButton2.setup(gpio->thinButton2, INPUT_PULLDOWN);
+	square_button_.setup(gpio->squareButton, INPUT_PULLDOWN);
+	thin_button1_.setup(gpio->thinButton1, INPUT_PULLDOWN);
+	thin_button2_.setup(gpio->thinButton2, INPUT_PULLDOWN);
 	
-	potentiometer1.setup(gpio->potentiometer1, 0.97);
-	potentiometer2.setup(gpio->potentiometer2, 0.97);
+	potentiometer1_.setup(gpio->potentiometer1, 0.97);
+	potentiometer2_.setup(gpio->potentiometer2, 0.97);
 }
 
 void UserInput::update(){
 	
-	potentiometer1.readHWvalue();
-	potentiometer2.readHWvalue();
-	squareButton.readHWvalue();
-	thinButton1.readHWvalue();
-	thinButton2.readHWvalue();
+	potentiometer1_.read_HW_value();
+	potentiometer2_.read_HW_value();
+	square_button_.read_HW_value();
+	thin_button1_.read_HW_value();
+	thin_button2_.read_HW_value();
 }
 
-uint16_t UserInput::getAnalogValue(AnalogInputList selectInput){
+uint16_t UserInput::get_analog_value(AnalogInputList selectInput){
 	
 	switch (selectInput) {
 		case AnalogInputList::potentiometer1:
-			return potentiometer1.getValue();
+			return potentiometer1_.get_value();
 			break;
 		case AnalogInputList::potentiometer2:
-			return potentiometer2.getValue();
+			return potentiometer2_.get_value();
 			break;
 	}
 }
 
 
-bool UserInput::getDigitalValue(DigitalInputList selectInput){
+bool UserInput::get_digital_value(DigitalInputList selectInput){
 	
 	switch (selectInput) {
 		case DigitalInputList::squareButton:
-			return squareButton.getValue();
+			return square_button_.get_value();
 			break;
 		case DigitalInputList::thinButton1:
-			return thinButton1.getValue();
+			return thin_button1_.get_value();
 			break;
 		case DigitalInputList::thinButton2:
-			return thinButton2.getValue();
+			return thin_button2_.get_value();
 			break;
 	}
 }

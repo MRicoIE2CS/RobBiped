@@ -38,15 +38,15 @@ class UserInput : public I_PeriodicTask {
 		
 		friend class Executor;
 		
-		Potentiometer potentiometer1;
-		Potentiometer potentiometer2;
-		Button thinButton1;
-		Button thinButton2;
-		Button squareButton;
+		Potentiometer potentiometer1_;
+		Potentiometer potentiometer2_;
+		Button thin_button1_;
+		Button thin_button2_;
+		Button square_button_;
 		
 		Configs::UserInputPins *gpio;
 		
-		void assocGPIO(Configs::UserInputPins &_gpio);
+		void assoc_GPIO(Configs::UserInputPins &_gpio);
 		void configuration();
 		
 		void update();
@@ -56,8 +56,8 @@ class UserInput : public I_PeriodicTask {
 		enum class DigitalInputList { thinButton1, thinButton2, squareButton };
 		enum class AnalogInputList { potentiometer1, potentiometer2 };
 		
-		uint16_t getAnalogValue(AnalogInputList selectInput);
-		bool getDigitalValue(DigitalInputList selectInput);
+		uint16_t get_analog_value(AnalogInputList selectInput);
+		bool get_digital_value(DigitalInputList selectInput);
 	
 	};
 

@@ -32,31 +32,31 @@ class Joint {
 	
 	private:
 	
-	MG996R servo;
+	MG996R servo_;
 	
-	double maxAngleAllowed = PI;
-	double minAngleAllowed = -PI;
-	double calibration_offsetAngle = HALF_PI;
-	bool invertDirection = false;
+	double max_angle_allowed_ = PI;
+	double min_angle_allowed_ = -PI;
+	double calibration_offset_angle_ = HALF_PI;
+	bool invert_direction_ = false;
 	
-	double assignedAngle = 0;
+	double assigned_angle_ = 0;
 	
 	public:
 	
-	void cleanCalibrationValues();
-	void invertAngleSign(bool yes_no);
-	void calibration_setMinAngle(bool catchCurrentAngle, double _angle);
-	void calibration_setMaxAngle(bool catchCurrentAngle, double _angle);
-	void calibration_setZero(bool catchCurrentAngle, double _angle);
-	void calibration_ZeroFineAdjust();	//How to do?	
+	void clean_calibration_values();
+	void invert_angle_sign(bool yes_no);
+	void calibration_set_min_angle(bool catchCurrentAngle, double _angle);
+	void calibration_set_max_angle(bool catchCurrentAngle, double _angle);
+	void calibration_set_zero(bool catchCurrentAngle, double _angle);
+	void calibration__zero_fine_adjust();	//How to do?	
 	
-	uint16_t getPWMPulseWidthUpdate();
+	uint16_t get_PWM_pulse_width_update();
 	//unsigned int getPulseWidthApplied();
-	bool isUpdateNeeded();
+	bool is_update_needed();
 	
-	bool setAngleTarget_rad(double _ang);
-	double getAssignedAnlge();
-	double getZeroOffset();
+	bool set_angle_target_rad(double _ang);
+	double get_assigned_anlge();
+	double get_zero_offset();
 	
 };
 

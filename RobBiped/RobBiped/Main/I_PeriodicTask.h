@@ -30,24 +30,23 @@ class I_PeriodicTask{
 	public:
 
 		enum class execType { inMillis, inMicros };
-		void setExecutionPeriod(execType _timerType, uint16_t _period);
+		void set_execution_period(execType _timerType, uint16_t _period);
 
-		bool getExecutionFlag();
+		bool get_execution_flag();
 
 		void update();
 
 	protected:
 
-		uint16_t getExecutionPeriod();
-		uint64_t getLastMillisExecuted();
+		uint16_t get_execution_period();
+		uint64_t get_last_millis_executed();
 
-		execType timerType = execType::inMillis;
-		uint16_t executionPeriod;
-		uint64_t lastTimeExecuted;
+		execType timer_type_ = execType::inMillis;
+		uint16_t execution_period_;
+		uint64_t last_time_executed_;
 
-		uint64_t currentMillis;
-		uint64_t currentMicros;
-
+		uint64_t current_millis_;
+		uint64_t current_micros_;
 	};
 
 #endif

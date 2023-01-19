@@ -31,18 +31,18 @@ class Button {
 		
 		friend class UserInput;
 		
-		uint8_t HWpin;
-		bool value;
-		uint32_t valueChangeTrigggerTime;
-		uint32_t valueChangeDelay_ms = 250;
+		uint8_t HW_pin_;
+		bool value_;
+		uint32_t value_change_triggger_time_;
+		uint32_t value_change_delay_ms_ = 250;
 		
 		void setup(uint8_t _pin, uint8_t _mode);
 		
-		bool readHWvalue();
+		bool read_HW_value();
 		
 	public:
 
-		bool getValue();
+		bool get_value();
 };
 
 #endif

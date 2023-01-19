@@ -25,31 +25,26 @@
 	#include "WProgram.h"
 #endif
 
-
 class MG996R {
 	
 	private:
 		
 		// minPulse and maxPulse are calibrated so that all the range covers 180deg (PI rads) with relative precision
-		uint16_t minPulse = 111;	
-		uint16_t maxPulse = 508;
-		double maxAngle_rad = PI;
+		uint16_t min_pulse_ = 111;	
+		uint16_t max_pulse_ = 508;
+		double max_angle_rad_ = PI;
 		
-		uint16_t pulseWidthAssigned; 
-		uint16_t pulseWidthApplied;
-		
-		uint16_t angleToPulse(int16_t _ang);
-		uint16_t angleToPulse(double _ang);
+		uint16_t pulse_width_assigned_; 
+		uint16_t pulse_width_applied_;
+
+		uint16_t angle_to_pulse(double _ang);
 	
 	public:
 		
-		bool setTargetAngle(double _targetAngle);	//Input angle from 0 to PI rads
+		bool set_target_angle(double _targetAngle);	//Input angle from 0 to PI rads
 		
-		uint16_t getPulseWidthAssigned();
-		bool isNewPulseWidth();
-	
+		uint16_t get_pulse_width_assigned();
+		bool is_new_pulse_width();
 	};
 
-
 #endif
-

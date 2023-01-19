@@ -42,77 +42,77 @@ class GyroscopeAccelerometerManager : public I_PeriodicTask
 private:
 
 	// Serial Commands pointer
- 	Command* command;
+ 	Command* command_;
 	 
-	Configuration::Configs::GyroscpeAccelerometer* config;
+	Configuration::Configs::GyroscpeAccelerometer* config_;
 
-	MPU6050 mpu6050;
+	MPU6050 mpu6050_;
 	
 	// Raw values of accelerometer and gyroscope
-	int16_t ax, ay, az;
-	int16_t gx, gy, gz;
+	int16_t ax_, ay_, az_;
+	int16_t gx_, gy_, gz_;
 	
 	// Scaled values of accelerometer and gyroscope
-	float ax_m_s2, ay_m_s2, az_m_s2;
-	float gx_deg_s, gy_deg_s, gz_deg_s;
+	float ax_m_s2_, ay_m_s2_, az_m_s2_;
+	float gx_deg_s_, gy_deg_s_, gz_deg_s_;
 	
 	// Inclination angle of sensor, obtained from accelerometer
-	float accel_ang_x;
-	float accel_ang_y;
+	float accel_ang_x_;
+	float accel_ang_y_;
 	
 	// Rotation of sensor, obtained from gyroscope
-	int64_t tiempo_prev, dt;
-	float ang_x, ang_y;
-	float ang_x_prev, ang_y_prev;
+	int64_t tiempo_prev_, dt_;
+	float ang_x_, ang_y_;
+	float ang_x_prev_, ang_y_prev_;
 	
-	void getReadings();
-	void unitsConversion();
-	void calculateAccAngle();
-	void complementaryFilter_Angle();
-	void processReadings();
+	void get_readings();
+	void units_conversion();
+	void calculate_accelerometer_angle();
+	void complementary_filter_for_angle();
+	void process_readings();
 	
 	// Calibration variables
-	int64_t f_ax,f_ay, f_az;	// Used in filter
-	int32_t p_ax, p_ay, p_az;	// Used in filter
-	int64_t f_gx,f_gy, f_gz;	// Used in filter
-	int32_t p_gx, p_gy, p_gz;	// Used in filter
-	int32_t counter=0;	// Used in filter
-	int16_t* ax_o = nullptr;	// Accelerometer offsets
-	int16_t* ay_o = nullptr;
-	int16_t* az_o = nullptr;
-	int16_t* gx_o = nullptr;	// Gyroscope offsets
-	int16_t* gy_o = nullptr;
-	int16_t* gz_o = nullptr;
-	bool calibrate_first_run = true;
-	void readOffsets();
-	void printOffsets();
+	int64_t f_ax_,f_ay_, f_az_;	// Used in filter
+	int32_t p_ax_, p_ay_, p_az_;	// Used in filter
+	int64_t f_gx_,f_gy_, f_gz_;	// Used in filter
+	int32_t p_gx_, p_gy_, p_gz_;	// Used in filter
+	int32_t counter_=0;	// Used in filter
+	int16_t* ax_o_ = nullptr;	// Accelerometer offsets
+	int16_t* ay_o_ = nullptr;
+	int16_t* az_o_ = nullptr;
+	int16_t* gx_o_ = nullptr;	// Gyroscope offsets
+	int16_t* gy_o_ = nullptr;
+	int16_t* gz_o_ = nullptr;
+	bool calibrate_first_run_ = true;
+	void read_offsets();
+	void print_offsets();
 	void calibrate();
 
-	void printValues();
+	void print_values();
 
 public:
 
-	void assocConfig(Configs::GyroscpeAccelerometer &_config);
+	void assoc_config(Configs::GyroscpeAccelerometer &_config);
 
 	void init();
 
 	bool update();
 	
-	void getValues(float* _ax_m_s2, float* _ay_m_s2, float* _az_m_s2, float* _gx_deg_s, float* _gy_deg_s, float* _gz_deg_s);
+	void get_values(float* _ax_m_s2, float* _ay_m_s2, float* _az_m_s2, float* _gx_deg_s, float* _gy_deg_s, float* _gz_deg_s);
 	
-	void getValue_ax_m_s2(float* _ax_m_s2);
-	float getValue_ax_m_s2();
-	void getValue_ay_m_s2(float* _ay_m_s2);
-	float getValue_ay_m_s2();
-	void getValue_az_m_s2(float* _az_m_s2);
-	float getValue_az_m_s2();
+	void get_value_ax_m_s2(float* _ax_m_s2);
+	float get_value_ax_m_s2();
+	void get_value_ay_m_s2(float* _ay_m_s2);
+	float get_value_ay_m_s2();
+	void get_value_az_m_s2(float* _az_m_s2);
+	float get_value_az_m_s2();
 	
-	void getValue_gx_deg_s(float* _gx_deg_s);
-	float getValue_gx_deg_s();
-	void getValue_gy_deg_s(float* _gy_deg_s);
-	float getValue_gy_deg_s();
-	void getValue_gz_deg_s(float* _gz_deg_s);
-	float getValue_gz_deg_s();
+	void get_value_gx_deg_s(float* _gx_deg_s);
+	float get_value_gx_deg_s();
+	void get_value_gy_deg_s(float* _gy_deg_s);
+	float get_value_gy_deg_s();
+	void get_value_gz_deg_s(float* _gz_deg_s);
+	float get_value_gz_deg_s();
 };
 
 

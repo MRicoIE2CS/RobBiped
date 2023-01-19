@@ -636,12 +636,6 @@
     <Compile Include="Sensors\GyroAcc\MPU6050\MPU6050.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Sensors\HX711\HX711.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Sensors\HX711\HX711.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Sensors\HX711\multiple_HX711.cpp">
       <SubType>compile</SubType>
     </Compile>

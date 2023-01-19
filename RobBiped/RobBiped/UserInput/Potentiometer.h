@@ -33,18 +33,18 @@ class Potentiometer {
 	
 		friend class UserInput;
 		
-		uint8_t HWpin;
-		uint16_t value;
-		ExpFilter expFilter;
+		uint8_t HW_pin_;
+		uint16_t value_;
+		ExpFilter exp_filter_;
 		
-		void setup(uint8_t _pin, double _Kfilter);
+		void setup(uint8_t _pin, double _K_filter);
 		
-		uint16_t readHWvalue();
+		uint16_t read_HW_value();
 		
 	public:
 		
 		
-		uint16_t getValue();
+		uint16_t get_value();
 	};
 
 

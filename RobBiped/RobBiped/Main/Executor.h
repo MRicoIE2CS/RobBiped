@@ -42,14 +42,14 @@ class Executor {
 		
 		
 		/////____________ OBJECTS: __//
-		Configuration::Configs config;
+		Configuration::Configs config_;
 		///// END OBJECTS: __//
 		
 		/////____________ TASK OBJECTS: __//
-		UserInput userInput;
-		JointsManager servoUpdater;
-		ForceSensorsManager forceSensorsManager;
-		GyroscopeAccelerometerManager gyroscopeAccelerometerManager;
+		UserInput user_input_;
+		JointsManager servo_updater_;
+		ForceSensorsManager force_sensors_manager_;
+		GyroscopeAccelerometerManager gyroscope_accelerometer_manager_;
 		///// END OBJECT TASKS __//
 	
 		/////____________ PRIVATE FUNCTIONS: __//
@@ -57,7 +57,7 @@ class Executor {
 		void associations();
 		
 		void inputs();
-		void mainExecution();
+		void main_execution();
 		void outputs();
 		///// END PRIVATE FUNCTIONS: __//
 	

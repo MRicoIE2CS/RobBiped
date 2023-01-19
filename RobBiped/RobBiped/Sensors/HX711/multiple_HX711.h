@@ -40,9 +40,9 @@ private:
 
 	friend class ForceSensorsManager;
 
-	uint8_t _hx711_number = 0;
+	uint8_t hx711_number_ = 0;
 
-	byte PD_SCK;	// Power Down and Serial Clock Input Pin (Common to all HX711)
+	byte PD_SCK_;	// Power Down and Serial Clock Input Pin (Common to all HX711)
 	
 	enum class Channel { Ax128, Bx32, Ax64 };
 		
@@ -77,28 +77,28 @@ private:
 		LastStoredReadings historyStoredReadings;
 	};
 	
-	Channel channel = Channel::Ax64;
-	ActiveChannels activeChannels;
-	byte ChSelBits;		// Additional bits on dataframe for channel selection of next reading
+	Channel channel_ = Channel::Ax64;
+	ActiveChannels active_channels_;
+	byte channel_selection_additional_bits_;		// Additional bits on dataframe for channel selection of next reading
 	
 	
-	std::vector<Single_HX711> v_HX711;	// Vector of HX711 structs
+	std::vector<Single_HX711> v_HX711_;	// Vector of HX711 structs
 	
-	uint32_t lastReadingMicros;
-	uint32_t lastElapsedMicros;
+	uint32_t last_reading_micros_;
+	uint32_t last_elapsed_micros_;
 	
-	Channel commuteNextChannel(bool forceNextChannel = false, Channel _channel = Channel::Ax64);
-	byte setChannelSelectionBits(Channel _nextChannel, bool forceNextSelection = false, short _sel = 3);
+	Channel commute_next_channel(bool forceNextChannel = false, Channel _channel = Channel::Ax64);
+	byte set_channel_selection_bits(Channel _nextChannel, bool forceNextSelection = false, short _sel = 3);
 	
 	void get_DIN_pins_array(byte *_array);
 	void read_shiftIn(uint8_t clockPin, byte *DIN_array, bool _readings[hx711_number][8]);
 	void construct_read(uint8_t idx_byte_sel, uint8_t clockPin, uint8_t bitOrder, byte _arr_data[hx711_number][3], bool _readings[hx711_number][8]);
 	
 	// Obtains a reading, and sets channel for next one
-	void readAndCommuteNextChannel();
+	void read_and_commute_next_channel();
 	
 	uint16_t historyLength = 10;
-	void historyAppend(uint16_t hx711_idx, Channel channel, int32_t _reading);
+	void history_append(uint16_t hx711_idx, Channel channel, int32_t _reading);
 
  public:
 	
@@ -118,13 +118,13 @@ private:
 	bool update();
 	
 	// Set active channels
-	void setActiveChannels(bool _Ax128, bool _Ax64, bool _Bx32);
+	void set_sctive_channels(bool _Ax128, bool _Ax64, bool _Bx32);
 	
 	
 	// Get each channel's value
-	int32_t getAx128ChannelValue(uint16_t hx711_idx);
-	int32_t getAx64ChannelValue(uint16_t hx711_idx);
-	int32_t getBx32ChannelValue(uint16_t hx711_idx);
+	int32_t get_Ax128_channel_value(uint16_t hx711_idx);
+	int32_t get_Ax64_channel_value(uint16_t hx711_idx);
+	int32_t get_Bx32_channel_value(uint16_t hx711_idx);
 	
 	// Tare: set the OFFSET value for tare weight; times = how many times to read the tare value
 	void tare_Ax128(uint16_t hx711_idx);
@@ -135,7 +135,7 @@ private:
 	void set_offset_Bx32(uint16_t hx711_idx, double offset);
 	
 	// Get last elapsed time between readings
-	uint32_t getLastElapsedTimeBetweenReadings();
+	uint32_t get_last_elapsed_time_between_readings();
 
 	// Puts the chip into power down mode
 	void power_down();
