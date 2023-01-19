@@ -29,11 +29,10 @@ struct UnitsConvert {
 	
 	struct Angle {
 		
-		double degToRad(double _ang);
-		double radToDeg(double _ang);
+		double deg_to_rad(double _ang);
+		double rad_to_deg(double _ang);
 		
 		};
-	
 	
 	};
 

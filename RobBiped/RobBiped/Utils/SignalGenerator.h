@@ -34,8 +34,6 @@ class SignalGenerator : public I_PeriodicTask{
 		
 		void init();
 		
-		void update();
-		
 		double generate_trajectory();
 		
 		enum class SignalType { sine, triangular, square, saw };

@@ -65,7 +65,7 @@ class Executor {
 		void init();
 		
 		void execution();
-	
+		
 	};
 
 #endif

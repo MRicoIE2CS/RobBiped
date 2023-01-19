@@ -55,14 +55,14 @@ void ForceSensorsManager::init()
 	filter_RightFoot_RightBack_.set_exp_constant(config_->filter_exp_constant);
 	filter_RightFoot_RightFront_.set_exp_constant(config_->filter_exp_constant);
 	
-	filter_LeftFoot_LeftBack_.set_thresholdvalue(config_->filter_threshold_value);
-	filter_LeftFoot_LeftFront_.set_thresholdvalue(config_->filter_threshold_value);
-	filter_LeftFoot_RightBack_.set_thresholdvalue(config_->filter_threshold_value);
-	filter_LeftFoot_RightFront_.set_thresholdvalue(config_->filter_threshold_value);
-	filter_RightFoot_LeftBack_.set_thresholdvalue(config_->filter_threshold_value);
-	filter_RightFoot_LeftFront_.set_thresholdvalue(config_->filter_threshold_value);
-	filter_RightFoot_RightBack_.set_thresholdvalue(config_->filter_threshold_value);
-	filter_RightFoot_RightFront_.set_thresholdvalue(config_->filter_threshold_value);
+	filter_LeftFoot_LeftBack_.set_threshold_value(config_->filter_threshold_value);
+	filter_LeftFoot_LeftFront_.set_threshold_value(config_->filter_threshold_value);
+	filter_LeftFoot_RightBack_.set_threshold_value(config_->filter_threshold_value);
+	filter_LeftFoot_RightFront_.set_threshold_value(config_->filter_threshold_value);
+	filter_RightFoot_LeftBack_.set_threshold_value(config_->filter_threshold_value);
+	filter_RightFoot_LeftFront_.set_threshold_value(config_->filter_threshold_value);
+	filter_RightFoot_RightBack_.set_threshold_value(config_->filter_threshold_value);
+	filter_RightFoot_RightFront_.set_threshold_value(config_->filter_threshold_value);
 }
 
 bool ForceSensorsManager::update()

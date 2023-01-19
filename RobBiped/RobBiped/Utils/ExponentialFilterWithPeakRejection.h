@@ -33,7 +33,7 @@ class ExpFilterPeakReject: public ExpFilter {
 		double threshold_value_;
 		
 	public:
-		void set_thresholdvalue(double value);
+		void set_threshold_value(double value);
 		double filter_pr(double rawValue, bool acceptStep = false);
 		double filter_pr(uint8_t rawValue, bool acceptStep = false);
 		double filter_pr(int8_t rawValue, bool acceptStep = false);

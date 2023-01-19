@@ -18,7 +18,7 @@
 
 #include "ExponentialFilterWithPeakRejection.h"
 
-void ExpFilterPeakReject::set_thresholdvalue(double value)
+void ExpFilterPeakReject::set_threshold_value(double value)
 {
 	threshold_value_ = value;
 }
