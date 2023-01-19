@@ -40,7 +40,6 @@ class Executor {
 	
 	private:
 		
-		
 		/////____________ OBJECTS: __//
 		Configuration::Configs config_;
 		///// END OBJECTS: __//
@@ -53,7 +52,6 @@ class Executor {
 		///// END OBJECT TASKS __//
 	
 		/////____________ PRIVATE FUNCTIONS: __//
-		void setup();
 		void associations();
 		
 		void inputs();

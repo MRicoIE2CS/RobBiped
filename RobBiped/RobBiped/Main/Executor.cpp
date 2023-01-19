@@ -20,7 +20,7 @@
 
 void Executor::init()
 {
-	setup();
+	associations();
 	
 	//______TASKS CONFIGURATION_____//
 	

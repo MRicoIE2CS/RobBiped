@@ -18,16 +18,11 @@
 
 #include "Executor.h"
 
-void Executor::setup()
-{
-	associations();
-}
-
 void Executor::associations()
 {
-	user_input_.assoc_GPIO(config_.userInputPins);
+	user_input_.assoc_GPIO(config_.user_input_pins);
 	//TODO: Associate buttons to servo updater calibration
 	//servoUpdater.assocButtons(config.gpio.thinButton1, config.gpio.thinButton2);
-	force_sensors_manager_.assoc_config(config_.forceSensors);
-	gyroscope_accelerometer_manager_.assoc_config(config_.gyroAcc);
+	force_sensors_manager_.assoc_config(config_.force_sensors);
+	gyroscope_accelerometer_manager_.assoc_config(config_.gyro_acc);
 }

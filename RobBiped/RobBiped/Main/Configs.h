@@ -38,7 +38,7 @@ struct Configs
 		uint8_t thinButton2 = 4;
 		uint8_t potentiometer1 = 36;
 		uint8_t potentiometer2 = 39;
-		}userInputPins;
+		}user_input_pins;
 	
 	struct ForceSensors {
 		struct GPIO {
@@ -59,7 +59,7 @@ struct Configs
 			int16_t frontBack_separation = 103;
 			int16_t leftRight_separation = 37;
 			}location_mm;
-		}forceSensors;		// Dependent on static const Configuration::hx711_number
+		}force_sensors;		// Dependent on static const Configuration::hx711_number
 	
 	struct GyroscpeAccelerometer {
 		struct Offsets {
@@ -70,7 +70,7 @@ struct Configs
 			int16_t gy_o = -35;
 			int16_t gz_o = -13;
 			}offsets;
-		}gyroAcc;
+		}gyro_acc;
 };
 
 } // End namespace Configuration
