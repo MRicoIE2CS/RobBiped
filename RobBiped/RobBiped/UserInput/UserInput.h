@@ -38,14 +38,14 @@ class UserInput : public I_PeriodicTask {
 		
 		Potentiometer potentiometer1_;
 		Potentiometer potentiometer2_;
-		Button thin_button1_;
-		Button thin_button2_;
+		Button forward_button_;
+		Button back_button_;
 		
 		Configs::UserInputPins *gpio_;
 		
 	public:
 		
-		enum class DigitalInputList { thinButton1, thinButton2 };
+		enum class DigitalInputList { forward_button, back_button };
 		enum class AnalogInputList { potentiometer1, potentiometer2 };
 		
 		uint16_t get_analog_value(AnalogInputList selectInput);

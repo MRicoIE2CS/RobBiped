@@ -33,9 +33,8 @@ static const uint8_t hx711_number = 4;	// forceSensors configuration
 struct Configs 
 {
 	struct UserInputPins {
-		uint8_t squareButton = 15;
-		uint8_t thinButton1 = 2;
-		uint8_t thinButton2 = 4;
+		uint8_t forward_button = 2;
+		uint8_t back_button = 4;
 		uint8_t potentiometer1 = 36;
 		uint8_t potentiometer2 = 39;
 		}user_input_pins;

@@ -34,8 +34,8 @@ void JointsManager::init(){
 void JointsManager::update(UserInput& _userInput){
 	
 	check_state(command_->commands.servo_selection_button_emulation,
-				_userInput.get_digital_value(UserInput::DigitalInputList::thinButton1),
-				_userInput.get_digital_value(UserInput::DigitalInputList::thinButton2));
+				_userInput.get_digital_value(UserInput::DigitalInputList::forward_button),
+				_userInput.get_digital_value(UserInput::DigitalInputList::forward_button));
 				
 	if (current_state_ == State::calibrating){
 		calibration_set_angle_to_servo(_userInput.get_analog_value(UserInput::AnalogInputList::potentiometer1));

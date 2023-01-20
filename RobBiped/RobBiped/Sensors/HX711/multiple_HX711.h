@@ -55,9 +55,9 @@ private:
 		int32_t Bx32;
 	};
 	struct StoredReadings {
-		int32_t ReadingAx128;
-		int32_t ReadingAx64;
-		int32_t ReadingBx32;
+		int32_t reading_Ax128;
+		int32_t reading_Ax64;
+		int32_t reading_Bx32;
 	};
 	struct LastStoredReadings{
 		vector<int32_t> v_Ax128;
@@ -68,9 +68,9 @@ private:
 	struct Single_HX711 
 	{
 		byte DIN;		// Serial Data Output Pin
-		OffsetPerChannel offsetPerChannel;
-		StoredReadings storedReadings;
-		LastStoredReadings historyStoredReadings;
+		OffsetPerChannel offset_per_channel;
+		StoredReadings stored_readings;
+		LastStoredReadings history_stored_readings;
 	};
 	
 	Channel channel_ = Channel::Ax64;
@@ -83,12 +83,12 @@ private:
 	uint32_t last_reading_micros_;
 	uint32_t last_elapsed_micros_;
 	
-	Channel commute_next_channel(bool forceNextChannel = false, Channel _channel = Channel::Ax64);
-	byte set_channel_selection_bits(Channel _nextChannel, bool forceNextSelection = false, short _sel = 3);
+	Channel commute_next_channel(bool force_next_channel = false, Channel _channel = Channel::Ax64);
+	byte set_channel_selection_bits(Channel _next_channel, bool force_next_selection = false, short _sel = 3);
 	
 	void get_DIN_pins_array(byte *_array);
 	void read_shiftIn(uint8_t clockPin, byte *DIN_array, bool _readings[hx711_number][8]);
-	void construct_read(uint8_t idx_byte_sel, uint8_t clockPin, uint8_t bitOrder, byte _arr_data[hx711_number][3], bool _readings[hx711_number][8]);
+	void construct_read(uint8_t idx_byte_sel, uint8_t bit_order, byte _arr_data[hx711_number][3], bool _readings[hx711_number][8]);
 	
 	// Obtains a reading, and sets channel for next one
 	void read_and_commute_next_channel();

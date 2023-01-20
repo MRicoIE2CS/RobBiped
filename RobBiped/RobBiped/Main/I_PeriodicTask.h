@@ -30,7 +30,7 @@ class I_PeriodicTask{
 	public:
 
 		enum class execType { inMillis, inMicros };
-		void set_execution_period(execType _timerType, uint16_t _period);
+		void set_execution_period(execType _timer_type, uint16_t _period);
 
 		bool get_execution_flag();
 

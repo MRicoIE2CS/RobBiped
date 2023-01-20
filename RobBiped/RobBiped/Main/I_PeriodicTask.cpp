@@ -18,9 +18,9 @@
 
 #include "I_PeriodicTask.h"
 
-void I_PeriodicTask::set_execution_period(execType _timerType, uint16_t _period)
+void I_PeriodicTask::set_execution_period(execType _timer_type, uint16_t _period)
 {
-	timer_type_ = _timerType;
+	timer_type_ = _timer_type;
 	execution_period_ = _period;
 	switch (timer_type_) {
 		case execType::inMillis:

@@ -25,8 +25,8 @@ void UserInput::assoc_GPIO(Configs::UserInputPins &_gpio){
 
 void UserInput::configuration(){
 	
-	thin_button1_.setup(gpio_->thinButton1, INPUT_PULLDOWN);
-	thin_button2_.setup(gpio_->thinButton2, INPUT_PULLDOWN);
+	forward_button_.setup(gpio_->forward_button, INPUT_PULLDOWN);
+	back_button_.setup(gpio_->back_button, INPUT_PULLDOWN);
 	
 	potentiometer1_.setup(gpio_->potentiometer1, 0.97);
 	potentiometer2_.setup(gpio_->potentiometer2, 0.97);
@@ -36,8 +36,8 @@ void UserInput::update(){
 	
 	potentiometer1_.read_HW_value();
 	potentiometer2_.read_HW_value();
-	thin_button1_.read_HW_value();
-	thin_button2_.read_HW_value();
+	forward_button_.read_HW_value();
+	back_button_.read_HW_value();
 }
 
 uint16_t UserInput::get_analog_value(AnalogInputList selectInput){
@@ -56,11 +56,11 @@ uint16_t UserInput::get_analog_value(AnalogInputList selectInput){
 bool UserInput::get_digital_value(DigitalInputList selectInput){
 	
 	switch (selectInput) {
-		case DigitalInputList::thinButton1:
-			return thin_button1_.get_value();
+		case DigitalInputList::forward_button:
+			return forward_button_.get_value();
 			break;
-		case DigitalInputList::thinButton2:
-			return thin_button2_.get_value();
+		case DigitalInputList::back_button:
+			return back_button_.get_value();
 			break;
 	}
 }
