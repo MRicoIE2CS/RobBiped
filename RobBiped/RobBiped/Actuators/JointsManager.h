@@ -44,10 +44,10 @@ class JointsManager : public I_PeriodicTask{
 	
 		Adafruit_PWMServoDriver PCA9685_1_ = Adafruit_PWMServoDriver(0x40);
 		
-		std::map<unsigned short,Joint> PCA9685_1_servoMap_;
+		std::map<uint8_t,Joint> PCA9685_1_servoMap_;
 		
 		enum class State { running , calibrating, sleeping } current_state_;
-		unsigned long last_millis_changed_state_;
+		uint64_t last_millis_changed_state_;
 		enum class CalibrationState { servoSelection, zeroCalibration, firstPointCalibration, secondPointCalibration };
 		struct Calibration {
 			CalibrationState calibrationState;
@@ -68,20 +68,20 @@ class JointsManager : public I_PeriodicTask{
 		void calibration_first_point_calibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
 		void calibration_second_point_calibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
 		void calibration_serial_print(uint32_t currentMillis);
+		void calibration_set_angle_to_servo(uint16_t potentiometerVal);
+		double calibration_get_angle_from_potentiometer(uint16_t potentiometerVal);
+
 		void sleep();
 		void wakeup();
 		bool change_state_conditions(uint32_t& currentMillis, bool& switchCommand);
 		void change_state(uint32_t& currentMillis);
-		
-		void calibration_set_angle_to_servo(uint16_t potentiometerVal);
-		double calibration_get_angle_from_potentiometer(uint16_t potentiometerVal);
-	
+
 	public:
-	
+
 		void init();
 		void joints_config();
 		
-		void set_angle_to_servo(unsigned short servoIndex, double servoAngle);
+		void set_angle_to_servo(uint8_t servoIndex, double servoAngle);
 		
 		void update(UserInput& _userInput);
 		void servo_update();

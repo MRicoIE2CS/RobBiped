@@ -43,8 +43,6 @@ private:
 	byte PD_SCK_;	// Power Down and Serial Clock Input Pin (Common to all HX711)
 	
 	enum class Channel { Ax128, Bx32, Ax64 };
-		
-	struct CombinedOutputData { uint16_t hx711_idx; Channel _channel; int32_t _valueRead; };
 	
 	struct ActiveChannels {
 		bool Ax128 = false;
@@ -95,15 +93,12 @@ private:
 	// Obtains a reading, and sets channel for next one
 	void read_and_commute_next_channel();
 	
-	uint16_t historyLength = 10;
+	uint16_t history_length_ = 10;
 	void history_append(uint16_t hx711_idx, Channel channel, int32_t _reading);
 
  public:
-	
-	// Define clock and data pin
-	Multiple_HX711();
 
-	virtual ~Multiple_HX711();
+	Multiple_HX711();
 	
 	void configure(byte _DINs[], byte pd_sck);
 
@@ -143,4 +138,3 @@ private:
 };
 
 #endif /* MULTIPLE_HX711_h */
-

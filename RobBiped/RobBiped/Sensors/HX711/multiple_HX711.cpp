@@ -23,11 +23,6 @@ Multiple_HX711::Multiple_HX711()
 	hx711_number_ = Configuration::hx711_number;
 }
 
-Multiple_HX711::~Multiple_HX711()
-{
-
-}
-
 void Multiple_HX711::configure(byte _DINs[], byte pd_sck)
 {
 	PD_SCK_ 	= pd_sck;
@@ -290,21 +285,21 @@ void Multiple_HX711::history_append(uint16_t hx711_idx, Channel channel, int32_t
 	{
 		case (Channel::Ax128):
 			_hx711->historyStoredReadings.v_Ax128.push_back(_reading);
-			if (_hx711->historyStoredReadings.v_Ax128.size() > historyLength)
+			if (_hx711->historyStoredReadings.v_Ax128.size() > history_length_)
 			{
 				_hx711->historyStoredReadings.v_Ax128.erase(_hx711->historyStoredReadings.v_Ax128.begin());
 			}
 		break;
 		case (Channel::Ax64):
 			_hx711->historyStoredReadings.v_Ax64.push_back(_reading);
-			if (_hx711->historyStoredReadings.v_Ax64.size() > historyLength)
+			if (_hx711->historyStoredReadings.v_Ax64.size() > history_length_)
 			{
 				_hx711->historyStoredReadings.v_Ax64.erase(_hx711->historyStoredReadings.v_Ax64.begin());
 			}
 		break;
 		case (Channel::Bx32):
 			_hx711->historyStoredReadings.v_Bx32.push_back(_reading);
-			if (_hx711->historyStoredReadings.v_Bx32.size() > historyLength)
+			if (_hx711->historyStoredReadings.v_Bx32.size() > history_length_)
 			{
 				_hx711->historyStoredReadings.v_Bx32.erase(_hx711->historyStoredReadings.v_Bx32.begin());
 			}

@@ -92,7 +92,7 @@ void JointsManager::servo_update(){
 	
 	if (current_state_ == State::sleeping) return;
 	
-	std::map<unsigned short,Joint>::iterator itMap;
+	std::map<uint8_t,Joint>::iterator itMap;
 	
 	for (itMap = PCA9685_1_servoMap_.begin(); itMap!=PCA9685_1_servoMap_.end(); ++itMap){
 		if (itMap->second.is_update_needed()) {
@@ -101,7 +101,7 @@ void JointsManager::servo_update(){
 	}
 }
 
-void JointsManager::set_angle_to_servo(unsigned short servoIndex, double servoAngle){
+void JointsManager::set_angle_to_servo(uint8_t servoIndex, double servoAngle){
 	
 	if (current_state_ == State::running){
 		PCA9685_1_servoMap_[servoIndex].set_angle_target_rad(servoAngle);

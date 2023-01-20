@@ -19,17 +19,17 @@
 #include "UserInput.h"
 
 void UserInput::assoc_GPIO(Configs::UserInputPins &_gpio){
-	gpio = &_gpio;
+	gpio_ = &_gpio;
 	configuration();
 }
 
 void UserInput::configuration(){
 	
-	thin_button1_.setup(gpio->thinButton1, INPUT_PULLDOWN);
-	thin_button2_.setup(gpio->thinButton2, INPUT_PULLDOWN);
+	thin_button1_.setup(gpio_->thinButton1, INPUT_PULLDOWN);
+	thin_button2_.setup(gpio_->thinButton2, INPUT_PULLDOWN);
 	
-	potentiometer1_.setup(gpio->potentiometer1, 0.97);
-	potentiometer2_.setup(gpio->potentiometer2, 0.97);
+	potentiometer1_.setup(gpio_->potentiometer1, 0.97);
+	potentiometer2_.setup(gpio_->potentiometer2, 0.97);
 }
 
 void UserInput::update(){

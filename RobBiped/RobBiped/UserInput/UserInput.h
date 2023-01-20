@@ -41,7 +41,7 @@ class UserInput : public I_PeriodicTask {
 		Button thin_button1_;
 		Button thin_button2_;
 		
-		Configs::UserInputPins *gpio;
+		Configs::UserInputPins *gpio_;
 		
 	public:
 		
