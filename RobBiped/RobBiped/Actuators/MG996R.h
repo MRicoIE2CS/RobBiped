@@ -41,7 +41,7 @@ class MG996R {
 	
 	public:
 		
-		bool set_target_angle(double _targetAngle);	//Input angle from 0 to PI rads
+		bool set_target_angle(double _ang);	//Input angle from 0 to PI rads
 		
 		uint16_t get_pulse_width_assigned();
 		bool is_new_pulse_width();

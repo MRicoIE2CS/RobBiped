@@ -58,9 +58,9 @@ void Joint::clean_calibration_values(){
 	//invertDirection = false;
 }
 
-void Joint::calibration_set_min_angle(bool catchCurrentAngle, double _angle){
+void Joint::calibration_set_min_angle(bool catch_current_angle, double _angle){
 	
-	if (catchCurrentAngle){
+	if (catch_current_angle){
 		
 		min_angle_allowed_ = assigned_angle_;
 	}
@@ -70,9 +70,9 @@ void Joint::calibration_set_min_angle(bool catchCurrentAngle, double _angle){
 	}
 }
 
-void Joint::calibration_set_max_angle(bool catchCurrentAngle, double _angle){
+void Joint::calibration_set_max_angle(bool catch_current_angle, double _angle){
 	
-	if (catchCurrentAngle){
+	if (catch_current_angle){
 		
 		max_angle_allowed_ = assigned_angle_;
 	}
@@ -82,9 +82,9 @@ void Joint::calibration_set_max_angle(bool catchCurrentAngle, double _angle){
 	}
 }
 
-void Joint::calibration_set_zero(bool catchCurrentAngle, double _angle){
+void Joint::calibration_set_zero(bool catch_current_angle, double _angle){
 	
-	if (catchCurrentAngle){
+	if (catch_current_angle){
 		
 		calibration_offset_angle_ = assigned_angle_ + HALF_PI;
 	} 

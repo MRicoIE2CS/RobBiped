@@ -44,37 +44,37 @@ class JointsManager : public I_PeriodicTask{
 	
 		Adafruit_PWMServoDriver PCA9685_1_ = Adafruit_PWMServoDriver(0x40);
 		
-		std::map<uint8_t,Joint> PCA9685_1_servoMap_;
+		std::map<uint8_t,Joint> PCA9685_1_servo_map_;
 		
 		enum class State { running , calibrating, sleeping } current_state_;
 		uint64_t last_millis_changed_state_;
 		enum class CalibrationState { servoSelection, zeroCalibration, firstPointCalibration, secondPointCalibration };
 		struct Calibration {
 			CalibrationState calibrationState;
-			int8_t selectedServo = 0;
-			uint32_t lastMillisChangedCalibrationState;
-			uint32_t valueChangeDelay_ms = 2000;
-			bool calibrationStateButtonChangeFlag;
-			uint32_t SerialPrint_LastMillis;
-			uint32_t SerialPrint_Period_ms = 400;
+			int8_t selected_servo = 0;
+			uint32_t last_millis_changed_calibration_state;
+			uint32_t value_change_delay_ms = 2000;
+			bool calibration_state_button_change_flag;
+			uint32_t serial_print_last_millis;
+			uint32_t serial_print_period_ms = 400;
 		} calibration_data_;
 		
-		void check_state(bool& sel_button_pressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
-		void calibration_mode_enter_exit_conditions(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
-		void calibration_state_machine(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
-		void calibration_button_pressed_flag_mechanism(uint32_t currentMillis);
-		void calibration_servo_selection(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
-		void calibration_zero_calibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
-		void calibration_first_point_calibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
-		void calibration_second_point_calibration(uint32_t currentMillis, bool squareButtonPressed, bool ThinButton1Pressed, bool ThinButton2Pressed);
-		void calibration_serial_print(uint32_t currentMillis);
-		void calibration_set_angle_to_servo(uint16_t potentiometerVal);
-		double calibration_get_angle_from_potentiometer(uint16_t potentiometerVal);
+		void check_state(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
+		void calibration_mode_enter_exit_conditions(uint32_t current_millis, bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
+		void calibration_state_machine(uint32_t current_millis, bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
+		void calibration_button_pressed_flag_mechanism(uint32_t current_millis);
+		void calibration_servo_selection(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
+		void calibration_zero_calibration(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
+		void calibration_first_point_calibration(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
+		void calibration_second_point_calibration(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
+		void calibration_serial_print(uint32_t current_millis);
+		void calibration_set_angle_to_servo(uint16_t potentiometer_val);
+		double calibration_get_angle_from_potentiometer(uint16_t potentiometer_val);
 
 		void sleep();
 		void wakeup();
-		bool change_state_conditions(uint32_t& currentMillis, bool& switchCommand);
-		void change_state(uint32_t& currentMillis);
+		bool change_state_conditions(uint32_t& current_millis, bool& switch_command);
+		void change_state(uint32_t& current_millis);
 
 	public:
 

@@ -45,9 +45,9 @@ class Joint {
 	
 	void clean_calibration_values();
 	void invert_angle_sign(bool yes_no);
-	void calibration_set_min_angle(bool catchCurrentAngle, double _angle);
-	void calibration_set_max_angle(bool catchCurrentAngle, double _angle);
-	void calibration_set_zero(bool catchCurrentAngle, double _angle);
+	void calibration_set_min_angle(bool catch_current_angle, double _angle);
+	void calibration_set_max_angle(bool catch_current_angle, double _angle);
+	void calibration_set_zero(bool catch_current_angle, double _angle);
 	void calibration__zero_fine_adjust();	//How to do?	
 	
 	uint16_t get_PWM_pulse_width_update();

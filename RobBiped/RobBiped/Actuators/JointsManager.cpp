@@ -44,29 +44,29 @@ void JointsManager::update(UserInput& _userInput){
 	servo_update();
 }
 
-void JointsManager::check_state(bool& sel_button_pressed, bool ThinButton1Pressed, bool ThinButton2Pressed){
+void JointsManager::check_state(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed){
 	uint32_t currentMillis = millis();
 	
 	if (change_state_conditions(currentMillis, command_->commands.servo_onoff_toggle)) change_state(currentMillis);	// run/sleep to servos
 	
-	calibration_mode_enter_exit_conditions(currentMillis, sel_button_pressed, ThinButton1Pressed, ThinButton2Pressed);
-	if (current_state_ == State::calibrating) calibration_state_machine(currentMillis, sel_button_pressed, ThinButton1Pressed, ThinButton2Pressed);
+	calibration_mode_enter_exit_conditions(currentMillis, sel_button_pressed, forward_button_pressed, back_button_pressed);
+	if (current_state_ == State::calibrating) calibration_state_machine(currentMillis, sel_button_pressed, forward_button_pressed, back_button_pressed);
 	calibration_button_pressed_flag_mechanism(currentMillis);
 	
 	sel_button_pressed = false;
 }
 
-bool JointsManager::change_state_conditions(uint32_t& currentMillis, bool& switchCommand){
+bool JointsManager::change_state_conditions(uint32_t& current_millis, bool& switch_command){
 	
-	bool conditions = switchCommand && (current_state_ != State::calibrating);
+	bool conditions = switch_command && (current_state_ != State::calibrating);
 						//&& (calibrationData.calibrationStateButtonChangeFlag == false)
-						//&& (abs(currentMillis - lastMillisChangedState) > 2000);
-	if (conditions) switchCommand = false;
+						//&& (abs(current_millis - lastMillisChangedState) > 2000);
+	if (conditions) switch_command = false;
 	return conditions;
 }
 
-void JointsManager::change_state(uint32_t& currentMillis){
-	last_millis_changed_state_ = currentMillis;
+void JointsManager::change_state(uint32_t& current_millis){
+	last_millis_changed_state_ = current_millis;
 	
 	if (current_state_ == State::running){
 		sleep();
@@ -94,7 +94,7 @@ void JointsManager::servo_update(){
 	
 	std::map<uint8_t,Joint>::iterator itMap;
 	
-	for (itMap = PCA9685_1_servoMap_.begin(); itMap!=PCA9685_1_servoMap_.end(); ++itMap){
+	for (itMap = PCA9685_1_servo_map_.begin(); itMap!=PCA9685_1_servo_map_.end(); ++itMap){
 		if (itMap->second.is_update_needed()) {
 			PCA9685_1_.setPWM(itMap->first, 0, itMap->second.get_PWM_pulse_width_update() );
 		}
@@ -104,7 +104,7 @@ void JointsManager::servo_update(){
 void JointsManager::set_angle_to_servo(uint8_t servoIndex, double servoAngle){
 	
 	if (current_state_ == State::running){
-		PCA9685_1_servoMap_[servoIndex].set_angle_target_rad(servoAngle);
+		PCA9685_1_servo_map_[servoIndex].set_angle_target_rad(servoAngle);
 	}
 	
 }
