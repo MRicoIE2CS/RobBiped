@@ -23,65 +23,65 @@ double ExpFilter::set_exp_constant(double k){
 	exp_K_ = k;
 }
 
-double ExpFilter::filter(double rawValue){
+double ExpFilter::filter(double raw_value){
 	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*rawValue;
+	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*raw_value;
 	last_filtered_value_ = filteredValue;
 	return filteredValue;
 }
 
-double ExpFilter::filter(uint8_t rawValue){
+double ExpFilter::filter(uint8_t raw_value){
 	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)rawValue;
+	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
 	last_filtered_value_ = filteredValue;
 	return filteredValue;
 }
 
-double ExpFilter::filter(int8_t rawValue){
+double ExpFilter::filter(int8_t raw_value){
 	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)rawValue;
+	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
 	last_filtered_value_ = filteredValue;
 	return filteredValue;
 }
 
-double ExpFilter::filter(uint16_t rawValue){
+double ExpFilter::filter(uint16_t raw_value){
 	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)rawValue;
+	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
 	last_filtered_value_ = filteredValue;
 	return filteredValue;
 }
 
-double ExpFilter::filter(int16_t rawValue){
+double ExpFilter::filter(int16_t raw_value){
 	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)rawValue;
+	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
 	last_filtered_value_ = filteredValue;
 	return filteredValue;
 }
 
-double ExpFilter::filter(uint32_t rawValue){
+double ExpFilter::filter(uint32_t raw_value){
 	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)rawValue;
+	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
 	last_filtered_value_ = filteredValue;
 	return filteredValue;
 }
 
-double ExpFilter::filter(int32_t rawValue){
+double ExpFilter::filter(int32_t raw_value){
 	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)rawValue;
+	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
 	last_filtered_value_ = filteredValue;
 	return filteredValue;
 }
 
-double ExpFilter::filter(uint64_t rawValue){
+double ExpFilter::filter(uint64_t raw_value){
 	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)rawValue;
+	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
 	last_filtered_value_ = filteredValue;
 	return filteredValue;
 }
 
-double ExpFilter::filter(int64_t rawValue){
+double ExpFilter::filter(int64_t raw_value){
 	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)rawValue;
+	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
 	last_filtered_value_ = filteredValue;
 	return filteredValue;
 }

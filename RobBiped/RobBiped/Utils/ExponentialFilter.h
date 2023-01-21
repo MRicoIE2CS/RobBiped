@@ -26,7 +26,8 @@
 #endif
 
 //TODO: Change file for Signals
-//TODO: New class: Hysteresis: A greater change in value is needed in order to change direction of change, than the case when incrementing in same direction
+//TODO: New class: Hysteresis: A greater change in value is needed in order to change direction of change,
+// than the case when incrementing or decrementing in same direction
 
 
 class ExpFilter {
@@ -39,15 +40,15 @@ class ExpFilter {
 	public:
 		
 		double set_exp_constant(double k);
-		double filter(double rawValue);
-		double filter(uint8_t rawValue);
-		double filter(int8_t rawValue);
-		double filter(uint16_t rawValue);
-		double filter(int16_t rawValue);
-		double filter(uint32_t rawValue);
-		double filter(int32_t rawValue);
-		double filter(uint64_t rawValue);
-		double filter(int64_t rawValue);
+		double filter(double raw_value);
+		double filter(uint8_t raw_value);
+		double filter(int8_t raw_value);
+		double filter(uint16_t raw_value);
+		double filter(int16_t raw_value);
+		double filter(uint32_t raw_value);
+		double filter(int32_t raw_value);
+		double filter(uint64_t raw_value);
+		double filter(int64_t raw_value);
 	};
 
 

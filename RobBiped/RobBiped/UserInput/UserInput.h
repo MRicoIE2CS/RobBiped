@@ -48,8 +48,8 @@ class UserInput : public I_PeriodicTask {
 		enum class DigitalInputList { forward_button, back_button };
 		enum class AnalogInputList { potentiometer1, potentiometer2 };
 		
-		uint16_t get_analog_value(AnalogInputList selectInput);
-		bool get_digital_value(DigitalInputList selectInput);
+		uint16_t get_analog_value(AnalogInputList select_input);
+		bool get_digital_value(DigitalInputList select_input);
 		
 		void update();
 		

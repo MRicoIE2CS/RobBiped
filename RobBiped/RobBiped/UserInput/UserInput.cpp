@@ -40,9 +40,9 @@ void UserInput::update(){
 	back_button_.read_HW_value();
 }
 
-uint16_t UserInput::get_analog_value(AnalogInputList selectInput){
+uint16_t UserInput::get_analog_value(AnalogInputList select_input){
 	
-	switch (selectInput) {
+	switch (select_input) {
 		case AnalogInputList::potentiometer1:
 			return potentiometer1_.get_value();
 			break;
@@ -53,9 +53,9 @@ uint16_t UserInput::get_analog_value(AnalogInputList selectInput){
 }
 
 
-bool UserInput::get_digital_value(DigitalInputList selectInput){
+bool UserInput::get_digital_value(DigitalInputList select_input){
 	
-	switch (selectInput) {
+	switch (select_input) {
 		case DigitalInputList::forward_button:
 			return forward_button_.get_value();
 			break;

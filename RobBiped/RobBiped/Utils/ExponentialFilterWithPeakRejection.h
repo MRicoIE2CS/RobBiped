@@ -34,15 +34,15 @@ class ExpFilterPeakReject: public ExpFilter {
 		
 	public:
 		void set_threshold_value(double value);
-		double filter_pr(double rawValue, bool acceptStep = false);
-		double filter_pr(uint8_t rawValue, bool acceptStep = false);
-		double filter_pr(int8_t rawValue, bool acceptStep = false);
-		double filter_pr(uint16_t rawValue, bool acceptStep = false);
-		double filter_pr(int16_t rawValue, bool acceptStep = false);
-		double filter_pr(uint32_t rawValue, bool acceptStep = false);
-		double filter_pr(int32_t rawValue, bool acceptStep = false);
-		double filter_pr(uint64_t rawValue, bool acceptStep = false);
-		double filter_pr(int64_t rawValue, bool acceptStep = false);
+		double filter_pr(double raw_value, bool accept_step = false);
+		double filter_pr(uint8_t raw_value, bool accept_step = false);
+		double filter_pr(int8_t raw_value, bool accept_step = false);
+		double filter_pr(uint16_t raw_value, bool accept_step = false);
+		double filter_pr(int16_t raw_value, bool accept_step = false);
+		double filter_pr(uint32_t raw_value, bool accept_step = false);
+		double filter_pr(int32_t raw_value, bool accept_step = false);
+		double filter_pr(uint64_t raw_value, bool accept_step = false);
+		double filter_pr(int64_t raw_value, bool accept_step = false);
 	};
 
 #endif
