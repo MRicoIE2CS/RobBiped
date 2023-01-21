@@ -1,7 +1,7 @@
 /*
  * multiple_HX711.h
  *
- * Copyright 2023 Mikel Rico Abajo (MRicoIE2C)
+ * Copyright 2023 Mikel Rico Abajo (https://github.com/MRicoIE2CS)
 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
