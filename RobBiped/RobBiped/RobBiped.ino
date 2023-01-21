@@ -1,9 +1,19 @@
-
 /*
  * RobBiped.ino
  *
- * Created: 1/28/2022 8:02:12 PM
- * Author: MRICO
+ * Copyright 2023 Mikel Rico Abajo (https://github.com/MRicoIE2CS) 
+
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+
+ * http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */ 
 
 #include "Main/Executor.h"
@@ -11,7 +21,7 @@
 
 Executor executor;
 
-Command* serialCommand = Command::getInstance();
+Command* serial_command = Command::get_instance();
 
 void setup()
 {
@@ -19,10 +29,10 @@ void setup()
 	
 	executor.init();
 	
-	while (!serialCommand->commands.init)
+	while (!serial_command->commands.init)
 	{
 		Serial.println("type in 'init' to initialize");
-		serialCommand->listenForCommands();
+		serial_command->listen_for_commands();
 		delay(1000);
 	}
 	Serial.println("Initialize execution!");
@@ -32,5 +42,5 @@ void loop()
 {
 	executor.execution();
 	
-	serialCommand->listenForCommands();
+	serial_command->listen_for_commands();
 }

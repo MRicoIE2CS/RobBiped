@@ -1,4 +1,20 @@
+/*
+ * SignalGenerator.h
+ *
+ * Copyright 2023 Mikel Rico Abajo (https://github.com/MRicoIE2CS)
 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+
+ * http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */ 
 
 #ifndef _SIGNALGENERATOR_h
 #define _SIGNALGENERATOR_h
@@ -9,7 +25,6 @@
 	#include "WProgram.h"
 #endif
 
-//#include "UpdateServos.h"
 #include "../Main/I_PeriodicTask.h"
 
 
@@ -19,31 +34,27 @@ class SignalGenerator : public I_PeriodicTask{
 		
 		void init();
 		
-		void update();
-		
-		double generateTrajectory();
+		double generate_trajectory();
 		
 		enum class SignalType { sine, triangular, square, saw };
 			
-		void configureSignal(SignalType _type, unsigned int _period, unsigned int _amplitude, unsigned int _offset, unsigned int _phaseShift);
-		
+		void configure_signal(SignalType _type, uint16_t _period, uint16_t _amplitude, uint16_t _offset, uint16_t _phase_shift);
 		
 	private:
 	
-		unsigned long lastCalculatedTime;
+		uint64_t last_calculated_time_;
 		
-		SignalType signalType = SignalType::sine;
+		SignalType signal_type_ = SignalType::sine;
 		
-		unsigned int period_ms = 500;
+		uint16_t period_ms_ = 500;
 		
-		double amplitude = 1;
+		double amplitude_ = 1;
 		
-		double offset = 0;
+		double offset_ = 0;
 		
-		unsigned int phaseShift = 0;
+		uint16_t phase_shift_ = 0;
 		
-		double last_output = 0;
-		
+		double last_output_ = 0;
 	};
 
 
