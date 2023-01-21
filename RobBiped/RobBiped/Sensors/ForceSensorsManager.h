@@ -70,14 +70,14 @@ private:
 	
 	Configuration::Configs::ForceSensors *config_;
 	
-	double *calibration_LeftFoot_LeftFrontSensor_;
-	double *calibration_LeftFoot_RightFrontSensor_;
-	double *calibration_LeftFoot_LeftBackSensor_;
-	double *calibration_LeftFoot_RightBackSensor_;
-	double *calibration_RightFoot_LeftFrontSensor_;
-	double *calibration_RightFoot_RightFrontSensor_;
-	double *calibration_RightFoot_LeftBackSensor_;
-	double *calibration_RightFoot_RightBackSensor_;
+	double *calibration_LeftFoot_LeftFront_cell_;
+	double *calibration_LeftFoot_RightFront_cell_;
+	double *calibration_LeftFoot_LeftBack_cell_;
+	double *calibration_LeftFoot_RightBack_cell_;
+	double *calibration_RightFoot_LeftFront_cell_;
+	double *calibration_RightFoot_RightFront_cell_;
+	double *calibration_RightFoot_LeftBack_cell_;
+	double *calibration_RightFoot_RightBack_cell_;
 	
 	int16_t *separation_FrontBack_mm_;
 	int16_t *separation_LeftRight_mm_;

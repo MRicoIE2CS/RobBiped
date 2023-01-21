@@ -29,22 +29,17 @@ void ForceSensorsManager::init()
 
 	multiple_hx711_.configure(config_->gpio.dINs, config_->gpio.clock);
 	
-	calibration_LeftFoot_LeftFrontSensor_ = &(config_->calibration_LeftFoot_LeftFrontSensor);
-	calibration_LeftFoot_RightFrontSensor_ = &(config_->calibration_LeftFoot_RightFrontSensor);
-	calibration_LeftFoot_LeftBackSensor_ = &(config_->calibration_LeftFoot_LeftBackSensor);
-	calibration_LeftFoot_RightBackSensor_ = &(config_->calibration_LeftFoot_RightBackSensor);
-	calibration_RightFoot_LeftFrontSensor_ = &(config_->calibration_RightFoot_LeftFrontSensor);
-	calibration_RightFoot_RightFrontSensor_ = &(config_->calibration_RightFoot_RightFrontSensor);
-	calibration_RightFoot_LeftBackSensor_ = &(config_->calibration_RightFoot_LeftBackSensor);
-	calibration_RightFoot_RightBackSensor_ = &(config_->calibration_RightFoot_RightBackSensor);
+	calibration_LeftFoot_LeftFront_cell_ = &(config_->calibration_LeftFoot_LeftFront_cell);
+	calibration_LeftFoot_RightFront_cell_ = &(config_->calibration_LeftFoot_RightFront_cell);
+	calibration_LeftFoot_LeftBack_cell_ = &(config_->calibration_LeftFoot_LeftBack_cell);
+	calibration_LeftFoot_RightBack_cell_ = &(config_->calibration_LeftFoot_RightBack_cell);
+	calibration_RightFoot_LeftFront_cell_ = &(config_->calibration_RightFoot_LeftFront_cell);
+	calibration_RightFoot_RightFront_cell_ = &(config_->calibration_RightFoot_RightFront_cell);
+	calibration_RightFoot_LeftBack_cell_ = &(config_->calibration_RightFoot_LeftBack_cell);
+	calibration_RightFoot_RightBack_cell_ = &(config_->calibration_RightFoot_RightBack_cell);
 	
 	separation_FrontBack_mm_ = &(config_->location_mm.frontBack_separation);
 	separation_LeftRight_mm_ = &(config_->location_mm.leftRight_separation);
-	
-	multiple_hx711_.set_sctive_channels(false,true,true);
-	multiple_hx711_.power_up();
-	
-	//______//
 	
 	filter_LeftFoot_LeftBack_.set_exp_constant(config_->filter_exp_constant);
 	filter_LeftFoot_LeftFront_.set_exp_constant(config_->filter_exp_constant);
@@ -63,6 +58,11 @@ void ForceSensorsManager::init()
 	filter_RightFoot_LeftFront_.set_threshold_value(config_->filter_threshold_value);
 	filter_RightFoot_RightBack_.set_threshold_value(config_->filter_threshold_value);
 	filter_RightFoot_RightFront_.set_threshold_value(config_->filter_threshold_value);
+	
+	//______//
+	
+	multiple_hx711_.set_sctive_channels(false,true,true);
+	multiple_hx711_.power_up();
 }
 
 bool ForceSensorsManager::update()
@@ -71,14 +71,14 @@ bool ForceSensorsManager::update()
 
 	if (updated)
 	{
-		value_LeftFoot_LeftBack_ = filter_LeftFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(0u)) / 2.0 * *calibration_LeftFoot_LeftBackSensor_;
-		value_LeftFoot_LeftFront_ = filter_LeftFoot_LeftFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(0u)) * *calibration_LeftFoot_LeftFrontSensor_;
-		value_LeftFoot_RightBack_ = filter_LeftFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(1u)) / 2.0 * *calibration_LeftFoot_RightBackSensor_;
-		value_LeftFoot_RightFront_ = filter_LeftFoot_RightFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(1u)) * *calibration_LeftFoot_RightFrontSensor_;
-		value_RightFoot_LeftBack_ = filter_RightFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(2u)) / 2.0 * *calibration_RightFoot_LeftBackSensor_;
-		value_RightFoot_LeftFront_ = filter_RightFoot_LeftFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(2u)) * *calibration_RightFoot_LeftFrontSensor_;
-		value_RightFoot_RightBack_ = filter_RightFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(3u)) / 2.0 * *calibration_RightFoot_RightBackSensor_;
-		value_RightFoot_RightFront_ = filter_RightFoot_RightFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(3u)) * *calibration_RightFoot_RightFrontSensor_;
+		value_LeftFoot_LeftBack_ = filter_LeftFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(0u)) / 2.0 * *calibration_LeftFoot_LeftBack_cell_;
+		value_LeftFoot_LeftFront_ = filter_LeftFoot_LeftFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(0u)) * *calibration_LeftFoot_LeftFront_cell_;
+		value_LeftFoot_RightBack_ = filter_LeftFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(1u)) / 2.0 * *calibration_LeftFoot_RightBack_cell_;
+		value_LeftFoot_RightFront_ = filter_LeftFoot_RightFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(1u)) * *calibration_LeftFoot_RightFront_cell_;
+		value_RightFoot_LeftBack_ = filter_RightFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(2u)) / 2.0 * *calibration_RightFoot_LeftBack_cell_;
+		value_RightFoot_LeftFront_ = filter_RightFoot_LeftFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(2u)) * *calibration_RightFoot_LeftFront_cell_;
+		value_RightFoot_RightBack_ = filter_RightFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(3u)) / 2.0 * *calibration_RightFoot_RightBack_cell_;
+		value_RightFoot_RightFront_ = filter_RightFoot_RightFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(3u)) * *calibration_RightFoot_RightFront_cell_;
 		
 		calculate_ZMP();
 	}

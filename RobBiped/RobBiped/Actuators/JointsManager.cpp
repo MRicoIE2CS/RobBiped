@@ -31,27 +31,27 @@ void JointsManager::init(){
 	joints_config();
 }
 	
-void JointsManager::update(UserInput& _userInput){
+void JointsManager::update(UserInput& _user_input){
 	
 	check_state(command_->commands.servo_selection_button_emulation,
-				_userInput.get_digital_value(UserInput::DigitalInputList::forward_button),
-				_userInput.get_digital_value(UserInput::DigitalInputList::forward_button));
+				_user_input.get_digital_value(UserInput::DigitalInputList::forward_button),
+				_user_input.get_digital_value(UserInput::DigitalInputList::forward_button));
 				
 	if (current_state_ == State::calibrating){
-		calibration_set_angle_to_servo(_userInput.get_analog_value(UserInput::AnalogInputList::potentiometer1));
+		calibration_set_angle_to_servo(_user_input.get_analog_value(UserInput::AnalogInputList::potentiometer1));
 	}
 	
 	servo_update();
 }
 
 void JointsManager::check_state(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed){
-	uint32_t currentMillis = millis();
+	uint32_t current_millis = millis();
 	
-	if (change_state_conditions(currentMillis, command_->commands.servo_onoff_toggle)) change_state(currentMillis);	// run/sleep to servos
+	if (change_state_conditions(current_millis, command_->commands.servo_onoff_toggle)) change_state(current_millis);	// run/sleep to servos
 	
-	calibration_mode_enter_exit_conditions(currentMillis, sel_button_pressed, forward_button_pressed, back_button_pressed);
-	if (current_state_ == State::calibrating) calibration_state_machine(currentMillis, sel_button_pressed, forward_button_pressed, back_button_pressed);
-	calibration_button_pressed_flag_mechanism(currentMillis);
+	calibration_mode_enter_exit_conditions(current_millis, sel_button_pressed, forward_button_pressed, back_button_pressed);
+	if (current_state_ == State::calibrating) calibration_state_machine(current_millis, sel_button_pressed, forward_button_pressed, back_button_pressed);
+	calibration_button_pressed_flag_mechanism(current_millis);
 	
 	sel_button_pressed = false;
 }
@@ -101,10 +101,9 @@ void JointsManager::servo_update(){
 	}
 }
 
-void JointsManager::set_angle_to_servo(uint8_t servoIndex, double servoAngle){
+void JointsManager::set_angle_to_servo(uint8_t servo_index, double servo_angle){
 	
 	if (current_state_ == State::running){
-		PCA9685_1_servo_map_[servoIndex].set_angle_target_rad(servoAngle);
+		PCA9685_1_servo_map_[servo_index].set_angle_target_rad(servo_angle);
 	}
-	
 }

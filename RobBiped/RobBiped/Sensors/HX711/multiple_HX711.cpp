@@ -134,23 +134,21 @@ void Multiple_HX711::get_DIN_pins_array(byte *_array)
 	}
 }
 
-void Multiple_HX711::read_shiftIn(uint8_t clockPin, byte *DIN_array, bool _readings[Configuration::hx711_number][8])
+void Multiple_HX711::read_shiftIn(uint8_t clock_pin, byte *DIN_array, bool _readings[Configuration::hx711_number][8])
 {
 	uint8_t value = 0;
 	uint8_t i;
 	
-
 	for (i = 0; i < 8; ++i)
 	{
-		digitalWrite(clockPin, HIGH);
+		digitalWrite(clock_pin, HIGH);
 		delayMicroseconds(1);	// Needed to give time for the chip to change state of its output
 		for (uint8_t _idx = 0; _idx < hx711_number_; _idx++)
 		{
 			_readings[_idx][i] = digitalRead(DIN_array[_idx]);
 		}
-		digitalWrite(clockPin, LOW);
+		digitalWrite(clock_pin, LOW);
 	}
-	
 }
 
 void Multiple_HX711::construct_read(uint8_t idx_byte_sel, uint8_t bit_order, byte _arr_data[Configuration::hx711_number][3], bool _readings[Configuration::hx711_number][8])

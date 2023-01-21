@@ -87,7 +87,7 @@ private:
 	byte set_channel_selection_bits(Channel _next_channel, bool force_next_selection = false, short _sel = 3);
 	
 	void get_DIN_pins_array(byte *_array);
-	void read_shiftIn(uint8_t clockPin, byte *DIN_array, bool _readings[hx711_number][8]);
+	void read_shiftIn(uint8_t clock_pin, byte *DIN_array, bool _readings[hx711_number][8]);
 	void construct_read(uint8_t idx_byte_sel, uint8_t bit_order, byte _arr_data[hx711_number][3], bool _readings[hx711_number][8]);
 	
 	// Obtains a reading, and sets channel for next one

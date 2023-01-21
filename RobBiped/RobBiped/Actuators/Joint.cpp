@@ -20,8 +20,8 @@
 
 
 uint16_t Joint::get_PWM_pulse_width_update(){
-	uint16_t pulseWidth = servo_.get_pulse_width_assigned();
-	return pulseWidth;
+	uint16_t pulse_width = servo_.get_pulse_width_assigned();
+	return pulse_width;
 }
 
 bool Joint::is_update_needed(){

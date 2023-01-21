@@ -50,7 +50,7 @@ class JointsManager : public I_PeriodicTask{
 		uint64_t last_millis_changed_state_;
 		enum class CalibrationState { servoSelection, zeroCalibration, firstPointCalibration, secondPointCalibration };
 		struct Calibration {
-			CalibrationState calibrationState;
+			CalibrationState calibration_state;
 			int8_t selected_servo = 0;
 			uint32_t last_millis_changed_calibration_state;
 			uint32_t value_change_delay_ms = 2000;
@@ -81,9 +81,9 @@ class JointsManager : public I_PeriodicTask{
 		void init();
 		void joints_config();
 		
-		void set_angle_to_servo(uint8_t servoIndex, double servoAngle);
+		void set_angle_to_servo(uint8_t servo_index, double servo_angle);
 		
-		void update(UserInput& _userInput);
+		void update(UserInput& _user_input);
 		void servo_update();
 	
 };
