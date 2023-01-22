@@ -26,10 +26,10 @@
 #endif
 
 #include <Wire.h>
-#include <Adafruit_PWMServoDriver.h>
 #include <map>
 
 #include "../Main/I_PeriodicTask.h"
+#include "PCA9685/Adafruit_PWMServoDriver.h"
 #include "Joint.h"
 #include "MG996R.h"
 #include "../UserInput/UserInput.h"

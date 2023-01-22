@@ -71,7 +71,6 @@
     <ListValues>
       <Value>../../../RobBiped</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries/Wire/src</Value>
-      <Value>C:/Users/MRICO/Documents/Arduino/libraries/Adafruit_PWM_Servo_Driver_Library</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/apps</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/libb64</Value>
@@ -179,7 +178,6 @@
     <ListValues>
       <Value>../../../RobBiped</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries/Wire/src</Value>
-      <Value>C:/Users/MRICO/Documents/Arduino/libraries/Adafruit_PWM_Servo_Driver_Library</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/apps</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/libb64</Value>
@@ -332,7 +330,6 @@
     <ListValues>
       <Value>../../../RobBiped</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries/Wire/src</Value>
-      <Value>C:/Users/MRICO/Documents/Arduino/libraries/Adafruit_PWM_Servo_Driver_Library</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/apps</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/libb64</Value>
@@ -440,7 +437,6 @@
     <ListValues>
       <Value>../../../RobBiped</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries/Wire/src</Value>
-      <Value>C:/Users/MRICO/Documents/Arduino/libraries/Adafruit_PWM_Servo_Driver_Library</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/apps</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/libb64</Value>
@@ -588,6 +584,12 @@
     <Compile Include="Actuators\JointsManager.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Actuators\PCA9685\Adafruit_PWMServoDriver.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Actuators\PCA9685\Adafruit_PWMServoDriver.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Main\Configs.h">
       <SubType>compile</SubType>
     </Compile>
@@ -696,6 +698,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Actuators\" />
+    <Folder Include="Actuators\PCA9685" />
     <Folder Include="Main" />
     <Folder Include="Sensors" />
     <Folder Include="Sensors\GyroAcc\MPU6050" />
@@ -706,6 +709,12 @@
     <Folder Include="__vm\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Actuators\PCA9685\license.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Actuators\PCA9685\README.md">
+      <SubType>compile</SubType>
+    </None>
     <None Include="LICENSE.md">
       <SubType>compile</SubType>
     </None>
