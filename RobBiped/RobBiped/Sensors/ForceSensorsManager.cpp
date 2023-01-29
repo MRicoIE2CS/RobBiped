@@ -192,13 +192,13 @@ void ForceSensorsManager::calculate_ZMP()
 	int32_t force_sum =
 			value_LeftFoot_LeftBack_ + value_LeftFoot_LeftFront_ + value_LeftFoot_RightBack_ + value_LeftFoot_RightFront_;
 	int32_t force_ponderatedSum =
-			value_LeftFoot_LeftBack_ + (value_LeftFoot_LeftFront_ * *separation_FrontBack_mm_) + value_LeftFoot_RightBack_ + (value_LeftFoot_RightFront_ * *separation_FrontBack_mm_);
+			(value_LeftFoot_LeftFront_ * *separation_FrontBack_mm_) + (value_LeftFoot_RightFront_ * *separation_FrontBack_mm_);
 	
 	// ZMP X coordinate of the left foot, in mm, from the left-back sensor
 	zmp_left_foot_x_mm_ = filter_zmp_left_foot_x_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
 	
 	force_ponderatedSum =
-			value_LeftFoot_LeftBack_ + value_LeftFoot_LeftFront_ + (value_LeftFoot_RightBack_ * *separation_LeftRight_mm_) + (value_LeftFoot_RightFront_ * *separation_LeftRight_mm_);
+			(value_LeftFoot_RightBack_ * *separation_LeftRight_mm_) + (value_LeftFoot_RightFront_ * *separation_LeftRight_mm_);
 	
 	// ZMP Y coordinate of the left foot, in mm, from the left-back sensor
 	zmp_left_foot_y_mm_ = filter_zmp_left_foot_y_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
@@ -206,13 +206,13 @@ void ForceSensorsManager::calculate_ZMP()
 	force_sum =
 			value_RightFoot_LeftBack_ + value_RightFoot_LeftFront_ + value_RightFoot_RightBack_ + value_RightFoot_RightFront_;
 	force_ponderatedSum =
-			value_RightFoot_LeftBack_ + (value_RightFoot_LeftFront_ * *separation_FrontBack_mm_) + value_RightFoot_RightBack_ + (value_RightFoot_RightFront_ * *separation_FrontBack_mm_);
+			(value_RightFoot_LeftFront_ * *separation_FrontBack_mm_) + (value_RightFoot_RightFront_ * *separation_FrontBack_mm_);
 	
 	// ZMP X coordinate of the right foot, in mm, from the left-back sensor
 	zmp_right_foot_x_mm_ = filter_zmp_right_foot_x_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
 	
 	force_ponderatedSum =
-			value_RightFoot_LeftBack_ + value_RightFoot_LeftFront_ + (value_RightFoot_RightBack_ * *separation_LeftRight_mm_) + (value_RightFoot_RightFront_ * *separation_LeftRight_mm_);
+			(value_RightFoot_RightBack_ * *separation_LeftRight_mm_) + (value_RightFoot_RightFront_ * *separation_LeftRight_mm_);
 	
 	// ZMP Y coordinate of the right foot, in mm, from the left-back sensor
 	zmp_right_foot_y_mm_ = filter_zmp_right_foot_y_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
