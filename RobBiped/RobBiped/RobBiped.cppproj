@@ -293,7 +293,7 @@
   <armgcccpp.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcccpp.preprocessingassembler.debugging.DebugLevel>
 </ArmGccCpp>
     </ToolchainSettings>
-    <VMSETTING_IncludePaths>../../../servoUpdater;C:/Program Files (x86)/Arduino/libraries;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries;C:/Users/MRICO/Documents/Arduino/libraries;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/apps;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/libb64;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/variants/doitESP32devkitV1;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/config;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_trace;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_update;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/asio;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bootloader_support;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bt;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/coap;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/console;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/driver;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/efuse;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-tls;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_adc_cal;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_event;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_client;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_server;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_ota;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_server;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_ringbuf;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_websocket_client;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/espcoredump;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ethernet;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/expat;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fatfs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freemodbus;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freertos;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/heap;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/idf_test;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/jsmn;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/json;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/libsodium;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/log;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/lwip;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mbedtls;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mdns;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/micro-ecc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mqtt;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/newlib;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nghttp;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nvs_flash;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/openssl;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protobuf-c;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protocomm;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/pthread;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/sdmmc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/smartconfig_ack;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/soc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spi_flash;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spiffs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcp_transport;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcpip_adapter;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ulp;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/unity;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/vfs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wear_levelling;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wifi_provisioning;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wpa_supplicant;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/xtensa-debug-module;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-face;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32-camera;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fb_gfx;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries/Wire/src;C:/Users/MRICO/Documents/Arduino/libraries/Adafruit_PWM_Servo_Driver_Library;../../../RobBiped;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include/c++/5.2.0/xtensa-esp32-elf;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include/c++/5.2.0;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/include/c++/5.2.0;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/include;{runtime.tools.xtensa-lx106-elf-gcc.path}/xtensa-lx106-elf/include/c++/4.8.2;{runtime.tools.xtensa-lx106-elf-gcc.path}/xtensa-lx106-elf/include/c++/4.8.2/xtensa-lx106-elf;{runtime.tools.xtensa-lx106-elf-gcc.path}/xtensa-lx106-elf/include;{runtime.tools.xtensa-lx106-elf-gcc.path}/lib/gcc/xtensa-lx106-elf/4.8.2/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/new;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/bits;{vm.intellisense.add-paths};C:/Users/MRICO/Documents/Arduino/libraries/HX711;C:/Users/MRICO/DOCUME~1/GitHub/RobBiped/RobBiped/RobBiped;</VMSETTING_IncludePaths>
+    <VMSETTING_IncludePaths>../../../servoUpdater;C:/Program Files (x86)/Arduino/libraries;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries;C:/Users/MRICO/Documents/Arduino/libraries;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/apps;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/libb64;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/variants/doitESP32devkitV1;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/config;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_trace;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_update;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/asio;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bootloader_support;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bt;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/coap;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/console;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/driver;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/efuse;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-tls;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_adc_cal;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_event;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_client;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_server;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_ota;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_server;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_ringbuf;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_websocket_client;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/espcoredump;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ethernet;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/expat;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fatfs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freemodbus;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freertos;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/heap;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/idf_test;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/jsmn;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/json;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/libsodium;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/log;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/lwip;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mbedtls;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mdns;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/micro-ecc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mqtt;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/newlib;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nghttp;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nvs_flash;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/openssl;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protobuf-c;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protocomm;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/pthread;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/sdmmc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/smartconfig_ack;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/soc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spi_flash;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spiffs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcp_transport;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcpip_adapter;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ulp;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/unity;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/vfs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wear_levelling;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wifi_provisioning;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wpa_supplicant;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/xtensa-debug-module;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-face;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32-camera;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fb_gfx;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries/Wire/src;C:/Users/MRICO/Documents/Arduino/libraries/Adafruit_PWM_Servo_Driver_Library;../../../RobBiped;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include/c++/5.2.0/xtensa-esp32-elf;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include/c++/5.2.0;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/include/c++/5.2.0;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/include;{runtime.tools.xtensa-lx106-elf-gcc.path}/xtensa-lx106-elf/include/c++/4.8.2;{runtime.tools.xtensa-lx106-elf-gcc.path}/xtensa-lx106-elf/include/c++/4.8.2/xtensa-lx106-elf;{runtime.tools.xtensa-lx106-elf-gcc.path}/xtensa-lx106-elf/include;{runtime.tools.xtensa-lx106-elf-gcc.path}/lib/gcc/xtensa-lx106-elf/4.8.2/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/new;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/bits;{vm.intellisense.add-paths};C:/Users/MRICO/Documents/Arduino/libraries/HX711;C:/Users/MRICO/DOCUME~1/GitHub/RobBiped/RobBiped/RobBiped;C:/Users/MRICO/Documents/Arduino/libraries/Eigen;</VMSETTING_IncludePaths>
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
@@ -554,7 +554,7 @@
   <armgcccpp.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcccpp.preprocessingassembler.debugging.DebugLevel>
 </ArmGccCpp>
     </ToolchainSettings>
-    <VMSETTING_IncludePaths>../../../servoUpdater;C:/Program Files (x86)/Arduino/libraries;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries;C:/Users/MRICO/Documents/Arduino/libraries;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/apps;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/libb64;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/variants/doitESP32devkitV1;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/config;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_trace;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_update;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/asio;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bootloader_support;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bt;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/coap;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/console;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/driver;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/efuse;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-tls;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_adc_cal;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_event;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_client;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_server;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_ota;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_server;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_ringbuf;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_websocket_client;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/espcoredump;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ethernet;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/expat;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fatfs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freemodbus;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freertos;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/heap;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/idf_test;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/jsmn;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/json;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/libsodium;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/log;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/lwip;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mbedtls;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mdns;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/micro-ecc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mqtt;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/newlib;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nghttp;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nvs_flash;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/openssl;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protobuf-c;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protocomm;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/pthread;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/sdmmc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/smartconfig_ack;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/soc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spi_flash;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spiffs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcp_transport;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcpip_adapter;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ulp;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/unity;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/vfs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wear_levelling;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wifi_provisioning;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wpa_supplicant;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/xtensa-debug-module;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-face;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32-camera;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fb_gfx;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries/Wire/src;C:/Users/MRICO/Documents/Arduino/libraries/Adafruit_PWM_Servo_Driver_Library;../../../RobBiped;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include/c++/5.2.0/xtensa-esp32-elf;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include/c++/5.2.0;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/include/c++/5.2.0;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/include;{runtime.tools.xtensa-lx106-elf-gcc.path}/xtensa-lx106-elf/include/c++/4.8.2;{runtime.tools.xtensa-lx106-elf-gcc.path}/xtensa-lx106-elf/include/c++/4.8.2/xtensa-lx106-elf;{runtime.tools.xtensa-lx106-elf-gcc.path}/xtensa-lx106-elf/include;{runtime.tools.xtensa-lx106-elf-gcc.path}/lib/gcc/xtensa-lx106-elf/4.8.2/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/new;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/bits;{vm.intellisense.add-paths};C:/Users/MRICO/Documents/Arduino/libraries/HX711;C:/Users/MRICO/DOCUME~1/GitHub/RobBiped/RobBiped/RobBiped;</VMSETTING_IncludePaths>
+    <VMSETTING_IncludePaths>../../../servoUpdater;C:/Program Files (x86)/Arduino/libraries;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries;C:/Users/MRICO/Documents/Arduino/libraries;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/apps;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/cores/esp32/libb64;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/variants/doitESP32devkitV1;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/config;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_trace;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/app_update;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/asio;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bootloader_support;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/bt;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/coap;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/console;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/driver;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/efuse;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-tls;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_adc_cal;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_event;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_client;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_http_server;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_ota;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_https_server;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_ringbuf;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp_websocket_client;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/espcoredump;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ethernet;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/expat;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fatfs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freemodbus;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/freertos;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/heap;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/idf_test;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/jsmn;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/json;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/libsodium;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/log;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/lwip;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mbedtls;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mdns;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/micro-ecc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/mqtt;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/newlib;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nghttp;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/nvs_flash;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/openssl;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protobuf-c;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/protocomm;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/pthread;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/sdmmc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/smartconfig_ack;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/soc;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spi_flash;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/spiffs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcp_transport;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/tcpip_adapter;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/ulp;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/unity;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/vfs;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wear_levelling;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wifi_provisioning;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/wpa_supplicant;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/xtensa-debug-module;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-face;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32-camera;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fb_gfx;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/libraries/Wire/src;C:/Users/MRICO/Documents/Arduino/libraries/Adafruit_PWM_Servo_Driver_Library;../../../RobBiped;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include/c++/5.2.0/xtensa-esp32-elf;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include/c++/5.2.0;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/include/c++/5.2.0;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/include;{runtime.tools.xtensa-lx106-elf-gcc.path}/xtensa-lx106-elf/include/c++/4.8.2;{runtime.tools.xtensa-lx106-elf-gcc.path}/xtensa-lx106-elf/include/c++/4.8.2/xtensa-lx106-elf;{runtime.tools.xtensa-lx106-elf-gcc.path}/xtensa-lx106-elf/include;{runtime.tools.xtensa-lx106-elf-gcc.path}/lib/gcc/xtensa-lx106-elf/4.8.2/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/new;C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/bits;{vm.intellisense.add-paths};C:/Users/MRICO/Documents/Arduino/libraries/HX711;C:/Users/MRICO/DOCUME~1/GitHub/RobBiped/RobBiped/RobBiped;C:/Users/MRICO/Documents/Arduino/libraries/Eigen;</VMSETTING_IncludePaths>
     <VisualMicroSettings>
       <VisualMicroSettings>
         <ValidatedAS7>1</ValidatedAS7>
@@ -684,6 +684,987 @@
     <Compile Include="Utils\ExponentialFilterWithPeakRejection.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigenDense.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigenSparse.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\ArduinoEigenCommon.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\ArduinoEigenExtension.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Cholesky\LDLT.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Cholesky\LLT.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Cholesky\LLT_LAPACKE.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\CholmodSupport\CholmodSupport.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AltiVec\Complex.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AltiVec\MathFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AltiVec\MatrixProduct.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AltiVec\MatrixProductCommon.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AltiVec\MatrixProductMMA.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AltiVec\PacketMath.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AVX512\Complex.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AVX512\MathFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AVX512\PacketMath.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AVX512\TypeCasting.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AVX\Complex.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AVX\MathFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AVX\PacketMath.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AVX\TypeCasting.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\CUDA\Complex.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\CUDA\Half.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\CUDA\MathFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\CUDA\PacketMath.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\CUDA\PacketMathHalf.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\CUDA\TypeCasting.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\Default\BFloat16.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\Default\ConjHelper.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\Default\GenericPacketMathFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\Default\GenericPacketMathFunctionsFwd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\Default\Half.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\Default\Settings.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\Default\TypeCasting.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\GPU\MathFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\GPU\PacketMath.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\GPU\TypeCasting.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\HIP\hcc\math_constants.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\MSA\Complex.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\MSA\MathFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\MSA\PacketMath.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\NEON\Complex.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\NEON\GeneralBlockPanelKernel.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\NEON\MathFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\NEON\PacketMath.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\NEON\TypeCasting.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SSE\Complex.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SSE\MathFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SSE\PacketMath.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SSE\TypeCasting.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SVE\MathFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SVE\PacketMath.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SVE\TypeCasting.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SYCL\InteropHeaders.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SYCL\MathFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SYCL\PacketMath.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SYCL\SyclMemoryModel.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SYCL\TypeCasting.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\ZVector\Complex.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\ZVector\MathFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\ZVector\PacketMath.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\ArithmeticSequence.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Array.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\ArrayBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\ArrayWrapper.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Assign.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\AssignEvaluator.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Assign_MKL.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\BandMatrix.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Block.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\BooleanRedux.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\CommaInitializer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\ConditionEstimator.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\CoreEvaluators.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\CoreIterators.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\CwiseBinaryOp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\CwiseNullaryOp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\CwiseTernaryOp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\CwiseUnaryOp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\CwiseUnaryView.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\DenseBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\DenseCoeffsBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\DenseStorage.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Diagonal.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\DiagonalMatrix.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\DiagonalProduct.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Dot.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\EigenBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\ForceAlignedAccess.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\functors\AssignmentFunctors.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\functors\BinaryFunctors.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\functors\NullaryFunctors.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\functors\StlFunctors.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\functors\TernaryFunctors.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\functors\UnaryFunctors.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Fuzzy.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\GeneralProduct.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\GenericPacketMath.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\GlobalFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\IndexedView.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Inverse.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\IO.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Map.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\MapBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\MathFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\MathFunctionsImpl.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Matrix.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\MatrixBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\NestByValue.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\NoAlias.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\NumTraits.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\PartialReduxEvaluator.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\PermutationMatrix.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\PlainObjectBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Product.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\ProductEvaluators.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\GeneralBlockPanelKernel.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\GeneralMatrixMatrix.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\GeneralMatrixMatrixTriangular.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\GeneralMatrixMatrixTriangular_BLAS.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\GeneralMatrixMatrix_BLAS.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\GeneralMatrixVector.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\GeneralMatrixVector_BLAS.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\Parallelizer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\SelfadjointMatrixMatrix.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\SelfadjointMatrixMatrix_BLAS.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\SelfadjointMatrixVector.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\SelfadjointMatrixVector_BLAS.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\SelfadjointProduct.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\SelfadjointRank2Update.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\TriangularMatrixMatrix.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\TriangularMatrixMatrix_BLAS.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\TriangularMatrixVector.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\TriangularMatrixVector_BLAS.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\TriangularSolverMatrix.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\TriangularSolverMatrix_BLAS.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\TriangularSolverVector.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Random.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Redux.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Ref.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Replicate.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Reshaped.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\ReturnByValue.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Reverse.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Select.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\SelfAdjointView.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\SelfCwiseBinaryOp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Solve.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\SolverBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\SolveTriangular.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\StableNorm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\StlIterators.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Stride.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Swap.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Transpose.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Transpositions.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\TriangularMatrix.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\BlasUtil.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\ConfigureVectorization.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\Constants.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\DisableStupidWarnings.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\ForwardDeclarations.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\IndexedViewHelper.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\IntegralConstant.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\Macros.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\Memory.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\Meta.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\MKL_support.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\NonMPL2.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\ReenableStupidWarnings.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\ReshapedHelper.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\StaticAssert.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\SymbolicIndex.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\XprHelper.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\VectorBlock.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\VectorwiseOp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\Visitor.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\ComplexEigenSolver.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\ComplexSchur.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\ComplexSchur_LAPACKE.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\EigenSolver.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\GeneralizedEigenSolver.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\GeneralizedSelfAdjointEigenSolver.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\HessenbergDecomposition.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\MatrixBaseEigenvalues.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\RealQZ.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\RealSchur.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\RealSchur_LAPACKE.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\SelfAdjointEigenSolver.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\SelfAdjointEigenSolver_LAPACKE.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\Tridiagonalization.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\AlignedBox.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\AngleAxis.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\arch\Geometry_SIMD.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\arch\Geometry_SSE.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\EulerAngles.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\Homogeneous.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\Hyperplane.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\OrthoMethods.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\ParametrizedLine.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\Quaternion.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\Rotation2D.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\RotationBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\Scaling.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\Transform.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\Translation.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\Umeyama.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Householder\BlockHouseholder.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Householder\Householder.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Householder\HouseholderSequence.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\IterativeLinearSolvers\BasicPreconditioners.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\IterativeLinearSolvers\BiCGSTAB.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\IterativeLinearSolvers\ConjugateGradient.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\IterativeLinearSolvers\IncompleteCholesky.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\IterativeLinearSolvers\IncompleteLUT.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\IterativeLinearSolvers\IterativeSolverBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\IterativeLinearSolvers\LeastSquareConjugateGradient.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\IterativeLinearSolvers\SolveWithGuess.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Jacobi\Jacobi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\KLUSupport\KLUSupport.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\LU\arch\InverseSize4.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\LU\arch\Inverse_SSE.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\LU\Determinant.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\LU\FullPivLU.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\LU\InverseImpl.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\LU\PartialPivLU.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\LU\PartialPivLU_LAPACKE.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\MetisSupport\MetisSupport.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\misc\blas.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\misc\Image.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\misc\Kernel.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\misc\lapack.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\misc\lapacke.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\misc\lapacke_mangling.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\misc\RealSvd2x2.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\OrderingMethods\Amd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\OrderingMethods\Eigen_Colamd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\OrderingMethods\Ordering.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\PardisoSupport\PardisoSupport.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\PaStiXSupport\PaStiXSupport.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\plugins\ArrayCwiseBinaryOps.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\plugins\ArrayCwiseUnaryOps.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\plugins\BlockMethods.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\plugins\CommonCwiseBinaryOps.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\plugins\CommonCwiseUnaryOps.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\plugins\IndexedViewMethods.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\plugins\MatrixCwiseBinaryOps.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\plugins\MatrixCwiseUnaryOps.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\plugins\ReshapedMethods.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\QR\ColPivHouseholderQR.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\QR\ColPivHouseholderQR_LAPACKE.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\QR\CompleteOrthogonalDecomposition.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\QR\FullPivHouseholderQR.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\QR\HouseholderQR.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\QR\HouseholderQR_LAPACKE.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCholesky\SimplicialCholesky.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCholesky\SimplicialCholesky_impl.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\AmbiVector.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\CompressedStorage.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\ConservativeSparseSparseProduct.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\MappedSparseMatrix.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseAssign.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseBlock.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseColEtree.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseCompressedBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseCwiseBinaryOp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseCwiseUnaryOp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseDenseProduct.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseDiagonalProduct.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseDot.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseFuzzy.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseMap.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseMatrix.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseMatrixBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparsePermutation.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseProduct.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseRedux.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseRef.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseSelfAdjointView.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseSolverBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseSparseProductWithPruning.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseTranspose.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseTriangularView.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseUtil.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseVector.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\SparseView.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\TriangularSolver.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLUImpl.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_column_bmod.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_column_dfs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_copy_to_ucol.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_gemm_kernel.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_heap_relax_snode.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_kernel_bmod.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_Memory.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_panel_bmod.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_panel_dfs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_pivotL.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_pruneL.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_relax_snode.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_Structs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_SupernodalMatrix.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\SparseLU_Utils.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseQR\SparseQR.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SPQRSupport\SuiteSparseQRSupport.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\StlSupport\details.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\StlSupport\StdDeque.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\StlSupport\StdList.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\StlSupport\StdVector.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SuperLUSupport\SuperLUSupport.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SVD\BDCSVD.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SVD\JacobiSVD.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SVD\JacobiSVD_LAPACKE.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SVD\SVDBase.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SVD\UpperBidiagonalization.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\UmfPackSupport\UmfPackSupport.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\ArxTypeTraits.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\ArxTypeTraits\functional.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\ArxTypeTraits\has_include.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\ArxTypeTraits\has_libstdcplusplus.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\ArxTypeTraits\initializer_list.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\ArxTypeTraits\replace_minmax_macros.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\ArxTypeTraits\tuple.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\ArxTypeTraits\type_traits.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Utils\SignalGenerator.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -710,6 +1691,59 @@
     <Folder Include="Sensors\GyroAcc" />
     <Folder Include="UserInput" />
     <Folder Include="Utils" />
+    <Folder Include="Utils\LinearAlgebra\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Cholesky\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\CholmodSupport\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AltiVec\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AVX512\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\AVX\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\CUDA\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\Default\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\GPU\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\HIP\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\HIP\hcc\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\MSA\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\NEON\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SSE\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SVE\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\SYCL\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\arch\ZVector\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\functors\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\products\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Core\util\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Eigenvalues\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Geometry\arch\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Householder\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\IterativeLinearSolvers\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\Jacobi\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\KLUSupport\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\LU\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\LU\arch\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\MetisSupport\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\misc\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\OrderingMethods\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\PardisoSupport\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\PaStiXSupport\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\plugins\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\QR\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCholesky\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseCore\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseLU\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SparseQR\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SPQRSupport\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\StlSupport\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SuperLUSupport\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\SVD\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\src\UmfPackSupport\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\utils\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\" />
+    <Folder Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\ArxTypeTraits\" />
     <Folder Include="__vm\" />
   </ItemGroup>
   <ItemGroup>
@@ -720,6 +1754,129 @@
       <SubType>compile</SubType>
     </None>
     <None Include="LICENSE.md">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\Cholesky.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\CholmodSupport.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\CMakeLists.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\Core.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\Dense.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\Eigen.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\Eigenvalues.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\Geometry.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\Householder.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\IterativeLinearSolvers.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\Jacobi.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\KLUSupport.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\LU.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\MetisSupport.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\OrderingMethods.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\PardisoSupport.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\PaStiXSupport.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\QR.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\QtAlignedMalloc.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\Sparse.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\SparseCholesky.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\SparseCore.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\SparseLU.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\SparseQR.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\SPQRSupport.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\StdDeque.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\StdList.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\StdVector.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\SuperLUSupport.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\SVD.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\UmfPackSupport.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\library.json">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\library.properties">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\LICENSE">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\README.md">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\COPYING.MPL2">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\COPYING.README">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\library.json">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\library.properties">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\LICENSE">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Utils\LinearAlgebra\README.md">
       <SubType>compile</SubType>
     </None>
   </ItemGroup>
