@@ -136,7 +136,6 @@
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-face</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32-camera</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fb_gfx</Value>
-      <Value>C:/Users/MRICO/DOCUME~1/GitHub/RobBiped/RobBiped/RobBiped</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/include</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include/c++/5.2.0/xtensa-esp32-elf</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include</Value>
@@ -244,7 +243,6 @@
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-face</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32-camera</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fb_gfx</Value>
-      <Value>C:/Users/MRICO/DOCUME~1/GitHub/RobBiped/RobBiped/RobBiped</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/include</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include/c++/5.2.0/xtensa-esp32-elf</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include</Value>
@@ -299,6 +297,7 @@
         <ValidatedAS7>1</ValidatedAS7>
         <arduino.upload.port>COM3</arduino.upload.port>
         <config.Debug.customdebug_esp32_esp32doit-devkit-v1_debugger_type>universal</config.Debug.customdebug_esp32_esp32doit-devkit-v1_debugger_type>
+        <arduino.build.skip_library_file_if_exists_in_project>1</arduino.build.skip_library_file_if_exists_in_project>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -397,7 +396,6 @@
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-face</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32-camera</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fb_gfx</Value>
-      <Value>C:/Users/MRICO/DOCUME~1/GitHub/RobBiped/RobBiped/RobBiped</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/include</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include/c++/5.2.0/xtensa-esp32-elf</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include</Value>
@@ -505,7 +503,6 @@
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp-face</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/esp32-camera</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/hardware/esp32/1.0.6/tools/sdk/include/fb_gfx</Value>
-      <Value>C:/Users/MRICO/DOCUME~1/GitHub/RobBiped/RobBiped/RobBiped</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/lib/gcc/xtensa-esp32-elf/5.2.0/include</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include/c++/5.2.0/xtensa-esp32-elf</Value>
       <Value>C:/Users/MRICO/AppData/Local/arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/1.22.0-97-gc752ad5-5.2.0/xtensa-esp32-elf/include</Value>
@@ -560,6 +557,7 @@
         <ValidatedAS7>1</ValidatedAS7>
         <arduino.upload.port>COM3</arduino.upload.port>
         <config.Debug.customdebug_esp32_esp32doit-devkit-v1_debugger_type>universal</config.Debug.customdebug_esp32_esp32doit-devkit-v1_debugger_type>
+        <arduino.build.skip_library_file_if_exists_in_project>1</arduino.build.skip_library_file_if_exists_in_project>
       </VisualMicroSettings>
     </VisualMicroSettings>
   </PropertyGroup>
@@ -682,6 +680,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Utils\ExponentialFilterWithPeakRejection.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\ForwardKinematics\ForwardKinematics.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\ForwardKinematics\ForwardKinematics.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Utils\LinearAlgebra\ArduinoEigen.h">
@@ -1744,6 +1748,7 @@
     <Folder Include="Utils\LinearAlgebra\ArduinoEigen\utils\" />
     <Folder Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\" />
     <Folder Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\ArxTypeTraits\" />
+    <Folder Include="Utils\ForwardKinematics" />
     <Folder Include="__vm\" />
   </ItemGroup>
   <ItemGroup>
