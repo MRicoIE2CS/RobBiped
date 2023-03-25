@@ -19,23 +19,15 @@
 #ifndef _UNITSCONVERTER_h
 #define _UNITSCONVERTER_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#include "Arduino.h"
 
-struct UnitsConvert {
+namespace UnitsConvert {
+namespace Angle {
 	
-	struct Angle {
-		
-		double deg_to_rad(double _ang);
-		double rad_to_deg(double _ang);
-		
-		};
-	
-	};
-
+	double deg_to_rad(double _ang);
+	double rad_to_deg(double _ang);
+}	// End namespace UnitsConvert
+}	// End namespace Angle
 
 #endif
 
