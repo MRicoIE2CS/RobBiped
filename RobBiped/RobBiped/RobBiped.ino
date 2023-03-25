@@ -17,6 +17,7 @@
  */
 
 #include <iostream>
+#include <vector>
 
 #include "Main/Executor.h"
 #include "UserInput/Command.h"
@@ -56,32 +57,28 @@ void setup()
 	
 	double q1 = 0;
 	double q2 = 0;
-	double q3 = 1.44973;
-	double q4 = -2.21624;
+	double q3 = 1.72526;
+	double q4 = -0.182847;
 	double q5 = 0;
 	
 	// Denavit-Hartenberg table
+	std::vector<Vector4d> DH_table;
 	Vector4d DH_row_1;
 	DH_row_1 << q4, 0, l3, 0;
 	Vector4d DH_row_2;
 	DH_row_2 << q3, 0, l2, 0;
+	DH_table.push_back(DH_row_1);
+	DH_table.push_back(DH_row_2);
 	
-	Matrix4d TM_1 = Matrix4d::Zero();
-	ForwardKinematics::get_TM_from_DH(DH_row_1, TM_1);
-	Serial.println("TM_1: ");
+	Matrix4d TM;
+	
+	ForwardKinematics::get_overall_TM_from_DH_table(DH_table, TM);
+	
 	IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
-	std::cout << TM_1.format(CleanFmt) << std::endl;
-	
-	Matrix4d TM_2 = Matrix4d::Zero();
-	ForwardKinematics::get_TM_from_DH(DH_row_2, TM_2);
-	Serial.println("TM_2: ");
-	std::cout << TM_2.format(CleanFmt) << std::endl;
-	
-	Matrix4d TF = Matrix4d::Zero();
-	TF = TM_1 * TM_2;
 	Serial.println("TF: ");
-	std::cout << TF.format(CleanFmt) << std::endl;
+	std::cout << TM.format(CleanFmt) << std::endl;
 	
+	// TODO: Inverse Kinematics
 }
 
 void loop()
