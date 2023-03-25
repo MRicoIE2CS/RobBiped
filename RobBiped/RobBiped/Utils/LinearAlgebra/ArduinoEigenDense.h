@@ -7,7 +7,7 @@
 
 // guarantee that the Eigen code that you are #including is licensed under the MPL2
 #define EIGEN_MPL2_ONLY
-#include "ArduinoEigen/Eigen/Dense"
+#include "ArduinoEigen/Eigen/Dense.h"
 
 #include "ArduinoEigen/ArduinoEigenExtension.h"
 
