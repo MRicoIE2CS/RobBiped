@@ -19,17 +19,13 @@
 #ifndef _CONFIGS_h
 #define _CONFIGS_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
 #include "Arduino.h"
-#else
-#include "WProgram.h"
-#endif
 
 namespace Configuration
 {
 
 static const uint8_t hx711_number = 4;	// forceSensors configuration
-	
+
 struct Configs 
 {
 	struct UserInputPins {
@@ -38,7 +34,7 @@ struct Configs
 		uint8_t potentiometer1 = 36;
 		uint8_t potentiometer2 = 39;
 		}user_input_pins;
-	
+
 	struct ForceSensors {
 		struct GPIO {
 			uint8_t clock = 27;
@@ -59,7 +55,7 @@ struct Configs
 			int16_t leftRight_separation = 37;
 			}location_mm;
 		}force_sensors;		// Dependent on static const Configuration::hx711_number
-	
+
 	struct GyroscpeAccelerometer {
 		struct Offsets {
 			int16_t ax_o = -35;	// Accelerometer offsets
@@ -70,6 +66,17 @@ struct Configs
 			int16_t gz_o = -13;
 			}offsets;
 		}gyro_acc;
+
+	struct Kinematics {
+		struct Direct {
+			
+			}direct;
+		
+		struct Inverse {
+			
+		}inverse;
+
+		}kinematics;
 };
 
 } // End namespace Configuration

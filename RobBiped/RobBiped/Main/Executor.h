@@ -19,13 +19,7 @@
 #ifndef _EXECUTOR_h
 #define _EXECUTOR_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
-
-
+#include "Arduino.h"
 
 #include "I_PeriodicTask.h"
 #include "../Actuators/JointsManager.h"
@@ -69,4 +63,3 @@ class Executor {
 	};
 
 #endif
-

@@ -18,7 +18,6 @@
 
 #include "ExponentialFilter.h"
 
-
 double ExpFilter::set_exp_constant(double k){
 	exp_K_ = k;
 }

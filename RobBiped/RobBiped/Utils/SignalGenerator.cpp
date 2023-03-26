@@ -18,7 +18,6 @@
 
 #include "SignalGenerator.h"
 
-
 double SignalGenerator::generate_trajectory(){
 	
 	uint64_t current_millis = millis();

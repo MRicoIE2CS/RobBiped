@@ -19,16 +19,11 @@
 #ifndef _EXPONENTIALFILTER_h
 #define _EXPONENTIALFILTER_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#include "Arduino.h"
 
 //TODO: Change file for Signals
 //TODO: New class: Hysteresis: A greater change in value is needed in order to change direction of change,
 // than the case when incrementing or decrementing in same direction
-
 
 class ExpFilter {
 	
@@ -51,6 +46,4 @@ class ExpFilter {
 		double filter(int64_t raw_value);
 	};
 
-
 #endif
-

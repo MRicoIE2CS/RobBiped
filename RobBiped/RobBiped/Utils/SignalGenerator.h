@@ -19,14 +19,9 @@
 #ifndef _SIGNALGENERATOR_h
 #define _SIGNALGENERATOR_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#include "Arduino.h"
 
 #include "../Main/I_PeriodicTask.h"
-
 
 class SignalGenerator : public I_PeriodicTask{
 	
@@ -57,7 +52,4 @@ class SignalGenerator : public I_PeriodicTask{
 		double last_output_ = 0;
 	};
 
-
-
 #endif
-

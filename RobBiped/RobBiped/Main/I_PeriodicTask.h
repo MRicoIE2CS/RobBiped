@@ -19,11 +19,7 @@
 #ifndef _TASK_h
 #define _TASK_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#include "Arduino.h"
 
 class I_PeriodicTask{
 
@@ -50,4 +46,3 @@ class I_PeriodicTask{
 	};
 
 #endif
-
