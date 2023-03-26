@@ -682,6 +682,9 @@
     <Compile Include="Utils\ExponentialFilterWithPeakRejection.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Utils\Kinematics\example\KinematicsExample.cpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Utils\Kinematics\ForwardKinematics.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -1701,6 +1704,7 @@
     <Folder Include="Sensors\GyroAcc" />
     <Folder Include="UserInput" />
     <Folder Include="Utils" />
+    <Folder Include="Utils\Kinematics\example" />
     <Folder Include="Utils\LinearAlgebra\" />
     <Folder Include="Utils\LinearAlgebra\ArduinoEigen\" />
     <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\" />

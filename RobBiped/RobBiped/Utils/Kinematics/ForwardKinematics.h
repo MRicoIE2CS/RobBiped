@@ -46,6 +46,8 @@ using Eigen::Vector3d;
 */
 namespace ForwardKinematics {
 
+namespace DenavitHartenberg {
+
 	/*
 	*  @fn void get_rotation_matrix_from_DH(const Vector4d& DH_row, Matrix3d& R)
 	*  @brief Fills the rotation matrix of the homogeneous transformation matrix,
@@ -94,6 +96,31 @@ namespace ForwardKinematics {
 	*/
 	void get_overall_TM_from_DH_table(const std::vector<Vector4d> &_DH_table, Matrix4d& _TMf);
 
+}	// End namespace DenavitHartenberg
+
+namespace Geometric {
+
+	/*
+	*  @fn void get_position_from_length_and_angles(
+	*				const long &leg_length_mm, const double &frontal_angle_rad, const double &lateral_angle_rad,
+	*				Vector3d &desired_position);
+	*  @brief Obtains the desired position (x, y, z) of the final effector, from the desired leg length and the
+	*  desired frontal and lateral angles (against the vertical axis) of the final effector relative to the base coordinate frame.
+	*
+	*  Coordinate frame of the base:
+	*  The forward direction corresponds to the y axis.
+	*  The lateral direction corresponds to the z axis.
+	*  When in home position, the leg is extended through the x axis.
+	*
+	*  @param[in] _leg_length_mm Desired leg length, in mm.
+	*  @param[in] _forward_angle_rad Desired frontal angle, in radians.
+	*  @param[in] _lateral_angle_rad Desired lateral angle, in radians.
+	*  @param[out] _desired_position Desired position (x, y, z) vector(3) of the final effector relative to the base.
+	*/
+	void get_position_from_length_and_angles(
+			const double &_leg_length_mm, const double &_forward_angle_rad, const double &_lateral_angle_rad,
+			Vector3d &_desired_position);
+
 	/*
 	*  @fn void get_length_and_angles_from_position(
 	*				const Vector3d &_position,
@@ -114,6 +141,8 @@ namespace ForwardKinematics {
 	void get_length_and_angles_from_position(
 			const Vector3d &_position,
 			double &_leg_length_mm, double &_forward_angle_rad, double &_lateral_angle_rad);
+
+}	// End namespace Geometric
 
 }	// End namespace ForwardKinematics
 
