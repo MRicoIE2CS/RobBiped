@@ -51,7 +51,7 @@ namespace ForwardKinematics {
 	*  @param[in] DH_row Denavit-Hartenberg row.
 	*  @param[out] TM Homogeneous transformation matrix.
 	*/
-	void fill_rotation_matrix_from_DH(const Vector4d& DH_row, Matrix4d& TM);
+	void fill_rotation_matrix_from_DH(const Vector4d& _DH_row, Matrix4d& _TM);
 
 	/*
 	*  @fn void get_position_from_DH(const Vector4d& DH_row,  Vector3d& pos)
@@ -61,7 +61,7 @@ namespace ForwardKinematics {
 	*  @param[in] DH_row Denavit-Hartenberg row.
 	*  @param[out] TM Homogeneous transformation matrix.
 	*/
-	void fill_position_from_DH(const Vector4d& DH_row, Matrix4d& TM);
+	void fill_position_from_DH(const Vector4d& _DH_row, Matrix4d& _TM);
 
 	/*
 	*  @fn void fill_the_rest_of_TF(const Vector4d& DH_row,  Vector3d& pos)
@@ -69,7 +69,7 @@ namespace ForwardKinematics {
 	*
 	*  @param[out] TM Homogeneous transformation matrix.
 	*/
-	void fill_the_rest_of_TM(Matrix4d& TM);
+	void fill_the_rest_of_TM(Matrix4d& _TM);
 
 	/*
 	*  @fn void get_TM_from_DH_row(const Vector4d& DH_row,  Matrix4d& TF)
@@ -79,7 +79,7 @@ namespace ForwardKinematics {
 	*  @param[in] DH_row One row of the Denavit-Hartenberg table.
 	*  @param[out] TM Homogeneous transformation matrix.
 	*/
-	void get_TM_from_DH_row(const Vector4d& DH_row, Matrix4d& TM);
+	void get_TM_from_DH_row(const Vector4d& _DH_row, Matrix4d& _TM);
 
 	/*
 	*  @fn void get_overall_TM_from_DH_table(const std::vector<Vector4d> &DH_table,  Matrix4d& TF)
@@ -89,7 +89,7 @@ namespace ForwardKinematics {
 	*  @param[in] DH_table Denavit-Hartenberg table.
 	*  @param[out] TMf Homogeneous transformation matrix.
 	*/
-	void get_overall_TM_from_DH_table(const std::vector<Vector4d> &DH_table, Matrix4d& TMf);
+	void get_overall_TM_from_DH_table(const std::vector<Vector4d> &_DH_table, Matrix4d& _TMf);
 
 }	// End namespace ForwardKinematics
 

@@ -682,10 +682,16 @@
     <Compile Include="Utils\ExponentialFilterWithPeakRejection.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Utils\ForwardKinematics\ForwardKinematics.cpp">
+    <Compile Include="Utils\Kinematics\ForwardKinematics.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Utils\ForwardKinematics\ForwardKinematics.h">
+    <Compile Include="Utils\Kinematics\ForwardKinematics.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\Kinematics\GeometricInverseKinematics.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\Kinematics\GeometricInverseKinematics.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Utils\LinearAlgebra\ArduinoEigen.h">
@@ -1748,7 +1754,7 @@
     <Folder Include="Utils\LinearAlgebra\ArduinoEigen\utils\" />
     <Folder Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\" />
     <Folder Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\ArxTypeTraits\" />
-    <Folder Include="Utils\ForwardKinematics" />
+    <Folder Include="Utils\Kinematics" />
     <Folder Include="__vm\" />
   </ItemGroup>
   <ItemGroup>

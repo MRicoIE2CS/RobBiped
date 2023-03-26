@@ -22,7 +22,8 @@
 #include "Main/Executor.h"
 #include "UserInput/Command.h"
 
-#include "Utils/ForwardKinematics/ForwardKinematics.h"
+#include "Utils/Kinematics/ForwardKinematics.h"
+#include "Utils/Kinematics/GeometricInverseKinematics.h"
 #include "Utils/LinearAlgebra/ArduinoEigenDense.h"
 
 using Eigen::Matrix4d;
@@ -48,6 +49,8 @@ void setup()
 	}
 	Serial.println("Initialize execution!");
 	
+	IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
+	
 	const double l1 = 85;
 	const double l2 = 80;
 	const double l3 = 65;
@@ -55,10 +58,26 @@ void setup()
 	const double l5 = 35;
 	const double a4 = 13;
 	
+	double leg_length_mm = 37;
+	double frontal_angle_rad = 0.2;
+	double lateral_angle_rad = 0;
+	Vector3d desired_position;
+	
+	InverseKinematics::Geometric::get_desired_position_from_length_and_angles(leg_length_mm, frontal_angle_rad, lateral_angle_rad, desired_position);
+	Serial.println("Desired position: ");
+	std::cout << desired_position.format(CleanFmt) << std::endl;
+
+	Vector2d links_lengths;
+	links_lengths << l3, l2;
+	double target_angle_rad_1;
+	double target_angle_rad_2;
+	InverseKinematics::Geometric::sagittal_two_links_inverse_kinematics(desired_position, links_lengths, target_angle_rad_1, target_angle_rad_2);
+	Serial.println("target joint angles: " + (String)target_angle_rad_1 + ", " + (String)target_angle_rad_2);
+	
 	double q1 = 0;
 	double q2 = 0;
-	double q3 = 1.72526;
-	double q4 = -0.182847;
+	double q3 = target_angle_rad_2;
+	double q4 = target_angle_rad_1;
 	double q5 = 0;
 	
 	// Denavit-Hartenberg table
@@ -73,12 +92,9 @@ void setup()
 	Matrix4d TM;
 	
 	ForwardKinematics::get_overall_TM_from_DH_table(DH_table, TM);
-	
-	IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
+
 	Serial.println("TF: ");
 	std::cout << TM.format(CleanFmt) << std::endl;
-	
-	// TODO: Inverse Kinematics
 }
 
 void loop()
