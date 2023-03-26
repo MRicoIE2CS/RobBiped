@@ -59,11 +59,15 @@ void setup()
 	const double a4 = 13;
 	
 	double leg_length_mm = 37;
-	double frontal_angle_rad = 0.2;
-	double lateral_angle_rad = 0;
+	double forward_angle_rad = -0.7;
+	double lateral_angle_rad = 0.0;	// Not used
 	Vector3d desired_position;
+	Serial.println("Initial leg position: ");
+	Serial.println("leg_length_mm: " + (String)leg_length_mm);
+	Serial.println("forward_angle_rad: " + (String)forward_angle_rad);
+	Serial.println("lateral_angle_rad: " + (String)lateral_angle_rad);
 	
-	InverseKinematics::Geometric::get_desired_position_from_length_and_angles(leg_length_mm, frontal_angle_rad, lateral_angle_rad, desired_position);
+	InverseKinematics::Geometric::get_desired_position_from_length_and_angles(leg_length_mm, forward_angle_rad, lateral_angle_rad, desired_position);
 	Serial.println("Desired position: ");
 	std::cout << desired_position.format(CleanFmt) << std::endl;
 
@@ -95,6 +99,18 @@ void setup()
 
 	Serial.println("TF: ");
 	std::cout << TM.format(CleanFmt) << std::endl;
+	
+	Vector3d current_position = TM.block<3,1>(0,3);
+	Serial.println("current_position: ");
+	std::cout << current_position.format(CleanFmt) << std::endl;
+	leg_length_mm;
+	forward_angle_rad; 
+	lateral_angle_rad;
+	ForwardKinematics::get_length_and_angles_from_position(current_position, leg_length_mm, forward_angle_rad, lateral_angle_rad);
+	Serial.println("Final leg position: ");
+	Serial.println("leg_length_mm: " + (String)leg_length_mm);
+	Serial.println("forward_angle_rad: " + (String)forward_angle_rad);
+	Serial.println("lateral_angle_rad: " + (String)lateral_angle_rad);
 }
 
 void loop()

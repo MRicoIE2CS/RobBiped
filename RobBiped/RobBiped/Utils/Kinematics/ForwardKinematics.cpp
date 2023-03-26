@@ -18,6 +18,8 @@
 
 #include "ForwardKinematics.h"
 
+#include <math.h>
+
 void ForwardKinematics::fill_rotation_matrix_from_DH(const Vector4d& _DH_row, Matrix4d& _TM)
 {
 	_TM(0,0) = cos(_DH_row(0));
@@ -35,9 +37,9 @@ void ForwardKinematics::fill_rotation_matrix_from_DH(const Vector4d& _DH_row, Ma
 
 void ForwardKinematics::fill_position_from_DH(const Vector4d& _DH_row, Matrix4d& _TM)
 {
-	_TM(0,3) = _DH_row(2) * cos(_DH_row(0));	// x
-	_TM(1,3) = _DH_row(2) * sin(_DH_row(0));	// y
-	_TM(2,3) = _DH_row(1);						// z
+	_TM(0,3) = _DH_row(2) * cos(_DH_row(0));
+	_TM(1,3) = _DH_row(2) * sin(_DH_row(0));
+	_TM(2,3) = _DH_row(1);
 }
 
 void ForwardKinematics::fill_the_rest_of_TM(Matrix4d& _TM)
@@ -65,4 +67,35 @@ void ForwardKinematics::get_overall_TM_from_DH_table(const std::vector<Vector4d>
 		get_TM_from_DH_row(row, TM);
 		_TMf *= TM;
 	}
+}
+
+void ForwardKinematics::get_length_and_angles_from_position(
+		const Vector3d &_position,
+		double &_leg_length_mm, double &_forward_angle_rad, double &_lateral_angle_rad)
+{
+	// Calculation of the inclination in the forward direction (y direction)
+	if (0 != _position(1))
+	{
+		_leg_length_mm = sqrt(pow(_position(0), 2) + pow(_position(1), 2));		// l_s = sqrt( x^2 + y^2 )
+		double cos_forward_angle = _position(1) / _leg_length_mm;				// cos(delta) = y / l_s
+		double sin_forward_angle = sqrt(1 - pow(cos_forward_angle, 2));			// sin(delta) = sqrt( 1 - cos(delta)^2 )
+		_forward_angle_rad = M_PI /2 - atan2(sin_forward_angle, cos_forward_angle);		// delta = PI/2 - atan(sin / cos)
+	}
+	else
+	{
+		_leg_length_mm = _position(0);
+		_forward_angle_rad = 0.0;
+	}
+	
+	// Calculation of the inclination in the lateral direction (z direction),
+	// and the final leg length
+	if (0 != _position(2))	// If z-component is not 0
+	{
+		_leg_length_mm = sqrt(pow(_leg_length_mm, 2) + pow(_position(2), 2));		// l_f = sqrt( l_s^2 + z^2 )
+		double l_lateral = sqrt(pow(_position(0), 2) + pow(_position(2), 2));	// l_l = sqrt( x^2 + z^2 )
+		double cos_lateral_angle = _position(2) / l_lateral;					// cos(rho) = z / l_l
+		double sin_lateral_angle = sqrt(1 - pow(cos_lateral_angle, 2));			// sin(rho) = sqrt( 1 - cos(rho)^2 )
+		_lateral_angle_rad = M_PI/2 - atan2(sin_lateral_angle, cos_lateral_angle);		// delta = PI/2 - atan(sin / cos)
+	}
+	else _lateral_angle_rad = 0.0;
 }

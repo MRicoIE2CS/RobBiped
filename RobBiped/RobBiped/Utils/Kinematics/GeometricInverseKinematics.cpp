@@ -21,12 +21,12 @@
 #include <math.h>
 
 void InverseKinematics::Geometric::get_desired_position_from_length_and_angles(
-		const double &_leg_length_mm, const double &_frontal_angle_rad, const double &_lateral_angle_rad,
+		const double &_leg_length_mm, const double &_forward_angle_rad, const double &_lateral_angle_rad,
 		Vector3d &_desired_position)
 {
-	_desired_position(0) = _leg_length_mm * cos(_frontal_angle_rad) * cos(_lateral_angle_rad);
-	_desired_position(1) = _leg_length_mm * sin(_frontal_angle_rad) * cos(_lateral_angle_rad);
-	_desired_position(2) = _leg_length_mm * cos(_frontal_angle_rad) * sin(_lateral_angle_rad);
+	_desired_position(0) = _leg_length_mm * cos(_forward_angle_rad) * cos(_lateral_angle_rad);
+	_desired_position(1) = _leg_length_mm * sin(_forward_angle_rad) * cos(_lateral_angle_rad);
+	_desired_position(2) = _leg_length_mm * cos(_forward_angle_rad) * sin(_lateral_angle_rad);
 }
 
 void InverseKinematics::Geometric::sagittal_two_links_inverse_kinematics(

@@ -29,6 +29,8 @@ using Eigen::Vector2d;
 /*
 *  @brief Inverse kinematics by the geometric method,
 *  for a kinematic chain formed of two links moving only within the sagittal plane.
+*
+*  Note: This calculations depend on the chosen coordinate frame of the base.
 */
 namespace InverseKinematics {
 namespace Geometric {	
@@ -37,16 +39,21 @@ namespace Geometric {
 	*  @fn void get_desired_position_from_length_and_angles(
 	*				const long &leg_length_mm, const double &frontal_angle_rad, const double &lateral_angle_rad,
 	*				Vector3d &desired_position);
-	*  @brief Obtains the desired position (x, y, z) of the final effector, from the desired leg length and
-	*  the desired frontal and lateral angles of the final effector relative to the base coordinate frame.
+	*  @brief Obtains the desired position (x, y, z) of the final effector, from the desired leg length and the
+	*  desired frontal and lateral angles (against the vertical axis) of the final effector relative to the base coordinate frame.
 	*
-	*  @param[in] leg_length_mm Desired leg length, in mm.
-	*  @param[in] frontal_angle_rad Desired frontal angle, in radians.
-	*  @param[in] lateral_angle_rad Desired lateral angle, in radians.
-	*  @param[out] desired_position Desired position (x, y, z) vector(3) of the final effector relative to the base.
+	*  Coordinate frame of the base:
+	*  The forward direction corresponds to the y axis.
+	*  The lateral direction corresponds to the z axis.
+	*  When in home position, the leg is extended through the x axis.
+	*
+	*  @param[in] _leg_length_mm Desired leg length, in mm.
+	*  @param[in] _forward_angle_rad Desired frontal angle, in radians.
+	*  @param[in] _lateral_angle_rad Desired lateral angle, in radians.
+	*  @param[out] _desired_position Desired position (x, y, z) vector(3) of the final effector relative to the base.
 	*/
 	void get_desired_position_from_length_and_angles(
-			const double &_leg_length_mm, const double &_frontal_angle_rad, const double &_lateral_angle_rad,
+			const double &_leg_length_mm, const double &_forward_angle_rad, const double &_lateral_angle_rad,
 			Vector3d &_desired_position);
 
 	/*
@@ -58,6 +65,11 @@ namespace Geometric {
 	*  @brief Obtains the desired position (x, y, z) of the final effector, from the desired leg length and
 	*  the desired frontal and lateral angles of the final effector relative to the base coordinate frame,
 	*  for a two links kinematic chain, moving only within the sagittal plane.
+	*
+	*  Coordinate frame of the base:
+	*  The forward direction corresponds to the y axis.
+	*  The lateral direction corresponds to the z axis (not being used in this calculation).
+	*  When in home position, the leg is extended through the x axis.
 	*
 	*  @param[in] _desired_position Desired position (x, y, z) vector(3) of the final effector relative to the base.
 	*  @param[in] _links_lengths Links lengths, in mm.
