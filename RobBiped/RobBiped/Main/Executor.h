@@ -44,6 +44,10 @@ class Executor {
 		ForceSensorsManager force_sensors_manager_;
 		GyroscopeAccelerometerManager gyroscope_accelerometer_manager_;
 		///// END OBJECT TASKS __//
+		
+		/////____________ AUXILIARY OBJECTS: __//
+		
+		///// END AUXILIARY OBJECTS: __//
 	
 		/////____________ PRIVATE FUNCTIONS: __//
 		void associations();

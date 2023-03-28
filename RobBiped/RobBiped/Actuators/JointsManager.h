@@ -28,6 +28,7 @@
 #include <Wire.h>
 #include <map>
 
+#include "../Main/Configs.h"
 #include "../Main/I_PeriodicTask.h"
 #include "PCA9685/Adafruit_PWMServoDriver.h"
 #include "Joint.h"
@@ -81,11 +82,10 @@ class JointsManager : public I_PeriodicTask{
 		void init();
 		void joints_config();
 		
-		void set_angle_to_servo(uint8_t servo_index, double servo_angle);
+		void set_angle_to_servo(Configuration::JointsNames servo_index, double servo_angle);
 		
 		void update(UserInput& _user_input);
 		void servo_update();
-	
 };
 
 #endif

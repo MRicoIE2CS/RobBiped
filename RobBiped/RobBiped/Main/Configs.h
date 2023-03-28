@@ -21,8 +21,16 @@
 
 #include "Arduino.h"
 
+
+
 namespace Configuration
 {
+
+enum class JointsNames {LeftFootRoll = 0, LeftFootPitch = 1, LeftKnee = 2, LeftHipPitch = 3,
+						LeftHipRoll = 4, LeftShoulderSagittal = 5, LeftShoulderAmplitude = 6,
+						Unused1 = 7, Unused2 = 8,
+						RightShoulderAmplitude = 9, RightShoulderSagittal = 10, RightHipRoll = 11,
+						RightHipPitch = 12, RightKnee = 13, RightFootPitch = 14, RightFootRoll = 15 };
 
 static const uint8_t hx711_number = 4;	// forceSensors configuration
 
@@ -68,15 +76,18 @@ struct Configs
 		}gyro_acc;
 
 	struct Kinematics {
-		struct Direct {
-			
-			}direct;
-		
-		struct Inverse {
-			
-		}inverse;
-
+		double height_hip = 85;			// Height between joints of the hip (l1)
+		double height_hip_knee = 80;	// Height between knee and the first joint of the hip (l2)
+		double height_knee_ankle = 65;	// Height between ankle and knee (l3)
+		double height_ankle = 45;		// Height between joints of the ankle (l4)
+		double height_foot = 35;		// Height between floor and first joint of the ankle (l5)
+		double d_lateral_foot = 13;		// Lateral distance between foot center and the axis of the first ankle joint (a1)
 		}kinematics;
+
+	
+	struct PCA9685 {
+		
+		}pca9685;
 };
 
 } // End namespace Configuration

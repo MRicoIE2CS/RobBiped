@@ -56,7 +56,23 @@ void Executor::inputs()
 void Executor::main_execution()
 {
 	
-	
+// 	// INIT Example of using potentiometer to command servos
+// 	uint16_t pot1Val = user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer2);
+// 
+// 	double readingAngle_0;
+// 	double max_val = 0.2;
+// 	double min_val = -0.2;
+// 	double ampl = max_val - min_val;
+// 	if (pot1Val < 1000){
+// 		readingAngle_0 = 0;
+// 	}
+// 	else if (pot1Val > 3000){
+// 		readingAngle_0 = ampl;
+// 	}
+// 	else {
+// 		readingAngle_0 = (double)(pot1Val - 1000) / (double)2000 * ampl;
+// 	}
+// 	double nextAngle_0 = readingAngle_0 - ampl / 2;
 	
 }
 
@@ -64,43 +80,26 @@ void Executor::outputs()
 {
 	if (servo_updater_.get_execution_flag())
 	{
-// 		// INIT Example of using potentiometer to command servos
-// 		uint16_t pot1Val = userInput.getAnalogValue(UserInput::AnalogInputList::potentiometer2);
-// 		
-// 		double readingAngle_0;
-// 		double max_val = 0.2;
-// 		double min_val = -0.2;
-// 		double ampl = max_val - min_val;
-// 		if (pot1Val < 1000){
-// 			readingAngle_0 = 0;
-// 		}
-// 		else if (pot1Val > 3000){
-// 			readingAngle_0 = ampl;
-// 		}
-// 		else {
-// 			readingAngle_0 = (double)(pot1Val - 1000) / (double)2000 * ampl;
-// 		}
-// 		double nextAngle_0 = readingAngle_0 - ampl / 2;
 		double nextAngle_0 = 0.0;
 		// END Example
 		
 		// Servo setpoint assignation
-		servo_updater_.set_angle_to_servo(0,nextAngle_0);
-		servo_updater_.set_angle_to_servo(1,nextAngle_0);
-		servo_updater_.set_angle_to_servo(2,nextAngle_0);
-		servo_updater_.set_angle_to_servo(3,nextAngle_0);
-		servo_updater_.set_angle_to_servo(4,nextAngle_0);
-		servo_updater_.set_angle_to_servo(5,nextAngle_0);
-		servo_updater_.set_angle_to_servo(6,nextAngle_0);
-		servo_updater_.set_angle_to_servo(7,nextAngle_0);
-		servo_updater_.set_angle_to_servo(8,nextAngle_0);
-		servo_updater_.set_angle_to_servo(9,nextAngle_0);
-		servo_updater_.set_angle_to_servo(10,nextAngle_0);
-		servo_updater_.set_angle_to_servo(11,nextAngle_0);
-		servo_updater_.set_angle_to_servo(12,nextAngle_0);
-		servo_updater_.set_angle_to_servo(13,nextAngle_0);
-		servo_updater_.set_angle_to_servo(14,nextAngle_0);
-		servo_updater_.set_angle_to_servo(15,nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftFootRoll, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftFootPitch, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftKnee, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftHipPitch, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftHipRoll, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftShoulderSagittal, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftShoulderAmplitude, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::Unused1, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::Unused2, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightShoulderAmplitude, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightShoulderSagittal, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightHipRoll, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightHipPitch, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightKnee, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightFootPitch, nextAngle_0);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightFootRoll, nextAngle_0);
 		
 		// Servo setpoint command
 		servo_updater_.update(user_input_);
