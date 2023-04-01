@@ -107,3 +107,8 @@ void JointsManager::set_angle_to_servo(Configuration::JointsNames servo_index, d
 		PCA9685_1_servo_map_[static_cast<uint8_t>(servo_index)].set_angle_target_rad(servo_angle);
 	}
 }
+
+JointsManager::State JointsManager::get_current_state()
+{
+	return current_state_;
+}
