@@ -66,12 +66,12 @@ struct Configs
 
 	struct GyroscpeAccelerometer {
 		struct Offsets {
-			int16_t ax_o = -35;	// Accelerometer offsets
-			int16_t ay_o = -234;
-			int16_t az_o = 919;
-			int16_t gx_o = 7;		// Gyroscope offsets
+			int16_t ax_o = -303;	// Accelerometer offsets
+			int16_t ay_o = -214;
+			int16_t az_o = 911;
+			int16_t gx_o = 1;		// Gyroscope offsets
 			int16_t gy_o = -35;
-			int16_t gz_o = -13;
+			int16_t gz_o = -15;
 			}offsets;
 		}gyro_acc;
 
