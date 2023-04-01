@@ -141,30 +141,39 @@ void GyroscopeAccelerometerManager::calibrate()
 	if (counter_==100){
 
 		// Calibrate accelerometer for 1g in z axis (adjust offset)
-		if (p_ax_>0) *ax_o_--;
-		else {*ax_o_++;}
-		if (p_ay_>0) *ay_o_--;
-		else {*ay_o_++;}
-		if (p_az_-16384>0) *az_o_--;
-		else {*az_o_++;}
+		if (p_ax_>0) (*ax_o_)--;
+		else {(*ax_o_)++;}
+		if (p_ay_>0) (*ay_o_)--;
+		else {(*ay_o_)++;}
+		if (p_az_-16384>0) (*az_o_)--;
+		else {(*az_o_)++;}
 		
 		mpu6050_.setXAccelOffset(*ax_o_);
 		mpu6050_.setYAccelOffset(*ay_o_);
 		mpu6050_.setZAccelOffset(*az_o_);
 
 		// Calibrate gyroscope to 0º/s in every axis ()
-		if (p_gx_>0) *gx_o_--;
-		else {*gx_o_++;}
-		if (p_gy_>0) *gy_o_--;
-		else {*gy_o_++;}
-		if (p_gz_>0) *gz_o_--;
-		else {*gz_o_++;}
+		if (p_gx_>0) (*gx_o_)--;
+		else {(*gx_o_)++;}
+		if (p_gy_>0) (*gy_o_)--;
+		else {(*gy_o_)++;}
+		if (p_gz_>0) (*gz_o_)--;
+		else {(*gz_o_)++;}
 		
 		mpu6050_.setXGyroOffset(*gx_o_);
 		mpu6050_.setYGyroOffset(*gy_o_);
 		mpu6050_.setZGyroOffset(*gz_o_);
 		
 		counter_ = 0;
+		
+		Serial.println("Calibrating GYROSCOPE ACCELEROMETER SENSOR____________________________");
+		Serial.print("a[x y z](bits) g[x y z](bits):\t");
+		Serial.print(p_ax_); Serial.print("\t");
+		Serial.print(p_ay_); Serial.print("\t");
+		Serial.print(p_az_); Serial.print("\t");
+		Serial.print(p_gx_); Serial.print("\t");
+		Serial.print(p_gy_); Serial.print("\t");
+		Serial.println(p_gz_);
 	}
 	counter_++;
 }
@@ -223,12 +232,12 @@ void GyroscopeAccelerometerManager::print_values()
 	
 	Serial.print("X inclination: ");
 	Serial.print(accel_ang_x_);
-	Serial.print("Y inclination:");
+	Serial.print(" | Y inclination:");
 	Serial.println(accel_ang_y_);
 	
 	Serial.print("X rotation:  ");
 	Serial.print(ang_x_);
-	Serial.print("Y rotation: ");
+	Serial.print(" | Y rotation: ");
 	Serial.println(ang_y_);
 }
 
