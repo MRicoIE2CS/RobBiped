@@ -304,3 +304,23 @@ float GyroscopeAccelerometerManager::get_value_gz_deg_s()
 {
 	return gz_deg_s_;
 }
+
+void GyroscopeAccelerometerManager::get_value_angle_z_pitch(float* _ang_pitch)
+{
+	*_ang_pitch = ang_x_;
+}
+
+float GyroscopeAccelerometerManager::get_value_angle_z_pitch()
+{
+	return ang_x_;
+}
+
+void GyroscopeAccelerometerManager::get_value_angle_z_roll(float* _ang_roll)
+{
+	*_ang_roll = ang_y_;
+}
+
+float GyroscopeAccelerometerManager::get_value_angle_z_roll()
+{
+	return ang_y_;
+}
