@@ -34,13 +34,19 @@ class PID {
 		double Ki_ = 0.0;
 		double Kd_ = 0.0;
 
+		// Anti-windup constant
+		// If apply_saturation_ = false, no anti-windup can be applied
+		// The advice is to chose Kw as a fraction of 1/Ti,
+		// with Ti = Kp/Ki.
+		double Kw_ = 0.5;
+
 		// Time constant in milliseconds
 		uint16_t time_constant_millis_ = 1000;
 
 		// Setpoint weighting for proportional action
 		double on_proportional_setpoint_weight_ = 1;
 		// Setpoint weighting for derivative action
-		double on_derivative_setpoint_weight_ = 0;
+		double on_derivative_setpoint_weight_ = 0.0;
 
 		// Saturation constants
 		// By default, no saturation is applied, nor anti-windup technique for integral part
@@ -49,8 +55,12 @@ class PID {
 		double upper_limit_;
 
 		// Memory variables
+		uint64_t last_millis_computation = millis();
 		double last_setpoint_ = 0.0;
 		double last_feedback_ = 0.0;
+		double last_integral_action = 0.0;
+		double last_controller_output = 0.0;
+		double last_saturated_controller_output = 0.0;
 
 	public:
 
@@ -63,6 +73,14 @@ class PID {
 		*  @param[in] _Kd Derivative constant.
 		*/
 		void set_constants(double& _Kp, double& _Ki, double& _Kd);
+
+		/*
+		*  @fn void set_antiwindup(double& _Kw);
+		*  @brief Setter for the anti-windup constant.
+		*
+		*  @param[in] _Kw Anti-windup constant.
+		*/
+		void set_antiwindup(double& _Kw);
 
 		/*
 		*  @fn void set_time_constant_millis(uint16_t& _millis)
