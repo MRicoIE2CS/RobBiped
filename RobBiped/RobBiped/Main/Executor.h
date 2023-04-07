@@ -51,6 +51,7 @@ class Executor {
 	
 		/////____________ PRIVATE FUNCTIONS: __//
 		void associations();
+		void initialize_servo_setpoints();
 		
 		void inputs();
 		void main_execution();
