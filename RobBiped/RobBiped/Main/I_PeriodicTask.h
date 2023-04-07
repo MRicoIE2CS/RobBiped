@@ -32,6 +32,17 @@ class I_PeriodicTask{
 
 		void update();
 
+		// This flag can be used to notify the rest of the tasks that it has been updated.
+		// For instance, a sensor could notify the rest of the tasks that it has taken a new measurement.
+		bool has_been_updated = false;
+
+		// This flag could be used to control when a task has tried to update, but it was not yet ready (for instance,
+		//  a measurement was not ready to be taken), so that it could try it again on the next execution loop.
+		bool not_ready_last_time = false;
+
+		// This flag could be used by other tasks to force-trigger the update of this task.
+		bool should_be_updated = false;
+
 	protected:
 
 		uint16_t get_execution_period();
