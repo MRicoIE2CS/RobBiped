@@ -94,43 +94,65 @@ public:
 
 	bool update();
 
-	void get_values(float* _ax_m_s2, float* _ay_m_s2, float* _az_m_s2, float* _gx_deg_s, float* _gy_deg_s, float* _gz_deg_s);
+	void get_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2, float& _gx_deg_s, float& _gy_deg_s, float& _gz_deg_s);
 
-	void get_value_ax_m_s2(float* _ax_m_s2);
+	void get_value_ax_m_s2(float& _ax_m_s2);
 	float get_value_ax_m_s2();
-	void get_value_ay_m_s2(float* _ay_m_s2);
+	void get_value_ay_m_s2(float& _ay_m_s2);
 	float get_value_ay_m_s2();
-	void get_value_az_m_s2(float* _az_m_s2);
+	void get_value_az_m_s2(float& _az_m_s2);
 	float get_value_az_m_s2();
 
-	void get_value_gx_deg_s(float* _gx_deg_s);
+	void get_value_gx_deg_s(float& _gx_deg_s);
 	float get_value_gx_deg_s();
-	void get_value_gy_deg_s(float* _gy_deg_s);
+	void get_value_gy_deg_s(float& _gy_deg_s);
 	float get_value_gy_deg_s();
-	void get_value_gz_deg_s(float* _gz_deg_s);
+	void get_value_gz_deg_s(float& _gz_deg_s);
 	float get_value_gz_deg_s();
 
 	/*
-	*  @fn void get_value_angle_z_pitch(float* _ang_pitch);
-	*  @fn float get_value_angle_z_pitch();
+	*  @fn void get_value_angle_z_pitch_deg(float* _ang_pitch);
+	*  @fn float get_value_angle_z_pitch_deg();
 	*  @brief Getter for the inclination angle of the z axis of the sensor, relative to the vertical
 	*  axis (of the world), over the sagittal plane. Pitch rotation (rotation over the local X axis of the sensor).
 	*
 	*  @param[out] _ang_pitch Pitch inclination angle.
 	*/
-	void get_value_angle_z_pitch(float* _ang_pitch);
-	float get_value_angle_z_pitch();
+	void get_value_angle_z_pitch_deg(float& _ang_pitch);
+	float get_value_angle_z_pitch_deg();
 
 	/*
-	*  @fn void get_value_angle_z_roll(float* _ang_roll);
-	*  @fn float get_value_angle_z_roll();
+	*  @fn void get_value_angle_z_roll_deg(float* _ang_roll);
+	*  @fn float get_value_angle_z_roll_deg();
 	*  @brief Getter for the inclination angle of the z axis of the sensor, relative to the vertical
 	*  axis (of the world), over the frontal plane. Roll rotation (rotation over the local Y axis of the sensor).
 	*
 	*  @param[out] _ang_roll Roll inclination angle.
 	*/
-	void get_value_angle_z_roll(float* _ang_roll);
-	float get_value_angle_z_roll();
+	void get_value_angle_z_roll_deg(float& _ang_roll);
+	float get_value_angle_z_roll_deg();
+
+	/*
+	*  @fn void get_value_angle_z_pitch_rad(float* _ang_pitch);
+	*  @fn float get_value_angle_z_pitch_rad();
+	*  @brief Getter for the inclination angle of the z axis of the sensor, relative to the vertical
+	*  axis (of the world), over the sagittal plane. Pitch rotation (rotation over the local X axis of the sensor).
+	*
+	*  @param[out] _ang_pitch Pitch inclination angle.
+	*/
+	void get_value_angle_z_pitch_rad(float& _ang_pitch);
+	float get_value_angle_z_pitch_rad();
+
+	/*
+	*  @fn void get_value_angle_z_roll_rad(float* _ang_roll);
+	*  @fn float get_value_angle_z_roll_rad();
+	*  @brief Getter for the inclination angle of the z axis of the sensor, relative to the vertical
+	*  axis (of the world), over the frontal plane. Roll rotation (rotation over the local Y axis of the sensor).
+	*
+	*  @param[out] _ang_roll Roll inclination angle.
+	*/
+	void get_value_angle_z_roll_rad(float& _ang_roll);
+	float get_value_angle_z_roll_rad();
 };
 
 #endif
