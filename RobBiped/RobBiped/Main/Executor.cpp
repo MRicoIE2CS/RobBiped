@@ -35,16 +35,20 @@ void Executor::init()
 	// This task sets the calculation period of the torso posture control.
 	gyroscope_accelerometer_manager_.set_execution_period(I_PeriodicTask::execType::inMillis, 10);
 	gyroscope_accelerometer_manager_.init();
+	
+	// This task will be computed each time a new gyroscope/accelerometer measurement is performed.
+	// For that reason, there is no need to set an execution period for it.
+	torso_posture_controller_.init();
+	torso_posture_controller_.set_setpoint_rad(torso_setpoint);
 
 	// This task will depend on the update of the setpoints of the servos, which is triggered by other tasks,
 	// such as the control tasks.
-	servo_updater_.set_execution_period(I_PeriodicTask::execType::inMillis,5);
+	servo_updater_.set_execution_period(I_PeriodicTask::execType::inMillis,10);
 	servo_updater_.init();
 
 	// END TASKS CONFIGURATION
 
 	initialize_servo_setpoints();
-	servo_updater_.should_be_updated = true;
 }
 
 void Executor::inputs()
@@ -73,33 +77,34 @@ void Executor::inputs()
 	}
 }
 
-double torso_setpoint = 0.0;
-ExpFilter exp_filter;
-
 void Executor::main_execution()
 {
 	// If sensors have been updated, control can be computed.
 	if (gyroscope_accelerometer_manager_.has_been_updated)
 	{
-		// TODO
-		//double torso_pitch_control_action = torso_posture_controller_.;
+		// Get torso pitch orientation measurement.
+		double filtered_torso_pitch_angle_rad = torso_pitch_exp_filter.filter(gyroscope_accelerometer_manager_.get_value_angle_z_pitch_rad());
 		
-		// Servo setpoint assignation
-		//servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftHipPitch, - torso_pitch_control_action / 360 * 2 * PI);
-		//servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightHipPitch, - torso_pitch_control_action / 360 * 2 * PI);
+		// Compute the control action for torso pitch.
+		double torso_pitch_control_action = torso_posture_controller_.compute(filtered_torso_pitch_angle_rad);
+		
+		// Servo setpoint assignation.
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftHipPitch, -torso_pitch_control_action);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightHipPitch, -torso_pitch_control_action);
+		servo_updater_.should_be_updated = true;
 	}
 }
 
 void Executor::outputs()
 {
 	// If another task has raised the flag, because new setpoints have been set.
-	if (servo_updater_.should_be_updated)
+	if (servo_updater_.should_be_updated | servo_updater_.get_execution_flag())
 	{
+		servo_updater_.should_be_updated = false;
 		// Servo setpoint command
 		// This implies I2C communication, but don't worry,
 		// it will send the command only for the servos whose setpoint has been updated.
 		servo_updater_.update(user_input_);
-		servo_updater_.should_be_updated = false;
 	}
 }
 

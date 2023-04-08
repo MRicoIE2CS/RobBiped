@@ -25,6 +25,7 @@ void Executor::associations()
 	//servoUpdater.assocButtons(config.gpio.thinButton1, config.gpio.thinButton2);
 	force_sensors_manager_.assoc_config(config_.force_sensors);
 	gyroscope_accelerometer_manager_.assoc_config(config_.gyro_acc);
+	torso_posture_controller_.assoc_config(config_.control.torso_posture);
 }
 
 void Executor::initialize_servo_setpoints()

@@ -90,8 +90,8 @@ struct Configs
 	struct Control {
 		struct TorsoPosture {
 			// PID constants
-			double kp = 0.3;
-			double ki = 0.03;
+			double kp = 1;
+			double ki = 0.1;
 			double kd = 0.0;
 			// Anti-windup constant
 			double k_windup = 0.5;
