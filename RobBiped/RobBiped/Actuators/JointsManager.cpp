@@ -101,11 +101,9 @@ void JointsManager::servo_update(){
 	}
 }
 
-void JointsManager::set_angle_to_servo(Configuration::JointsNames servo_index, double servo_angle){
-
-	if (current_state_ == State::running){
-		PCA9685_1_servo_map_[static_cast<uint8_t>(servo_index)].set_angle_target_rad(servo_angle);
-	}
+void JointsManager::set_angle_to_servo(Configuration::JointsNames servo_index, double servo_angle)
+{
+	PCA9685_1_servo_map_[static_cast<uint8_t>(servo_index)].set_angle_target_rad(servo_angle);
 }
 
 JointsManager::State JointsManager::get_current_state()
