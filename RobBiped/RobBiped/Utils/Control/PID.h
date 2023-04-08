@@ -58,7 +58,9 @@ class PID {
 		uint64_t last_millis_computation = millis();
 		double last_setpoint_ = 0.0;
 		double last_feedback_ = 0.0;
+		double last_proportional_action = 0.0;
 		double last_integral_action = 0.0;
+		double last_derivative_action = 0.0;
 		double last_controller_output = 0.0;
 		double last_saturated_controller_output = 0.0;
 
@@ -101,7 +103,7 @@ class PID {
 		*  @param[in] _lower_limit Lower limit.
 		*  @param[in] _upper_limit Upper limit.
 		*/
-		void set_saturation_constants(bool& _apply_saturation, double& _lower_limit, double& _upper_limit);
+		void set_saturation_constants(bool _apply_saturation, double& _lower_limit, double& _upper_limit);
 
 		/*
 		*  @fn void set_setpoint_weighting(double& _on_proportional, double& _on_derivative);
@@ -121,6 +123,16 @@ class PID {
 		*  @param[out] _output Output of the controller.
 		*/
 		void compute_output(const double& _setpoint, const double& _feedback, double& _output);
+
+		/*
+		*  @fn void get_control_action_values(const double& _kp, const double& _ki, double& _kd);
+		*  @brief Getter for the last values of the separated control components of the PID.
+		*
+		*  @param[out] _kp Proportional component.
+		*  @param[out] _ki Integral component.
+		*  @param[out] _kd Derivative component.
+		*/
+		void get_control_action_values(double& _kp, double& _ki, double& _kd);
 };
 
 }	// End namespace Control

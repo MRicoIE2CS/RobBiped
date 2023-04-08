@@ -35,7 +35,7 @@ void Control::PID::set_time_constant_millis(uint16_t& _millis)
 	if (0 != _millis) time_constant_millis_ = _millis;
 }
 
-void Control::PID::set_saturation_constants(bool& _apply_saturation, double& _lower_limit, double& _upper_limit)
+void Control::PID::set_saturation_constants(bool _apply_saturation, double& _lower_limit, double& _upper_limit)
 {
 	apply_saturation_ = _apply_saturation;
 	lower_limit_ = _lower_limit;
@@ -52,7 +52,7 @@ void Control::PID::compute_output(const double& _setpoint, const double& _feedba
 {
 	uint64_t current_millis_computation = millis();
 	uint64_t current_time_interval = current_millis_computation - last_millis_computation;
-	uint64_t time_fraction = current_time_interval / time_constant_millis_;
+	double time_fraction = static_cast<double>(current_time_interval) / static_cast<double>(time_constant_millis_);
 
 	// Error calculation
 	double error = _setpoint - _feedback;
@@ -65,18 +65,20 @@ void Control::PID::compute_output(const double& _setpoint, const double& _feedba
 			proportional_action = Kp_ * ( on_proportional_setpoint_weight_ * _setpoint - _feedback );
 		else proportional_action = Kp_ * _feedback;
 	}
+	else proportional_action = 0.0;
 
 	// Integral component
 	double integral_action;
 	if (0.0 != Ki_)
 	{
-		double integral_action = last_integral_action + Ki_ * error * time_fraction;
+		integral_action = last_integral_action + Ki_ * error * time_fraction;
 		if (apply_saturation_)
 		{
 			double anti_windup = Kw_ * (last_saturated_controller_output - last_controller_output);
 			integral_action += anti_windup;
 		}
 	}
+	else integral_action = 0.0;
 
 	// Derivative component
 	double derivative_action;
@@ -90,12 +92,13 @@ void Control::PID::compute_output(const double& _setpoint, const double& _feedba
 		}
 		else derivative_action = - Kd_ * diff_feedback / time_fraction;
 	}
+	else derivative_action = 0.0;
 	
 	// Sum of the components
 	double sum = proportional_action + integral_action + derivative_action;
 
 	// Saturation
-	saturation(sum, lower_limit_, upper_limit_, _output);
+	if (apply_saturation_) saturation(sum, lower_limit_, upper_limit_, _output);
 
 	// Memory update
 	last_millis_computation = current_millis_computation;
@@ -104,4 +107,13 @@ void Control::PID::compute_output(const double& _setpoint, const double& _feedba
 	last_integral_action = integral_action;
 	last_controller_output = sum;
 	last_saturated_controller_output = _output;
+	last_proportional_action = proportional_action;
+	last_derivative_action = derivative_action;
+}
+
+void Control::PID::get_control_action_values(double& _kp, double& _ki, double& _kd)
+{
+	_kp = last_proportional_action;
+	_ki = last_integral_action;
+	_kd = last_derivative_action;
 }
