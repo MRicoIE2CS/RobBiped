@@ -21,8 +21,6 @@
 
 #include "Arduino.h"
 
-
-
 namespace Configuration
 {
 
@@ -84,10 +82,27 @@ struct Configs
 		double d_lateral_foot = 13;		// Lateral distance between foot center and the axis of the first ankle joint (a1)
 		}kinematics;
 
-	
+
 	struct PCA9685 {
 		
 		}pca9685;
+
+	struct Control {
+		struct TorsoPosture {
+			// PID constants
+			double kp = 0.3;
+			double ki = 0.03;
+			double kd = 0.0;
+			// Anti-windup constant
+			double k_windup = 0.5;
+			// Setpoint weighting constants
+			double proportional_setpoint_weight = 1.0;
+			double derivative_setpoint_weight = 0.0;
+			// Saturation limits
+			double lower_saturation_degrees = -45;
+			double upper_saturation_degrees = 45;
+			}torso_posture;
+		}control;
 };
 
 } // End namespace Configuration

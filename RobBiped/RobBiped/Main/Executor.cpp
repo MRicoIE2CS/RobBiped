@@ -73,12 +73,20 @@ void Executor::inputs()
 	}
 }
 
+double torso_setpoint = 0.0;
+ExpFilter exp_filter;
+
 void Executor::main_execution()
 {
 	// If sensors have been updated, control can be computed.
 	if (gyroscope_accelerometer_manager_.has_been_updated)
 	{
 		// TODO
+		//double torso_pitch_control_action = torso_posture_controller_.;
+		
+		// Servo setpoint assignation
+		//servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftHipPitch, - torso_pitch_control_action / 360 * 2 * PI);
+		//servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightHipPitch, - torso_pitch_control_action / 360 * 2 * PI);
 	}
 }
 
