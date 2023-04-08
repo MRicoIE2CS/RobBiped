@@ -76,6 +76,12 @@ void Command::listen_for_commands()
 		else if (command.equals("gyro.deb.off")){
 			commands.gyroacc_debug_off = true;
 		}
+		else if (command.equals("torso.deb.on")){
+			commands.torso_posture_debug_on = true;
+		}
+		else if (command.equals("torso.deb.off")){
+			commands.torso_posture_debug_off = true;
+		}
 		else if (command.equals("off"))
 		{
 		}
