@@ -66,7 +66,7 @@ class FootRollCentering : public I_PeriodicTask
 		*
 		*  @param[in] _desired_foot_roll_angle Desired foot roll angle, in radians.
 		*/
-		void set_setpoint_rad(double& _desired_foot_roll_angle);
+		void set_setpoint_rad(double& _desired_zmp_lateral_deviation_mm);
 
 		/*
 		*  @fn double compute(double& _current_foot_roll_angle_rad)
@@ -75,7 +75,7 @@ class FootRollCentering : public I_PeriodicTask
 		*
 		*  @param[in] _current_foot_roll_angle_rad Feedback value; Current foot roll angle, in radians.
 		*/
-		double compute(double& _current_foot_roll_angle_rad);
+		double compute(double& _current_foot_zmp_lateral_deviation_mm);
 };
 
 }

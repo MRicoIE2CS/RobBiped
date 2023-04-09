@@ -50,10 +50,10 @@ void Control::FootRollCentering::set_setpoint_rad(double& _desired_foot_roll_ang
 	setpoint_rad_ = _desired_foot_roll_angle;
 }
 
-double Control::FootRollCentering::compute(double& _current_foot_roll_angle_rad)
+double Control::FootRollCentering::compute(double& _current_foot_zmp_lateral_deviation_mm)
 {
 	double output_rad;
-	pid_.compute_output(setpoint_rad_, _current_foot_roll_angle_rad, output_rad);
+	pid_.compute_output(setpoint_rad_, _current_foot_zmp_lateral_deviation_mm, output_rad);
 	
 	if (command_->commands.foot_roll_centering_debug_on)
 	{
