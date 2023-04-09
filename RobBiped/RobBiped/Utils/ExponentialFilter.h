@@ -26,14 +26,16 @@
 // than the case when incrementing or decrementing in same direction
 
 class ExpFilter {
-	
+
 	protected:
-		
+
 		double last_filtered_value_ = 0;
 		double exp_K_ = 0.9;
-		
+
+		// TODO: Establish time awareness, to be independent of the rate of the call to filter.
+
 	public:
-		
+
 		double set_exp_constant(double k);
 		double filter(double raw_value);
 		double filter(uint8_t raw_value);
