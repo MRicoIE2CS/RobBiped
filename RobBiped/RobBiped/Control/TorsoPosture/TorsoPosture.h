@@ -16,6 +16,9 @@
  * limitations under the License.
  */
 
+#ifndef _TORSO_POSTURE_h
+#define _TORSO_POSTURE_h
+
 #include "arduino.h"
 
 #include "../../Main/Configs.h"
@@ -81,3 +84,5 @@ class TorsoPosture : public I_PeriodicTask
 };
 
 }	// End namespace Control
+
+#endif
