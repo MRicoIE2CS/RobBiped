@@ -106,8 +106,8 @@ struct Configs
 
 		struct FootRollCentering {
 				// PID constants
-				double kp = 1;
-				double ki = 0.1;
+				double kp = 0.0;
+				double ki = 0.001;
 				double kd = 0.0;
 				// Anti-windup constant
 				double k_windup = 0.5;

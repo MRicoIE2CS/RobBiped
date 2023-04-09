@@ -26,6 +26,8 @@ void Executor::associations()
 	force_sensors_manager_.assoc_config(config_.force_sensors);
 	gyroscope_accelerometer_manager_.assoc_config(config_.gyro_acc);
 	torso_posture_controller_.assoc_config(config_.control.torso_posture);
+	left_foot_roll_centering_controller_.assoc_config(config_.control.foot_roll_centering);
+	right_foot_roll_centering_controller_.assoc_config(config_.control.foot_roll_centering);
 }
 
 void Executor::initialize_servo_setpoints()
@@ -36,14 +38,14 @@ void Executor::initialize_servo_setpoints()
 	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftFootPitch, initial_setpoint);
 	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftKnee, initial_setpoint);
 	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftHipPitch, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftHipRoll, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftHipRoll, initial_setpoint);	// TODO: Open hip support a bit
 	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftShoulderSagittal, initial_setpoint);
 	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftShoulderAmplitude, initial_setpoint);
 	servo_updater_.set_angle_to_servo(Configuration::JointsNames::Unused1, initial_setpoint);
 	servo_updater_.set_angle_to_servo(Configuration::JointsNames::Unused2, initial_setpoint);
 	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightShoulderAmplitude, initial_setpoint);
 	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightShoulderSagittal, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightHipRoll, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightHipRoll, initial_setpoint);	// TODO: Open hip support a bit
 	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightHipPitch, initial_setpoint);
 	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightKnee, initial_setpoint);
 	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightFootPitch, initial_setpoint);
