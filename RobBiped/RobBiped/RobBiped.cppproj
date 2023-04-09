@@ -592,6 +592,12 @@
     <Compile Include="Actuators\PCA9685\Adafruit_PWMServoDriver.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Control\TorsoPosture\TorsoPosture.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Control\TorsoPosture\TorsoPosture.cpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Main\Configs.h">
       <SubType>compile</SubType>
     </Compile>
@@ -668,6 +674,18 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="UserInput\UserInput.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\Control\FunctionBocks.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\Control\FunctionBocks.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\Control\PID.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\Control\PID.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Utils\ExponentialFilter.cpp">
@@ -1697,7 +1715,12 @@
   <ItemGroup>
     <Folder Include="Actuators\" />
     <Folder Include="Actuators\PCA9685" />
+    <Folder Include="Control\LegExtensionOrientation" />
+    <Folder Include="Control\FootSupport" />
+    <Folder Include="Control\SwingingLeg" />
+    <Folder Include="Control\TorsoPosture" />
     <Folder Include="Main" />
+    <Folder Include="Control" />
     <Folder Include="Sensors" />
     <Folder Include="Sensors\GyroAcc\MPU6050" />
     <Folder Include="Sensors\HX711" />
@@ -1759,6 +1782,7 @@
     <Folder Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\" />
     <Folder Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\ArxTypeTraits\" />
     <Folder Include="Utils\Kinematics" />
+    <Folder Include="Utils\Control" />
     <Folder Include="__vm\" />
   </ItemGroup>
   <ItemGroup>

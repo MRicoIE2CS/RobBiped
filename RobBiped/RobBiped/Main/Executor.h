@@ -29,6 +29,7 @@
 #include "../UserInput/UserInput.h"
 #include "../Sensors/ForceSensorsManager.h"
 #include "../Sensors/GyroscopeAccelerometerManager.h"
+#include "../Control/TorsoPosture/TorsoPosture.h"
 
 class Executor {
 	
@@ -43,10 +44,17 @@ class Executor {
 		JointsManager servo_updater_;
 		ForceSensorsManager force_sensors_manager_;
 		GyroscopeAccelerometerManager gyroscope_accelerometer_manager_;
+		Control::TorsoPosture torso_posture_controller_;
 		///// END OBJECT TASKS __//
+		
+		/////____________ AUXILIARY OBJECTS: __//
+		double torso_setpoint = 0.0;
+		ExpFilter torso_pitch_exp_filter;
+		///// END AUXILIARY OBJECTS: __//
 	
 		/////____________ PRIVATE FUNCTIONS: __//
 		void associations();
+		void initialize_servo_setpoints();
 		
 		void inputs();
 		void main_execution();

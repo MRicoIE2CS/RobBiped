@@ -141,30 +141,39 @@ void GyroscopeAccelerometerManager::calibrate()
 	if (counter_==100){
 
 		// Calibrate accelerometer for 1g in z axis (adjust offset)
-		if (p_ax_>0) *ax_o_--;
-		else {*ax_o_++;}
-		if (p_ay_>0) *ay_o_--;
-		else {*ay_o_++;}
-		if (p_az_-16384>0) *az_o_--;
-		else {*az_o_++;}
+		if (p_ax_>0) (*ax_o_)--;
+		else {(*ax_o_)++;}
+		if (p_ay_>0) (*ay_o_)--;
+		else {(*ay_o_)++;}
+		if (p_az_-16384>0) (*az_o_)--;
+		else {(*az_o_)++;}
 		
 		mpu6050_.setXAccelOffset(*ax_o_);
 		mpu6050_.setYAccelOffset(*ay_o_);
 		mpu6050_.setZAccelOffset(*az_o_);
 
 		// Calibrate gyroscope to 0º/s in every axis ()
-		if (p_gx_>0) *gx_o_--;
-		else {*gx_o_++;}
-		if (p_gy_>0) *gy_o_--;
-		else {*gy_o_++;}
-		if (p_gz_>0) *gz_o_--;
-		else {*gz_o_++;}
+		if (p_gx_>0) (*gx_o_)--;
+		else {(*gx_o_)++;}
+		if (p_gy_>0) (*gy_o_)--;
+		else {(*gy_o_)++;}
+		if (p_gz_>0) (*gz_o_)--;
+		else {(*gz_o_)++;}
 		
 		mpu6050_.setXGyroOffset(*gx_o_);
 		mpu6050_.setYGyroOffset(*gy_o_);
 		mpu6050_.setZGyroOffset(*gz_o_);
 		
 		counter_ = 0;
+		
+		Serial.println("Calibrating GYROSCOPE ACCELEROMETER SENSOR____________________________");
+		Serial.print("a[x y z](bits) g[x y z](bits):\t");
+		Serial.print(p_ax_); Serial.print("\t");
+		Serial.print(p_ay_); Serial.print("\t");
+		Serial.print(p_az_); Serial.print("\t");
+		Serial.print(p_gx_); Serial.print("\t");
+		Serial.print(p_gy_); Serial.print("\t");
+		Serial.println(p_gz_);
 	}
 	counter_++;
 }
@@ -173,7 +182,8 @@ void GyroscopeAccelerometerManager::calibrate()
 
 bool GyroscopeAccelerometerManager::update()
 {
-	
+	bool return_value = false;
+
 	if (command_->commands.gyroacc_calibrate_on)
 	{
 		if (calibrate_first_run_){
@@ -197,8 +207,9 @@ bool GyroscopeAccelerometerManager::update()
 		//Serial.println("Elapsed micros: " + (String)(micros() - previousMicros));		// 2016us elapsed!
 		process_readings();
 		//Serial.println("Elapsed micros: " + (String)(micros() - previousMicros));		// just 52us elapsed here
+		return_value = true;
 	}
-	
+
 	if (command_->commands.gyroacc_debug_on)
 	{
 		print_values();
@@ -208,6 +219,8 @@ bool GyroscopeAccelerometerManager::update()
 			command_->commands.gyroacc_debug_off = false;
 		}
 	}
+
+	return return_value;
 }
 
 void GyroscopeAccelerometerManager::print_values()
@@ -223,75 +236,115 @@ void GyroscopeAccelerometerManager::print_values()
 	
 	Serial.print("X inclination: ");
 	Serial.print(accel_ang_x_);
-	Serial.print("Y inclination:");
+	Serial.print(" | Y inclination:");
 	Serial.println(accel_ang_y_);
 	
 	Serial.print("X rotation:  ");
 	Serial.print(ang_x_);
-	Serial.print("Y rotation: ");
+	Serial.print(" | Y rotation: ");
 	Serial.println(ang_y_);
 }
 
-void GyroscopeAccelerometerManager::get_values(float* _ax_m_s2, float* _ay_m_s2, float* _az_m_s2, float* _gx_deg_s, float* _gy_deg_s, float* _gz_deg_s)
+void GyroscopeAccelerometerManager::get_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2, float& _gx_deg_s, float& _gy_deg_s, float& _gz_deg_s)
 {
-	*_ax_m_s2 = ax_m_s2_;
-	*_ay_m_s2 = ay_m_s2_;
-	*_az_m_s2 = az_m_s2_;
-	*_gx_deg_s = gx_deg_s_;
-	*_gy_deg_s = gy_deg_s_;
-	*_gz_deg_s = gz_deg_s_;
+	_ax_m_s2 = ax_m_s2_;
+	_ay_m_s2 = ay_m_s2_;
+	_az_m_s2 = az_m_s2_;
+	_gx_deg_s = gx_deg_s_;
+	_gy_deg_s = gy_deg_s_;
+	_gz_deg_s = gz_deg_s_;
 }
 
-void GyroscopeAccelerometerManager::get_value_ax_m_s2(float* _ax_m_s2)
+void GyroscopeAccelerometerManager::get_value_ax_m_s2(float& _ax_m_s2)
 {
-	*_ax_m_s2 = ax_m_s2_;
+	_ax_m_s2 = ax_m_s2_;
 }
 float GyroscopeAccelerometerManager::get_value_ax_m_s2()
 {
 	return ax_m_s2_;
 }
 
-void GyroscopeAccelerometerManager::get_value_ay_m_s2(float* _ay_m_s2)
+void GyroscopeAccelerometerManager::get_value_ay_m_s2(float& _ay_m_s2)
 {
-	*_ay_m_s2 = ay_m_s2_;
+	_ay_m_s2 = ay_m_s2_;
 }
 float GyroscopeAccelerometerManager::get_value_ay_m_s2()
 {
 	return ay_m_s2_;
 }
 
-void GyroscopeAccelerometerManager::get_value_az_m_s2(float* _az_m_s2)
+void GyroscopeAccelerometerManager::get_value_az_m_s2(float& _az_m_s2)
 {
-	*_az_m_s2 = az_m_s2_;
+	_az_m_s2 = az_m_s2_;
 }
 float GyroscopeAccelerometerManager::get_value_az_m_s2()
 {
 	return az_m_s2_;
 }
 
-void GyroscopeAccelerometerManager::get_value_gx_deg_s(float* _gx_deg_s)
+void GyroscopeAccelerometerManager::get_value_gx_deg_s(float& _gx_deg_s)
 {
-	*_gx_deg_s = gx_deg_s_;
+	_gx_deg_s = gx_deg_s_;
 }
 float GyroscopeAccelerometerManager::get_value_gx_deg_s()
 {
 	return gx_deg_s_;
 }
 
-void GyroscopeAccelerometerManager::get_value_gy_deg_s(float* _gy_deg_s)
+void GyroscopeAccelerometerManager::get_value_gy_deg_s(float& _gy_deg_s)
 {
-	*_gy_deg_s = gy_deg_s_;
+	_gy_deg_s = gy_deg_s_;
 }
 float GyroscopeAccelerometerManager::get_value_gy_deg_s()
 {
 	return gy_deg_s_;
 }
 
-void GyroscopeAccelerometerManager::get_value_gz_deg_s(float* _gz_deg_s)
+void GyroscopeAccelerometerManager::get_value_gz_deg_s(float& _gz_deg_s)
 {
-	*_gz_deg_s = gz_deg_s_;
+	_gz_deg_s = gz_deg_s_;
 }
 float GyroscopeAccelerometerManager::get_value_gz_deg_s()
 {
 	return gz_deg_s_;
+}
+
+void GyroscopeAccelerometerManager::get_value_angle_z_pitch_deg(float& _ang_pitch)
+{
+	_ang_pitch = ang_x_;
+}
+
+float GyroscopeAccelerometerManager::get_value_angle_z_pitch_deg()
+{
+	return ang_x_;
+}
+
+void GyroscopeAccelerometerManager::get_value_angle_z_roll_deg(float& _ang_roll)
+{
+	_ang_roll = ang_y_;
+}
+
+float GyroscopeAccelerometerManager::get_value_angle_z_roll_deg()
+{
+	return ang_y_;
+}
+
+void GyroscopeAccelerometerManager::get_value_angle_z_pitch_rad(float& _ang_pitch)
+{
+	_ang_pitch = ang_x_ * DEG_TO_RAD;
+}
+
+float GyroscopeAccelerometerManager::get_value_angle_z_pitch_rad()
+{
+	return ang_x_ * DEG_TO_RAD;
+}
+
+void GyroscopeAccelerometerManager::get_value_angle_z_roll_rad(float& _ang_roll)
+{
+	_ang_roll = ang_y_ * DEG_TO_RAD;
+}
+
+float GyroscopeAccelerometerManager::get_value_angle_z_roll_rad()
+{
+	return ang_y_ * DEG_TO_RAD;
 }

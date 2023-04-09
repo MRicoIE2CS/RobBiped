@@ -25,4 +25,27 @@ void Executor::associations()
 	//servoUpdater.assocButtons(config.gpio.thinButton1, config.gpio.thinButton2);
 	force_sensors_manager_.assoc_config(config_.force_sensors);
 	gyroscope_accelerometer_manager_.assoc_config(config_.gyro_acc);
+	torso_posture_controller_.assoc_config(config_.control.torso_posture);
+}
+
+void Executor::initialize_servo_setpoints()
+{
+	double initial_setpoint = 0.0;
+	// Servo setpoint assignation
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftFootRoll, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftFootPitch, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftKnee, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftHipPitch, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftHipRoll, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftShoulderSagittal, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftShoulderAmplitude, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::Unused1, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::Unused2, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightShoulderAmplitude, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightShoulderSagittal, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightHipRoll, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightHipPitch, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightKnee, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightFootPitch, initial_setpoint);
+	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightFootRoll, initial_setpoint);
 }

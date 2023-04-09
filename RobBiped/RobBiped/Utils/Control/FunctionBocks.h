@@ -1,7 +1,7 @@
 /*
- * RobBiped.ino
+ * FunctionBocks.h
  *
- * Copyright 2023 Mikel Rico Abajo (https://github.com/MRicoIE2CS) 
+ * Copyright 2023 Mikel Rico Abajo (https://github.com/MRicoIE2CS)
 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,32 +16,16 @@
  * limitations under the License.
  */
 
-#include "Main/Executor.h"
-#include "UserInput/Command.h"
+#ifndef _FUNCTIONBLOCKS_h
+#define _FUNCTIONBLOCKS_h
 
-Executor executor;
+#include "arduino.h"
 
-Command* serial_command = Command::get_instance();
+namespace Control {
 
-void setup()
-{
-	Serial.begin(500000);
-	
-	while (!serial_command->commands.init)
-	{
-		Serial.println("type in 'init' to initialize");
-		serial_command->listen_for_commands();
-		delay(1000);
-	}
-	
-	executor.init();
-	
-	Serial.println("Initialize execution!");
-}
+	void saturation(double& _input, double& _lower_limit, double& _upper_limit, double& _output);
+	double saturation(double& _input, double& _lower_limit, double& _upper_limit);
 
-void loop()
-{
-	executor.execution();
+}	// End namespace Control
 
-	serial_command->listen_for_commands();
-}
+#endif

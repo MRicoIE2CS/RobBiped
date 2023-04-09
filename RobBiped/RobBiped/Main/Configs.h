@@ -24,6 +24,12 @@
 namespace Configuration
 {
 
+enum class JointsNames {LeftFootRoll = 0, LeftFootPitch = 1, LeftKnee = 2, LeftHipPitch = 3,
+						LeftHipRoll = 4, LeftShoulderSagittal = 5, LeftShoulderAmplitude = 6,
+						Unused1 = 7, Unused2 = 8,
+						RightShoulderAmplitude = 9, RightShoulderSagittal = 10, RightHipRoll = 11,
+						RightHipPitch = 12, RightKnee = 13, RightFootPitch = 14, RightFootRoll = 15 };
+
 static const uint8_t hx711_number = 4;	// forceSensors configuration
 
 struct Configs 
@@ -58,25 +64,45 @@ struct Configs
 
 	struct GyroscpeAccelerometer {
 		struct Offsets {
-			int16_t ax_o = -35;	// Accelerometer offsets
-			int16_t ay_o = -234;
-			int16_t az_o = 919;
-			int16_t gx_o = 7;		// Gyroscope offsets
+			int16_t ax_o = -303;	// Accelerometer offsets
+			int16_t ay_o = -214;
+			int16_t az_o = 911;
+			int16_t gx_o = 1;		// Gyroscope offsets
 			int16_t gy_o = -35;
-			int16_t gz_o = -13;
+			int16_t gz_o = -15;
 			}offsets;
 		}gyro_acc;
 
 	struct Kinematics {
-		struct Direct {
-			
-			}direct;
-		
-		struct Inverse {
-			
-		}inverse;
-
+		double height_hip = 85;			// Height between joints of the hip (l1)
+		double height_hip_knee = 80;	// Height between knee and the first joint of the hip (l2)
+		double height_knee_ankle = 65;	// Height between ankle and knee (l3)
+		double height_ankle = 45;		// Height between joints of the ankle (l4)
+		double height_foot = 35;		// Height between floor and first joint of the ankle (l5)
+		double d_lateral_foot = 13;		// Lateral distance between foot center and the axis of the first ankle joint (a1)
 		}kinematics;
+
+
+	struct PCA9685 {
+		
+		}pca9685;
+
+	struct Control {
+		struct TorsoPosture {
+			// PID constants
+			double kp = 1;
+			double ki = 0.1;
+			double kd = 0.0;
+			// Anti-windup constant
+			double k_windup = 0.5;
+			// Setpoint weighting constants
+			double proportional_setpoint_weight = 1.0;
+			double derivative_setpoint_weight = 0.0;
+			// Saturation limits
+			double lower_saturation_degrees = -45;
+			double upper_saturation_degrees = 45;
+			}torso_posture;
+		}control;
 };
 
 } // End namespace Configuration

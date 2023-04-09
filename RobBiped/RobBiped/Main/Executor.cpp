@@ -21,88 +21,89 @@
 void Executor::init()
 {
 	associations();
-	
+
 	//______TASKS CONFIGURATION_____//
-	
+
 	user_input_.set_execution_period(I_PeriodicTask::execType::inMillis, 5);
-	
-	servo_updater_.set_execution_period(I_PeriodicTask::execType::inMillis,20);	
-	servo_updater_.init();
-	
-	force_sensors_manager_.set_execution_period(I_PeriodicTask::execType::inMillis, 5);
+
+	// Force sensors new measurement is ready every 67500us.
+	// This execution period sets the period at which the measurement is checked to be ready.
+	force_sensors_manager_.set_execution_period(I_PeriodicTask::execType::inMillis, 1);
 	force_sensors_manager_.init();
-	
-	gyroscope_accelerometer_manager_.set_execution_period(I_PeriodicTask::execType::inMillis, 4);
+
+	// Every time a new measurement of the gyroscope/accelerometer is taken, reading requires 2ms of elapsed time.
+	// This task sets the calculation period of the torso posture control.
+	gyroscope_accelerometer_manager_.set_execution_period(I_PeriodicTask::execType::inMillis, 10);
 	gyroscope_accelerometer_manager_.init();
 	
+	// This task will be computed each time a new gyroscope/accelerometer measurement is performed.
+	// For that reason, there is no need to set an execution period for it.
+	torso_posture_controller_.init();
+	torso_posture_controller_.set_setpoint_rad(torso_setpoint);
+
+	// This task will depend on the update of the setpoints of the servos, which is triggered by other tasks,
+	// such as the control tasks.
+	servo_updater_.set_execution_period(I_PeriodicTask::execType::inMillis,10);
+	servo_updater_.init();
+
 	// END TASKS CONFIGURATION
+
+	initialize_servo_setpoints();
 }
 
 void Executor::inputs()
 {
+	// These are flags set true for just one execution loop.
+	force_sensors_manager_.has_been_updated = false;
+	gyroscope_accelerometer_manager_.has_been_updated = false;
+
+	// User input updates at a rate specified on `init()` method.
 	if (user_input_.get_execution_flag()) user_input_.update();
-	
-	if (gyroscope_accelerometer_manager_.get_execution_flag())
-	{
-		bool updated = gyroscope_accelerometer_manager_.update();
-	}
-	
+
+	// Force sensors manager updates at a rate specified on `init()` method.
+	// Each time, sensors must be ready. If they are not, an error flag is set.
+	// Execution period should be configured bigger that the time the sensor needs, for that to not happen.
 	if (force_sensors_manager_.get_execution_flag())
 	{
-		bool updated = force_sensors_manager_.update();
+		force_sensors_manager_.has_been_updated = force_sensors_manager_.update();
+	}
+
+	// If the force sensors manager have been updated, the gyroscope/accelerometer is read.
+	// This is because force sensors need more time to update internally.
+	// Also, gyro/acc requires considerable more time to be read.
+	if (gyroscope_accelerometer_manager_.get_execution_flag())
+	{
+		gyroscope_accelerometer_manager_.has_been_updated = gyroscope_accelerometer_manager_.update();
 	}
 }
 
 void Executor::main_execution()
 {
-	
-	
-	
+	// If sensors have been updated, control can be computed.
+	if (gyroscope_accelerometer_manager_.has_been_updated)
+	{
+		// Get torso pitch orientation measurement.
+		double filtered_torso_pitch_angle_rad = torso_pitch_exp_filter.filter(gyroscope_accelerometer_manager_.get_value_angle_z_pitch_rad());
+		
+		// Compute the control action for torso pitch.
+		double torso_pitch_control_action = torso_posture_controller_.compute(filtered_torso_pitch_angle_rad);
+		
+		// Servo setpoint assignation.
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftHipPitch, -torso_pitch_control_action);
+		servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightHipPitch, -torso_pitch_control_action);
+		servo_updater_.should_be_updated = true;
+	}
 }
 
 void Executor::outputs()
 {
-	if (servo_updater_.get_execution_flag())
+	// If another task has raised the flag, because new setpoints have been set.
+	if (servo_updater_.should_be_updated | servo_updater_.get_execution_flag())
 	{
-// 		// INIT Example of using potentiometer to command servos
-// 		uint16_t pot1Val = userInput.getAnalogValue(UserInput::AnalogInputList::potentiometer2);
-// 		
-// 		double readingAngle_0;
-// 		double max_val = 0.2;
-// 		double min_val = -0.2;
-// 		double ampl = max_val - min_val;
-// 		if (pot1Val < 1000){
-// 			readingAngle_0 = 0;
-// 		}
-// 		else if (pot1Val > 3000){
-// 			readingAngle_0 = ampl;
-// 		}
-// 		else {
-// 			readingAngle_0 = (double)(pot1Val - 1000) / (double)2000 * ampl;
-// 		}
-// 		double nextAngle_0 = readingAngle_0 - ampl / 2;
-		double nextAngle_0 = 0.0;
-		// END Example
-		
-		// Servo setpoint assignation
-		servo_updater_.set_angle_to_servo(0,nextAngle_0);
-		servo_updater_.set_angle_to_servo(1,nextAngle_0);
-		servo_updater_.set_angle_to_servo(2,nextAngle_0);
-		servo_updater_.set_angle_to_servo(3,nextAngle_0);
-		servo_updater_.set_angle_to_servo(4,nextAngle_0);
-		servo_updater_.set_angle_to_servo(5,nextAngle_0);
-		servo_updater_.set_angle_to_servo(6,nextAngle_0);
-		servo_updater_.set_angle_to_servo(7,nextAngle_0);
-		servo_updater_.set_angle_to_servo(8,nextAngle_0);
-		servo_updater_.set_angle_to_servo(9,nextAngle_0);
-		servo_updater_.set_angle_to_servo(10,nextAngle_0);
-		servo_updater_.set_angle_to_servo(11,nextAngle_0);
-		servo_updater_.set_angle_to_servo(12,nextAngle_0);
-		servo_updater_.set_angle_to_servo(13,nextAngle_0);
-		servo_updater_.set_angle_to_servo(14,nextAngle_0);
-		servo_updater_.set_angle_to_servo(15,nextAngle_0);
-		
+		servo_updater_.should_be_updated = false;
 		// Servo setpoint command
+		// This implies I2C communication, but don't worry,
+		// it will send the command only for the servos whose setpoint has been updated.
 		servo_updater_.update(user_input_);
 	}
 }

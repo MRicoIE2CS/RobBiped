@@ -48,6 +48,8 @@ struct Command
 		bool gyroacc_calibrate_off = false;
 		bool gyroacc_debug_on = false;
 		bool gyroacc_debug_off = false;
+		bool torso_posture_debug_on = false;
+		bool torso_posture_debug_off = false;
 	}commands;
 	
 private:

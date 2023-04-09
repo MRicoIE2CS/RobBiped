@@ -19,15 +19,12 @@
 #ifndef _UPDATESERVOS_h
 #define _UPDATESERVOS_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#include "Arduino.h"
 
 #include <Wire.h>
 #include <map>
 
+#include "../Main/Configs.h"
 #include "../Main/I_PeriodicTask.h"
 #include "PCA9685/Adafruit_PWMServoDriver.h"
 #include "Joint.h"
@@ -36,17 +33,21 @@
 #include "../UserInput/Command.h"
 
 class JointsManager : public I_PeriodicTask{
-	
+
+	public:
+
+		enum class State { running , calibrating, sleeping };
+
 	private:
-	
+
 		// Serial Commands pointer
 		Command* command_;
-	
+
 		Adafruit_PWMServoDriver PCA9685_1_ = Adafruit_PWMServoDriver(0x40);
-		
+
 		std::map<uint8_t,Joint> PCA9685_1_servo_map_;
-		
-		enum class State { running , calibrating, sleeping } current_state_;
+
+		State current_state_;
 		uint64_t last_millis_changed_state_;
 		enum class CalibrationState { servoSelection, zeroCalibration, firstPointCalibration, secondPointCalibration };
 		struct Calibration {
@@ -58,7 +59,7 @@ class JointsManager : public I_PeriodicTask{
 			uint32_t serial_print_last_millis;
 			uint32_t serial_print_period_ms = 400;
 		} calibration_data_;
-		
+
 		void check_state(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
 		void calibration_mode_enter_exit_conditions(uint32_t current_millis, bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
 		void calibration_state_machine(uint32_t current_millis, bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
@@ -80,13 +81,13 @@ class JointsManager : public I_PeriodicTask{
 
 		void init();
 		void joints_config();
-		
-		void set_angle_to_servo(uint8_t servo_index, double servo_angle);
-		
+
+		void set_angle_to_servo(Configuration::JointsNames servo_index, double servo_angle);
+
+		State get_current_state();
+
 		void update(UserInput& _user_input);
 		void servo_update();
-	
 };
 
 #endif
-
