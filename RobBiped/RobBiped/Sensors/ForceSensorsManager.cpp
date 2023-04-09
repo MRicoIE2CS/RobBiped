@@ -193,29 +193,39 @@ void ForceSensorsManager::calculate_ZMP()
 			value_LeftFoot_LeftBack_ + value_LeftFoot_LeftFront_ + value_LeftFoot_RightBack_ + value_LeftFoot_RightFront_;
 	int32_t force_ponderatedSum =
 			(value_LeftFoot_LeftFront_ * *separation_FrontBack_mm_) + (value_LeftFoot_RightFront_ * *separation_FrontBack_mm_);
-	
+
 	// ZMP X coordinate of the left foot, in mm, from the left-back sensor
 	zmp_left_foot_x_mm_ = filter_zmp_left_foot_x_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
-	
+	// ZMP coordinate frame translation to the foot center
+	zmp_left_foot_x_mm_ -= *separation_FrontBack_mm_ / 2;
+
+	// Y coordinate axis is positive pointing to the outside of the body
 	force_ponderatedSum =
-			(value_LeftFoot_RightBack_ * *separation_LeftRight_mm_) + (value_LeftFoot_RightFront_ * *separation_LeftRight_mm_);
-	
+			(value_LeftFoot_LeftBack_ * *separation_LeftRight_mm_) + (value_LeftFoot_LeftFront_ * *separation_LeftRight_mm_);
+
 	// ZMP Y coordinate of the left foot, in mm, from the left-back sensor
 	zmp_left_foot_y_mm_ = filter_zmp_left_foot_y_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
-	
+	// ZMP coordinate frame translation to the foot center
+	zmp_left_foot_y_mm_ -= *separation_LeftRight_mm_ / 2;
+
 	force_sum =
 			value_RightFoot_LeftBack_ + value_RightFoot_LeftFront_ + value_RightFoot_RightBack_ + value_RightFoot_RightFront_;
 	force_ponderatedSum =
 			(value_RightFoot_LeftFront_ * *separation_FrontBack_mm_) + (value_RightFoot_RightFront_ * *separation_FrontBack_mm_);
-	
+
 	// ZMP X coordinate of the right foot, in mm, from the left-back sensor
 	zmp_right_foot_x_mm_ = filter_zmp_right_foot_x_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
-	
+	// ZMP coordinate frame translation to the foot center
+	zmp_right_foot_x_mm_ -= *separation_FrontBack_mm_ / 2;
+
+	// Y coordinate axis is positive pointing to the outside of the body
 	force_ponderatedSum =
 			(value_RightFoot_RightBack_ * *separation_LeftRight_mm_) + (value_RightFoot_RightFront_ * *separation_LeftRight_mm_);
-	
+
 	// ZMP Y coordinate of the right foot, in mm, from the left-back sensor
 	zmp_right_foot_y_mm_ = filter_zmp_right_foot_y_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
+	// ZMP coordinate frame translation to the foot center
+	zmp_right_foot_y_mm_ -= *separation_LeftRight_mm_ / 2;
 }
 
 void ForceSensorsManager::get_values_ZMP_LeftFoot(int16_t& x_mm, int16_t& y_mm)
@@ -233,23 +243,23 @@ void ForceSensorsManager::get_values_ZMP_RightFoot(int16_t& x_mm, int16_t& y_mm)
 void ForceSensorsManager::print_values()
 {
 	Serial.println("Reading FORCE SENSORS____________________________");
-	Serial.print("LeftFoot_LeftFrontSensor: \t\t");
+	Serial.print("LeftFoot: \t\t");
 	Serial.print(getValue_gr_LeftFoot_LeftFrontSensor());
-	Serial.print("\tLeftFoot_RightFrontSensor: \t\t");
+	Serial.print("\t");
 	Serial.println(getValue_gr_LeftFoot_RightFrontSensor());
-	Serial.print("LeftFoot_LeftBackSensor: \t\t");
+	Serial.print("\t\t\t");
 	Serial.print(getValue_gr_LeftFoot_LeftBackSensor());
-	Serial.print("\tLeftFoot_RightBackSensor: \t\t");
+	Serial.print("\t");
 	Serial.println(getValue_gr_LeftFoot_RightBackSensor());
 
 
-	Serial.print("RightFoot_LeftFrontSensor: \t\t");
+	Serial.print("RightFoot: \t\t");
 	Serial.print(getValue_gr_RightFoot_LeftFrontSensor());
-	Serial.print("\tRightFoot_RightFrontSensor: \t\t");
+	Serial.print("\t");
 	Serial.println(getValue_gr_RightFoot_RightFrontSensor());
-	Serial.print("RightFoot_LeftBackSensor: \t\t");
+	Serial.print("\t\t\t");
 	Serial.print(getValue_gr_RightFoot_LeftBackSensor());
-	Serial.print("\tRightFoot_RightBackSensor: \t\t");
+	Serial.print("\t");
 	Serial.println(getValue_gr_RightFoot_RightBackSensor());
 
 // 	Serial.println("\tTime between readings (us): \t");
@@ -259,12 +269,12 @@ void ForceSensorsManager::print_values()
 void ForceSensorsManager::print_ZMP()
 {
 	Serial.println("Reading ZMP coordinates____________________________");
-	Serial.print("Left foot X mm(): \t\t");
-	Serial.println(zmp_left_foot_x_mm_);
-	Serial.print("Left foot Y mm(): \t\t");
+	Serial.print("Left foot (X,Y):\t\t");
+	Serial.print(zmp_left_foot_x_mm_);
+	Serial.print("\t");
 	Serial.println(zmp_left_foot_y_mm_);
-	Serial.print("Right foot X mm(): \t\t");
-	Serial.println(zmp_right_foot_x_mm_);
-	Serial.print("Right foot X mm(): \t\t");
+	Serial.print("Right foot (X,Y):\t\t");
+	Serial.print(zmp_right_foot_x_mm_);
+	Serial.print("\t");
 	Serial.println(zmp_right_foot_y_mm_);
 }
