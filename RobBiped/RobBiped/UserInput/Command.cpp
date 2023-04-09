@@ -82,6 +82,12 @@ void Command::listen_for_commands()
 		else if (command.equals("torso.deb.off")){
 			commands.torso_posture_debug_off = true;
 		}
+		else if (command.equals("footroll.deb.on")){
+			commands.foot_roll_centering_debug_on = true;
+		}
+		else if (command.equals("footroll.deb.off")){
+			commands.foot_roll_centering_debug_off = true;
+		}
 		else if (command.equals("off"))
 		{
 		}

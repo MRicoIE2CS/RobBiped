@@ -1,5 +1,5 @@
 /*
- * TorsoPosture.h
+ * FootRollCentering.h
  *
  * Copyright 2023 Mikel Rico Abajo (https://github.com/MRicoIE2CS)
 
@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef _TORSO_POSTURE_h
-#define _TORSO_POSTURE_h
+#ifndef _FOOT_ROLL_CENTERING_h
+#define _FOOT_ROLL_CENTERING_h
 
 #include "arduino.h"
 
@@ -28,7 +28,7 @@
 
 namespace Control {
 
-class TorsoPosture : public I_PeriodicTask
+class FootRollCentering : public I_PeriodicTask
 {
 	private:
 
@@ -37,7 +37,7 @@ class TorsoPosture : public I_PeriodicTask
 
 		PID pid_;
 
-		Configuration::Configs::Control::TorsoPosture *config_;
+		Configuration::Configs::Control::FootRollCentering *config_;
 
 		// PID constants
 		double *kp_;
@@ -52,32 +52,32 @@ class TorsoPosture : public I_PeriodicTask
 		double *lower_saturation_degrees_;
 		double *upper_saturation_degrees_;
 
-		// Desired torso pitch angle, in radians
+		// Desired setpoint, in radians
 		double setpoint_rad_;
 
 	public:
 
-		void assoc_config(Configuration::Configs::Control::TorsoPosture& _config);
+		void assoc_config(Configuration::Configs::Control::FootRollCentering& _config);
 		void init();
 
 		/*
-		*  @fn void set_setpoint_rad(double& _desired_torso_pitch_angle);
-		*  @brief Setter for desired torso pitch angle, in radians.
+		*  @fn void set_setpoint_rad(double& _desired_foot_roll_angle);
+		*  @brief Setter for desired foot roll angle, in radians.
 		*
-		*  @param[in] _desired_torso_pitch_angle Desired torso pitch angle, in radians.
+		*  @param[in] _desired_foot_roll_angle Desired foot roll angle, in radians.
 		*/
-		void set_setpoint_rad(double& _desired_torso_pitch_angle);
+		void set_setpoint_rad(double& _desired_zmp_lateral_deviation_mm);
 
 		/*
-		*  @fn double compute(double& _current_torso_pitch_angle_rad)
+		*  @fn double compute(double& _current_foot_roll_angle_rad)
 		*  @brief Compute controller.
-		*  It returns the computed output value, in radians, to be applied to the pitch joints of the hip.
+		*  It returns the computed output value, in radians, to be applied to the foot roll joint.
 		*
-		*  @param[in] _current_torso_pitch_angle_rad Feedback value; Current pitch posture of the torso, in radians.
+		*  @param[in] _current_foot_roll_angle_rad Feedback value; Current foot roll angle, in radians.
 		*/
-		double compute(double& _current_torso_pitch_angle_rad);
+		double compute(double& _current_foot_zmp_lateral_deviation_mm);
 };
 
-}	// End namespace Control
+}
 
 #endif

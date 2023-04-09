@@ -88,6 +88,7 @@ struct Configs
 		}pca9685;
 
 	struct Control {
+
 		struct TorsoPosture {
 			// PID constants
 			double kp = 1;
@@ -102,6 +103,22 @@ struct Configs
 			double lower_saturation_degrees = -45;
 			double upper_saturation_degrees = 45;
 			}torso_posture;
+
+		struct FootRollCentering {
+				// PID constants
+				double kp = 0.0;
+				double ki = 0.001;
+				double kd = 0.0;
+				// Anti-windup constant
+				double k_windup = 0.5;
+				// Setpoint weighting constants
+				double proportional_setpoint_weight = 1.0;
+				double derivative_setpoint_weight = 0.0;
+				// Saturation limits
+				double lower_saturation_degrees = -10;
+				double upper_saturation_degrees = 10;
+			}foot_roll_centering;
+
 		}control;
 };
 

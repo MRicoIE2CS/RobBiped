@@ -1,5 +1,5 @@
 /*
- * TorsoPosture.cpp
+ * FootRollCentering.cpp
  *
  * Copyright 2023 Mikel Rico Abajo (https://github.com/MRicoIE2CS)
 
@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-#include "TorsoPosture.h"
+#include "FootRollCentering.h"
 
-void Control::TorsoPosture::assoc_config(Configuration::Configs::Control::TorsoPosture& _config)
+void Control::FootRollCentering::assoc_config(Configuration::Configs::Control::FootRollCentering& _config)
 {
 	config_ = &_config;
 }
 
-void Control::TorsoPosture::init()
+void Control::FootRollCentering::init()
 {
 	kp_ = &(config_->kp);
 	ki_ = &(config_->ki);
@@ -45,28 +45,28 @@ void Control::TorsoPosture::init()
 	pid_.set_setpoint_weighting(*proportional_setpoint_weight_, *derivative_setpoint_weight_);
 }
 
-void Control::TorsoPosture::set_setpoint_rad(double& _desired_torso_pitch_angle)
+void Control::FootRollCentering::set_setpoint_rad(double& _desired_foot_roll_angle)
 {
-	setpoint_rad_ = _desired_torso_pitch_angle;
+	setpoint_rad_ = _desired_foot_roll_angle;
 }
 
-double Control::TorsoPosture::compute(double& _current_torso_pitch_angle_rad)
+double Control::FootRollCentering::compute(double& _current_foot_zmp_lateral_deviation_mm)
 {
 	double output_rad;
-	pid_.compute_output(setpoint_rad_, _current_torso_pitch_angle_rad, output_rad);
-
-	if (command_->commands.torso_posture_debug_on)
+	pid_.compute_output(setpoint_rad_, _current_foot_zmp_lateral_deviation_mm, output_rad);
+	
+	if (command_->commands.foot_roll_centering_debug_on)
 	{
 		double kp, ki, kd;
 		pid_.get_control_action_values(kp, ki, kd);
 		Serial.println("Action::: " + (String)output_rad + "\tKp = " + (String)kp + "\tKi = " + (String)ki + "\tKd = " + (String)kd);
 
-		if (command_->commands.torso_posture_debug_off)
+		if (command_->commands.foot_roll_centering_debug_off)
 		{
-			command_->commands.torso_posture_debug_on = false;
-			command_->commands.torso_posture_debug_off = false;
+			command_->commands.foot_roll_centering_debug_on = false;
+			command_->commands.foot_roll_centering_debug_off = false;
 		}
 	}
-
+	
 	return output_rad;
 }

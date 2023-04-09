@@ -30,6 +30,7 @@
 #include "../Sensors/ForceSensorsManager.h"
 #include "../Sensors/GyroscopeAccelerometerManager.h"
 #include "../Control/TorsoPosture/TorsoPosture.h"
+#include "../Control/FootSupport/FootRollCentering.h"
 
 class Executor {
 	
@@ -45,11 +46,16 @@ class Executor {
 		ForceSensorsManager force_sensors_manager_;
 		GyroscopeAccelerometerManager gyroscope_accelerometer_manager_;
 		Control::TorsoPosture torso_posture_controller_;
+		Control::FootRollCentering left_foot_roll_centering_controller_;
+		Control::FootRollCentering right_foot_roll_centering_controller_;
 		///// END OBJECT TASKS __//
 		
 		/////____________ AUXILIARY OBJECTS: __//
-		double torso_setpoint = 0.0;
-		ExpFilter torso_pitch_exp_filter;
+		double torso_setpoint_ = 0.0;
+		ExpFilter torso_pitch_exp_filter_;
+		double zmp_lateral_deviation_setpoint_ = 0.0;
+		ExpFilter left_zmp_lateral_exp_filter_;
+		ExpFilter right_zmp_lateral_exp_filter_;
 		///// END AUXILIARY OBJECTS: __//
 	
 		/////____________ PRIVATE FUNCTIONS: __//

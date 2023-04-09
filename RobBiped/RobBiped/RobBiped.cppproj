@@ -592,6 +592,12 @@
     <Compile Include="Actuators\PCA9685\Adafruit_PWMServoDriver.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Control\FootSupport\FootRollCentering.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Control\FootSupport\FootRollCentering.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Control\TorsoPosture\TorsoPosture.h">
       <SubType>compile</SubType>
     </Compile>
