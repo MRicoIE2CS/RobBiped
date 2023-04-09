@@ -227,21 +227,23 @@ void GyroscopeAccelerometerManager::print_values()
 {
 	Serial.println("Reading GYROSCOPE ACCELEROMETER SENSOR____________________________");
 	Serial.print("a[x y z](m/s2) g[x y z](deg/s):\t");
-	Serial.print(ax_m_s2_); Serial.print("\t");
-	Serial.print(ay_m_s2_); Serial.print("\t");
-	Serial.print(az_m_s2_); Serial.print("\t");
-	Serial.print(gx_deg_s_); Serial.print("\t");
-	Serial.print(gy_deg_s_); Serial.print("\t");
-	Serial.println(gz_deg_s_);
-	
-	Serial.print("X inclination: ");
-	Serial.print(accel_ang_x_);
-	Serial.print(" | Y inclination:");
-	Serial.println(accel_ang_y_);
-	
-	Serial.print("X rotation:  ");
+	Serial.print(ax_m_s2_); Serial.print("; ");
+	Serial.print(ay_m_s2_); Serial.print("; ");
+	Serial.print(az_m_s2_); Serial.print("; ");
+	Serial.print(gx_deg_s_); Serial.print("; ");
+	Serial.print(gy_deg_s_); Serial.print("; ");
+	Serial.print(gz_deg_s_); Serial.print("\t");
+
+	// This angle is obtained without complementary filter
+// 	Serial.print("X inclination: ");
+// 	Serial.print(accel_ang_x_);
+// 	Serial.print(" | Y inclination:");
+// 	Serial.print(accel_ang_y_); Serial.print("\t");
+
+	// This angle is obtained by complementary filter
+	Serial.print("Pitch angle (x,y):\t");
 	Serial.print(ang_x_);
-	Serial.print(" | Y rotation: ");
+	Serial.print(" , ");
 	Serial.println(ang_y_);
 }
 
