@@ -54,13 +54,19 @@ double Control::TorsoPosture::compute(double& _current_torso_pitch_angle_rad)
 {
 	double output_rad;
 	pid_.compute_output(setpoint_rad_, _current_torso_pitch_angle_rad, output_rad);
-	
+
 	if (command_->commands.torso_posture_debug_on)
 	{
 		double kp, ki, kd;
 		pid_.get_control_action_values(kp, ki, kd);
 		Serial.println("Action::: " + (String)output_rad + "\tKp = " + (String)kp + "\tKi = " + (String)ki + "\tKd = " + (String)kd);
+
+		if (command_->commands.torso_posture_debug_off)
+		{
+			command_->commands.torso_posture_debug_on = false;
+			command_->commands.torso_posture_debug_off = false;
+		}
 	}
-	
+
 	return output_rad;
 }
