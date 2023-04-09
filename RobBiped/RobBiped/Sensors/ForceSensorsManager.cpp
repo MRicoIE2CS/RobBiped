@@ -173,6 +173,8 @@ void ForceSensorsManager::tare_LeftFoot()
 	filter_LeftFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(1u), true);
 	multiple_hx711_.tare_Bx32(1u);
 	filter_LeftFoot_RightFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(1u), true);
+
+	is_tare_left_performed_ = true;
 }
 
 void ForceSensorsManager::tare_RightFoot()
@@ -185,6 +187,8 @@ void ForceSensorsManager::tare_RightFoot()
 	filter_RightFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(3u), true);
 	multiple_hx711_.tare_Bx32(3u);
 	filter_RightFoot_RightFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(3u), true);
+
+	is_tare_right_performed_ = true;
 }
 
 void ForceSensorsManager::calculate_ZMP()
@@ -277,4 +281,14 @@ void ForceSensorsManager::print_ZMP()
 	Serial.print(zmp_right_foot_x_mm_);
 	Serial.print("\t");
 	Serial.println(zmp_right_foot_y_mm_);
+}
+
+bool ForceSensorsManager::is_tare_left_performed()
+{
+	return is_tare_left_performed_;
+}
+
+bool ForceSensorsManager::is_tare_right_performed()
+{
+	return is_tare_right_performed_;
 }
