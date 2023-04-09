@@ -21,4 +21,63 @@
 
 #include "arduino.h"
 
+#include "../../Main/Configs.h"
+#include "../../Main/I_PeriodicTask.h"
+#include "../../UserInput/Command.h"
+#include "../../Utils/Control/PID.h"
+
+namespace Control {
+
+class FootRollCentering : public I_PeriodicTask
+{
+	private:
+
+		// Serial Commands pointer
+		Command* command_;
+
+		PID pid_;
+
+		Configuration::Configs::Control::FootRollCentering *config_;
+
+		// PID constants
+		double *kp_;
+		double *ki_;
+		double *kd_;
+		// Anti-windup constant
+		double *k_windup_;
+		// Setpoint weighting constants
+		double *proportional_setpoint_weight_;
+		double *derivative_setpoint_weight_;
+		// Saturation limits, in degrees
+		double *lower_saturation_degrees_;
+		double *upper_saturation_degrees_;
+
+		// Desired setpoint, in radians
+		double setpoint_rad_;
+
+	public:
+
+		void assoc_config(Configuration::Configs::Control::FootRollCentering& _config);
+		void init();
+
+		/*
+		*  @fn void set_setpoint_rad(double& _desired_foot_roll_angle);
+		*  @brief Setter for desired foot roll angle, in radians.
+		*
+		*  @param[in] _desired_foot_roll_angle Desired foot roll angle, in radians.
+		*/
+		void set_setpoint_rad(double& _desired_foot_roll_angle);
+
+		/*
+		*  @fn double compute(double& _current_foot_roll_angle_rad)
+		*  @brief Compute controller.
+		*  It returns the computed output value, in radians, to be applied to the foot roll joint.
+		*
+		*  @param[in] _current_foot_roll_angle_rad Feedback value; Current foot roll angle, in radians.
+		*/
+		double compute(double& _current_foot_roll_angle_rad);
+};
+
+}
+
 #endif
