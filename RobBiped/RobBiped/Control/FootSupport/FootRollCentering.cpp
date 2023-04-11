@@ -52,8 +52,7 @@ void Control::FootRollCentering::set_setpoint_rad(double& _desired_foot_roll_ang
 
 double Control::FootRollCentering::compute(double& _current_foot_zmp_lateral_deviation_mm)
 {
-	double output_rad;
-	pid_.compute_output(setpoint_rad_, _current_foot_zmp_lateral_deviation_mm, output_rad);
+	double output_rad = 0.0;
 	
 	if (command_->commands.foot_roll_centering_debug_on)
 	{
@@ -67,6 +66,21 @@ double Control::FootRollCentering::compute(double& _current_foot_zmp_lateral_dev
 			command_->commands.foot_roll_centering_debug_off = false;
 		}
 	}
-	
+
+	if (!controller_on & command_->commands.foot_roll_centering_on)
+	{
+		controller_on = true;
+	}
+	if (controller_on & command_->commands.foot_roll_centering_off)
+	{
+		pid_.sleep();
+		controller_on = false;
+	}
+
+	if (controller_on)
+	{
+		pid_.compute_output(setpoint_rad_, _current_foot_zmp_lateral_deviation_mm, output_rad);
+	}
+
 	return output_rad;
 }

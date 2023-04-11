@@ -55,6 +55,9 @@ class FootRollCentering : public I_PeriodicTask
 		// Desired setpoint, in radians
 		double setpoint_rad_;
 
+		// ON state of the controller
+		bool controller_on = false;
+
 	public:
 
 		void assoc_config(Configuration::Configs::Control::FootRollCentering& _config);
