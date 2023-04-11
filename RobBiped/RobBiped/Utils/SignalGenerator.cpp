@@ -19,24 +19,24 @@
 #include "SignalGenerator.h"
 
 double SignalGenerator::generate_trajectory(){
-	
+
 	uint64_t current_millis = millis();
-	
-	double nextOutput = offset_ + amplitude_ * sin( (double)current_millis/(double)period_ms_ + (double)phase_shift_) ;
-	
+
+	double nextOutput = offset_ + amplitude_ * sin( HALF_PI * (double)(current_millis - initial_time_)/(double)period_ms_ + phase_shift_rad_);
+
 	return nextOutput;
 }
 
-void SignalGenerator::configure_signal(SignalGenerator::SignalType _type, uint16_t _period, uint16_t _amplitude, uint16_t _offset, uint16_t _phase_shift){
+void SignalGenerator::configure_signal(SignalGenerator::SignalType _type, uint16_t _period_ms, double _amplitude, double _offset, double _phase_shift_rad){
+
 	signal_type_ = _type;
-	period_ms_ = _period;
+	period_ms_ = _period_ms;
 	amplitude_ = _amplitude;
 	offset_ = _offset;
-	phase_shift_ = _phase_shift;
+	phase_shift_rad_ = _phase_shift_rad;
 }
 
 void SignalGenerator::init(){
-	
-	last_calculated_time_ = millis();
-	last_output_ = 0;
+
+	initial_time_ = millis();
 }
