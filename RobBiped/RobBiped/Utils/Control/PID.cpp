@@ -69,12 +69,12 @@ void Control::PID::compute_output(const double& _setpoint, const double& _feedba
 
 	// Integral component
 	double integral_action;
-	if (0.0 != Ki_)
+	if (0.0 != Ki_ & !sleep_)
 	{
-		integral_action = last_integral_action + Ki_ * error * time_fraction;
+		integral_action = last_integral_action_ + Ki_ * error * time_fraction;
 		if (apply_saturation_)
 		{
-			double anti_windup = Kw_ * (last_saturated_controller_output - last_controller_output);
+			double anti_windup = Kw_ * (last_saturated_controller_output_ - last_controller_output_);
 			integral_action += anti_windup;
 		}
 	}
@@ -82,7 +82,7 @@ void Control::PID::compute_output(const double& _setpoint, const double& _feedba
 
 	// Derivative component
 	double derivative_action;
-	if (0.0 != Kd_)
+	if (0.0 != Kd_ & !sleep_)
 	{
 		double diff_feedback = _feedback - last_feedback_;
 		if (0.0 != on_derivative_setpoint_weight_)
@@ -104,16 +104,24 @@ void Control::PID::compute_output(const double& _setpoint, const double& _feedba
 	last_millis_computation = current_millis_computation;
 	last_setpoint_ = _setpoint;
 	last_feedback_ = _feedback;
-	last_integral_action = integral_action;
-	last_controller_output = sum;
-	last_saturated_controller_output = _output;
-	last_proportional_action = proportional_action;
-	last_derivative_action = derivative_action;
+	last_integral_action_ = integral_action;
+	last_controller_output_ = sum;
+	last_saturated_controller_output_ = _output;
+	last_proportional_action_ = proportional_action;
+	last_derivative_action_ = derivative_action;
+	
+	// Clean sleep state
+	sleep_ = false;
 }
 
 void Control::PID::get_control_action_values(double& _kp, double& _ki, double& _kd)
 {
-	_kp = last_proportional_action;
-	_ki = last_integral_action;
-	_kd = last_derivative_action;
+	_kp = last_proportional_action_;
+	_ki = last_integral_action_;
+	_kd = last_derivative_action_;
+}
+
+void Control::PID::sleep()
+{
+	sleep_ = true;
 }
