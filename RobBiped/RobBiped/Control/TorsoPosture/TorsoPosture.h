@@ -55,6 +55,9 @@ class TorsoPosture : public I_PeriodicTask
 		// Desired torso pitch angle, in radians
 		double setpoint_rad_;
 
+		// ON state of the controller
+		bool controller_on = false;
+
 	public:
 
 		void assoc_config(Configuration::Configs::Control::TorsoPosture& _config);
