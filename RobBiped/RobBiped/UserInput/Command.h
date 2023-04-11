@@ -50,8 +50,16 @@ struct Command
 		bool gyroacc_debug_off = false;
 		bool torso_posture_debug_on = false;
 		bool torso_posture_debug_off = false;
+		bool torso_posture_on = false;
+		bool torso_posture_off = false;
 		bool foot_roll_centering_debug_on = false;
 		bool foot_roll_centering_debug_off = false;
+		bool foot_roll_centering_on = false;
+		bool foot_roll_centering_off = false;
+		bool squats_on = false;
+		bool squats_off = false;
+		bool squats_debug_on = false;
+		bool squats_debug_off = false;
 	}commands;
 	
 private:
