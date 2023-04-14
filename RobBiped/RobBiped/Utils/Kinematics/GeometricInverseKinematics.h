@@ -40,26 +40,39 @@ namespace Geometric {
 	*				const Vector3d &_desired_position,
 	*				const Vector2d &_links_lengths,
 	*				double &_target_angle_1,
-	*				double &_target_angle_2);
-	*  @brief Obtains the desired position (x, y, z) of the final effector, from the desired leg length and
-	*  the desired frontal and lateral angles of the final effector relative to the base coordinate frame,
-	*  for a two links kinematic chain, moving only within the sagittal plane.
+	*				double &_target_angle_2,
+	*				bool _invert_knee_side = false);
+	*  @brief Obtains the necessary joint angles, for the final effector to reach a desired position,
+	*  in a two-links kinematic chain, moving only within the sagittal plane (two-dimensional movement).
+	*  The knee side is calculated to be in the front (according to humanoid movement). To invert this
+	*  calculation, a `true` bool value can be passed to the optional _invert_knee_side parameter.
 	*
 	*  Coordinate frame of the base:
-	*  The forward direction corresponds to the y axis.
-	*  The lateral direction corresponds to the z axis (not being used in this calculation).
-	*  When in home position, the leg is extended through the x axis.
+	*  - The forward direction corresponds to the y axis.
+	*  - The lateral direction corresponds to the z axis (not being used in this calculation).
+	*  - When in home position, the leg is extended through the x axis.
+	*
+	*  Output angles' sign is positive corresponding to a positive z-axis rotation (in accordance with Denavit-Hartenberg direct
+	*  kinematics convention).
+	*  Coordinate frame of each link is positioned as:
+	*  - Center is positioned on the joints center.
+	*  - X-axis is pointing to the extension of the link.
+	*  - Y-axis is pointing to the frontal direction (over the x-y plane of the base's coordinate frame).
+	*  - Z-axis is pointing to the lateral direction (normal to the x-y plane of the base's coordinate frame).
 	*
 	*  @param[in] _desired_position Desired position (x, y, z) vector(3) of the final effector relative to the base.
 	*  @param[in] _links_lengths Links lengths, in mm.
+	*  @param[in] _invert_knee_side (optional: Default false) If true, the calculated angles correspond to the inverted knee side position.
 	*  @param[out] _target_angle_rad_1 Target angle necessary in the first joint to reach the desired position, in radians.
 	*  @param[out] _target_angle_rad_2 Target angle necessary in the second joint to reach the desired position, in radians.
+	*  @return False if desired position is non reachable. True if successful calculation.
 	*/
-	void sagittal_two_links_inverse_kinematics(
+	bool sagittal_two_links_inverse_kinematics(
 			const Vector3d &_desired_position,
 			const Vector2d &_links_lengths,
 			double &_target_angle_rad_1,
-			double &_target_angle_rad_2);
+			double &_target_angle_rad_2,
+			const bool _invert_knee_side = false);
 
 }	// End namespace Geometric	
 }	// End namespace InverseKinematics

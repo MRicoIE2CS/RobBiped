@@ -47,7 +47,7 @@ void JointsManager::joints_config(){
 // LEFT HIP - PITCH
 	jointInitializer.invert_angle_sign(false);
 	jointInitializer.calibration_set_zero(false, 1.84);
-	jointInitializer.calibration_set_min_angle(false, -0.45);
+	jointInitializer.calibration_set_min_angle(false, -1);
 	jointInitializer.calibration_set_max_angle(false, 1);
 	PCA9685_1_servo_map_[3] = jointInitializer;
 // LEFT HIP - ROLL
@@ -98,8 +98,8 @@ void JointsManager::joints_config(){
 // RIGHT HIP - PITCH
 	jointInitializer.invert_angle_sign(true);
 	jointInitializer.calibration_set_zero(false, 1.64);
-	jointInitializer.calibration_set_min_angle(false, -0.45);
-	jointInitializer.calibration_set_max_angle(false, 0.45);
+	jointInitializer.calibration_set_min_angle(false, -1);
+	jointInitializer.calibration_set_max_angle(false, 1);
 	PCA9685_1_servo_map_[12] = jointInitializer;
 	
 // RIGHT KNEE

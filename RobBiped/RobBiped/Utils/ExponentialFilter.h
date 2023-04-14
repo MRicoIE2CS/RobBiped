@@ -33,6 +33,9 @@ class ExpFilter {
 		double exp_K_ = 0.9;
 
 		// TODO: Establish time awareness, to be independent of the rate of the call to filter.
+		// exp_K = 1 - e ^ (- delta_t / tau) ; with tau being the time constant.
+		// The time constant is the amount of time for the smoothed response of a unit step function to reach
+		// 1 - 1/e proportion of the original signal, which approximates to 63.2%.
 
 	public:
 

@@ -52,8 +52,7 @@ void Control::TorsoPosture::set_setpoint_rad(double& _desired_torso_pitch_angle)
 
 double Control::TorsoPosture::compute(double& _current_torso_pitch_angle_rad)
 {
-	double output_rad;
-	pid_.compute_output(setpoint_rad_, _current_torso_pitch_angle_rad, output_rad);
+	double output_rad = 0.0;
 
 	if (command_->commands.torso_posture_debug_on)
 	{
@@ -66,6 +65,25 @@ double Control::TorsoPosture::compute(double& _current_torso_pitch_angle_rad)
 			command_->commands.torso_posture_debug_on = false;
 			command_->commands.torso_posture_debug_off = false;
 		}
+	}
+
+	if (command_->commands.torso_posture_on)
+	{
+		controller_on = true;
+
+		command_->commands.torso_posture_on = false;
+	}
+	if (command_->commands.torso_posture_off)
+	{
+		pid_.sleep();
+		controller_on = false;
+
+		command_->commands.torso_posture_off = false;
+	}
+
+	if (controller_on)
+	{
+		pid_.compute_output(setpoint_rad_, _current_torso_pitch_angle_rad, output_rad);
 	}
 
 	return output_rad;

@@ -82,11 +82,37 @@ void Command::listen_for_commands()
 		else if (command.equals("torso.deb.off")){
 			commands.torso_posture_debug_off = true;
 		}
+		else if (command.equals("torso.on")){
+			commands.torso_posture_on = true;
+		}
+		else if (command.equals("torso.off")){
+			commands.torso_posture_off = true;
+		}
 		else if (command.equals("footroll.deb.on")){
 			commands.foot_roll_centering_debug_on = true;
 		}
 		else if (command.equals("footroll.deb.off")){
 			commands.foot_roll_centering_debug_off = true;
+		}
+		else if (command.equals("footroll.on")){
+			commands.foot_roll_centering_on = true;
+			commands.foot_roll_centering_off = false;
+		}
+		else if (command.equals("footroll.off")){
+			commands.foot_roll_centering_off = true;
+			commands.foot_roll_centering_on = false;
+		}
+		else if (command.equals("squats.on")){
+			commands.squats_on = true;
+		}
+		else if (command.equals("squats.off")){
+			commands.squats_off = true;
+		}
+		else if (command.equals("squats.deb.on")){
+			commands.squats_debug_on = true;
+		}
+		else if (command.equals("squats.deb.off")){
+			commands.squats_debug_off = true;
 		}
 		else if (command.equals("off"))
 		{

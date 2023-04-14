@@ -58,11 +58,14 @@ class PID {
 		uint64_t last_millis_computation = millis();
 		double last_setpoint_ = 0.0;
 		double last_feedback_ = 0.0;
-		double last_proportional_action = 0.0;
-		double last_integral_action = 0.0;
-		double last_derivative_action = 0.0;
-		double last_controller_output = 0.0;
-		double last_saturated_controller_output = 0.0;
+		double last_proportional_action_ = 0.0;
+		double last_integral_action_ = 0.0;
+		double last_derivative_action_ = 0.0;
+		double last_controller_output_ = 0.0;
+		double last_saturated_controller_output_ = 0.0;
+
+		// In sleep mode, control action is not computed, and the internal components do not grow (as the integral part).
+		bool sleep_ = true;
 
 	public:
 
@@ -133,6 +136,14 @@ class PID {
 		*  @param[out] _kd Derivative component.
 		*/
 		void get_control_action_values(double& _kp, double& _ki, double& _kd);
+
+		/*
+		*  @fn void sleep()
+		*  @brief Sets the controller to sleep mode.
+		*  In sleep mode, control action is not computed, and the internal components do not grow (as the integral part).
+		*  Controller is woken up (sleep state is cleaned) by calling compute_output() method.
+		*/
+		void sleep();
 };
 
 }	// End namespace Control

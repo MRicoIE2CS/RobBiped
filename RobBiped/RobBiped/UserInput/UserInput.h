@@ -33,32 +33,31 @@
 using namespace Configuration;
 
 class UserInput : public I_PeriodicTask {
-	
+
 	private:
-		
+
 		Potentiometer potentiometer1_;
 		Potentiometer potentiometer2_;
 		Button forward_button_;
 		Button back_button_;
-		
+
 		Configs::UserInputPins *gpio_;
-		
+
 	public:
-		
+
 		enum class DigitalInputList { forward_button, back_button };
 		enum class AnalogInputList { potentiometer1, potentiometer2 };
-		
+
+		// 0-4095 for 12 bits on 0-3.3V. [ESP32]
 		uint16_t get_analog_value(AnalogInputList select_input);
+
 		bool get_digital_value(DigitalInputList select_input);
-		
+
 		void update();
-		
+
 		void assoc_GPIO(Configs::UserInputPins &_gpio);
 		void configuration();
-	
+
 	};
 
-
-
 #endif
-
