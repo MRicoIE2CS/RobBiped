@@ -108,9 +108,9 @@ namespace Geometric {
 	*  desired frontal and lateral angles (against the vertical axis) of the final effector relative to the base coordinate frame.
 	*
 	*  Coordinate frame of the base:
-	*  The forward direction corresponds to the y axis.
-	*  The lateral direction corresponds to the z axis.
-	*  When in home position, the leg is extended through the x axis.
+	*  - The forward direction corresponds to the y axis.
+	*  - The lateral direction corresponds to the z axis.
+	*  - When in home position, the leg is extended through the x axis.
 	*
 	*  @param[in] _leg_length_mm Desired leg length, in mm.
 	*  @param[in] _forward_angle_rad Desired frontal angle, in radians.
@@ -129,9 +129,9 @@ namespace Geometric {
 	*  from the position (x, y, z) of the final effector, relative to the base coordinate frame.
 	*
 	*  Coordinate frame of the base:
-	*  The forward direction corresponds to the y axis.
-	*  The lateral direction corresponds to the z axis.
-	*  When in home position, the leg is extended through the x axis.
+	*  - The forward direction corresponds to the y axis.
+	*  - The lateral direction corresponds to the z axis.
+	*  - When in home position, the leg is extended through the x axis.
 	*
 	*  @param[in] _position Position (x, y, z) vector(3) of the final effector relative to the base.
 	*  @param[out] _leg_length_mm Leg length, in mm.
