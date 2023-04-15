@@ -50,10 +50,17 @@ void Executor::init()
 
 	// This task could be updated in response to a request from other task, using `should_be_updated` member,
 	// or every execution period of the task could be checked if it needs to be updated.
+	// The signal generation will be updated each time a new gyroscope/accelerometer measure is taken.
 	servo_updater_.set_execution_period(I_PeriodicTask::execType::inMillis,2);
 	servo_updater_.init();
 
+	// Signal generator to generate the squats periodic movement.
+	squats_unitary_cycle_generator_.configure_signal(SignalGenerator::SignalType::sine, 10000, 0.5, 0.5, HALF_PI);
+
 	// END TASKS CONFIGURATION
+
+	// Get Command singleton instance
+	command_ = Command::get_instance();
 
 	initialize_servo_setpoints();
 }
@@ -86,50 +93,9 @@ void Executor::inputs()
 
 void Executor::main_execution()
 {
-	// TODO: If servos are sleeping, PIDs should sleep too, for the integral part to not grow.
+	state_machine_switch();
 
-	// If sensors have been updated, control can be computed.
-	if (gyroscope_accelerometer_manager_.has_been_updated)
-	{
-		// Get torso pitch orientation measurement.
-		double filtered_torso_pitch_angle_rad = torso_pitch_exp_filter_.filter(gyroscope_accelerometer_manager_.get_value_angle_z_pitch_rad());
-		
-		// Compute the control action for torso pitch.
-		double torso_pitch_control_action = torso_posture_controller_.compute(filtered_torso_pitch_angle_rad);
-		
-		// Servo setpoint assignation.
-		servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftHipPitch, -torso_pitch_control_action);
-		servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightHipPitch, -torso_pitch_control_action);
-		servo_updater_.should_be_updated = true;
-	}
-
-	if (force_sensors_manager_.has_been_updated)
-	{
-		double left_foot_roll_centering_action = 0.0;
-		if (force_sensors_manager_.is_tare_left_performed())
-		{
-			int16_t left_foot_zmp_lateral_deviation;
-			int16_t ignored;
-			force_sensors_manager_.get_values_ZMP_LeftFoot(ignored, left_foot_zmp_lateral_deviation);
-			double d_left_foot_zmp_lateral_deviation = left_zmp_lateral_exp_filter_.filter(static_cast<double>(left_foot_zmp_lateral_deviation));
-			left_foot_roll_centering_action = left_foot_roll_centering_controller_.compute(d_left_foot_zmp_lateral_deviation);
-		}
-
-		double right_foot_roll_centering_action = 0.0;
-		if (force_sensors_manager_.is_tare_right_performed())
-		{
-			int16_t right_foot_zmp_lateral_deviation;
-			int16_t ignored;
-			force_sensors_manager_.get_values_ZMP_RightFoot(ignored, right_foot_zmp_lateral_deviation);
-			double d_right_foot_zmp_lateral_deviation = right_zmp_lateral_exp_filter_.filter(static_cast<double>(right_foot_zmp_lateral_deviation));
-			right_foot_roll_centering_action = right_foot_roll_centering_controller_.compute(d_right_foot_zmp_lateral_deviation);
-		}
-
-		// Servo setpoint assignation.
-		servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftFootRoll, left_foot_roll_centering_action);
-		servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightFootRoll, right_foot_roll_centering_action);
-		servo_updater_.should_be_updated = true;
-	}
+	state_machine_execution();
 }
 
 void Executor::outputs()
