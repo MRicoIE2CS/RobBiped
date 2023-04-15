@@ -607,6 +607,9 @@
     <Compile Include="Main\Configs.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Main\examples\no_state_machine\SimpleSquatsCommandedByPotentiometer.cpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Main\Executor.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -620,6 +623,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Main\I_PeriodicTask.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Main\StateMachine.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="RobBiped.ino">
@@ -1727,6 +1733,8 @@
     <Folder Include="Control\TorsoPosture" />
     <Folder Include="Main" />
     <Folder Include="Control" />
+    <Folder Include="Main\examples" />
+    <Folder Include="Main\examples\no_state_machine" />
     <Folder Include="Sensors" />
     <Folder Include="Sensors\GyroAcc\MPU6050" />
     <Folder Include="Sensors\HX711" />
