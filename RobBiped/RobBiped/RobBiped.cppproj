@@ -610,6 +610,9 @@
     <Compile Include="Main\examples\no_state_machine\SimpleSquatsCommandedByPotentiometer.cpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Main\examples\state_machine\SimpleSquatsCommandedByPotentiometer.cpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Main\Executor.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -1734,6 +1737,7 @@
     <Folder Include="Main" />
     <Folder Include="Control" />
     <Folder Include="Main\examples" />
+    <Folder Include="Main\examples\state_machine" />
     <Folder Include="Main\examples\no_state_machine" />
     <Folder Include="Sensors" />
     <Folder Include="Sensors\GyroAcc\MPU6050" />
