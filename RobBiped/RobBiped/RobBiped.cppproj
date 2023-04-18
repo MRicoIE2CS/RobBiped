@@ -703,6 +703,12 @@
     <Compile Include="Utils\Control\PID.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Utils\Control\TrayectoryInterpolator.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\Control\TrayectoryInterpolator.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Utils\ExponentialFilter.cpp">
       <SubType>compile</SubType>
     </Compile>
