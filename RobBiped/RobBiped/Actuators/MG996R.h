@@ -19,30 +19,26 @@
 #ifndef _MG996R_h
 #define _MG996R_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#include "Arduino.h"
 
 class MG996R {
-	
+
 	private:
-		
+
 		// minPulse and maxPulse are calibrated so that all the range covers 180deg (PI rads) with relative precision
 		uint16_t min_pulse_ = 111;	
 		uint16_t max_pulse_ = 508;
 		double max_angle_rad_ = PI;
-		
+
 		uint16_t pulse_width_assigned_; 
 		uint16_t pulse_width_applied_;
 
 		uint16_t angle_to_pulse(double _ang);
-	
+
 	public:
-		
+
 		bool set_target_angle(double _ang);	//Input angle from 0 to PI rads
-		
+
 		uint16_t get_pulse_width_assigned();
 		bool is_new_pulse_width();
 	};

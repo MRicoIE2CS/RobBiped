@@ -18,7 +18,6 @@
 
 #include "MG996R.h"
 
-
 bool MG996R::set_target_angle(double _ang){
 	if (_ang < 0 || _ang > max_angle_rad_) {
 		Serial.println("Joint overlimit! | Angle: " + (String)_ang);
@@ -28,7 +27,6 @@ bool MG996R::set_target_angle(double _ang){
 		pulse_width_assigned_ = angle_to_pulse(_ang);
 		return false;
 	}
-	
 }
 
 uint16_t MG996R::get_pulse_width_assigned(){
@@ -45,4 +43,3 @@ uint16_t MG996R::angle_to_pulse(double _ang){
 	uint16_t pulse = round((double)min_pulse_ + _ang * ((double)(max_pulse_-min_pulse_) / max_angle_rad_));
 	return pulse;
 }
-
