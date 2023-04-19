@@ -90,6 +90,23 @@ class JointsManager : public I_PeriodicTask{
 
 		State get_current_state();
 
+		/*
+		*  @fn std::map<Configuration::JointsNames, double> get_last_joint_setpoints()
+		*  @brief Returns the map of the current setpoint angle set to each joint.
+		*
+		*  @return std::map<Configuration::JointsNames,double> Last joint setpoint angles.
+		*/
+		std::map<Configuration::JointsNames, double> get_last_joint_setpoints();
+
+		/*
+		*  @fn double get_last_joint_setpoints(Configuration::JointsNames _joint);
+		*  @brief Returns the value of the current setpoint angle set to the specified joint.
+		*
+		*  @param[in] _joint Joint name.
+		*  @return double Last joint setpoint angle.
+		*/
+		double get_last_joint_setpoints(Configuration::JointsNames& _joint);
+
 		void update(UserInput& _user_input);
 		void servo_update();
 };

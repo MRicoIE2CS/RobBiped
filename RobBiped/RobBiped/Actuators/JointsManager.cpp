@@ -110,3 +110,13 @@ JointsManager::State JointsManager::get_current_state()
 {
 	return current_state_;
 }
+
+std::map<Configuration::JointsNames, double> JointsManager::get_last_joint_setpoints()
+{
+	return last_joint_setpoints_;
+}
+
+double JointsManager::get_last_joint_setpoints(Configuration::JointsNames& _joint)
+{
+	return last_joint_setpoints_[_joint];
+}
