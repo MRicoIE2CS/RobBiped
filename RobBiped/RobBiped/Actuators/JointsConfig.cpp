@@ -19,11 +19,11 @@
 #include "JointsManager.h"
 
 void JointsManager::joints_config(){
-	
+
 	Joint jointInitializer;
-	
+
 	//jointInitializer.cleanCalibrationValues();
-	
+
 // LEFT FOOT - ROLL
 	jointInitializer.invert_angle_sign(false);
 	jointInitializer.calibration_set_zero(false, 1.20);
@@ -36,7 +36,7 @@ void JointsManager::joints_config(){
 	jointInitializer.calibration_set_min_angle(false, -0.6);
 	jointInitializer.calibration_set_max_angle(false, 0.8);
 	PCA9685_1_servo_map_[1] = jointInitializer;
-	
+
 // LEFT KNEE
 	jointInitializer.invert_angle_sign(true);
 	jointInitializer.calibration_set_zero(false, 1.57);
@@ -56,7 +56,6 @@ void JointsManager::joints_config(){
 	jointInitializer.calibration_set_min_angle(false, -0.1);
 	jointInitializer.calibration_set_max_angle(false, 0.5);
 	PCA9685_1_servo_map_[4] = jointInitializer;
-	
 
 // LEFT SHOULDER
 	jointInitializer.invert_angle_sign(false);
@@ -70,7 +69,7 @@ void JointsManager::joints_config(){
 	jointInitializer.calibration_set_min_angle(false, -0.45);
 	jointInitializer.calibration_set_max_angle(false, 0.45);
 	PCA9685_1_servo_map_[6] = jointInitializer;
-	
+
 // UNUSED
 	jointInitializer.clean_calibration_values();
 	PCA9685_1_servo_map_[7] = jointInitializer;
@@ -101,14 +100,14 @@ void JointsManager::joints_config(){
 	jointInitializer.calibration_set_min_angle(false, -1);
 	jointInitializer.calibration_set_max_angle(false, 1);
 	PCA9685_1_servo_map_[12] = jointInitializer;
-	
+
 // RIGHT KNEE
 	jointInitializer.invert_angle_sign(false);
 	jointInitializer.calibration_set_zero(false, 1.87);
 	jointInitializer.calibration_set_min_angle(false, -1.5);
 	jointInitializer.calibration_set_max_angle(false, 0.2);
 	PCA9685_1_servo_map_[13] = jointInitializer;
-	
+
 //RIGHT FOOT - ROLL
 	jointInitializer.invert_angle_sign(true);
 	jointInitializer.calibration_set_zero(false, 1.38);
@@ -121,4 +120,11 @@ void JointsManager::joints_config(){
 	jointInitializer.calibration_set_min_angle(false, -0.4);
 	jointInitializer.calibration_set_max_angle(false, 0.2);
 	PCA9685_1_servo_map_[15] = jointInitializer;
+
+	uint8_t aux_idx = 0;
+	for (auto joint : PCA9685_1_servo_map_)
+	{
+		last_joint_setpoints_[static_cast<Configuration::JointsNames>(aux_idx)] = 0.0;
+		aux_idx++;
+	}
 }

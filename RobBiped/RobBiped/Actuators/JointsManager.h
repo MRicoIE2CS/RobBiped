@@ -24,13 +24,13 @@
 #include <Wire.h>
 #include <map>
 
-#include "../Main/Configs.h"
-#include "../Main/I_PeriodicTask.h"
-#include "PCA9685/Adafruit_PWMServoDriver.h"
 #include "Joint.h"
 #include "MG996R.h"
-#include "../UserInput/UserInput.h"
+#include "PCA9685/Adafruit_PWMServoDriver.h"
 #include "../UserInput/Command.h"
+#include "../UserInput/UserInput.h"
+#include "../Main/Configs.h"
+#include "../Main/I_PeriodicTask.h"
 
 class JointsManager : public I_PeriodicTask{
 
@@ -45,7 +45,11 @@ class JointsManager : public I_PeriodicTask{
 
 		Adafruit_PWMServoDriver PCA9685_1_ = Adafruit_PWMServoDriver(0x40);
 
-		std::map<uint8_t,Joint> PCA9685_1_servo_map_;
+		// A map that stores the actual Joint objects
+		std::map<uint8_t, Joint> PCA9685_1_servo_map_;
+
+		// A map where the current setpoint angle of each Joint is stored
+		std::map<Configuration::JointsNames, double> last_joint_setpoints_;
 
 		State current_state_;
 		uint64_t last_millis_changed_state_;
