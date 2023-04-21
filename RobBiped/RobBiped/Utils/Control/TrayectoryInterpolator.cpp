@@ -17,3 +17,58 @@
  */
 
 #include "TrayectoryInterpolator.h"
+
+bool Control::LinearTrajectoryInterpolator::configure_trayectory(double& _target, double& _initial_value, uint64_t& _transition_time_ms)
+{
+	if ((_target == _initial_value)
+		|| (-HALF_PI > _target)
+		|| (-HALF_PI > _initial_value)
+		|| (HALF_PI < _target)
+		|| (HALF_PI < _initial_value)
+		|| (0 == _transition_time_ms)
+		)
+	{
+		return false;
+	}
+	target_ = _target;
+	initial_value_ = _initial_value;
+	transition_time_ms_ = _transition_time_ms;
+	return true;
+}
+
+bool Control::LinearTrajectoryInterpolator::compute_output(double& _output)
+{
+	if (!initiated_)
+	{
+		initial_millis_ = millis();
+		slope_ = (target_ - initial_value_) / (transition_time_ms_);
+
+		initiated_ = true;
+		return true;
+	}
+	else
+	{
+		double calculated_value = initial_value_ + slope_ * (millis() - initial_millis_);
+		
+		if (is_target_reached(calculated_value))
+		{
+			_output = target_;
+			return false;
+		}
+		else
+		{
+			_output = calculated_value;
+			return true;
+		}
+	}
+}
+
+bool Control::LinearTrajectoryInterpolator::is_target_reached(double& _calculated_value)
+{
+	if (((0 < slope_) && (_calculated_value > target_))
+	   || ((0 > slope_) && (_calculated_value < target_)))
+	{
+		return true;
+	}
+	else return false;
+}
