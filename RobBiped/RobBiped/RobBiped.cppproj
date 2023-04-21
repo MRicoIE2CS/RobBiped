@@ -709,6 +709,12 @@
     <Compile Include="Utils\Control\TrayectoryInterpolator.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Utils\Control\Waiting.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\Control\Waiting.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Utils\ExponentialFilter.cpp">
       <SubType>compile</SubType>
     </Compile>
