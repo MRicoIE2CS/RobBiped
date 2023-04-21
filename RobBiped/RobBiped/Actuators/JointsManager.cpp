@@ -102,7 +102,8 @@ void JointsManager::servo_update(){
 
 void JointsManager::set_angle_to_servo(Configuration::JointsNames servo_index, double servo_angle)
 {
-	PCA9685_1_servo_map_[static_cast<uint8_t>(servo_index)].set_angle_target_rad(servo_angle);
+	bool ret_val = PCA9685_1_servo_map_[static_cast<uint8_t>(servo_index)].set_angle_target_rad(servo_angle);
+	if (ret_val) Serial.println("Error servo " + (String)static_cast<uint8_t>(servo_index));
 	last_joint_setpoints_[servo_index] = servo_angle;
 }
 
