@@ -18,13 +18,9 @@
 
 #include "TrayectoryInterpolator.h"
 
-bool Control::LinearTrajectoryInterpolator::configure_trayectory(double& _target, double& _initial_value, uint64_t& _transition_time_ms)
+bool Control::LinearTrajectoryInterpolator::configure_trayectory(const double& _target, const double& _initial_value, const uint64_t& _transition_time_ms)
 {
 	if ((_target == _initial_value)
-		|| (-HALF_PI > _target)
-		|| (-HALF_PI > _initial_value)
-		|| (HALF_PI < _target)
-		|| (HALF_PI < _initial_value)
 		|| (0 == _transition_time_ms)
 		)
 	{
@@ -42,6 +38,7 @@ bool Control::LinearTrajectoryInterpolator::compute_output(double& _output)
 	{
 		initial_millis_ = millis();
 		slope_ = (target_ - initial_value_) / (transition_time_ms_);
+		_output = initial_value_;
 
 		initiated_ = true;
 		return true;
@@ -49,7 +46,7 @@ bool Control::LinearTrajectoryInterpolator::compute_output(double& _output)
 	else
 	{
 		double calculated_value = initial_value_ + slope_ * (millis() - initial_millis_);
-		
+
 		if (is_target_reached(calculated_value))
 		{
 			_output = target_;
@@ -71,4 +68,9 @@ bool Control::LinearTrajectoryInterpolator::is_target_reached(double& _calculate
 		return true;
 	}
 	else return false;
+}
+
+void Control::LinearTrajectoryInterpolator::reset()
+{
+	initiated_ = false;
 }
