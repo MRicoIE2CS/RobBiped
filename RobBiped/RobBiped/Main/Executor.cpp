@@ -51,7 +51,7 @@ void Executor::init()
 	// This task could be updated in response to a request from other task, using `should_be_updated` member,
 	// or every execution period of the task could be checked if it needs to be updated.
 	// The signal generation will be updated each time a new gyroscope/accelerometer measure is taken.
-	servo_updater_.set_execution_period(I_PeriodicTask::execType::inMillis,2);
+	servo_updater_.set_execution_period(I_PeriodicTask::execType::inMillis, 2);
 	servo_updater_.init();
 
 	// Signal generator to generate the squats periodic movement.
