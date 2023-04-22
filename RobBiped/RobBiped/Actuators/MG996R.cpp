@@ -19,13 +19,12 @@
 #include "MG996R.h"
 
 bool MG996R::set_target_angle(double _ang){
-	if (_ang < 0 || _ang > max_angle_rad_) {
-		Serial.println("Joint overlimit! | Angle: " + (String)_ang);
-		return true;
+	if (_ang < min_angle_rad_ || _ang > max_angle_rad_) {
+		return false;
 	}
 	else {
 		pulse_width_assigned_ = angle_to_pulse(_ang);
-		return false;
+		return true;
 	}
 }
 

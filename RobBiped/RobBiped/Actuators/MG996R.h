@@ -28,6 +28,7 @@ class MG996R {
 		// minPulse and maxPulse are calibrated so that all the range covers 180deg (PI rads) with relative precision
 		uint16_t min_pulse_ = 111;	
 		uint16_t max_pulse_ = 508;
+		double min_angle_rad_ = 0.0;
 		double max_angle_rad_ = PI;
 
 		uint16_t pulse_width_assigned_; 
