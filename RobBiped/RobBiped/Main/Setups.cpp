@@ -34,20 +34,20 @@ void Executor::initialize_servo_setpoints()
 {
 	double initial_setpoint = 0.0;
 	// Servo setpoint assignation
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftFootRoll, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftFootPitch, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftKnee, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftHipPitch, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftHipRoll, initial_setpoint);	// TODO: Open hip support a bit
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftShoulderSagittal, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::LeftShoulderAmplitude, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::Unused1, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::Unused2, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightShoulderAmplitude, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightShoulderSagittal, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightHipRoll, initial_setpoint);	// TODO: Open hip support a bit
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightHipPitch, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightKnee, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightFootPitch, initial_setpoint);
-	servo_updater_.set_angle_to_servo(Configuration::JointsNames::RightFootRoll, initial_setpoint);
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, initial_setpoint);
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, initial_setpoint);
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, initial_setpoint);
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, initial_setpoint);
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, initial_setpoint);	// TODO: Open hip support a bit
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftShoulderSagittal, initial_setpoint);
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftShoulderAmplitude, initial_setpoint);
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::Unused1, initial_setpoint);
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::Unused2, initial_setpoint);
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightShoulderAmplitude, initial_setpoint);
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightShoulderSagittal, initial_setpoint);
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, initial_setpoint);	// TODO: Open hip support a bit
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, initial_setpoint);
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, initial_setpoint);
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, initial_setpoint);
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, initial_setpoint);
 }

@@ -1,5 +1,5 @@
 /*
- * MG996R.h
+ * Waiting.cpp
  *
  * Copyright 2023 Mikel Rico Abajo (https://github.com/MRicoIE2CS)
 
@@ -16,32 +16,44 @@
  * limitations under the License.
  */
 
-#ifndef _MG996R_h
-#define _MG996R_h
+#include "Waiting.h"
 
-#include "Arduino.h"
+bool Control::Waiting::configure_waiting(const uint64_t& _waiting_time_ms)
+{
+	if (0 == _waiting_time_ms)
+	{
+		return false;
+	}
+	waiting_time_ms_ = _waiting_time_ms;
+	return true;
+}
 
-class MG996R {
+bool Control::Waiting::evaluate()
+{
+	if (!initiated_)
+	{
+		initial_millis_ = millis();
+		final_millis_ = initial_millis_ + waiting_time_ms_;
+		initiated_ = true;
+		return false;
+	}
+	else
+	{
+		double current_millis = millis();
 
-	private:
+		if (final_millis_ < current_millis)
+		{
+			initiated_ = false;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
 
-		// minPulse and maxPulse are calibrated so that all the range covers 180deg (PI rads) with relative precision
-		uint16_t min_pulse_ = 111;	
-		uint16_t max_pulse_ = 508;
-		double min_angle_rad_ = 0.0;
-		double max_angle_rad_ = PI;
-
-		uint16_t pulse_width_assigned_; 
-		uint16_t pulse_width_applied_;
-
-		uint16_t angle_to_pulse(double _ang);
-
-	public:
-
-		bool set_target_angle(double _ang);	//Input angle from 0 to PI rads
-
-		uint16_t get_pulse_width_assigned();
-		bool is_new_pulse_width();
-	};
-
-#endif
+void Control::Waiting::reset()
+{
+	initiated_ = false;
+}

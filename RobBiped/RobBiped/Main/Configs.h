@@ -91,7 +91,7 @@ struct Configs
 
 		struct TorsoPosture {
 			// PID constants
-			double kp = 1;
+			double kp = 0.5;
 			double ki = 0.1;
 			double kd = 0.0;
 			// Anti-windup constant

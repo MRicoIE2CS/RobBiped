@@ -19,12 +19,12 @@
 #include "JointsManager.h"
 
 void JointsManager::calibration_set_angle_to_servo(uint16_t potentiometer_val){
-	
+
 	PCA9685_1_servo_map_[calibration_data_.selected_servo].set_angle_target_rad(calibration_get_angle_from_potentiometer(potentiometer_val));
 }
 
 double JointsManager::calibration_get_angle_from_potentiometer(uint16_t potentiometer_val){
-	
+
 	double reading_angle_0;
 	if (potentiometer_val < 1000){
 		reading_angle_0 = 0;
@@ -36,12 +36,12 @@ double JointsManager::calibration_get_angle_from_potentiometer(uint16_t potentio
 		reading_angle_0 = (double)(potentiometer_val - 1000) / (double)2000 * PI;
 	}
 	double nextAngle_0 = reading_angle_0 - HALF_PI;
-	
+
 	return nextAngle_0;
 }
 
 void JointsManager::calibration_mode_enter_exit_conditions(uint32_t current_millis, bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed){
-	
+
 	bool conditionsToEnterCalibration = (current_state_ == State::running) && (forward_button_pressed && back_button_pressed);
 	bool conditionsToExitCalibration = (current_state_ == State::calibrating) && (calibration_data_.calibration_state == CalibrationState::servoSelection) && (forward_button_pressed && back_button_pressed);
 	if (conditionsToEnterCalibration && calibration_data_.calibration_state_button_change_flag == false) {
@@ -58,7 +58,7 @@ void JointsManager::calibration_mode_enter_exit_conditions(uint32_t current_mill
 }
 
 void JointsManager::calibration_button_pressed_flag_mechanism(uint32_t current_millis){
-	
+
 	if (calibration_data_.calibration_state_button_change_flag
 	&& (abs(current_millis - calibration_data_.last_millis_changed_calibration_state) > calibration_data_.value_change_delay_ms)
 	){
@@ -67,16 +67,16 @@ void JointsManager::calibration_button_pressed_flag_mechanism(uint32_t current_m
 }
 
 void JointsManager::calibration_state_machine(uint32_t current_millis, bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed){
-	
+
 	calibration_serial_print(current_millis);
-	
+
 	if (calibration_data_.calibration_state_button_change_flag == false){
 		
 		if (sel_button_pressed || forward_button_pressed || back_button_pressed){
 			calibration_data_.calibration_state_button_change_flag = true;
 			calibration_data_.last_millis_changed_calibration_state = current_millis;
 		}
-		
+
 		switch (calibration_data_.calibration_state) {
 			case CalibrationState::servoSelection:
 			calibration_servo_selection(sel_button_pressed, forward_button_pressed, back_button_pressed);
@@ -95,7 +95,7 @@ void JointsManager::calibration_state_machine(uint32_t current_millis, bool& sel
 }
 
 void JointsManager::calibration_serial_print(uint32_t current_millis){
-	
+
 	if (abs(current_millis - calibration_data_.serial_print_last_millis) > calibration_data_.serial_print_period_ms){
 		String calibration_stage;
 		switch (calibration_data_.calibration_state) {
@@ -112,18 +112,18 @@ void JointsManager::calibration_serial_print(uint32_t current_millis){
 			calibration_stage = "max";
 			break;
 		}
-		
+
 		Serial.println( "Calib. " + calibration_stage + " :"
 		+ " | ang:" + (String)PCA9685_1_servo_map_[calibration_data_.selected_servo].get_assigned_anlge()
 		+ " | zer:" + (String)PCA9685_1_servo_map_[calibration_data_.selected_servo].get_zero_offset()
 		);
-		
+
 		calibration_data_.serial_print_last_millis = current_millis;
 	}
 }
 
 void JointsManager::calibration_servo_selection(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed){
-	
+
 	if (forward_button_pressed){
 		calibration_data_.selected_servo = calibration_data_.selected_servo + 1;
 		if (calibration_data_.selected_servo > PCA9685_1_servo_map_.size() - 1) calibration_data_.selected_servo = 0;
@@ -138,7 +138,7 @@ void JointsManager::calibration_servo_selection(bool& sel_button_pressed, bool f
 }
 
 void JointsManager::calibration_zero_calibration(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed){
-	
+
 	if (forward_button_pressed){
 		PCA9685_1_servo_map_[calibration_data_.selected_servo].clean_calibration_values();
 	}
@@ -152,9 +152,8 @@ void JointsManager::calibration_zero_calibration(bool& sel_button_pressed, bool 
 }
 
 void JointsManager::calibration_first_point_calibration(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed){
-	
+
 	if (forward_button_pressed){
-		
 	}
 	if (back_button_pressed){
 		calibration_data_.calibration_state = CalibrationState::zeroCalibration;
@@ -166,9 +165,8 @@ void JointsManager::calibration_first_point_calibration(bool& sel_button_pressed
 }
 
 void JointsManager::calibration_second_point_calibration(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed){
-	
+
 	if (forward_button_pressed){
-		
 	}
 	if (back_button_pressed){
 		calibration_data_.calibration_state = CalibrationState::firstPointCalibration;
