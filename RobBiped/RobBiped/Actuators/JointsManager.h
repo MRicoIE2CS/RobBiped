@@ -86,7 +86,28 @@ class JointsManager : public I_PeriodicTask{
 		void init();
 		void joints_config();
 
-		void set_angle_to_servo(Configuration::JointsNames servo_index, double servo_angle);
+		/*
+		*  @fn bool set_angle_to_joint(Configuration::JointsNames _joint_index, double servo_angle)
+		*  @brief Setter for the angle to be applied to a Joint.
+		*  This method does not update last_joint_setpoints_ map, as it is updated when update() is called.
+		*  The angle assignation done by means of this method can be reverted to the previously applied angle,
+		*  by calling revert_angle_to_joint() method.
+		*
+		*  @param[in] _joint_index Servo identification number.
+		*  @param[in] _servo_angle_rad Angle to be applied, in radians.
+		*  @return bool True if successful operation. False if any over-limit has been reached.
+		*/
+		bool set_angle_to_joint(Configuration::JointsNames _joint_index, double _servo_angle_rad);
+
+		/*
+		*  @fn bool revert_angle_to_joint(Configuration::JointsNames _joint_index)
+		*  @brief This method reverts the action of the set but non-applied angles for the selected Joint.
+		*  Sets the assigned angle to the angle that was stored on the last call to update() method.
+		*
+		*  @param[in] _joint_index Joint identification number.
+		*  @return bool True if successful operation. It should always return true.
+		*/
+		bool revert_angle_to_joint(Configuration::JointsNames _joint_index);
 
 		State get_current_state();
 

@@ -96,15 +96,31 @@ void JointsManager::servo_update(){
 	for (itMap = PCA9685_1_servo_map_.begin(); itMap!=PCA9685_1_servo_map_.end(); ++itMap){
 		if (itMap->second.is_update_needed()) {
 			PCA9685_1_.setPWM(itMap->first, 0, itMap->second.get_PWM_pulse_width_update());
+			last_joint_setpoints_[static_cast<Configuration::JointsNames>(itMap->first)] = itMap->second.get_assigned_anlge();
 		}
 	}
 }
 
-void JointsManager::set_angle_to_servo(Configuration::JointsNames servo_index, double servo_angle)
+bool JointsManager::set_angle_to_joint(Configuration::JointsNames _joint_index, double _servo_angle_rad)
 {
-	bool ret_val = PCA9685_1_servo_map_[static_cast<uint8_t>(servo_index)].set_angle_target_rad(servo_angle);
-	if (ret_val) Serial.println("Error servo " + (String)static_cast<uint8_t>(servo_index));
-	last_joint_setpoints_[servo_index] = servo_angle;
+	bool ret_val = PCA9685_1_servo_map_[static_cast<uint8_t>(_joint_index)].set_angle_target_rad(_servo_angle_rad);
+	if (!ret_val)
+	{
+		//Serial.println("Angle error for joint " + (String)static_cast<uint8_t>(_joint_index));
+		return false;
+	}
+	return true;
+}
+
+bool JointsManager::revert_angle_to_joint(Configuration::JointsNames _joint_index)
+{
+	bool ret_val = PCA9685_1_servo_map_[static_cast<uint8_t>(_joint_index)].set_angle_target_rad(last_joint_setpoints_[_joint_index]);
+	if (!ret_val)
+	{
+		Serial.println("Angle error for joint " + (String)static_cast<uint8_t>(_joint_index));
+		return false;
+	}
+	return true;
 }
 
 JointsManager::State JointsManager::get_current_state()
