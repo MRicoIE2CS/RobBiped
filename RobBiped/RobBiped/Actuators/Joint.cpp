@@ -33,16 +33,22 @@ bool Joint::set_angle_target_rad(double _ang){
 
 	if (_ang < -PI || _ang > PI
 	|| (_ang < min_angle_allowed_ || _ang > max_angle_allowed_)
-	) {
-		Serial.println("Joint overlimit! | Angle: " + (String)_ang);
-		return true;
+	)
+	{
+		return false;
 	}
 	else {
-		assigned_angle_ = _ang ;		
+		bool ret_val = servo_.set_target_angle(_ang + calibration_offset_angle_);
 
-		servo_.set_target_angle(assigned_angle_ + calibration_offset_angle_);
-
-		return false;
+		if (!ret_val)
+		{
+			return false;
+		}
+		else
+		{
+			assigned_angle_ = _ang;
+			return true;
+		}
 	}
 }
 
@@ -51,7 +57,6 @@ void Joint::clean_calibration_values(){
 	max_angle_allowed_ = PI;
 	min_angle_allowed_ = -PI;
 	calibration_offset_angle_ = HALF_PI;
-	//invertDirection = false;
 }
 
 void Joint::calibration_set_min_angle(bool catch_current_angle, double _angle){
@@ -86,7 +91,7 @@ void Joint::calibration_set_zero(bool catch_current_angle, double _angle){
 	} 
 	else {
 
-		calibration_offset_angle_ = _angle;
+		calibration_offset_angle_ = _angle + HALF_PI;
 	}
 }
 
@@ -102,7 +107,7 @@ void Joint::invert_angle_sign(bool yes_no){
 
 double Joint::get_assigned_anlge(){
 
-	return assigned_angle_;
+	return (invert_direction_) ? - assigned_angle_ : assigned_angle_;
 }
 
 double Joint::get_zero_offset(){
