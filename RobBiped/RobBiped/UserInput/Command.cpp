@@ -52,6 +52,9 @@ void Command::listen_for_commands()
 			commands.force_tare_left = true;
 			commands.force_tare_right = true;
 		}
+		else if (command.equals("force.tar.auto")){
+			commands.force_auto_tare = true;
+		}
 		else if (command.equals("force.deb.on")){
 			commands.force_debug_on = true;
 		}
