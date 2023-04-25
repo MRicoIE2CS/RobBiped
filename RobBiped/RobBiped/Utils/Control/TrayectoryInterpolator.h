@@ -21,12 +21,14 @@
 
 #include "arduino.h"
 
+#include "../../Main/I_PeriodicTask.h"
+
 namespace Control {
 
 /*
 *  @brief This class offers a means to control a linear trajectory over a single double-typed variable.
 */
-class LinearTrajectoryInterpolator {
+class LinearTrajectoryInterpolator : public I_PeriodicTask {
 
 	private:
 
