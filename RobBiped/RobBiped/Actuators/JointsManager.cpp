@@ -109,7 +109,7 @@ bool JointsManager::set_angle_to_joint(Configuration::JointsNames _joint_index, 
 	bool ret_val = PCA9685_1_servo_map_[static_cast<uint8_t>(_joint_index)].set_angle_target_rad(_servo_angle_rad);
 	if (!ret_val)
 	{
-		Serial.println("Angle error for joint " + (String)static_cast<uint8_t>(_joint_index));
+		//Serial.println("Angle error joint " + (String)static_cast<uint8_t>(_joint_index) + ", angle:\t" + (String)_servo_angle_rad);
 		return false;
 	}
 	return true;

@@ -26,7 +26,7 @@ void JointsManager::joints_config(){
 
 // LEFT FOOT - ROLL
 	jointInitializer.invert_angle_sign(false);
-	jointInitializer.calibration_set_zero(false, -0.37);
+	jointInitializer.calibration_set_zero(false, -0.32);
 	jointInitializer.calibration_set_min_angle(false, -0.4);
 	jointInitializer.calibration_set_max_angle(false, 0.4);
 	PCA9685_1_servo_map_[0] = jointInitializer;
@@ -52,7 +52,7 @@ void JointsManager::joints_config(){
 	PCA9685_1_servo_map_[3] = jointInitializer;
 // LEFT HIP - ROLL
 	jointInitializer.invert_angle_sign(false);
-	jointInitializer.calibration_set_zero(false, 0.18);
+	jointInitializer.calibration_set_zero(false, 0.1);
 	jointInitializer.calibration_set_min_angle(false, -0.1);
 	jointInitializer.calibration_set_max_angle(false, 0.5);
 	PCA9685_1_servo_map_[4] = jointInitializer;
