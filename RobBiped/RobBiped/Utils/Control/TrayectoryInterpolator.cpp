@@ -18,7 +18,7 @@
 
 #include "TrayectoryInterpolator.h"
 
-bool Control::LinearTrajectoryInterpolator::configure_trayectory(const double& _target, const double& _initial_value, const uint64_t& _transition_time_ms)
+bool Control::LinearTrajectoryInterpolator::configure_trayectory(const double& _initial_value, const double& _target, const uint64_t& _transition_time_ms)
 {
 	if ((_target == _initial_value)
 		|| (0 == _transition_time_ms)
