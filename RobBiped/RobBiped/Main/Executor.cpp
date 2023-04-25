@@ -67,7 +67,7 @@ void Executor::init()
 void Executor::initialize_application()
 {
 	// STATE 1
-	state1_interpolator1_.set_execution_period(I_PeriodicTask::execType::inMillis, 20);
+	autotare_interpolator1_.set_execution_period(I_PeriodicTask::execType::inMillis, 20);
 
 	// Signal generator to generate the squats periodic movement.
 	squats_unitary_cycle_generator_.configure_signal(SignalGenerator::SignalType::sine, 10000, 0.5, 0.5, HALF_PI);

@@ -68,13 +68,46 @@ void Executor::state_machine_switch()
 			if (!waiting_first_time_ && state2_finished)
 			{
 				state_number++;
+				state3_phase = 0;
 				break;
 			}
 			break;
 		case 3:
-			if (state3_finished)
+			if (state3_phase && state3_finished)
 			{
-				state_number = 4;
+				state_number++;
+				state4_phase = 0;
+				break;
+			}
+			break;
+		case 4:
+			if (state4_phase && state4_finished)
+			{
+				state_number++;
+				waiting_first_time_ = true;
+				break;
+			}
+			break;
+		case 5:
+			if (!waiting_first_time_ && state5_finished)
+			{
+				state_number++;
+				state6_phase = 0;
+				break;
+			}
+			break;
+		case 6:
+			if (state6_phase && state6_finished)
+			{
+				// Squats disabled!
+				state_number = 10;
+				break;
+			}
+			break;
+		case 7:
+			if (state7_finished)
+			{
+				state_number++;
 				break;
 			}
 			break;
@@ -148,10 +181,7 @@ void Executor::always_executes()
 			right_foot_roll_centering_action = right_foot_roll_centering_controller_.compute(d_right_foot_zmp_lateral_deviation);
 		}
 
-		// Servo setpoint assignation.
-		servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, left_foot_roll_centering_action);
-		servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, right_foot_roll_centering_action);
-		servo_updater_.should_be_updated = true;
+		// TODO: Output from this controllers should be in the class scope, so that any state could apply it
 	}
 }
 
@@ -172,10 +202,10 @@ void Executor::state1_execution()
 	// The movement is divided in three different linear movements.
 	// First, a squat movement, then the pivot, and after that, a small retraction of the left leg to leave more space with the floor.
 
-	bool trajectory1_running = false;
+	bool trajectory_running = false;
 	if (0 == state1_phase)
 	{
-		if (!state1_interpolator1_.configure_trayectory(1.0, 0.0, state1_trajectory_time_))
+		if (!autotare_interpolator1_.configure_trayectory(0.0, 1.0, autotare_trajectories_time_))
 		while (true)
 		{
 			Serial.println("ERR_BAD_PARAMETER");
@@ -185,14 +215,14 @@ void Executor::state1_execution()
 	}
 	if (1 == state1_phase)
 	{
-		if (state1_interpolator1_.get_execution_flag())
+		if (autotare_interpolator1_.get_execution_flag())
 		{
 			// TRAJECTORY UNITARY COMPUTATION
 			double trajectory_unitary_vector;
-			trajectory1_running = state1_interpolator1_.compute_output(trajectory_unitary_vector);
+			trajectory_running = autotare_interpolator1_.compute_output(trajectory_unitary_vector);
 			
 			// LEG LIFT DISPLACEMENT
-			double calculated_leg_length = home_position_leg_length_ - state1_legs_squat_displacement * trajectory_unitary_vector;
+			double calculated_leg_length = home_position_leg_length_ - autotare_legs_squat_displacement * trajectory_unitary_vector;
 
 			//Inverse kinematics
 			double forward_angle_rad = 0.0;
@@ -212,55 +242,56 @@ void Executor::state1_execution()
 			bool ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_target_angle);
 			bool ret_val4 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, knee_target_angle);
 			bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + hip_angle_compensation);
-			last_hip_angle_compensation = hip_angle_compensation;
+			last_hip_left_angle_compensation = hip_angle_compensation;
+			last_hip_right_angle_compensation = hip_angle_compensation;
 
 			servo_updater_.should_be_updated = true;
 			
-			if (!trajectory1_running)
+			if (!trajectory_running)
 			{
 				state1_phase = 2;
-				state1_interpolator1_.reset();
+				autotare_interpolator1_.reset();
 			}
 		}
 	}
 	if (2 == state1_phase)
 	{
-		if (state1_interpolator1_.get_execution_flag())
+		if (autotare_interpolator1_.get_execution_flag())
 		{
 			// TRAJECTORY UNITARY COMPUTATION
 			double trajectory_unitary_vector;
-			trajectory1_running = state1_interpolator1_.compute_output(trajectory_unitary_vector);
+			trajectory_running = autotare_interpolator1_.compute_output(trajectory_unitary_vector);
 
 			// LATERAL DISPLACEMENT
-			double lateral_displacement_angle = state1_angle_displacement_ * trajectory_unitary_vector;
+			double lateral_displacement_angle = autotare_angle_displacement_ * trajectory_unitary_vector;
 
 			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, lateral_displacement_angle);
-			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, lateral_displacement_angle/6.0);
+			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, lateral_displacement_angle/4.0);
 			servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, -lateral_displacement_angle);
 
 			// This allows the torso upright controller to still actuate over the hip pitch joints
-			bool ret_val5 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action + last_hip_angle_compensation);
-			bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + last_hip_angle_compensation);
+			bool ret_val5 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action + last_hip_left_angle_compensation);
+			bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + last_hip_right_angle_compensation);
 
 			servo_updater_.should_be_updated = true;
 
-			if (!trajectory1_running)
+			if (!trajectory_running)
 			{
 				state1_phase = 3;
-				state1_interpolator1_.reset();
+				autotare_interpolator1_.reset();
 			}
 		}
 	}
 	if (3 == state1_phase)
 	{
-		if (state1_interpolator1_.get_execution_flag())
+		if (autotare_interpolator1_.get_execution_flag())
 		{
 			// TRAJECTORY UNITARY COMPUTATION
 			double trajectory_unitary_vector;
-			trajectory1_running = state1_interpolator1_.compute_output(trajectory_unitary_vector);
+			trajectory_running = autotare_interpolator1_.compute_output(trajectory_unitary_vector);
 			
 			// LEG LIFT DISPLACEMENT
-			double calculated_leg_length = home_position_leg_length_ - state1_legs_squat_displacement - state1_leg_lift_displacement * trajectory_unitary_vector;
+			double calculated_leg_length = home_position_leg_length_ - autotare_legs_squat_displacement - autotare_leg_lift_displacement * trajectory_unitary_vector;
 
 			//Inverse kinematics
 			double forward_angle_rad = 0.0;
@@ -277,14 +308,15 @@ void Executor::state1_execution()
 			bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_target_angle);
 			bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, knee_target_angle);
 			bool ret_val5 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action + hip_angle_compensation);
-			last_hip_angle_compensation = hip_angle_compensation;
+			bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + last_hip_right_angle_compensation);
+			last_hip_left_angle_compensation = hip_angle_compensation;
 
 			servo_updater_.should_be_updated = true;
 
-			if (!trajectory1_running)
+			if (!trajectory_running)
 			{
 				state1_finished = true;
-				state1_interpolator1_.reset();
+				autotare_interpolator1_.reset();
 			}
 		}
 	}
@@ -303,27 +335,355 @@ void Executor::state2_execution()
 		if (squats_going_down_) squats_going_down_ = false;
 		else squats_going_down_ = true;
 	}
-	if (waiting_.evaluate())
+	if (waiting_.get_execution_flag())
 	{
-		// Set command to tare left foot.
-		command_->commands.force_tare_left = true;
-		state2_finished = true;
+		if (waiting_.evaluate())
+		{
+			// Set command to tare left foot.
+			command_->commands.force_tare_left = true;
+			state2_finished = true;
+		}
+
+		// Torso upright posture control is still active during waiting
+		// This avoids the outgrow of the integral part of the controller
+		bool ret_val5 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action + last_hip_left_angle_compensation);
+		bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + last_hip_right_angle_compensation);
 	}
 }
 
 void Executor::state3_execution()
 {
+	// STATE 3: Go from the right to home position (almost, as the squat is not reversed yet).
+	// In this state, the movements of the state 1 are inversely performed.
+	// First, the left leg is extended to the same length as the right one, then the pivot movement is reversed.
+	// The squat movement is not reversed, as the robot will pivot to the left on the next state.
+
+	bool trajectory_running = false;
+	if (0 == state3_phase)
+	{
+		// Note that the interpolator goes now from 1.0 to 0.0!
+		// This way, the movements are performed inversely
+		// (phases have been also reversed)
+		if (!autotare_interpolator1_.configure_trayectory(1.0, 0.0, autotare_trajectories_time_))
+		while (true)
+		{
+			Serial.println("ERR_BAD_PARAMETER");
+			delay(1000);
+		}
+		state3_phase = 1;
+	}
+	if (1 == state3_phase)
+	{
+		if (autotare_interpolator1_.get_execution_flag())
+		{
+			// TRAJECTORY UNITARY COMPUTATION
+			double trajectory_unitary_vector;
+			trajectory_running = autotare_interpolator1_.compute_output(trajectory_unitary_vector);
+		
+			// LEG LIFT DISPLACEMENT
+			double calculated_leg_length = home_position_leg_length_ - autotare_legs_squat_displacement - autotare_leg_lift_displacement * trajectory_unitary_vector;
+
+			//Inverse kinematics
+			double forward_angle_rad = 0.0;
+			double ankle_target_angle;
+			double knee_target_angle;
+			double hip_angle_compensation;
+
+			bool ret_val_0 = InverseKinematics::get_leg_joints_angles_from_desired_length_and_orientation(
+			calculated_leg_length, forward_angle_rad,
+			config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
+			ankle_target_angle, knee_target_angle, hip_angle_compensation);
+
+			// Joint setpoint assignation.
+			bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_target_angle);
+			bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, knee_target_angle);
+			bool ret_val5 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action + hip_angle_compensation);
+			bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + last_hip_right_angle_compensation);
+			last_hip_left_angle_compensation = hip_angle_compensation;
+
+			servo_updater_.should_be_updated = true;
+
+			if (!trajectory_running)
+			{
+				state3_phase = 2;
+				autotare_interpolator1_.reset();
+			}
+		}
+	}
+	if (2 == state3_phase)
+	{
+		if (autotare_interpolator1_.get_execution_flag())
+		{
+			// TRAJECTORY UNITARY COMPUTATION
+			double trajectory_unitary_vector;
+			trajectory_running = autotare_interpolator1_.compute_output(trajectory_unitary_vector);
+
+			// LATERAL DISPLACEMENT
+			double lateral_displacement_angle = autotare_angle_displacement_ * trajectory_unitary_vector;
+
+			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, lateral_displacement_angle);
+			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, lateral_displacement_angle/4.0);
+			servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, -lateral_displacement_angle);
+
+			// This allows the torso upright controller to still actuate over the hip pitch joints
+			bool ret_val5 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action + last_hip_left_angle_compensation);
+			bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + last_hip_right_angle_compensation);
+
+			servo_updater_.should_be_updated = true;
+
+			if (!trajectory_running)
+			{
+				state3_finished = true;
+				autotare_interpolator1_.reset();
+			}
+		}
+	}
 }
 
 void Executor::state4_execution()
 {
+	// STATE 4: Pivot to the left foot (same as the STATE 1, but without the need to do the first squat).
+	// In this state, from home position, the robot pivots to the left in order to stand on the left foot.
+	// The movement is divided in two different linear movements.
+	// First the pivot to the left, and after that, a small retraction of the right leg to leave more space with the floor.
+
+	bool trajectory_running = false;
+	if (0 == state4_phase)
+	{
+		if (!autotare_interpolator1_.configure_trayectory(0.0, 1.0, autotare_trajectories_time_))
+		while (true)
+		{
+			Serial.println("ERR_BAD_PARAMETER");
+			delay(1000);
+		}
+		state4_phase = 2;
+	}
+	if (2 == state4_phase)
+	{
+		if (autotare_interpolator1_.get_execution_flag())
+		{
+			// TRAJECTORY UNITARY COMPUTATION
+			double trajectory_unitary_vector;
+			trajectory_running = autotare_interpolator1_.compute_output(trajectory_unitary_vector);
+
+			// LATERAL DISPLACEMENT
+			double lateral_displacement_angle = - autotare_angle_displacement_ * trajectory_unitary_vector;
+
+			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, lateral_displacement_angle);
+			servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -lateral_displacement_angle/4.0);
+			servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, -lateral_displacement_angle);
+
+			// This allows the torso upright controller to still actuate over the hip pitch joints
+			bool ret_val5 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action + last_hip_left_angle_compensation);
+			bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + last_hip_right_angle_compensation);
+
+			servo_updater_.should_be_updated = true;
+
+			if (!trajectory_running)
+			{
+				state4_phase = 3;
+				autotare_interpolator1_.reset();
+			}
+		}
+	}
+	if (3 == state4_phase)
+	{
+		if (autotare_interpolator1_.get_execution_flag())
+		{
+			// TRAJECTORY UNITARY COMPUTATION
+			double trajectory_unitary_vector;
+			trajectory_running = autotare_interpolator1_.compute_output(trajectory_unitary_vector);
+			
+			// LEG LIFT DISPLACEMENT
+			double calculated_leg_length = home_position_leg_length_ - autotare_legs_squat_displacement - autotare_leg_lift_displacement * trajectory_unitary_vector;
+
+			//Inverse kinematics
+			double forward_angle_rad = 0.0;
+			double ankle_target_angle;
+			double knee_target_angle;
+			double hip_angle_compensation;
+
+			bool ret_val_0 = InverseKinematics::get_leg_joints_angles_from_desired_length_and_orientation(
+			calculated_leg_length, forward_angle_rad,
+			config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
+			ankle_target_angle, knee_target_angle, hip_angle_compensation);
+
+			// Joint setpoint assignation.
+			bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_target_angle);
+			bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, knee_target_angle);
+			bool ret_val5 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + hip_angle_compensation);
+			bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action + last_hip_left_angle_compensation);
+			last_hip_right_angle_compensation = hip_angle_compensation;
+
+			servo_updater_.should_be_updated = true;
+
+			if (!trajectory_running)
+			{
+				state4_finished = true;
+				autotare_interpolator1_.reset();
+			}
+		}
+	}
 }
 
 void Executor::state5_execution()
 {
+	// STATE 5: Waiting.
+	// The robot waits a few seconds in order to gather data for the tare of the right foot.
+
+	if (waiting_first_time_)
+	{
+		waiting_first_time_ = false;
+		trajectory_interpolator_.reset();
+		waiting_.configure_waiting(waiting_time_);
+		if (squats_going_down_) squats_going_down_ = false;
+		else squats_going_down_ = true;
+	}
+	if (waiting_.get_execution_flag())
+	{
+		if (waiting_.evaluate())
+		{
+			// Set command to tare right foot.
+			command_->commands.force_tare_right = true;
+			state5_finished = true;
+		}
+
+		// Torso upright posture control is still active during waiting
+		// This avoids the outgrow of the integral part of the controller
+		bool ret_val5 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action + last_hip_left_angle_compensation);
+		bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + last_hip_right_angle_compensation);
+	}
 }
 
 void Executor::state6_execution()
+{
+	// STATE 6: Go back to home position.
+	// In this state, All movements performed in previous states must be reversed.
+	// The movement is divided in three different linear movements.
+	// First, the right leg is extended to the same length as the left one, then the pivot movement is reversed,
+	// and after that, the squat movement is reversed, back to home position.
+
+	bool trajectory_running = false;
+	if (0 == state6_phase)
+	{
+		if (!autotare_interpolator1_.configure_trayectory(1.0, 0.0, autotare_trajectories_time_))
+		while (true)
+		{
+			Serial.println("ERR_BAD_PARAMETER");
+			delay(1000);
+		}
+		state6_phase = 1;
+	}
+	if (1 == state6_phase)
+	{
+		if (autotare_interpolator1_.get_execution_flag())
+		{
+			// TRAJECTORY UNITARY COMPUTATION
+			double trajectory_unitary_vector;
+			trajectory_running = autotare_interpolator1_.compute_output(trajectory_unitary_vector);
+		
+			// LEG LIFT DISPLACEMENT
+			double calculated_leg_length = home_position_leg_length_ - autotare_legs_squat_displacement - autotare_leg_lift_displacement * trajectory_unitary_vector;
+
+			//Inverse kinematics
+			double forward_angle_rad = 0.0;
+			double ankle_target_angle;
+			double knee_target_angle;
+			double hip_angle_compensation;
+
+			bool ret_val_0 = InverseKinematics::get_leg_joints_angles_from_desired_length_and_orientation(
+			calculated_leg_length, forward_angle_rad,
+			config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
+			ankle_target_angle, knee_target_angle, hip_angle_compensation);
+
+			// Joint setpoint assignation.
+			bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_target_angle);
+			bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, knee_target_angle);
+			bool ret_val5 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + hip_angle_compensation);
+			bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action + last_hip_left_angle_compensation);
+			last_hip_right_angle_compensation = hip_angle_compensation;
+
+			servo_updater_.should_be_updated = true;
+
+			if (!trajectory_running)
+			{
+				state6_phase = 2;
+				autotare_interpolator1_.reset();
+			}
+		}
+	}
+	if (2 == state6_phase)
+	{
+		if (autotare_interpolator1_.get_execution_flag())
+		{
+			// TRAJECTORY UNITARY COMPUTATION
+			double trajectory_unitary_vector;
+			trajectory_running = autotare_interpolator1_.compute_output(trajectory_unitary_vector);
+
+			// LATERAL DISPLACEMENT
+			double lateral_displacement_angle = - autotare_angle_displacement_ * trajectory_unitary_vector;
+
+			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, lateral_displacement_angle);
+			servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -lateral_displacement_angle/4.0);
+			servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, -lateral_displacement_angle);
+
+			// This allows the torso upright controller to still actuate over the hip pitch joints
+			bool ret_val5 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action + last_hip_left_angle_compensation);
+			bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + last_hip_right_angle_compensation);
+
+			servo_updater_.should_be_updated = true;
+
+			if (!trajectory_running)
+			{
+				state6_phase = 3;
+				autotare_interpolator1_.reset();
+			}
+		}
+	}
+	if (3 == state6_phase)
+	{
+		if (autotare_interpolator1_.get_execution_flag())
+		{
+			// TRAJECTORY UNITARY COMPUTATION
+			double trajectory_unitary_vector;
+			trajectory_running = autotare_interpolator1_.compute_output(trajectory_unitary_vector);
+		
+			// LEG LIFT DISPLACEMENT
+			double calculated_leg_length = home_position_leg_length_ - autotare_legs_squat_displacement * trajectory_unitary_vector;
+
+			//Inverse kinematics
+			double forward_angle_rad = 0.0;
+			double ankle_target_angle;
+			double knee_target_angle;
+			double hip_angle_compensation;
+
+			bool ret_val_0 = InverseKinematics::get_leg_joints_angles_from_desired_length_and_orientation(
+			calculated_leg_length, forward_angle_rad,
+			config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
+			ankle_target_angle, knee_target_angle, hip_angle_compensation);
+
+			// Joint setpoint assignation.
+			bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_target_angle);
+			bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, knee_target_angle);
+			bool ret_val5 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action + hip_angle_compensation);
+			bool ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_target_angle);
+			bool ret_val4 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, knee_target_angle);
+			bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + hip_angle_compensation);
+			last_hip_left_angle_compensation = hip_angle_compensation;
+			last_hip_right_angle_compensation = hip_angle_compensation;
+
+			servo_updater_.should_be_updated = true;
+		
+			if (!trajectory_running)
+			{
+				state6_finished = true;
+				autotare_interpolator1_.reset();
+			}
+		}
+	}
+}
+
+void Executor::state7_execution()
 {
 	// If sensors have been updated, control can be computed.
 	if (gyroscope_accelerometer_manager_.has_been_updated)

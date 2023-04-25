@@ -70,31 +70,35 @@ class Executor {
 		bool state2_first_time = true;
 		bool state2_finished = false;
 		void state2_execution();
-		bool state3_first_time = true;
+		uint8_t state3_phase = 0;
 		bool state3_finished = false;
 		void state3_execution();
-		bool state4_first_time = true;
+		uint8_t state4_phase = 0;
 		bool state4_finished = false;
 		void state4_execution();
 		bool state5_first_time = true;
 		bool state5_finished = false;
 		void state5_execution();
-		bool state6_first_time = true;
+		uint8_t state6_phase = 0;
 		bool state6_finished = false;
 		void state6_execution();
+		uint8_t state7_phase = 0;
+		bool state7_finished = false;
+		void state7_execution();
 
 		// Other state machine flags
 		bool automatic_force_tare_on = false;
 
-		// STATE 1 Trajectory generation objects
-		bool state1_trajectory_running_ = false;
-		double state1_angle_displacement_ = 1.0;
-		double state1_legs_squat_displacement = 30.0;
-		double state1_leg_lift_displacement = 10.0;
-		const uint64_t state1_trajectory_time_ = 3000;
+		// AUTOTARE Trajectory generation objects
+		// (these are used on other states)
+		double autotare_angle_displacement_ = 0.9;
+		double autotare_legs_squat_displacement = 30.0;
+		double autotare_leg_lift_displacement = 20.0;
+		const uint64_t autotare_trajectories_time_ = 3000;
 		const double home_position_leg_length_ = 142.0;
-		Control::LinearTrajectoryInterpolator state1_interpolator1_;
-		double last_hip_angle_compensation = 0.0;
+		Control::LinearTrajectoryInterpolator autotare_interpolator1_;
+		double last_hip_left_angle_compensation = 0.0;
+		double last_hip_right_angle_compensation = 0.0;
 		
 		// Control tasks' objects
 		double torso_upright_pitch_control_action = 0.0;
@@ -110,7 +114,7 @@ class Executor {
 		const double min_desired_leg_length_ = 95.0;
 		const double max_desired_leg_length_ = 142.0;
 		double desired_leg_lenght_ = 0.0;
-		const uint64_t trajectory_time_ms_ = 10000;
+		const uint64_t trajectory_time_ms_ = 5000;
 
 		// Enabling flag for squats movement
 		bool squats_on_ = false;
