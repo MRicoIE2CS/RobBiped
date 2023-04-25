@@ -85,14 +85,14 @@ bool ForceSensorsManager::update()
 
 	if (command_->commands.force_tare_left)
 	{
-		Serial.println("TARE");
+		Serial.println("TARE LEFT");
 		tare_LeftFoot();
 		
 		command_->commands.force_tare_left = false;
 	}
 	if (command_->commands.force_tare_right)
 	{
-		Serial.println("TARE");
+		Serial.println("TARE RIGHT");
 		tare_RightFoot();
 		
 		command_->commands.force_tare_right = false;
