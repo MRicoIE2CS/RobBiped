@@ -88,3 +88,8 @@ double Control::TorsoPosture::compute(double& _current_torso_pitch_angle_rad)
 
 	return output_rad;
 }
+
+bool Control::TorsoPosture::is_on()
+{
+	return controller_on;
+}

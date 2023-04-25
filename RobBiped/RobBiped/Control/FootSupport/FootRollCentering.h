@@ -62,6 +62,7 @@ class FootRollCentering : public I_PeriodicTask
 
 		void assoc_config(Configuration::Configs::Control::FootRollCentering& _config);
 		void init();
+		bool is_on();
 
 		/*
 		*  @fn void set_setpoint_rad(double& _desired_foot_roll_angle);
