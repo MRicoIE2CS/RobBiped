@@ -742,6 +742,12 @@
     <Compile Include="Utils\Kinematics\GeometricInverseKinematics.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Utils\Kinematics\InverseKinematicsBlocks\LegLength_IK.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Utils\Kinematics\InverseKinematicsBlocks\LegLength_IK.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Utils\LinearAlgebra\ArduinoEigen.h">
       <SubType>compile</SubType>
     </Compile>
@@ -1758,6 +1764,7 @@
     <Folder Include="UserInput" />
     <Folder Include="Utils" />
     <Folder Include="Utils\Kinematics\example" />
+    <Folder Include="Utils\Kinematics\InverseKinematicsBlocks" />
     <Folder Include="Utils\LinearAlgebra\" />
     <Folder Include="Utils\LinearAlgebra\ArduinoEigen\" />
     <Folder Include="Utils\LinearAlgebra\ArduinoEigen\Eigen\" />
