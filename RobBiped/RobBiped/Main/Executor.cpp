@@ -54,8 +54,7 @@ void Executor::init()
 	servo_updater_.set_execution_period(I_PeriodicTask::execType::inMillis, 2);
 	servo_updater_.init();
 
-	// Signal generator to generate the squats periodic movement.
-	squats_unitary_cycle_generator_.configure_signal(SignalGenerator::SignalType::sine, 10000, 0.5, 0.5, HALF_PI);
+	initialize_application();
 
 	// END TASKS CONFIGURATION
 
@@ -65,6 +64,15 @@ void Executor::init()
 	initialize_servo_setpoints();
 }
 
+void Executor::initialize_application()
+{
+	// STATE 1
+	state1_interpolator1_.set_execution_period(I_PeriodicTask::execType::inMillis, 20);
+
+	// Signal generator to generate the squats periodic movement.
+	squats_unitary_cycle_generator_.configure_signal(SignalGenerator::SignalType::sine, 10000, 0.5, 0.5, HALF_PI);
+}
+
 void Executor::inputs()
 {
 	// These are flags set true for just one execution loop.
@@ -72,7 +80,11 @@ void Executor::inputs()
 	gyroscope_accelerometer_manager_.has_been_updated = false;
 
 	// User input updates at a rate specified on `init()` method.
-	if (user_input_.get_execution_flag()) user_input_.update();
+	if (user_input_.get_execution_flag()) 
+	{
+		user_input_.update();
+		user_input_.has_been_updated = true;
+	}
 
 	// Force sensors manager updates at a rate specified on `init()` method.
 	// Each time, sensors must be ready. If they are not, an error flag is set.
@@ -102,7 +114,7 @@ void Executor::outputs()
 {
 	// At the execution periodicity configured, for each servo, it is checked if it needs new setpoint.
 	// If that is the case, the setpoint of that servo is sent over I2C to the PCA9685.
-	if (servo_updater_.get_execution_flag())
+	if (servo_updater_.get_execution_flag() || servo_updater_.should_be_updated)
 	{
 		servo_updater_.should_be_updated = false;
 		// Servo setpoint command
