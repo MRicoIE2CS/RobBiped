@@ -27,7 +27,7 @@ void JointsManager::joints_config(){
 // LEFT FOOT - ROLL
 	jointInitializer.invert_angle_sign(false);
 	jointInitializer.calibration_set_zero(false, -0.37);
-	jointInitializer.calibration_set_min_angle(false, -0.2);
+	jointInitializer.calibration_set_min_angle(false, -0.4);
 	jointInitializer.calibration_set_max_angle(false, 0.4);
 	PCA9685_1_servo_map_[0] = jointInitializer;
 // LEFT FOOT - PITCH	
@@ -118,7 +118,7 @@ void JointsManager::joints_config(){
 	jointInitializer.invert_angle_sign(true);
 	jointInitializer.calibration_set_zero(false, 0.1);
 	jointInitializer.calibration_set_min_angle(false, -0.4);
-	jointInitializer.calibration_set_max_angle(false, 0.2);
+	jointInitializer.calibration_set_max_angle(false, 0.4);
 	PCA9685_1_servo_map_[15] = jointInitializer;
 
 	uint8_t aux_idx = 0;
