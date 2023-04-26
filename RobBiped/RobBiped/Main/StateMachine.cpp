@@ -99,8 +99,8 @@ void Executor::state_machine_switch()
 		case 6:
 			if (state6_phase && state6_finished)
 			{
-				// Squats disabled!
-				state_number = 10;
+				state_number++;
+				state7_phase = 0;
 				break;
 			}
 			break;
@@ -140,6 +140,9 @@ void Executor::state_machine_execution()
 			break;
 		case 6:
 			state6_execution();
+			break;
+		case 7:
+			state7_execution();
 			break;
 	}
 }
@@ -231,9 +234,9 @@ void Executor::state1_execution()
 			double hip_angle_compensation;
 
 			bool ret_val_0 = InverseKinematics::get_leg_joints_angles_from_desired_length_and_orientation(
-			calculated_leg_length, forward_angle_rad,
-			config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
-			ankle_target_angle, knee_target_angle, hip_angle_compensation);
+												calculated_leg_length, forward_angle_rad,
+												config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
+												ankle_target_angle, knee_target_angle, hip_angle_compensation);
 
 			// Joint setpoint assignation.
 			bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_target_angle);
@@ -266,7 +269,7 @@ void Executor::state1_execution()
 			double lateral_displacement_angle = autotare_angle_displacement_ * trajectory_unitary_vector;
 
 			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, lateral_displacement_angle);
-			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, lateral_displacement_angle/4.0);
+			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, lateral_displacement_angle/3.0);
 			servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, -lateral_displacement_angle);
 
 			// This allows the torso upright controller to still actuate over the hip pitch joints
@@ -300,9 +303,9 @@ void Executor::state1_execution()
 			double hip_angle_compensation;
 
 			bool ret_val_0 = InverseKinematics::get_leg_joints_angles_from_desired_length_and_orientation(
-			calculated_leg_length, forward_angle_rad,
-			config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
-			ankle_target_angle, knee_target_angle, hip_angle_compensation);
+												calculated_leg_length, forward_angle_rad,
+												config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
+												ankle_target_angle, knee_target_angle, hip_angle_compensation);
 
 			// Joint setpoint assignation.
 			bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_target_angle);
@@ -332,8 +335,6 @@ void Executor::state2_execution()
 		waiting_first_time_ = false;
 		trajectory_interpolator_.reset();
 		waiting_.configure_waiting(waiting_time_);
-		if (squats_going_down_) squats_going_down_ = false;
-		else squats_going_down_ = true;
 	}
 	if (waiting_.get_execution_flag())
 	{
@@ -390,9 +391,9 @@ void Executor::state3_execution()
 			double hip_angle_compensation;
 
 			bool ret_val_0 = InverseKinematics::get_leg_joints_angles_from_desired_length_and_orientation(
-			calculated_leg_length, forward_angle_rad,
-			config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
-			ankle_target_angle, knee_target_angle, hip_angle_compensation);
+												calculated_leg_length, forward_angle_rad,
+												config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
+												ankle_target_angle, knee_target_angle, hip_angle_compensation);
 
 			// Joint setpoint assignation.
 			bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_target_angle);
@@ -422,7 +423,7 @@ void Executor::state3_execution()
 			double lateral_displacement_angle = autotare_angle_displacement_ * trajectory_unitary_vector;
 
 			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, lateral_displacement_angle);
-			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, lateral_displacement_angle/4.0);
+			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, lateral_displacement_angle/3.0);
 			servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, -lateral_displacement_angle);
 
 			// This allows the torso upright controller to still actuate over the hip pitch joints
@@ -470,7 +471,7 @@ void Executor::state4_execution()
 			double lateral_displacement_angle = - autotare_angle_displacement_ * trajectory_unitary_vector;
 
 			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, lateral_displacement_angle);
-			servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -lateral_displacement_angle/4.0);
+			servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -lateral_displacement_angle/3.0);
 			servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, -lateral_displacement_angle);
 
 			// This allows the torso upright controller to still actuate over the hip pitch joints
@@ -504,9 +505,9 @@ void Executor::state4_execution()
 			double hip_angle_compensation;
 
 			bool ret_val_0 = InverseKinematics::get_leg_joints_angles_from_desired_length_and_orientation(
-			calculated_leg_length, forward_angle_rad,
-			config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
-			ankle_target_angle, knee_target_angle, hip_angle_compensation);
+												calculated_leg_length, forward_angle_rad,
+												config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
+												ankle_target_angle, knee_target_angle, hip_angle_compensation);
 
 			// Joint setpoint assignation.
 			bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_target_angle);
@@ -536,8 +537,6 @@ void Executor::state5_execution()
 		waiting_first_time_ = false;
 		trajectory_interpolator_.reset();
 		waiting_.configure_waiting(waiting_time_);
-		if (squats_going_down_) squats_going_down_ = false;
-		else squats_going_down_ = true;
 	}
 	if (waiting_.get_execution_flag())
 	{
@@ -592,9 +591,9 @@ void Executor::state6_execution()
 			double hip_angle_compensation;
 
 			bool ret_val_0 = InverseKinematics::get_leg_joints_angles_from_desired_length_and_orientation(
-			calculated_leg_length, forward_angle_rad,
-			config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
-			ankle_target_angle, knee_target_angle, hip_angle_compensation);
+												calculated_leg_length, forward_angle_rad,
+												config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
+												ankle_target_angle, knee_target_angle, hip_angle_compensation);
 
 			// Joint setpoint assignation.
 			bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_target_angle);
@@ -624,7 +623,7 @@ void Executor::state6_execution()
 			double lateral_displacement_angle = - autotare_angle_displacement_ * trajectory_unitary_vector;
 
 			servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, lateral_displacement_angle);
-			servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -lateral_displacement_angle/4.0);
+			servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -lateral_displacement_angle/3.0);
 			servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, -lateral_displacement_angle);
 
 			// This allows the torso upright controller to still actuate over the hip pitch joints
@@ -658,9 +657,9 @@ void Executor::state6_execution()
 			double hip_angle_compensation;
 
 			bool ret_val_0 = InverseKinematics::get_leg_joints_angles_from_desired_length_and_orientation(
-			calculated_leg_length, forward_angle_rad,
-			config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
-			ankle_target_angle, knee_target_angle, hip_angle_compensation);
+												calculated_leg_length, forward_angle_rad,
+												config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
+												ankle_target_angle, knee_target_angle, hip_angle_compensation);
 
 			// Joint setpoint assignation.
 			bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_target_angle);
@@ -689,33 +688,22 @@ void Executor::state7_execution()
 	if (gyroscope_accelerometer_manager_.has_been_updated)
 	{
 		// Squats generation:::
-		// Using the trajectory obtained from an interpolator, direct kinematics are applied to form a squat.
+		// Using the trajectory obtained from a sine signal generator, direct kinematics are applied to form a squat.
 
-		if (squats_first_time_)
+		if (0 == state7_phase)
 		{
-			double target_leg_length;
-			double current_leg_length;
-			if (squats_going_down_)
-			{
-				target_leg_length = min_desired_leg_length_;
-				current_leg_length = max_desired_leg_length_;
-			}
-			else
-			{
-				target_leg_length = max_desired_leg_length_;
-				current_leg_length = min_desired_leg_length_;
-			}
-			if (!trajectory_interpolator_.configure_trayectory(target_leg_length, current_leg_length, trajectory_time_ms_))
-				while (true)
-				{
-					Serial.println("ERR_BAD_PARAMETER");
-					delay(1000);
-				}
-			squats_first_time_ = false;
+			squats_unitary_cycle_generator_.init();
+			state7_phase = 1;
 		}
 
-		// Desired leg length computation (linear interpolation)
-		interpolator_running_ = trajectory_interpolator_.compute_output(desired_leg_lenght_);
+		// Sine signal computation
+		double trajectory_unitary_vector = squats_unitary_cycle_generator_.generate_trajectory();
+
+		// LEG LIFT DISPLACEMENT
+		desired_leg_lenght_ = min_desired_leg_length_ + (max_desired_leg_length_ - min_desired_leg_length_) * trajectory_unitary_vector;
+
+		// Some forward inclination for the squat movement
+		double forward_angle_rad = max_desired_squat_angle_ * (1.0 - trajectory_unitary_vector);
 
 		// Debug prints
 		if (command_->commands.squats_debug_on)
@@ -729,68 +717,37 @@ void Executor::state7_execution()
 			}
 		}
 
-		// INVERSE KINEMATICS
+		//Inverse kinematics
+		double ankle_target_angle;
+		double knee_target_angle;
+		double hip_angle_compensation;
 
-		double forward_angle_rad = 0.0;
-		double lateral_angle_rad = 0.0;	// Not used
-		Vector3d desired_position;
-		ForwardKinematics::Geometric::get_position_from_length_and_angles(desired_leg_lenght_, forward_angle_rad, lateral_angle_rad, desired_position);
+		bool ret_val0 = InverseKinematics::get_leg_joints_angles_from_desired_length_and_orientation(
+											desired_leg_lenght_, forward_angle_rad,
+											config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee,
+											ankle_target_angle, knee_target_angle, hip_angle_compensation);
 
-		Vector2d links_lengths;
-		links_lengths << config_.kinematics.height_knee_ankle, config_.kinematics.height_hip_knee;
-		double target_angle_rad_1;
-		double target_angle_rad_2;
-		bool ret_val = InverseKinematics::Geometric::sagittal_two_links_inverse_kinematics(desired_position, links_lengths, target_angle_rad_1, target_angle_rad_2);
-
-		// DIRECT KINEMATICS: OBTAIN TRTANSFORMATION MATRIX to know the orientation of final the effector
-
-		// Denavit-Hartenberg table
-		std::vector<Vector4d> DH_table;
-		Vector4d DH_row_1;
-		DH_row_1 << target_angle_rad_1, 0, config_.kinematics.height_knee_ankle, 0;
-		Vector4d DH_row_2;
-		DH_row_2 << target_angle_rad_2, 0, config_.kinematics.height_hip_knee, 0;
-		DH_table.push_back(DH_row_1);
-		DH_table.push_back(DH_row_2);
-
-		Matrix4d TM;
-
-		if (ret_val) ForwardKinematics::DenavitHartenberg::get_overall_TM_from_DH_table(DH_table, TM);
-
-		Matrix2d rotation_matrix = TM.block<2,2>(0,0);
-
-		double angle_to_compensate_hip = 0.0;
-		if (ret_val)
+		if (ret_val0)
 		{
-			angle_to_compensate_hip = atan2(TM(0,1), TM(0,0));
+			// Joint setpoint assignation.
+			bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_target_angle);
+			bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, knee_target_angle);
+			bool ret_val5 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action + hip_angle_compensation);
+			bool ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_target_angle);
+			bool ret_val4 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, knee_target_angle);
+			bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + hip_angle_compensation);
 
-			// Servo setpoint assignation.
-			squats_overlimit_error_propagation_ = false;
-			bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, target_angle_rad_1);
-			bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, target_angle_rad_2);
-			bool ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, target_angle_rad_1);
-			bool ret_val4 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, target_angle_rad_2);
-			if (!ret_val1 || !ret_val2 || !ret_val3 || !ret_val4)
+			if (!ret_val1 || !ret_val2 || !ret_val3 || !ret_val4 || !ret_val5 || !ret_val6)
 			{
 				// In the case that any of the joints has reached an over-limit angle, the current action is not applied
 				servo_updater_.revert_angle_to_joint(Configuration::JointsNames::LeftFootPitch);
 				servo_updater_.revert_angle_to_joint(Configuration::JointsNames::LeftKnee);
+				servo_updater_.revert_angle_to_joint(Configuration::JointsNames::LeftHipPitch);
 				servo_updater_.revert_angle_to_joint(Configuration::JointsNames::RightFootPitch);
 				servo_updater_.revert_angle_to_joint(Configuration::JointsNames::RightKnee);
-				squats_overlimit_error_propagation_ = true;
+				servo_updater_.revert_angle_to_joint(Configuration::JointsNames::RightHipPitch);
 			}
 			else servo_updater_.should_be_updated = true;
 		}
-
-		// Servo setpoint assignation.
-		bool ret_val5 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action + angle_to_compensate_hip);
-		bool ret_val6 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action + angle_to_compensate_hip);
-		if (squats_overlimit_error_propagation_ || !ret_val5 || !ret_val6)
-		{
-			// In the case that any of the joints has reached an over-limit angle, the current action is not applied
-			servo_updater_.revert_angle_to_joint(Configuration::JointsNames::LeftHipPitch);
-			servo_updater_.revert_angle_to_joint(Configuration::JointsNames::RightHipPitch);
-		}
-		else servo_updater_.should_be_updated = true;
 	}
 }

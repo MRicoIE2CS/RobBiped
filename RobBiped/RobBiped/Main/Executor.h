@@ -92,8 +92,8 @@ class Executor {
 		// AUTOTARE Trajectory generation objects
 		// (these are used on other states)
 		double autotare_angle_displacement_ = 0.9;
-		double autotare_legs_squat_displacement = 30.0;
-		double autotare_leg_lift_displacement = 20.0;
+		double autotare_legs_squat_displacement = 20.0;
+		double autotare_leg_lift_displacement = 30.0;
 		const uint64_t autotare_trajectories_time_ = 3000;
 		const double home_position_leg_length_ = 142.0;
 		Control::LinearTrajectoryInterpolator autotare_interpolator1_;
@@ -102,7 +102,7 @@ class Executor {
 		
 		// Control tasks' objects
 		double torso_upright_pitch_control_action = 0.0;
-		double torso_setpoint_ = 0.0;
+		double torso_setpoint_ = -0.05;
 		ExpFilter torso_pitch_exp_filter_;
 		double zmp_lateral_deviation_setpoint_ = 0.0;
 		ExpFilter left_zmp_lateral_exp_filter_;
@@ -111,19 +111,14 @@ class Executor {
 		SignalGenerator squats_unitary_cycle_generator_;
 		Control::LinearTrajectoryInterpolator trajectory_interpolator_;
 		bool interpolator_running_ = false;
-		const double min_desired_leg_length_ = 95.0;
-		const double max_desired_leg_length_ = 142.0;
+		const double min_desired_leg_length_ = 115.0;
+		const double max_desired_leg_length_ = 140.0;
+		const double max_desired_squat_angle_ = -0.2;
 		double desired_leg_lenght_ = 0.0;
-		const uint64_t trajectory_time_ms_ = 5000;
+		const uint64_t squats_period_ms_ = 3000;
 
 		// Enabling flag for squats movement
 		bool squats_on_ = false;
-		// Flag that is true on the first execution of each single linear trajectory of the squats
-		bool squats_first_time_ = true;
-		// Flag that indicates the direction of the movement on each iteration
-		bool squats_going_down_ = true;
-		// Flag that propagates an over-limit joint angle error on the current execution
-		bool squats_overlimit_error_propagation_ = false;
 
 		// Waiting object
 		Control::Waiting waiting_;
