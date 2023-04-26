@@ -84,3 +84,8 @@ double Control::FootRollCentering::compute(double& _current_foot_zmp_lateral_dev
 
 	return output_rad;
 }
+
+bool Control::FootRollCentering::is_on()
+{
+	return controller_on;
+}

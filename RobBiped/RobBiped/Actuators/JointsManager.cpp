@@ -48,9 +48,12 @@ void JointsManager::check_state(bool& sel_button_pressed, bool forward_button_pr
 
 	if (change_state_conditions(current_millis, command_->commands.servo_onoff_toggle)) change_state(current_millis);	// run/sleep to servos
 
-	calibration_mode_enter_exit_conditions(current_millis, sel_button_pressed, forward_button_pressed, back_button_pressed);
-	if (current_state_ == State::calibrating) calibration_state_machine(current_millis, sel_button_pressed, forward_button_pressed, back_button_pressed);
-	calibration_button_pressed_flag_mechanism(current_millis);
+// Servo calibration deactivated.
+// TODO: Change servo calibration operation in order to use serial commands, instead of physical buttons.
+
+// 	calibration_mode_enter_exit_conditions(current_millis, sel_button_pressed, forward_button_pressed, back_button_pressed);
+// 	if (current_state_ == State::calibrating) calibration_state_machine(current_millis, sel_button_pressed, forward_button_pressed, back_button_pressed);
+// 	calibration_button_pressed_flag_mechanism(current_millis);
 
 	sel_button_pressed = false;
 }
@@ -106,7 +109,7 @@ bool JointsManager::set_angle_to_joint(Configuration::JointsNames _joint_index, 
 	bool ret_val = PCA9685_1_servo_map_[static_cast<uint8_t>(_joint_index)].set_angle_target_rad(_servo_angle_rad);
 	if (!ret_val)
 	{
-		//Serial.println("Angle error for joint " + (String)static_cast<uint8_t>(_joint_index));
+		//Serial.println("Angle error joint " + (String)static_cast<uint8_t>(_joint_index) + ", angle:\t" + (String)_servo_angle_rad);
 		return false;
 	}
 	return true;
@@ -115,11 +118,7 @@ bool JointsManager::set_angle_to_joint(Configuration::JointsNames _joint_index, 
 bool JointsManager::revert_angle_to_joint(Configuration::JointsNames _joint_index)
 {
 	bool ret_val = PCA9685_1_servo_map_[static_cast<uint8_t>(_joint_index)].set_angle_target_rad(last_joint_setpoints_[_joint_index]);
-	if (!ret_val)
-	{
-		Serial.println("Angle error for joint " + (String)static_cast<uint8_t>(_joint_index));
-		return false;
-	}
+	if (!ret_val) return false;
 	return true;
 }
 

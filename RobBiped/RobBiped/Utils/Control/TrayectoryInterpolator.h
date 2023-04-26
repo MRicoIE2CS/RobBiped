@@ -21,12 +21,14 @@
 
 #include "arduino.h"
 
+#include "../../Main/I_PeriodicTask.h"
+
 namespace Control {
 
 /*
 *  @brief This class offers a means to control a linear trajectory over a single double-typed variable.
 */
-class LinearTrajectoryInterpolator {
+class LinearTrajectoryInterpolator : public I_PeriodicTask {
 
 	private:
 
@@ -64,12 +66,12 @@ class LinearTrajectoryInterpolator {
 		*  - Angle values are equal.
 		*  - Transition time is equal to zero.
 		*
-		*  @param[in] _target Final target of the trajectory.
 		*  @param[in] _initial_value Initial angle value.
+		*  @param[in] _target Final target of the trajectory.
 		*  @param[in] _transition_time_us Transition time, in milliseconds.
 		*  @return bool True if successfully configured. False if any configured parameter is inconsistent.
 		*/
-		bool configure_trayectory(const double& _target, const double& _initial_value, const uint64_t& _transition_time_ms);
+		bool configure_trayectory(const double& _initial_value, const double& _target, const uint64_t& _transition_time_ms);
 
 		/*
 		*  @fn void compute_output(double& _output)

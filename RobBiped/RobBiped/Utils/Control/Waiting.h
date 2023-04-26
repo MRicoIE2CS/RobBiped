@@ -21,12 +21,14 @@
 
 #include "arduino.h"
 
+#include "../../Main/I_PeriodicTask.h"
+
 namespace Control {
 
 /*
 *  @brief This class offers a means to control an idle state (as a non-blocking delay) during a configured time.
 */
-class Waiting {
+class Waiting : public I_PeriodicTask {
 
 	private:
 

@@ -26,13 +26,14 @@
 using Eigen::Vector3d;
 using Eigen::Vector2d;
 
+namespace InverseKinematics {
+
 /*
 *  @brief Inverse kinematics by the geometric method,
 *  for a kinematic chain formed of two links moving only within the sagittal plane.
 *
 *  Note: This calculations depend on the chosen coordinate frame of the base.
 */
-namespace InverseKinematics {
 namespace Geometric {
 
 	/*

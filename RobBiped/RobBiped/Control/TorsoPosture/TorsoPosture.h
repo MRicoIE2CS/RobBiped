@@ -62,6 +62,7 @@ class TorsoPosture : public I_PeriodicTask
 
 		void assoc_config(Configuration::Configs::Control::TorsoPosture& _config);
 		void init();
+		bool is_on();
 
 		/*
 		*  @fn void set_setpoint_rad(double& _desired_torso_pitch_angle);

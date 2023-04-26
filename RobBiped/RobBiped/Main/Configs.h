@@ -75,8 +75,8 @@ struct Configs
 
 	struct Kinematics {
 		double height_hip = 85;			// Height between joints of the hip (l1)
-		double height_hip_knee = 80;	// Height between knee and the first joint of the hip (l2)
-		double height_knee_ankle = 65;	// Height between ankle and knee (l3)
+		double height_hip_knee = 79;	// Height between knee and the first joint of the hip (thigh) (l2)
+		double height_knee_ankle = 63;	// Height between ankle and knee (calf) (l3)
 		double height_ankle = 45;		// Height between joints of the ankle (l4)
 		double height_foot = 35;		// Height between floor and first joint of the ankle (l5)
 		double d_lateral_foot = 13;		// Lateral distance between foot center and the axis of the first ankle joint (a1)

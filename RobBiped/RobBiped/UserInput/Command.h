@@ -40,6 +40,7 @@ struct Command
 		bool servo_selection_button_emulation = false;
 		bool force_tare_left = false;
 		bool force_tare_right = false;
+		bool force_auto_tare = false;
 		bool force_debug_on = false;
 		bool force_debug_off = false;
 		bool zmp_debug_on = false;

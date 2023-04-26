@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 
+#ifdef false
+
 #ifndef _EXECUTOR_h
 #define _EXECUTOR_h
 
@@ -147,5 +149,7 @@ class Executor {
 		void execution();
 
 	};
+
+#endif
 
 #endif
