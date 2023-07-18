@@ -39,6 +39,8 @@ class ExpFilter {
 
 	public:
 
+		// TODO: Templatize filter methods
+
 		double set_exp_constant(double k);
 		double filter(double raw_value);
 		double filter(uint8_t raw_value);
