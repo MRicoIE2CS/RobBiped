@@ -22,8 +22,6 @@
 #include "Arduino.h"
 
 //TODO: Change file for Signals
-//TODO: New class: Hysteresis: A greater change in value is needed in order to change direction of change,
-// than the case when incrementing or decrementing in same direction
 
 class ExpFilter {
 

@@ -29,7 +29,7 @@ bool Button::read_HW_value(){
 	
 	bool currentValue = digitalRead(HW_pin_);
 	uint32_t currentMillis = millis();
-	uint32_t timeSinceLastChange = abs(value_change_triggger_time_ - currentMillis);
+	uint32_t timeSinceLastChange = abs((int32_t)value_change_triggger_time_ - (int32_t)currentMillis);
 	
 	if (value_ != currentValue && (timeSinceLastChange > value_change_delay_ms_)) {
 		value_ = currentValue;

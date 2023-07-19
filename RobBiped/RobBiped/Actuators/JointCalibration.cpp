@@ -60,7 +60,7 @@ void JointsManager::calibration_mode_enter_exit_conditions(uint32_t current_mill
 void JointsManager::calibration_button_pressed_flag_mechanism(uint32_t current_millis){
 
 	if (calibration_data_.calibration_state_button_change_flag
-	&& (abs(current_millis - calibration_data_.last_millis_changed_calibration_state) > calibration_data_.value_change_delay_ms)
+	&& (abs((int32_t)current_millis - (int32_t)calibration_data_.last_millis_changed_calibration_state) > calibration_data_.value_change_delay_ms)
 	){
 		calibration_data_.calibration_state_button_change_flag = false;
 	}
@@ -96,7 +96,7 @@ void JointsManager::calibration_state_machine(uint32_t current_millis, bool& sel
 
 void JointsManager::calibration_serial_print(uint32_t current_millis){
 
-	if (abs(current_millis - calibration_data_.serial_print_last_millis) > calibration_data_.serial_print_period_ms){
+	if (abs((int32_t)current_millis - (int32_t)calibration_data_.serial_print_last_millis) > calibration_data_.serial_print_period_ms){
 		String calibration_stage;
 		switch (calibration_data_.calibration_state) {
 			case CalibrationState::servoSelection:

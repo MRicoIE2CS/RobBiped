@@ -50,7 +50,7 @@ bool I_PeriodicTask::get_execution_flag()
 	switch (timer_type_) {
 		case execType::inMillis:
 			current_millis_ = millis();
-			if (abs(current_millis_ - last_time_executed_) >= execution_period_) {
+			if (abs((int32_t)current_millis_ - (int32_t)last_time_executed_) >= execution_period_) {
 				last_time_executed_ = current_millis_;
 				return_val = true;
 			}
@@ -59,7 +59,7 @@ bool I_PeriodicTask::get_execution_flag()
 			
 		case execType::inMicros:
 			current_micros_ = micros();
-			if (abs(current_micros_ - last_time_executed_) >= execution_period_) {
+			if (abs((int32_t)current_micros_ - (int32_t)last_time_executed_) >= execution_period_) {
 				last_time_executed_ = current_micros_;
 				return_val = true;
 			}
