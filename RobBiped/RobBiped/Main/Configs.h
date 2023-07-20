@@ -46,6 +46,11 @@ struct Configs
 			uint8_t clock = 27;
 			uint8_t dINs[hx711_number] = {33, 32, 35, 34, 16, 17, 18, 19};	// Search upper for hx711_number static const
 			}gpio;
+		struct ActiveChannels {
+			bool _Ax128 = false;
+			bool _Ax64 = true;
+			bool _Bx32 = false;
+			}active_channels;
 		double filter_time_constant_ms = 20;
 		uint16_t filter_threshold_value = 500000;
 		double calibration_LeftFoot_LeftFront_cell = 1;

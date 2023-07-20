@@ -61,7 +61,7 @@ void ForceSensorsManager::init()
 	
 	//______//
 	
-	multiple_hx711_.set_sctive_channels(false,true,true);	// TODO: Change
+	multiple_hx711_.set_sctive_channels(config_->active_channels._Ax128, config_->active_channels._Ax64, config_->active_channels._Bx32);	// (_Ax128 / _Ax64 / _Bx32)
 	multiple_hx711_.power_up();
 }
 
