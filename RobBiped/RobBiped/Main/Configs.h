@@ -30,7 +30,7 @@ enum class JointsNames {LeftFootRoll = 0, LeftFootPitch = 1, LeftKnee = 2, LeftH
 						RightShoulderAmplitude = 9, RightShoulderSagittal = 10, RightHipRoll = 11,
 						RightHipPitch = 12, RightKnee = 13, RightFootPitch = 14, RightFootRoll = 15 };
 
-static const uint8_t hx711_number = 4;	// forceSensors configuration
+static const uint8_t hx711_number = 4;	// forceSensors configuration	// TODO: 8
 
 struct Configs 
 {
@@ -45,8 +45,9 @@ struct Configs
 		struct GPIO {
 			uint8_t clock = 27;
 			uint8_t dINs[hx711_number] = {33, 32, 35, 34};	// Search upper for hx711_number static const
+				// TODO: Add pins: 16 (RX2), 17 (TX2), 18, 19
 			}gpio;
-		double filter_exp_constant = 0.2;
+		double filter_time_constant_ms = 20;
 		uint16_t filter_threshold_value = 500000;
 		double calibration_LeftFoot_LeftFront_cell = 0.091844;
 		double calibration_LeftFoot_RightFront_cell = 0.092108;

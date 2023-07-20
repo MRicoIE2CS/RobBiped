@@ -41,14 +41,14 @@ void ForceSensorsManager::init()
 	separation_FrontBack_mm_ = &(config_->location_mm.frontBack_separation);
 	separation_LeftRight_mm_ = &(config_->location_mm.leftRight_separation);
 	
-	filter_LeftFoot_LeftBack_.set_exp_constant(config_->filter_exp_constant);
-	filter_LeftFoot_LeftFront_.set_exp_constant(config_->filter_exp_constant);
-	filter_LeftFoot_RightBack_.set_exp_constant(config_->filter_exp_constant);
-	filter_LeftFoot_RightFront_.set_exp_constant(config_->filter_exp_constant);
-	filter_RightFoot_LeftBack_.set_exp_constant(config_->filter_exp_constant);
-	filter_RightFoot_LeftFront_.set_exp_constant(config_->filter_exp_constant);
-	filter_RightFoot_RightBack_.set_exp_constant(config_->filter_exp_constant);
-	filter_RightFoot_RightFront_.set_exp_constant(config_->filter_exp_constant);
+	filter_LeftFoot_LeftBack_.set_time_constant(config_->filter_time_constant_ms);
+	filter_LeftFoot_LeftFront_.set_time_constant(config_->filter_time_constant_ms);
+	filter_LeftFoot_RightBack_.set_time_constant(config_->filter_time_constant_ms);
+	filter_LeftFoot_RightFront_.set_time_constant(config_->filter_time_constant_ms);
+	filter_RightFoot_LeftBack_.set_time_constant(config_->filter_time_constant_ms);
+	filter_RightFoot_LeftFront_.set_time_constant(config_->filter_time_constant_ms);
+	filter_RightFoot_RightBack_.set_time_constant(config_->filter_time_constant_ms);
+	filter_RightFoot_RightFront_.set_time_constant(config_->filter_time_constant_ms);
 	
 	filter_LeftFoot_LeftBack_.set_threshold_value(config_->filter_threshold_value);
 	filter_LeftFoot_LeftFront_.set_threshold_value(config_->filter_threshold_value);
@@ -61,7 +61,7 @@ void ForceSensorsManager::init()
 	
 	//______//
 	
-	multiple_hx711_.set_sctive_channels(false,true,true);
+	multiple_hx711_.set_sctive_channels(false,true,true);	// TODO: Change
 	multiple_hx711_.power_up();
 }
 

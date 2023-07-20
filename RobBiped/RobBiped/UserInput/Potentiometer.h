@@ -37,7 +37,7 @@ class Potentiometer {
 		
 	public:
 	
-		void setup(uint8_t _pin, double _K_filter);
+		void setup(uint8_t _pin, uint32_t _time_filter);
 	
 		uint16_t read_HW_value();
 		
