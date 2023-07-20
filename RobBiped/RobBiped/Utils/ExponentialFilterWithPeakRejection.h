@@ -29,8 +29,6 @@ class ExpFilterPeakReject: public ExpFilter {
 		
 	public:
 
-		// TODO: Templatize filter methods
-
 		void set_threshold_value(double value);
 		double filter_pr(double raw_value, bool accept_step = false);
 		double filter_pr(uint8_t raw_value, bool accept_step = false);
