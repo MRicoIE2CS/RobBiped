@@ -48,14 +48,14 @@ struct Configs
 			}gpio;
 		double filter_time_constant_ms = 20;
 		uint16_t filter_threshold_value = 500000;
-		double calibration_LeftFoot_LeftFront_cell = 0.091844;
-		double calibration_LeftFoot_RightFront_cell = 0.092108;
-		double calibration_LeftFoot_LeftBack_cell = 0.094531;
-		double calibration_LeftFoot_RightBack_cell = 0.092348;
-		double calibration_RightFoot_LeftFront_cell = 0.094735;
-		double calibration_RightFoot_RightFront_cell = 0.092529;
-		double calibration_RightFoot_LeftBack_cell = 0.093087;
-		double calibration_RightFoot_RightBack_cell = 0.094197;
+		double calibration_LeftFoot_LeftFront_cell = 1;
+		double calibration_LeftFoot_RightFront_cell = 1;
+		double calibration_LeftFoot_LeftBack_cell = 1;
+		double calibration_LeftFoot_RightBack_cell = 1;
+		double calibration_RightFoot_LeftFront_cell = 1;
+		double calibration_RightFoot_RightFront_cell = 1;
+		double calibration_RightFoot_LeftBack_cell = 1;
+		double calibration_RightFoot_RightBack_cell = 1;
 		struct Location {
 			int16_t frontBack_separation = 103;
 			int16_t leftRight_separation = 37;
