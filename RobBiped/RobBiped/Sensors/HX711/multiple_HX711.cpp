@@ -25,20 +25,20 @@ Multiple_HX711::Multiple_HX711()
 
 void Multiple_HX711::configure(byte _DINs[], byte pd_sck)
 {
-	PD_SCK_ 	= pd_sck;
+	PD_SCK_ = pd_sck;
 
 	pinMode(PD_SCK_, OUTPUT);
-	
-	channel_selection_additional_bits_ = 3;
-	
+
 	for (uint8_t _idx = 0; _idx < hx711_number_; _idx++)
 	{
 		Single_HX711 hx711 = {0};
 		hx711.DIN = _DINs[_idx];
 		pinMode(_DINs[_idx], INPUT);
 		hx711.stored_readings = {0};
+
+		// TODO: Read persistent stored offsets value.
 		hx711.offset_per_channel = {0};
-		
+
 		v_HX711_.push_back(hx711);
 	}
 }

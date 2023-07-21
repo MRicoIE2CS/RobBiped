@@ -42,6 +42,7 @@ struct Configs
 		}user_input_pins;
 
 	struct ForceSensors {
+		// Changes in the configuration of the load cells and the channels used might need modifications in ForceSensorsManager class.
 		struct GPIO {
 			uint8_t clock = 27;
 			uint8_t dINs[hx711_number] = {33, 32, 35, 34, 16, 17, 18, 19};	// Search upper for hx711_number static const

@@ -65,6 +65,21 @@ void ForceSensorsManager::init()
 	multiple_hx711_.power_up();
 }
 
+/*
+// CONNEXIONS TABLE
+//
+
+LeftFoot_LeftBack_		->		Ax64 of HX711(0u)
+LeftFoot_LeftFront_		->		Ax64 of HX711(1u)
+LeftFoot_RightBack_		->		Ax64 of HX711(2u)
+LeftFoot_RightFront_	->		Ax64 of HX711(3u)
+RightFoot_LeftBack_		->		Ax64 of HX711(4u)
+RightFoot_LeftFront_	->		Ax64 of HX711(5u)
+RightFoot_RightBack_	->		Ax64 of HX711(6u)
+RightFoot_RightFront_	->		Ax64 of HX711(7u)
+
+*/ 
+
 bool ForceSensorsManager::update()
 {
 	bool updated = multiple_hx711_.update();
@@ -72,13 +87,13 @@ bool ForceSensorsManager::update()
 	if (updated)
 	{
 		value_LeftFoot_LeftBack_ = filter_LeftFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(0u)) / 2.0 * *calibration_LeftFoot_LeftBack_cell_;
-		value_LeftFoot_LeftFront_ = filter_LeftFoot_LeftFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(0u)) * *calibration_LeftFoot_LeftFront_cell_;
-		value_LeftFoot_RightBack_ = filter_LeftFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(1u)) / 2.0 * *calibration_LeftFoot_RightBack_cell_;
-		value_LeftFoot_RightFront_ = filter_LeftFoot_RightFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(1u)) * *calibration_LeftFoot_RightFront_cell_;
-		value_RightFoot_LeftBack_ = filter_RightFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(2u)) / 2.0 * *calibration_RightFoot_LeftBack_cell_;
-		value_RightFoot_LeftFront_ = filter_RightFoot_LeftFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(2u)) * *calibration_RightFoot_LeftFront_cell_;
-		value_RightFoot_RightBack_ = filter_RightFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(3u)) / 2.0 * *calibration_RightFoot_RightBack_cell_;
-		value_RightFoot_RightFront_ = filter_RightFoot_RightFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(3u)) * *calibration_RightFoot_RightFront_cell_;
+		value_LeftFoot_LeftFront_ = filter_LeftFoot_LeftFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(1u)) * *calibration_LeftFoot_LeftFront_cell_;
+		value_LeftFoot_RightBack_ = filter_LeftFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(2u)) / 2.0 * *calibration_LeftFoot_RightBack_cell_;
+		value_LeftFoot_RightFront_ = filter_LeftFoot_RightFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(3u)) * *calibration_LeftFoot_RightFront_cell_;
+		value_RightFoot_LeftBack_ = filter_RightFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(4u)) / 2.0 * *calibration_RightFoot_LeftBack_cell_;
+		value_RightFoot_LeftFront_ = filter_RightFoot_LeftFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(5u)) * *calibration_RightFoot_LeftFront_cell_;
+		value_RightFoot_RightBack_ = filter_RightFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(6u)) / 2.0 * *calibration_RightFoot_RightBack_cell_;
+		value_RightFoot_RightFront_ = filter_RightFoot_RightFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(7u)) * *calibration_RightFoot_RightFront_cell_;
 		
 		calculate_ZMP();
 	}
@@ -167,26 +182,26 @@ void ForceSensorsManager::tare_LeftFoot()
 {
 	multiple_hx711_.tare_Ax64(0u);
 	filter_LeftFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(0u), true);	// This is done for the peak reject filter to accept this calibration step
-	multiple_hx711_.tare_Bx32(0u);
-	filter_LeftFoot_LeftFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(0u), true);
 	multiple_hx711_.tare_Ax64(1u);
-	filter_LeftFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(1u), true);
-	multiple_hx711_.tare_Bx32(1u);
-	filter_LeftFoot_RightFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(1u), true);
+	filter_LeftFoot_LeftFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(1u), true);
+	multiple_hx711_.tare_Ax64(2u);
+	filter_LeftFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(2u), true);
+	multiple_hx711_.tare_Ax64(3u);
+	filter_LeftFoot_RightFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(3u), true);
 
 	is_tare_left_performed_ = true;
 }
 
 void ForceSensorsManager::tare_RightFoot()
 {
-	multiple_hx711_.tare_Ax64(2u);
-	filter_RightFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(2u), true);
-	multiple_hx711_.tare_Bx32(2u);
-	filter_RightFoot_LeftFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(2u), true);
-	multiple_hx711_.tare_Ax64(3u);
-	filter_RightFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(3u), true);
-	multiple_hx711_.tare_Bx32(3u);
-	filter_RightFoot_RightFront_.filter_pr(multiple_hx711_.get_Bx32_channel_value(3u), true);
+	multiple_hx711_.tare_Ax64(4u);
+	filter_RightFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(4u), true);
+	multiple_hx711_.tare_Ax64(5u);
+	filter_RightFoot_LeftFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(5u), true);
+	multiple_hx711_.tare_Ax64(6u);
+	filter_RightFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(6u), true);
+	multiple_hx711_.tare_Ax64(7u);
+	filter_RightFoot_RightFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(7u), true);
 
 	is_tare_right_performed_ = true;
 }
