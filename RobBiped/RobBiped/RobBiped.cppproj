@@ -2249,12 +2249,6 @@
     <Compile Include="Utils\SignalGenerator.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Utils\UnitsConverter.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Utils\UnitsConverter.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="__vm\.RobBiped.vsarduino.h">
       <SubType>compile</SubType>
     </Compile>
