@@ -28,8 +28,8 @@ void UserInput::configuration(){
 	forward_button_.setup(gpio_->forward_button, INPUT_PULLDOWN);
 	back_button_.setup(gpio_->back_button, INPUT_PULLDOWN);
 
-	potentiometer1_.setup(gpio_->potentiometer1, 0.97);
-	potentiometer2_.setup(gpio_->potentiometer2, 0.97);
+	potentiometer1_.setup(gpio_->potentiometer1, 50);
+	potentiometer2_.setup(gpio_->potentiometer2, 50);
 }
 
 void UserInput::update(){

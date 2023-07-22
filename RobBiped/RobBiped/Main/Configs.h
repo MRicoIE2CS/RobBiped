@@ -30,7 +30,7 @@ enum class JointsNames {LeftFootRoll = 0, LeftFootPitch = 1, LeftKnee = 2, LeftH
 						RightShoulderAmplitude = 9, RightShoulderSagittal = 10, RightHipRoll = 11,
 						RightHipPitch = 12, RightKnee = 13, RightFootPitch = 14, RightFootRoll = 15 };
 
-static const uint8_t hx711_number = 4;	// forceSensors configuration
+static const uint8_t hx711_number = 8;	// forceSensors configuration
 
 struct Configs 
 {
@@ -42,20 +42,26 @@ struct Configs
 		}user_input_pins;
 
 	struct ForceSensors {
+		// Changes in the configuration of the load cells and the channels used might need modifications in ForceSensorsManager class.
 		struct GPIO {
 			uint8_t clock = 27;
-			uint8_t dINs[hx711_number] = {33, 32, 35, 34};	// Search upper for hx711_number static const
+			uint8_t dINs[hx711_number] = {33, 16, 32, 17, 34, 19, 35, 18};	// Order is important! Search upper for hx711_number static const
 			}gpio;
-		double filter_exp_constant = 0.2;
+		struct ActiveChannels {
+			bool _Ax128 = false;
+			bool _Ax64 = true;
+			bool _Bx32 = false;
+			}active_channels;
+		double filter_time_constant_ms = 20;
 		uint16_t filter_threshold_value = 500000;
-		double calibration_LeftFoot_LeftFront_cell = 0.091844;
-		double calibration_LeftFoot_RightFront_cell = 0.092108;
-		double calibration_LeftFoot_LeftBack_cell = 0.094531;
-		double calibration_LeftFoot_RightBack_cell = 0.092348;
-		double calibration_RightFoot_LeftFront_cell = 0.094735;
-		double calibration_RightFoot_RightFront_cell = 0.092529;
-		double calibration_RightFoot_LeftBack_cell = 0.093087;
-		double calibration_RightFoot_RightBack_cell = 0.094197;
+		double calibration_LeftFoot_LeftFront_cell = 0.048;	// Grams per unit
+		double calibration_LeftFoot_RightFront_cell = 0.048;
+		double calibration_LeftFoot_LeftBack_cell = 0.048;
+		double calibration_LeftFoot_RightBack_cell = 0.048;
+		double calibration_RightFoot_LeftFront_cell = 0.048;
+		double calibration_RightFoot_RightFront_cell = 0.048;
+		double calibration_RightFoot_LeftBack_cell = 0.048;
+		double calibration_RightFoot_RightBack_cell = 0.048;
 		struct Location {
 			int16_t frontBack_separation = 103;
 			int16_t leftRight_separation = 37;

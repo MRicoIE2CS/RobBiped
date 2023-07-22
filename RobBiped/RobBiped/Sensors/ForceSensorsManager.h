@@ -37,7 +37,7 @@ using namespace Configuration;
 // This class manages the use of multiple HX711 ICs in one object, filtering, adjusting and interpreting the obtained values.
 // As the use of multiple HX711 and interpretation of the measured magnitudes hardly depends on the HW setup configured for the robot,
 // it is needed to modify this class each time the number of hx711 modules or channels is modified.
-// It is considered easier to modify the class than to program a configurable class for all possible configurations
+// It is considered easier to modify the class than to program a configurable class for all possible configurations.
 class ForceSensorsManager : public I_PeriodicTask
 {
 private:

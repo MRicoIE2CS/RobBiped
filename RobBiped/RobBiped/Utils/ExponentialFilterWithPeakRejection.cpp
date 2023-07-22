@@ -37,96 +37,40 @@ double ExpFilterPeakReject::filter_pr(double raw_value, bool accept_step)
 
 double ExpFilterPeakReject::filter_pr(uint8_t raw_value, bool accept_step)
 {
-	if (abs(abs(raw_value) - abs(last_filtered_value_) > threshold_value_) && !(accept_step))
-	{
-		return last_filtered_value_;
-	}
-	else
-	{
-		return filter(raw_value);
-	}
+	return filter_pr((double)raw_value, accept_step);
 }
 
 double ExpFilterPeakReject::filter_pr(int8_t raw_value, bool accept_step)
 {
-	if (abs(abs(raw_value) - abs(last_filtered_value_) > threshold_value_) && !(accept_step))
-	{
-		return last_filtered_value_;
-	}
-	else
-	{
-		return filter(raw_value);
-	}
+	return filter_pr((double)raw_value, accept_step);
 }
 
 double ExpFilterPeakReject::filter_pr(uint16_t raw_value, bool accept_step)
 {
-	if (abs(abs(raw_value) - abs(last_filtered_value_) > threshold_value_) && !(accept_step))
-	{
-		return last_filtered_value_;
-	}
-	else
-	{
-		return filter(raw_value);
-	}
+	return filter_pr((double)raw_value, accept_step);
 }
 
 double ExpFilterPeakReject::filter_pr(int16_t raw_value, bool accept_step)
 {
-	if (abs(abs(raw_value) - abs(last_filtered_value_) > threshold_value_) && !(accept_step))
-	{
-		return last_filtered_value_;
-	}
-	else
-	{
-		return filter(raw_value);
-	}
+	return filter_pr((double)raw_value, accept_step);
 }
 
 double ExpFilterPeakReject::filter_pr(uint32_t raw_value, bool accept_step)
 {
-	if (abs(abs(raw_value) - abs(last_filtered_value_) > threshold_value_) && !(accept_step))
-	{
-		return last_filtered_value_;
-	}
-	else
-	{
-		return filter(raw_value);
-	}
+	return filter_pr((double)raw_value, accept_step);
 }
 
 double ExpFilterPeakReject::filter_pr(int32_t raw_value, bool accept_step)
 {
-	if (abs(abs(raw_value) - abs(last_filtered_value_) > threshold_value_) && !(accept_step))
-	{
-		return last_filtered_value_;
-	}
-	else
-	{
-		return filter(raw_value);
-	}
+	return filter_pr((double)raw_value, accept_step);
 }
 
 double ExpFilterPeakReject::filter_pr(uint64_t raw_value, bool accept_step)
 {
-	if (abs(abs(raw_value) - abs(last_filtered_value_) > threshold_value_) && !(accept_step))
-	{
-		return last_filtered_value_;
-	}
-	else
-	{
-		return filter(raw_value);
-	}
+	return filter_pr((double)raw_value, accept_step);
 }
 
 double ExpFilterPeakReject::filter_pr(int64_t raw_value, bool accept_step)
 {
-	if (abs(abs(raw_value) - abs(last_filtered_value_) > threshold_value_) && !(accept_step))
-	{
-		return last_filtered_value_;
-	}
-	else
-	{
-		return filter(raw_value);
-	}
+	return filter_pr((double)raw_value, accept_step);
 }

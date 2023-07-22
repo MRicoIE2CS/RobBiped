@@ -18,69 +18,54 @@
 
 #include "ExponentialFilter.h"
 
-double ExpFilter::set_exp_constant(double k){
-	exp_K_ = k;
+bool ExpFilter::set_time_constant(uint32_t _t_ms){
+	if (_t_ms == 0) return false;
+	time_constant_ms_ = _t_ms;
+	return true;
 }
 
 double ExpFilter::filter(double raw_value){
+	uint32_t current_millis = millis();
+	uint32_t time_interval = current_millis - last_time_executed;
+
+	exp_K_ = exp(-(double)time_interval / (double)time_constant_ms_);
+
 	double filteredValue;
 	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*raw_value;
 	last_filtered_value_ = filteredValue;
+
+	last_time_executed = current_millis;
 	return filteredValue;
 }
 
 double ExpFilter::filter(uint8_t raw_value){
-	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
-	last_filtered_value_ = filteredValue;
-	return filteredValue;
+	return filter((double)raw_value);
 }
 
 double ExpFilter::filter(int8_t raw_value){
-	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
-	last_filtered_value_ = filteredValue;
-	return filteredValue;
+	return filter((double)raw_value);
 }
 
 double ExpFilter::filter(uint16_t raw_value){
-	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
-	last_filtered_value_ = filteredValue;
-	return filteredValue;
+	return filter((double)raw_value);
 }
 
 double ExpFilter::filter(int16_t raw_value){
-	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
-	last_filtered_value_ = filteredValue;
-	return filteredValue;
+	return filter((double)raw_value);
 }
 
 double ExpFilter::filter(uint32_t raw_value){
-	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
-	last_filtered_value_ = filteredValue;
-	return filteredValue;
+	return filter((double)raw_value);
 }
 
 double ExpFilter::filter(int32_t raw_value){
-	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
-	last_filtered_value_ = filteredValue;
-	return filteredValue;
+	return filter((double)raw_value);
 }
 
 double ExpFilter::filter(uint64_t raw_value){
-	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
-	last_filtered_value_ = filteredValue;
-	return filteredValue;
+	return filter((double)raw_value);
 }
 
 double ExpFilter::filter(int64_t raw_value){
-	double filteredValue;
-	filteredValue = last_filtered_value_*exp_K_ + (1.0-exp_K_)*(double)raw_value;
-	last_filtered_value_ = filteredValue;
-	return filteredValue;
+	return filter((double)raw_value);
 }

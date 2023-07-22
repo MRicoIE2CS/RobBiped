@@ -19,11 +19,11 @@
 #include "Potentiometer.h"
 
 
-void Potentiometer::setup(uint8_t _pin, double _K_filter){
+void Potentiometer::setup(uint8_t _pin, uint32_t _time_filter){
 	
 	HW_pin_ = _pin;
 	adcAttachPin(HW_pin_);
-	exp_filter_.set_exp_constant(_K_filter);
+	exp_filter_.set_time_constant(_time_filter);
 }
 
 uint16_t Potentiometer::read_HW_value(){

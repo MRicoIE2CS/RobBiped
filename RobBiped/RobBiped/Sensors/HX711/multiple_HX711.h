@@ -75,7 +75,7 @@ private:
 	
 	Channel channel_ = Channel::Ax64;
 	ActiveChannels active_channels_;
-	byte channel_selection_additional_bits_;		// Additional bits on dataframe for channel selection of next reading
+	byte channel_selection_additional_bits_ = 3;		// Additional bits on dataframe for channel selection of next reading
 	
 	
 	std::vector<Single_HX711> v_HX711_;	// Vector of HX711 structs

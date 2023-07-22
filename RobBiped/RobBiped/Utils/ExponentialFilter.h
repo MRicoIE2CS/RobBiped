@@ -21,25 +21,35 @@
 
 #include "Arduino.h"
 
-//TODO: Change file for Signals
-//TODO: New class: Hysteresis: A greater change in value is needed in order to change direction of change,
-// than the case when incrementing or decrementing in same direction
-
+// Exponential Filter
+// Moving Average Filter
+// Infinite Impulse Response Filter (IIR)
 class ExpFilter {
 
 	protected:
 
 		double last_filtered_value_ = 0;
-		double exp_K_ = 0.9;
+		uint32_t last_time_executed = millis();
 
-		// TODO: Establish time awareness, to be independent of the rate of the call to filter.
 		// exp_K = 1 - e ^ (- delta_t / tau) ; with tau being the time constant.
+		double exp_K_;
+
 		// The time constant is the amount of time for the smoothed response of a unit step function to reach
 		// 1 - 1/e proportion of the original signal, which approximates to 63.2%.
+		uint32_t time_constant_ms_ = 20;
 
 	public:
 
-		double set_exp_constant(double k);
+		/*
+		*  @fn void set_time_constant(uint32_t _t_ms)
+		*  @brief Sets the time constant of the filter.
+		*  The time constant is the amount of time for the smoothed response of a unit step function to reach
+		*  1 - 1/e proportion of the original signal, which approximates to 63.2%.
+		*
+		*  @param[in] _t_ms Time constant in ms.
+		*/
+		bool set_time_constant(uint32_t _t_ms);
+
 		double filter(double raw_value);
 		double filter(uint8_t raw_value);
 		double filter(int8_t raw_value);

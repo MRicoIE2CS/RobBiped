@@ -82,15 +82,16 @@ void Control::PID::compute_output(const double& _setpoint, const double& _feedba
 
 	// Derivative component
 	double derivative_action;
+	// TODO: Implement derivative filtering
 	if (0.0 != Kd_ & !sleep_)
 	{
 		double diff_feedback = _feedback - last_feedback_;
 		if (0.0 != on_derivative_setpoint_weight_)
 		{
-			double diff_setpoint = _feedback - last_feedback_;
-			derivative_action = - Kd_ * ( on_derivative_setpoint_weight_ * diff_setpoint - diff_feedback ) / time_fraction;
+			double diff_setpoint = _setpoint - last_setpoint_;
+			derivative_action = Kd_ * ( on_derivative_setpoint_weight_ * diff_setpoint - diff_feedback ) / time_fraction;
 		}
-		else derivative_action = - Kd_ * diff_feedback / time_fraction;
+		else derivative_action = Kd_ * diff_feedback / time_fraction;
 	}
 	else derivative_action = 0.0;
 	
