@@ -19,11 +19,7 @@
 #ifndef _FORCESENSORSMANAGER_h
 #define _FORCESENSORSMANAGER_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#include "arduino.h"
 
 #include "../Main/I_PeriodicTask.h"
 #include "../Main/Configs.h"

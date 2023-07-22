@@ -27,8 +27,10 @@ void ForceSensorsManager::init()
 	// Get Command singleton instance
 	command_ = Command::get_instance();
 
+	// Important! Setting active channels needs to be called before configure() method because of persistent storage issues and performance
+	multiple_hx711_.set_active_channels(config_->active_channels._Ax128, config_->active_channels._Ax64, config_->active_channels._Bx32);
 	multiple_hx711_.configure(config_->gpio.dINs, config_->gpio.clock);
-	
+
 	calibration_LeftFoot_LeftFront_cell_ = &(config_->calibration_LeftFoot_LeftFront_cell);
 	calibration_LeftFoot_RightFront_cell_ = &(config_->calibration_LeftFoot_RightFront_cell);
 	calibration_LeftFoot_LeftBack_cell_ = &(config_->calibration_LeftFoot_LeftBack_cell);
@@ -37,10 +39,10 @@ void ForceSensorsManager::init()
 	calibration_RightFoot_RightFront_cell_ = &(config_->calibration_RightFoot_RightFront_cell);
 	calibration_RightFoot_LeftBack_cell_ = &(config_->calibration_RightFoot_LeftBack_cell);
 	calibration_RightFoot_RightBack_cell_ = &(config_->calibration_RightFoot_RightBack_cell);
-	
+
 	separation_FrontBack_mm_ = &(config_->location_mm.frontBack_separation);
 	separation_LeftRight_mm_ = &(config_->location_mm.leftRight_separation);
-	
+
 	filter_LeftFoot_LeftBack_.set_time_constant(config_->filter_time_constant_ms);
 	filter_LeftFoot_LeftFront_.set_time_constant(config_->filter_time_constant_ms);
 	filter_LeftFoot_RightBack_.set_time_constant(config_->filter_time_constant_ms);
@@ -49,7 +51,7 @@ void ForceSensorsManager::init()
 	filter_RightFoot_LeftFront_.set_time_constant(config_->filter_time_constant_ms);
 	filter_RightFoot_RightBack_.set_time_constant(config_->filter_time_constant_ms);
 	filter_RightFoot_RightFront_.set_time_constant(config_->filter_time_constant_ms);
-	
+
 	filter_LeftFoot_LeftBack_.set_threshold_value(config_->filter_threshold_value);
 	filter_LeftFoot_LeftFront_.set_threshold_value(config_->filter_threshold_value);
 	filter_LeftFoot_RightBack_.set_threshold_value(config_->filter_threshold_value);
@@ -58,10 +60,9 @@ void ForceSensorsManager::init()
 	filter_RightFoot_LeftFront_.set_threshold_value(config_->filter_threshold_value);
 	filter_RightFoot_RightBack_.set_threshold_value(config_->filter_threshold_value);
 	filter_RightFoot_RightFront_.set_threshold_value(config_->filter_threshold_value);
-	
+
 	//______//
-	
-	multiple_hx711_.set_sctive_channels(config_->active_channels._Ax128, config_->active_channels._Ax64, config_->active_channels._Bx32);
+
 	multiple_hx711_.power_up();
 }
 
@@ -120,14 +121,12 @@ bool ForceSensorsManager::update()
 
 	if (command_->commands.force_tare_left)
 	{
-		Serial.println("TARE LEFT");
 		tare_LeftFoot();
 		
 		command_->commands.force_tare_left = false;
 	}
 	if (command_->commands.force_tare_right)
 	{
-		Serial.println("TARE RIGHT");
 		tare_RightFoot();
 		
 		command_->commands.force_tare_right = false;
