@@ -163,8 +163,6 @@ void Executor::always_executes()
 
 	if (force_sensors_manager_.has_been_updated)
 	{
-		// Feet roll control:::
-		// TODO: Correct the deviation of the joint axis respect to the foot axis
 
 		double left_foot_roll_centering_action = 0.0;
 		if (force_sensors_manager_.is_tare_left_performed())
