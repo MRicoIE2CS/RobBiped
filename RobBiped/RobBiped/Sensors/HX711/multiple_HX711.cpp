@@ -18,16 +18,31 @@
 
 #include "multiple_HX711.h"
 
+#include <cstring>
+#include <string>
+
 Multiple_HX711::Multiple_HX711()
 {
 	hx711_number_ = Configuration::hx711_number;
 }
 
+void Multiple_HX711::set_active_channels(bool _Ax128, bool _Ax64, bool _Bx32)
+{
+	active_channels_.Ax128 = _Ax128;
+	active_channels_.Ax64 = _Ax64;
+	active_channels_.Bx32 = _Bx32;
+}
+
+// Important! Setting active channels needs to be called before configure() method because of persistent storage issues and performance
 void Multiple_HX711::configure(byte _DINs[], byte pd_sck)
 {
 	PD_SCK_ = pd_sck;
 
 	pinMode(PD_SCK_, OUTPUT);
+
+	// Open persistent storage object
+	persistent_storage.begin(persistent_storage_namespace, true);
+	char storage_key[10];
 
 	for (uint8_t _idx = 0; _idx < hx711_number_; _idx++)
 	{
@@ -36,11 +51,44 @@ void Multiple_HX711::configure(byte _DINs[], byte pd_sck)
 		pinMode(_DINs[_idx], INPUT);
 		hx711.stored_readings = {0};
 
-		// TODO: Read persistent stored offsets value.
+		// Offset per channel is stored persistently.
+		// This way, calibration doesn't need to be performed every time the system is powered up.
 		hx711.offset_per_channel = {0};
+		OffsetPerChannel ofsets;
+		if (active_channels_.Ax128)
+		{
+			char idx_key[2];
+			itoa(_idx, idx_key, 10);
+			strcpy(storage_key,idx_key);
+			const char* channel_key = "_Ax128";
+			strcat(storage_key, channel_key);
+			hx711.offset_per_channel.Ax128 = persistent_storage.getLong(storage_key, 0);
+		}
+		if (active_channels_.Ax64)
+		{
+			char idx_key[2];
+			itoa(_idx, idx_key, 10);
+			strcpy(storage_key,idx_key);
+			const char* channel_key = "_Ax64";
+			strcat(storage_key, channel_key);
+
+			hx711.offset_per_channel.Ax64 = persistent_storage.getLong(storage_key, 0);
+		}
+		if (active_channels_.Bx32)
+		{
+			char idx_key[2];
+			itoa(_idx, idx_key, 10);
+			strcpy(storage_key,idx_key);
+			const char* channel_key = "_Bx32";
+			strcat(storage_key, channel_key);
+			hx711.offset_per_channel.Bx32 = persistent_storage.getLong(storage_key, 0);
+		}
 
 		v_HX711_.push_back(hx711);
 	}
+
+	// Close persistent storage object
+	persistent_storage.end();
 }
 
 bool Multiple_HX711::are_xh711_ready()
@@ -64,13 +112,6 @@ bool Multiple_HX711::update()
 		return true;
 	}
 	else return false;
-}
-
-void Multiple_HX711::set_sctive_channels(bool _Ax128, bool _Ax64, bool _Bx32)
-{
-	active_channels_.Ax128 = _Ax128;
-	active_channels_.Ax64 = _Ax64;
-	active_channels_.Bx32 = _Bx32;
 }
 
 Multiple_HX711::Channel Multiple_HX711::commute_next_channel(bool force_next_channel, Channel _channel)
@@ -351,6 +392,20 @@ void Multiple_HX711::set_offset_Ax128(uint16_t hx711_idx, double offset)
 	if (hx711_idx >= hx711_number) return;
 	Single_HX711 *_hx711 = &v_HX711_[hx711_idx];
 	_hx711->offset_per_channel.Ax128 = offset;
+
+	// Open persistent storage object
+	persistent_storage.begin(persistent_storage_namespace, false);
+	char storage_key[10];
+	char idx_key[2];
+	itoa(hx711_idx, idx_key, 10);
+	strcpy(storage_key,idx_key);
+	const char* channel_key = "_Ax128";
+	strcat(storage_key, channel_key);
+	persistent_storage.putLong(storage_key, (int32_t)offset);
+	// Close persistent storage object
+	persistent_storage.end();
+
+	Serial.println("Saved offset on persistent storage!");
 }
 
 void Multiple_HX711::tare_Ax64(uint16_t hx711_idx)
@@ -376,6 +431,20 @@ void Multiple_HX711::set_offset_Ax64(uint16_t hx711_idx, double offset)
 	if (hx711_idx >= hx711_number) return;
 	Single_HX711 *_hx711 = &v_HX711_[hx711_idx];
 	_hx711->offset_per_channel.Ax64 = offset;
+
+	// Open persistent storage object
+	persistent_storage.begin(persistent_storage_namespace, false);
+	char storage_key[10];
+	char idx_key[2];
+	itoa(hx711_idx, idx_key, 10);
+	strcpy(storage_key,idx_key);
+	const char* channel_key = "_Ax64";
+	strcat(storage_key, channel_key);
+	persistent_storage.putLong(storage_key, (int32_t)offset);
+	// Close persistent storage object
+	persistent_storage.end();
+
+	Serial.println("Saved offset on persistent storage!");
 }
 
 void Multiple_HX711::tare_Bx32(uint16_t hx711_idx)
@@ -402,6 +471,20 @@ void Multiple_HX711::set_offset_Bx32(uint16_t hx711_idx, double offset)
 	if (hx711_idx >= hx711_number) return;
 	Single_HX711 *_hx711 = &v_HX711_[hx711_idx];
 	_hx711->offset_per_channel.Bx32 = offset;
+
+	// Open persistent storage object
+	persistent_storage.begin(persistent_storage_namespace, false);
+	char storage_key[10];
+	char idx_key[2];
+	itoa(hx711_idx, idx_key, 10);
+	strcpy(storage_key,idx_key);
+	const char* channel_key = "_Bx32";
+	strcat(storage_key, channel_key);
+	persistent_storage.putLong(storage_key, (int32_t)offset);
+	// Close persistent storage object
+	persistent_storage.end();
+
+	Serial.println("Saved offset on persistent storage!");
 }
 
 uint32_t Multiple_HX711::get_last_elapsed_time_between_readings()
