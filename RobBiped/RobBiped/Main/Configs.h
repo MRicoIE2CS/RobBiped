@@ -45,7 +45,7 @@ struct Configs
 		// Changes in the configuration of the load cells and the channels used might need modifications in ForceSensorsManager class.
 		struct GPIO {
 			uint8_t clock = 27;
-			uint8_t dINs[hx711_number] = {33, 32, 35, 34, 16, 17, 18, 19};	// Search upper for hx711_number static const
+			uint8_t dINs[hx711_number] = {33, 16, 32, 17, 34, 19, 35, 18};	// Order is important! Search upper for hx711_number static const
 			}gpio;
 		struct ActiveChannels {
 			bool _Ax128 = false;
@@ -54,14 +54,14 @@ struct Configs
 			}active_channels;
 		double filter_time_constant_ms = 20;
 		uint16_t filter_threshold_value = 500000;
-		double calibration_LeftFoot_LeftFront_cell = 1;
-		double calibration_LeftFoot_RightFront_cell = 1;
-		double calibration_LeftFoot_LeftBack_cell = 1;
-		double calibration_LeftFoot_RightBack_cell = 1;
-		double calibration_RightFoot_LeftFront_cell = 1;
-		double calibration_RightFoot_RightFront_cell = 1;
-		double calibration_RightFoot_LeftBack_cell = 1;
-		double calibration_RightFoot_RightBack_cell = 1;
+		double calibration_LeftFoot_LeftFront_cell = 0.048;	// Grams per unit
+		double calibration_LeftFoot_RightFront_cell = 0.048;
+		double calibration_LeftFoot_LeftBack_cell = 0.048;
+		double calibration_LeftFoot_RightBack_cell = 0.048;
+		double calibration_RightFoot_LeftFront_cell = 0.048;
+		double calibration_RightFoot_RightFront_cell = 0.048;
+		double calibration_RightFoot_LeftBack_cell = 0.048;
+		double calibration_RightFoot_RightBack_cell = 0.048;
 		struct Location {
 			int16_t frontBack_separation = 103;
 			int16_t leftRight_separation = 37;
