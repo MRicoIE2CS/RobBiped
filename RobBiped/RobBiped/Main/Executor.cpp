@@ -66,12 +66,6 @@ void Executor::init()
 
 void Executor::initialize_application()
 {
-	autotare_interpolator1_.set_execution_period(I_PeriodicTask::execType::inMillis, 20);
-
-	// Signal generator to generate the squats periodic movement.
-	squats_unitary_cycle_generator_.set_execution_period(I_PeriodicTask::execType::inMillis, 20);
-	// HALF_PI phase shift makes the sine signal to start at a value of 1.0
-	squats_unitary_cycle_generator_.configure_signal(SignalGenerator::SignalType::sine, squats_period_ms_, 0.5, 0.5, HALF_PI);
 }
 
 void Executor::inputs()
