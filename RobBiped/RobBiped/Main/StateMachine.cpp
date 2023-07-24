@@ -21,12 +21,12 @@ using Eigen::Matrix2d;
 void Executor::read_commands()
 {
 	// Commands
-// 	if (command_->commands.squats_on)
-// 	{
-// 		squats_on_ = true;
-// 		Serial.println("squats_on::: ");
-// 		command_->commands.squats_on = false;
-// 	}
+	if (command_->commands.application_on)
+	{
+		application_on = true;
+		Serial.println("application on::: ");
+		command_->commands.application_on = false;
+	}
 }
 
 void Executor::state_machine_switch()
@@ -36,7 +36,7 @@ void Executor::state_machine_switch()
 	switch (state_number)
 	{
 		case 0:
-			if (automatic_force_tare_on)
+			if (application_on)
 			{
 				state_number++;
 				state1_phase = 0;
