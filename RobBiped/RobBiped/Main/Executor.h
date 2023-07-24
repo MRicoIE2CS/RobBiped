@@ -87,13 +87,13 @@ class Executor {
 		void state7_execution();
 
 		// Other state machine flags
-		bool automatic_force_tare_on = false;
+		bool application_on = false;
 		
 		// Control tasks' objects
 		double torso_upright_pitch_control_action = 0.0;
 		double torso_setpoint_ = -0.05;
 		ExpFilter torso_pitch_exp_filter_;
-		double zmp_lateral_deviation_setpoint_ = 0.0;
+		double local_zmp_lateral_deviation_setpoint_ = 0.0;
 		ExpFilter left_zmp_lateral_exp_filter_;
 		ExpFilter right_zmp_lateral_exp_filter_;
 		double left_foot_roll_centering_action = 0.0;

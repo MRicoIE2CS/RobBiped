@@ -69,3 +69,16 @@ bool I_PeriodicTask::get_execution_flag()
 	
 	return return_val;
 }
+
+void I_PeriodicTask::reset_timer()
+{
+	switch (timer_type_) {
+		case execType::inMillis:
+			last_time_executed_ = millis();
+		break;
+		
+		case execType::inMicros:
+			last_time_executed_ = micros();
+		break;
+	}
+}

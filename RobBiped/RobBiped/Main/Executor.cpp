@@ -28,12 +28,12 @@ void Executor::init()
 
 	// Force sensors new measurement is ready every 67500us.
 	// This execution period sets the period at which the measurement is checked to be ready.
-	force_sensors_manager_.set_execution_period(I_PeriodicTask::execType::inMillis, 1);
+	force_sensors_manager_.set_execution_period(I_PeriodicTask::execType::inMicros, 250);
 	force_sensors_manager_.init();
 
 	// Every time a new measurement of the gyroscope/accelerometer is taken, reading requires 2ms of elapsed time.
 	// This task sets the calculation period of the torso posture control.
-	gyroscope_accelerometer_manager_.set_execution_period(I_PeriodicTask::execType::inMillis, 10);
+	gyroscope_accelerometer_manager_.set_execution_period(I_PeriodicTask::execType::inMillis, 9);
 	gyroscope_accelerometer_manager_.init();
 	
 	// This task will be computed each time a new gyroscope/accelerometer measurement is performed.
@@ -44,9 +44,9 @@ void Executor::init()
 	// This task will be computed each time a new foot force sensors measurement is performed.
 	// For that reason, there is no need to set an execution period for it.
 	left_foot_roll_centering_controller_.init();
-	left_foot_roll_centering_controller_.set_setpoint_rad(zmp_lateral_deviation_setpoint_);
+	left_foot_roll_centering_controller_.set_setpoint_rad(local_zmp_lateral_deviation_setpoint_);
 	right_foot_roll_centering_controller_.init();
-	right_foot_roll_centering_controller_.set_setpoint_rad(zmp_lateral_deviation_setpoint_);
+	right_foot_roll_centering_controller_.set_setpoint_rad(local_zmp_lateral_deviation_setpoint_);
 
 	// This task could be updated in response to a request from other task, using `should_be_updated` member,
 	// or every execution period of the task could be checked if it needs to be updated.
@@ -82,16 +82,19 @@ void Executor::inputs()
 	}
 
 	// Force sensors manager updates at a rate specified on `init()` method.
-	// Each time, sensors must be ready. If they are not, an error flag is set.
-	// Execution period should be configured bigger that the time the sensor needs, for that to not happen.
 	if (force_sensors_manager_.get_execution_flag())
 	{
 		force_sensors_manager_.has_been_updated = force_sensors_manager_.update();
+
+		// Gyro/acc sensor is read, counting time after force sensors update.
+		gyroscope_accelerometer_manager_.reset_timer();
 	}
 
-	// If the force sensors manager have been updated, the gyroscope/accelerometer is read.
-	// This is because force sensors need more time to update internally.
-	// Also, gyro/acc requires considerable more time to be read.
+	// The synchronization of gyro/acc sensor is dependent on force sensors execution.
+	// This is because force sensors need more time to update internally (new data available every ~11-13ms).
+	// Also, gyro/acc requires considerable more time to be read (2ms elapsed time when reading data).
+	// So, gyro/acc will be read 9ms after the force sensors reading, spending 2ms elapsed, then force sensors will be read again,
+	// triggering the execution of the application's control scheme. -> Cycle of the same period of the force sensors measurement.
 	if (gyroscope_accelerometer_manager_.get_execution_flag())
 	{
 		gyroscope_accelerometer_manager_.has_been_updated = gyroscope_accelerometer_manager_.update();

@@ -29,6 +29,7 @@ class I_PeriodicTask{
 		void set_execution_period(execType _timer_type, uint16_t _period);
 
 		bool get_execution_flag();
+		void reset_timer();
 
 		void update();
 

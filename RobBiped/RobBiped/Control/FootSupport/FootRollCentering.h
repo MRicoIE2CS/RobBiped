@@ -53,7 +53,7 @@ class FootRollCentering : public I_PeriodicTask
 		double *upper_saturation_degrees_;
 
 		// Desired setpoint, in radians
-		double setpoint_rad_;
+		double setpoint_rad_ = 0.0;
 
 		// ON state of the controller
 		bool controller_on = false;
