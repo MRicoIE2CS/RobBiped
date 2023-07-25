@@ -155,7 +155,8 @@ void Executor::always_executes()
 			int16_t left_foot_zmp_lateral_deviation;
 			int16_t ignored;
 			force_sensors_manager_.get_values_ZMP_LeftFoot(ignored, left_foot_zmp_lateral_deviation);
-			double d_left_foot_zmp_lateral_deviation = left_zmp_lateral_exp_filter_.filter(static_cast<double>(left_foot_zmp_lateral_deviation));
+			//double d_left_foot_zmp_lateral_deviation = left_zmp_lateral_exp_filter_.filter(static_cast<double>(left_foot_zmp_lateral_deviation));
+			double d_left_foot_zmp_lateral_deviation = - static_cast<double>(left_foot_zmp_lateral_deviation);
 			left_foot_roll_centering_action = left_foot_roll_centering_controller_.compute(d_left_foot_zmp_lateral_deviation);
 		}
 
@@ -165,11 +166,10 @@ void Executor::always_executes()
 			int16_t right_foot_zmp_lateral_deviation;
 			int16_t ignored;
 			force_sensors_manager_.get_values_ZMP_RightFoot(ignored, right_foot_zmp_lateral_deviation);
-			double d_right_foot_zmp_lateral_deviation = right_zmp_lateral_exp_filter_.filter(static_cast<double>(right_foot_zmp_lateral_deviation));
+			//double d_right_foot_zmp_lateral_deviation = right_zmp_lateral_exp_filter_.filter(static_cast<double>(right_foot_zmp_lateral_deviation));
+			double d_right_foot_zmp_lateral_deviation = - static_cast<double>(right_foot_zmp_lateral_deviation);
 			right_foot_roll_centering_action = right_foot_roll_centering_controller_.compute(d_right_foot_zmp_lateral_deviation);
 		}
-
-		// TODO: Output from this controllers should be in the class scope, so that any state could apply it
 	}
 }
 
@@ -178,29 +178,22 @@ void Executor::state0_execution()
 	if (!state0_first_time) state0_first_time = true;
 
 	// Robot starts in home position: All Joints' angles = 0.
-	// After "servo.pwr" command, the "" command starts the execution of 
+	// After "servo.pwr" command, the "app.on" command starts the execution of 
 	// After typing the starting command, "torso.on" command could be sent for that controller to better
 	// stabilize the torso posture.
 }
 
 void Executor::state1_execution()
 {
-	// STATE 1: 
+	// STATE 1: Just apply setpoints to ankle joints, and torso orientation
 
-	bool trajectory_running = false;
-	if (0 == state1_phase)
+	if (force_sensors_manager_.has_been_updated)
 	{
-		
-		state1_phase = 1;
-	}
-	if (1 == state1_phase)
-	{
-	}
-	if (2 == state1_phase)
-	{
-	}
-	if (3 == state1_phase)
-	{
+		// Joint setpoint assignation.
+		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, left_foot_roll_centering_action);
+		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, right_foot_roll_centering_action);
+		bool ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, -torso_upright_pitch_control_action);
+		bool ret_val4 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, -torso_upright_pitch_control_action);
 	}
 }
 
