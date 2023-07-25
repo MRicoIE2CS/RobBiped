@@ -35,6 +35,9 @@ bool Joint::set_angle_target_rad(double _ang){
 	|| (_ang < min_angle_allowed_ || _ang > max_angle_allowed_)
 	)
 	{
+		if (_ang < min_angle_allowed_) servo_.set_target_angle(min_angle_allowed_ + calibration_offset_angle_);
+		else if (_ang > max_angle_allowed_) servo_.set_target_angle(max_angle_allowed_ + calibration_offset_angle_);
+
 		return false;
 	}
 	else {
