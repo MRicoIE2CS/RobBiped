@@ -85,9 +85,6 @@ void Executor::inputs()
 	if (force_sensors_manager_.get_execution_flag())
 	{
 		force_sensors_manager_.has_been_updated = force_sensors_manager_.update();
-
-		// Gyro/acc sensor is read, counting time after force sensors update.
-		gyroscope_accelerometer_manager_.reset_timer();
 	}
 
 	// The synchronization of gyro/acc sensor is dependent on force sensors execution.
@@ -95,6 +92,11 @@ void Executor::inputs()
 	// Also, gyro/acc requires considerable more time to be read (2ms elapsed time when reading data).
 	// So, gyro/acc will be read 9ms after the force sensors reading, spending 2ms elapsed, then force sensors will be read again,
 	// triggering the execution of the application's control scheme. -> Cycle of the same period of the force sensors measurement.
+	if(force_sensors_manager_.has_been_updated)
+	{
+		// Gyro/acc sensor is read, counting time after force sensors update.
+		gyroscope_accelerometer_manager_.reset_timer();
+	}
 	if (gyroscope_accelerometer_manager_.get_execution_flag())
 	{
 		gyroscope_accelerometer_manager_.has_been_updated = gyroscope_accelerometer_manager_.update();
