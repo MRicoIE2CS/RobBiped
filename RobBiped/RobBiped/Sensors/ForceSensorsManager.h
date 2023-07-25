@@ -74,8 +74,8 @@ private:
 	double *calibration_RightFoot_LeftBack_cell_;
 	double *calibration_RightFoot_RightBack_cell_;
 
-	bool is_tare_left_performed_ = false;
-	bool is_tare_right_performed_ = false;
+	bool is_tare_left_performed_ = true;
+	bool is_tare_right_performed_ = true;
 
 	int16_t *separation_FrontBack_mm_;
 	int16_t *separation_LeftRight_mm_;
