@@ -25,7 +25,7 @@
 	#include "WProgram.h"
 #endif
 
-#include "../Utils/ExponentialFilter.h"
+#include "../Utils/Filters/ExponentialFilter.h"
 
 class Potentiometer {
 	

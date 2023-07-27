@@ -25,8 +25,8 @@
 #include "../Main/Configs.h"
 #include "../UserInput/Command.h"
 #include "HX711/multiple_HX711.h"
-#include "../Utils/ExponentialFilter.h"
-#include "../Utils/ExponentialFilterWithPeakRejection.h"
+#include "../Utils/Filters/ExponentialFilter.h"
+#include "../Utils/Filters/ExponentialFilterWithPeakRejection.h"
 
 using namespace Configuration;
 

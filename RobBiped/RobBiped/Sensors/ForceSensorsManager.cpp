@@ -87,6 +87,7 @@ bool ForceSensorsManager::update()
 
 	if (updated)
 	{
+		// TODO: Filter negative values
  		value_LeftFoot_LeftBack_ = filter_LeftFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(0u)) * *calibration_LeftFoot_LeftBack_cell_;
 		value_LeftFoot_LeftFront_ = filter_LeftFoot_LeftFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(1u)) * *calibration_LeftFoot_LeftFront_cell_;
 		value_LeftFoot_RightBack_ = filter_LeftFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(2u)) * *calibration_LeftFoot_RightBack_cell_;

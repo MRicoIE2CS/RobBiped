@@ -31,7 +31,7 @@
 #include "../UserInput/UserInput.h"
 #include "../Utils/Control/TrayectoryInterpolator.h"
 #include "../Utils/Control/Waiting.h"
-#include "../Utils/ExponentialFilter.h"
+#include "../Utils/Filters/ExponentialFilter.h"
 #include "../Utils/SignalGenerator.h"
 
 class Executor {
