@@ -148,6 +148,11 @@ void Executor::always_executes()
 
 	if (force_sensors_manager_.has_been_updated)
 	{
+		double potentiometer_value = user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0;
+		// Desired leg length
+		double local_zmp_lateral_deviation_setpoint_ = -37.0/2.0 + 37.0 * potentiometer_value;
+		left_foot_roll_centering_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
+		right_foot_roll_centering_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
 
 		left_foot_roll_centering_action = 0.0;
 		if (force_sensors_manager_.is_tare_left_performed())
