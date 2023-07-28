@@ -321,3 +321,58 @@ bool ForceSensorsManager::is_tare_right_performed()
 {
 	return is_tare_right_performed_;
 }
+
+void ForceSensorsManager::check_touch_detection()
+{
+	// Left Foot : Logic for triggering the touching of the ground
+	if ( !is_left_foot_touching_ground_
+		&& (value_LeftFoot_LeftBack_ > touch_detection_up_threshold_gr_
+		|| value_LeftFoot_LeftFront_ > touch_detection_up_threshold_gr_
+		|| value_LeftFoot_RightBack_ > touch_detection_up_threshold_gr_
+		|| value_LeftFoot_RightFront_ > touch_detection_up_threshold_gr_)
+		)
+	{
+		is_left_foot_touching_ground_ = true;
+	}
+	// Left Foot : Logic for triggering the NOT touching of the ground
+	else if ( is_left_foot_touching_ground_
+		&& (value_LeftFoot_LeftBack_ < touch_detection_down_threshold_gr_
+		&& value_LeftFoot_LeftFront_ < touch_detection_down_threshold_gr_
+		&& value_LeftFoot_RightBack_ < touch_detection_down_threshold_gr_
+		&& value_LeftFoot_RightFront_ < touch_detection_down_threshold_gr_)
+		)
+	{
+		is_left_foot_touching_ground_ = false;
+	}
+
+	// Right Foot : Logic for triggering the touching of the ground
+	if ( !is_right_foot_touching_ground_
+		&& (value_RightFoot_LeftBack_ > touch_detection_up_threshold_gr_
+		|| value_RightFoot_LeftFront_ > touch_detection_up_threshold_gr_
+		|| value_RightFoot_RightBack_ > touch_detection_up_threshold_gr_
+		|| value_RightFoot_RightFront_ > touch_detection_up_threshold_gr_)
+		)
+	{
+		is_right_foot_touching_ground_ = true;
+	}
+	// Right Foot : Logic for triggering the NOT touching of the ground
+	else if ( is_left_foot_touching_ground_
+		&& (value_RightFoot_LeftBack_ < touch_detection_down_threshold_gr_
+		&& value_RightFoot_LeftFront_ < touch_detection_down_threshold_gr_
+		&& value_RightFoot_RightBack_ < touch_detection_down_threshold_gr_
+		&& value_RightFoot_RightFront_ < touch_detection_down_threshold_gr_)
+		)
+	{
+		is_left_foot_touching_ground_ = false;
+	}
+}
+
+bool ForceSensorsManager::is_left_foot_touching_ground()
+{
+	return is_left_foot_touching_ground_;
+}
+
+bool ForceSensorsManager::is_right_foot_touching_ground()
+{
+	return is_right_foot_touching_ground_;
+}
