@@ -115,6 +115,8 @@ bool ForceSensorsManager::update()
 		value_RightFoot_RightFront_ = (value_RightFoot_RightFront_ < 0) ? 0 : value_RightFoot_RightFront_;
 		
 		calculate_ZMP();
+
+		check_touch_detection();
 		
 		if (command_->commands.force_debug_on)
 		{
@@ -298,6 +300,10 @@ void ForceSensorsManager::print_values()
 	Serial.print("\t");
 	Serial.println(getValue_gr_RightFoot_RightBackSensor());
 
+
+ 	Serial.println("\tFeet touching ground (Left ; Right): \t");
+ 	Serial.println((String)is_left_foot_touching_ground() + "\t;\t" + (String)is_right_foot_touching_ground());
+
 //  	Serial.println("\tTime between readings (us): \t");
 //  	Serial.println(get_last_elapsed_time_between_readings());
 }
@@ -359,14 +365,14 @@ void ForceSensorsManager::check_touch_detection()
 		is_right_foot_touching_ground_ = true;
 	}
 	// Right Foot : Logic for triggering the NOT touching of the ground
-	else if ( is_left_foot_touching_ground_
+	else if ( is_right_foot_touching_ground_
 		&& (value_RightFoot_LeftBack_ < touch_detection_down_threshold_gr_
 		&& value_RightFoot_LeftFront_ < touch_detection_down_threshold_gr_
 		&& value_RightFoot_RightBack_ < touch_detection_down_threshold_gr_
 		&& value_RightFoot_RightFront_ < touch_detection_down_threshold_gr_)
 		)
 	{
-		is_left_foot_touching_ground_ = false;
+		is_right_foot_touching_ground_ = false;
 	}
 }
 
