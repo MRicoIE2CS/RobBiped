@@ -61,6 +61,9 @@ void ForceSensorsManager::init()
 	filter_RightFoot_RightBack_.set_threshold_value(config_->filter_threshold_value);
 	filter_RightFoot_RightFront_.set_threshold_value(config_->filter_threshold_value);
 
+	touch_detection_up_threshold_gr_ = config_->touch_detection_up_threshold_gr;
+	touch_detection_down_threshold_gr_ = config_->touch_detection_down_threshold_gr;
+
 	//______//
 
 	multiple_hx711_.power_up();
@@ -112,6 +115,8 @@ bool ForceSensorsManager::update()
 		value_RightFoot_RightFront_ = (value_RightFoot_RightFront_ < 0) ? 0 : value_RightFoot_RightFront_;
 		
 		calculate_ZMP();
+
+		check_touch_detection();
 		
 		if (command_->commands.force_debug_on)
 		{
@@ -295,6 +300,10 @@ void ForceSensorsManager::print_values()
 	Serial.print("\t");
 	Serial.println(getValue_gr_RightFoot_RightBackSensor());
 
+
+ 	Serial.println("\tFeet touching ground (Left ; Right): \t");
+ 	Serial.println((String)is_left_foot_touching_ground() + "\t;\t" + (String)is_right_foot_touching_ground());
+
 //  	Serial.println("\tTime between readings (us): \t");
 //  	Serial.println(get_last_elapsed_time_between_readings());
 }
@@ -320,4 +329,59 @@ bool ForceSensorsManager::is_tare_left_performed()
 bool ForceSensorsManager::is_tare_right_performed()
 {
 	return is_tare_right_performed_;
+}
+
+void ForceSensorsManager::check_touch_detection()
+{
+	// Left Foot : Logic for triggering the touching of the ground
+	if ( !is_left_foot_touching_ground_
+		&& (value_LeftFoot_LeftBack_ > touch_detection_up_threshold_gr_
+		|| value_LeftFoot_LeftFront_ > touch_detection_up_threshold_gr_
+		|| value_LeftFoot_RightBack_ > touch_detection_up_threshold_gr_
+		|| value_LeftFoot_RightFront_ > touch_detection_up_threshold_gr_)
+		)
+	{
+		is_left_foot_touching_ground_ = true;
+	}
+	// Left Foot : Logic for triggering the NOT touching of the ground
+	else if ( is_left_foot_touching_ground_
+		&& (value_LeftFoot_LeftBack_ < touch_detection_down_threshold_gr_
+		&& value_LeftFoot_LeftFront_ < touch_detection_down_threshold_gr_
+		&& value_LeftFoot_RightBack_ < touch_detection_down_threshold_gr_
+		&& value_LeftFoot_RightFront_ < touch_detection_down_threshold_gr_)
+		)
+	{
+		is_left_foot_touching_ground_ = false;
+	}
+
+	// Right Foot : Logic for triggering the touching of the ground
+	if ( !is_right_foot_touching_ground_
+		&& (value_RightFoot_LeftBack_ > touch_detection_up_threshold_gr_
+		|| value_RightFoot_LeftFront_ > touch_detection_up_threshold_gr_
+		|| value_RightFoot_RightBack_ > touch_detection_up_threshold_gr_
+		|| value_RightFoot_RightFront_ > touch_detection_up_threshold_gr_)
+		)
+	{
+		is_right_foot_touching_ground_ = true;
+	}
+	// Right Foot : Logic for triggering the NOT touching of the ground
+	else if ( is_right_foot_touching_ground_
+		&& (value_RightFoot_LeftBack_ < touch_detection_down_threshold_gr_
+		&& value_RightFoot_LeftFront_ < touch_detection_down_threshold_gr_
+		&& value_RightFoot_RightBack_ < touch_detection_down_threshold_gr_
+		&& value_RightFoot_RightFront_ < touch_detection_down_threshold_gr_)
+		)
+	{
+		is_right_foot_touching_ground_ = false;
+	}
+}
+
+bool ForceSensorsManager::is_left_foot_touching_ground()
+{
+	return is_left_foot_touching_ground_;
+}
+
+bool ForceSensorsManager::is_right_foot_touching_ground()
+{
+	return is_right_foot_touching_ground_;
 }
