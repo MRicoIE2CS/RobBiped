@@ -77,6 +77,13 @@ private:
 	bool is_tare_left_performed_ = true;
 	bool is_tare_right_performed_ = true;
 
+	// Touch detection threshold, in gr, for detection of ground touch for the feet
+	uint32_t touch_detection_threshold_gr_ = 150;
+	// Ground touching flags
+	bool is_left_foot_touching_ground_ = false;
+	bool is_right_foot_touching_ground_ = false;
+	void check_touch_detection();
+
 	int16_t *separation_FrontBack_mm_;
 	int16_t *separation_LeftRight_mm_;
 	int16_t zmp_left_foot_x_mm_;
@@ -87,8 +94,6 @@ private:
 	ExpFilter filter_zmp_left_foot_y_mm_;
 	ExpFilter filter_zmp_right_foot_x_mm_;
 	ExpFilter filter_zmp_right_foot_y_mm_;
-	// TODO: In future will be needed to filter noise when values are low (although this will happen only when foot is not on ground)
-	// and also a manner to obtain if foot is touching ground (with a threshold, for instance)
 	void calculate_ZMP();
 
 	void print_values();
@@ -122,6 +127,9 @@ public:
 
 	void get_values_ZMP_LeftFoot(int16_t& x_mm, int16_t& y_mm);
 	void get_values_ZMP_RightFoot(int16_t& x_mm, int16_t& y_mm);
+	
+	bool is_left_foot_touching_ground();
+	bool is_right_foot_touching_ground();
 };
 
 #endif
