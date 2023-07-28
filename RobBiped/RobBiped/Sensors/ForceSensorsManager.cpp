@@ -61,6 +61,9 @@ void ForceSensorsManager::init()
 	filter_RightFoot_RightBack_.set_threshold_value(config_->filter_threshold_value);
 	filter_RightFoot_RightFront_.set_threshold_value(config_->filter_threshold_value);
 
+	touch_detection_up_threshold_gr_ = config_->touch_detection_up_threshold_gr;
+	touch_detection_down_threshold_gr_ = config_->touch_detection_down_threshold_gr;
+
 	//______//
 
 	multiple_hx711_.power_up();

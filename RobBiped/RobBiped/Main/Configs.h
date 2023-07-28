@@ -66,6 +66,8 @@ struct Configs
 			int16_t frontBack_separation = 103;
 			int16_t leftRight_separation = 37;
 			}location_mm;
+		uint32_t touch_detection_up_threshold_gr = 175;
+		uint32_t touch_detection_down_threshold_gr = 125;
 		}force_sensors;		// Dependent on static const Configuration::hx711_number
 
 	struct GyroscpeAccelerometer {

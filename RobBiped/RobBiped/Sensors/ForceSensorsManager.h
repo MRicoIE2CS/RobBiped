@@ -78,8 +78,8 @@ private:
 	bool is_tare_right_performed_ = true;
 
 	// Touch detection thresholds (hysteresis), in gr, for detection of ground touch for the feet 
-	uint32_t touch_detection_up_threshold_gr_ = 175;
-	uint32_t touch_detection_down_threshold_gr_ = 125;
+	uint32_t touch_detection_up_threshold_gr_;
+	uint32_t touch_detection_down_threshold_gr_;
 	// Ground touching flags
 	bool is_left_foot_touching_ground_ = false;
 	bool is_right_foot_touching_ground_ = false;
