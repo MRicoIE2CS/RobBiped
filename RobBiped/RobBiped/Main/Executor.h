@@ -31,7 +31,7 @@
 #include "../UserInput/UserInput.h"
 #include "../Utils/Control/TrayectoryInterpolator.h"
 #include "../Utils/Control/Waiting.h"
-#include "../Utils/ExponentialFilter.h"
+#include "../Utils/Filters/ExponentialFilter.h"
 #include "../Utils/SignalGenerator.h"
 
 class Executor {
@@ -87,38 +87,17 @@ class Executor {
 		void state7_execution();
 
 		// Other state machine flags
-		bool automatic_force_tare_on = false;
-
-		// AUTOTARE Trajectory generation objects
-		// (these are used on other states)
-		double autotare_angle_displacement_ = 0.9;
-		double autotare_legs_squat_displacement = 20.0;
-		double autotare_leg_lift_displacement = 30.0;
-		const uint64_t autotare_trajectories_time_ = 3000;
-		const double home_position_leg_length_ = 142.0;
-		Control::LinearTrajectoryInterpolator autotare_interpolator1_;
-		double last_hip_left_angle_compensation = 0.0;
-		double last_hip_right_angle_compensation = 0.0;
+		bool application_on = false;
 		
 		// Control tasks' objects
 		double torso_upright_pitch_control_action = 0.0;
 		double torso_setpoint_ = -0.05;
 		ExpFilter torso_pitch_exp_filter_;
-		double zmp_lateral_deviation_setpoint_ = 0.0;
+		double local_zmp_lateral_deviation_setpoint_ = 0.0;
 		ExpFilter left_zmp_lateral_exp_filter_;
 		ExpFilter right_zmp_lateral_exp_filter_;
-
-		SignalGenerator squats_unitary_cycle_generator_;
-		Control::LinearTrajectoryInterpolator trajectory_interpolator_;
-		bool interpolator_running_ = false;
-		const double min_desired_leg_length_ = 115.0;
-		const double max_desired_leg_length_ = 140.0;
-		const double max_desired_squat_angle_ = -0.2;
-		double desired_leg_lenght_ = 0.0;
-		const uint64_t squats_period_ms_ = 3000;
-
-		// Enabling flag for squats movement
-		bool squats_on_ = false;
+		double left_foot_roll_centering_action = 0.0;
+		double right_foot_roll_centering_action = 0.0;
 
 		// Waiting object
 		Control::Waiting waiting_;

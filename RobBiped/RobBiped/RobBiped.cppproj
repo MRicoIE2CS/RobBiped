@@ -725,16 +725,16 @@
     <Compile Include="Utils\Control\Waiting.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Utils\ExponentialFilter.cpp">
+    <Compile Include="Utils\Filters\ExponentialFilter.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Utils\ExponentialFilter.h">
+    <Compile Include="Utils\Filters\ExponentialFilter.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Utils\ExponentialFilterWithPeakRejection.cpp">
+    <Compile Include="Utils\Filters\ExponentialFilterWithPeakRejection.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Utils\ExponentialFilterWithPeakRejection.h">
+    <Compile Include="Utils\Filters\ExponentialFilterWithPeakRejection.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Utils\Kinematics\example\KinematicsExample.cpp">
@@ -1739,10 +1739,10 @@
     <Compile Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\ArxTypeTraits\type_traits.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Utils\SignalGenerator.cpp">
+    <Compile Include="Utils\Sources\SignalGenerator.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Utils\SignalGenerator.h">
+    <Compile Include="Utils\Sources\SignalGenerator.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="__vm\.RobBiped.vsarduino.h">
@@ -1825,6 +1825,8 @@
     <Folder Include="Utils\LinearAlgebra\ArduinoEigen\utils\ArxTypeTraits\ArxTypeTraits\" />
     <Folder Include="Utils\Kinematics" />
     <Folder Include="Utils\Control" />
+    <Folder Include="Utils\Filters" />
+    <Folder Include="Utils\Sources" />
     <Folder Include="__vm\" />
   </ItemGroup>
   <ItemGroup>

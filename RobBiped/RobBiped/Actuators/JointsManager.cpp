@@ -71,6 +71,7 @@ void JointsManager::change_state(uint32_t& current_millis){
 	last_millis_changed_state_ = current_millis;
 
 	if (current_state_ == State::running){
+		delay(500);
 		sleep();
 	}
 	else if (current_state_ == State::sleeping){

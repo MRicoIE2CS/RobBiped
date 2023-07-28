@@ -88,13 +88,28 @@ bool ForceSensorsManager::update()
 	if (updated)
 	{
  		value_LeftFoot_LeftBack_ = filter_LeftFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(0u)) * *calibration_LeftFoot_LeftBack_cell_;
+		value_LeftFoot_LeftBack_ = (value_LeftFoot_LeftBack_ < 0) ? 0 : value_LeftFoot_LeftBack_;
+
 		value_LeftFoot_LeftFront_ = filter_LeftFoot_LeftFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(1u)) * *calibration_LeftFoot_LeftFront_cell_;
+		value_LeftFoot_LeftFront_ = (value_LeftFoot_LeftFront_ < 0) ? 0 : value_LeftFoot_LeftFront_;
+
 		value_LeftFoot_RightBack_ = filter_LeftFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(2u)) * *calibration_LeftFoot_RightBack_cell_;
+		value_LeftFoot_RightBack_ = (value_LeftFoot_RightBack_ < 0) ? 0 : value_LeftFoot_RightBack_;
+
 		value_LeftFoot_RightFront_ = filter_LeftFoot_RightFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(3u)) * *calibration_LeftFoot_RightFront_cell_;
+		value_LeftFoot_RightFront_ = (value_LeftFoot_RightFront_ < 0) ? 0 : value_LeftFoot_RightFront_;
+
 		value_RightFoot_LeftBack_ = filter_RightFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(4u)) * *calibration_RightFoot_LeftBack_cell_;
+		value_RightFoot_LeftBack_ = (value_RightFoot_LeftBack_ < 0) ? 0 : value_RightFoot_LeftBack_;
+
 		value_RightFoot_LeftFront_ = filter_RightFoot_LeftFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(5u)) * *calibration_RightFoot_LeftFront_cell_;
+		value_RightFoot_LeftFront_ = (value_RightFoot_LeftFront_ < 0) ? 0 : value_RightFoot_LeftFront_;
+
 		value_RightFoot_RightBack_ = filter_RightFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(6u)) * *calibration_RightFoot_RightBack_cell_;
+		value_RightFoot_RightBack_ = (value_RightFoot_RightBack_ < 0) ? 0 : value_RightFoot_RightBack_;
+
 		value_RightFoot_RightFront_ = filter_RightFoot_RightFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(7u)) * *calibration_RightFoot_RightFront_cell_;
+		value_RightFoot_RightFront_ = (value_RightFoot_RightFront_ < 0) ? 0 : value_RightFoot_RightFront_;
 		
 		calculate_ZMP();
 		
@@ -238,7 +253,7 @@ void ForceSensorsManager::calculate_ZMP()
 
 	// Y coordinate axis is positive pointing to the outside of the body
 	force_ponderatedSum =
-			(value_RightFoot_RightBack_ * *separation_LeftRight_mm_) + (value_RightFoot_RightFront_ * *separation_LeftRight_mm_);
+			(value_RightFoot_LeftBack_ * *separation_LeftRight_mm_) + (value_RightFoot_LeftFront_ * *separation_LeftRight_mm_);
 
 	// ZMP Y coordinate of the right foot, in mm, from the left-back sensor
 	zmp_right_foot_y_mm_ = filter_zmp_right_foot_y_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);

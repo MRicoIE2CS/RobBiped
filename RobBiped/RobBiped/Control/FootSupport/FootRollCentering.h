@@ -53,7 +53,7 @@ class FootRollCentering : public I_PeriodicTask
 		double *upper_saturation_degrees_;
 
 		// Desired setpoint, in radians
-		double setpoint_rad_;
+		double setpoint_mm_ = 0.0;
 
 		// ON state of the controller
 		bool controller_on = false;
@@ -65,12 +65,12 @@ class FootRollCentering : public I_PeriodicTask
 		bool is_on();
 
 		/*
-		*  @fn void set_setpoint_rad(double& _desired_foot_roll_angle);
+		*  @fn void set_setpoint_mm(double& _desired_zmp_lateral_deviation_mm);
 		*  @brief Setter for desired foot roll angle, in radians.
 		*
 		*  @param[in] _desired_foot_roll_angle Desired foot roll angle, in radians.
 		*/
-		void set_setpoint_rad(double& _desired_zmp_lateral_deviation_mm);
+		void set_setpoint_mm(double& _desired_zmp_lateral_deviation_mm);
 
 		/*
 		*  @fn double compute(double& _current_foot_roll_angle_rad)

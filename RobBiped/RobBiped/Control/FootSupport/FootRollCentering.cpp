@@ -45,9 +45,9 @@ void Control::FootRollCentering::init()
 	pid_.set_setpoint_weighting(*proportional_setpoint_weight_, *derivative_setpoint_weight_);
 }
 
-void Control::FootRollCentering::set_setpoint_rad(double& _desired_foot_roll_angle)
+void Control::FootRollCentering::set_setpoint_mm(double& _desired_zmp_lateral_deviation_mm)
 {
-	setpoint_rad_ = _desired_foot_roll_angle;
+	setpoint_mm_ = _desired_zmp_lateral_deviation_mm;
 }
 
 double Control::FootRollCentering::compute(double& _current_foot_zmp_lateral_deviation_mm)
@@ -79,7 +79,7 @@ double Control::FootRollCentering::compute(double& _current_foot_zmp_lateral_dev
 
 	if (controller_on)
 	{
-		pid_.compute_output(setpoint_rad_, _current_foot_zmp_lateral_deviation_mm, output_rad);
+		pid_.compute_output(setpoint_mm_, _current_foot_zmp_lateral_deviation_mm, output_rad);
 	}
 
 	return output_rad;

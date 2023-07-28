@@ -21,7 +21,7 @@
 
 #include "Arduino.h"
 
-#include "../Main/I_PeriodicTask.h"
+#include "../../Main/I_PeriodicTask.h"
 
 class SignalGenerator : public I_PeriodicTask{
 

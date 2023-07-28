@@ -19,7 +19,12 @@
 #include "MG996R.h"
 
 bool MG996R::set_target_angle(double _ang){
-	if (_ang < min_angle_rad_ || _ang > max_angle_rad_) {
+	if (_ang < min_angle_rad_) {
+		pulse_width_assigned_ = angle_to_pulse(min_angle_rad_);
+		return false;
+	}
+	else if (_ang > max_angle_rad_) {
+		pulse_width_assigned_ = angle_to_pulse(max_angle_rad_);
 		return false;
 	}
 	else {
