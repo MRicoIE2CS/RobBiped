@@ -79,7 +79,8 @@ void GyroscopeAccelerometerManager::complementary_filter_for_angle()
 	auto currentMillis = millis();
 	dt_ = currentMillis - tiempo_prev_;
 	tiempo_prev_ = currentMillis;
-	
+
+	// TODO: Make the 0.98 a configurable constant
 	ang_x_ = 0.98 * (gx_deg_s_ * dt_ / 1000.0 + ang_x_prev_) + 0.02 * accel_ang_x_;
 	ang_y_ = 0.98 * (gy_deg_s_ * dt_ / 1000.0 + ang_y_prev_) + 0.02 * accel_ang_y_;
 
