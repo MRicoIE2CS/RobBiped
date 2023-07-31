@@ -190,7 +190,7 @@ void Executor::always_executes()
 
 void Executor::state0_execution()
 {
-	if (!state0_first_time) state0_first_time = true;
+	if (state0_first_time) state0_first_time = false;
 
 	// Robot starts in home position: All Joints' angles = 0.
 	// After "servo.pwr" command, the "force.tar.auto" command starts the execution of the automatic tare of the force sensors
