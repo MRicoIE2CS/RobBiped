@@ -21,9 +21,11 @@
 
 #include "../Main/Configs.h"
 #include "../Main/I_PeriodicTask.h"
+#include "../Utils/Kinematics/InverseKinematicsBlocks/LegLength_IK.h"
 #include "../Utils/LinearAlgebra/ArduinoEigenDense.h"
 
 using Eigen::Vector3d;
+using Eigen::Vector4d;
 
 class GlobalKinematics : public I_PeriodicTask {
 
@@ -38,7 +40,7 @@ class GlobalKinematics : public I_PeriodicTask {
 	private:
 
 		// Definitions (configuration)
-		Configuration::Configs::Kinematics *kinematics_config_;
+		Configuration::Configs::Kinematics *config_;
 
 		// Phase
 		PosePhases phase_;
@@ -60,14 +62,11 @@ class GlobalKinematics : public I_PeriodicTask {
 		double right_foot_center_;
 		double left_foot_center_;
 
-		// Computed lateral setpoints
+		// Computed lateral roll angle setpoints
 		double left_foot_roll_setpoint_, right_foot_roll_setpoint_;
+		// Computed leg length setpoints
+		// These lengths include all length of the leg, without foot roll joint height (from hip roll joint to foot roll joint)
 		double left_leg_length_setpoint_, right_leg_length_setpoint_;
-
-		// ...
-		Vector3d gyroacc_position_;
-		Vector3d CoM_position_;
-		Vector3d measured_ZMP_position_;
 
 	public:
 
@@ -75,17 +74,16 @@ class GlobalKinematics : public I_PeriodicTask {
 
 		void init(double _centerof_right_foot, PosePhases _phase, double _desired_hip_height, double _desired_step_width);
 
-		void update();
-
 		PosePhases get_walking_phase();
 
 		// Sets desired hip height
 		void set_desired_hip_height(double _desired_hip_height);
 		// Sets desired step_width
 		void set_desired_step_width(double _desired_step_width);
-		// Returns the necessary roll joints' angle, for desired step width and hip height, at home position
+		// Returns the necessary roll joint angles, for desired step width and hip height, at home position
 		double get_home_roll_angle();
-		// Returns the necessary legs' length, for desired step width and hip height, at home position
+		// Returns the necessary legs lengths, for desired step width and hip height, at home position
+		// These lengths include all length of the leg, without foot roll joint height (from hip roll joint to foot roll joint)
 		double get_home_leg_lengths();
 
 		// Returns the defined step width
@@ -97,6 +95,11 @@ class GlobalKinematics : public I_PeriodicTask {
 		void get_computed_angles(double &_left_foot_roll_setpoint, double &_right_foot_roll_setpoint);
 		// Returns the last computed leg lengths
 		void get_computed_leg_lengths(double &_left_leg_length_setpoint, double &_right_leg_length_setpoint);
+
+		// Computes forward and inverse kinematics to obtain joint angles from desired prismatic length (leg length,
+		// from hip pitch joint to ankle pitch joint) and desired forward inclination angle
+		bool get_joint_angles_for_leg_length(const double &_desired_prismatic_length, const double &_desired_forward_inclination_angle,
+											double &_down_joint, double &_mid_joint, double &_up_joint);
 
 	};
 
