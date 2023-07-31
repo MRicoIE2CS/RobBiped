@@ -24,8 +24,8 @@
 namespace InverseKinematics {
 
 	/*
-	*  @fn bool get_leg_joints_angles_from_desired_length_and_orientation(
-	*									const double& _desired_leg_length,
+	*  @fn bool get_supporting_leg_joints_angles_from_desired_length_and_orientation(
+	*									const double& _desired_prismatic_length,
 	*									const double& _forward_angle,
 	*									const double& _first_link_length,
 	*									const double& _second_link_length,
@@ -39,14 +39,15 @@ namespace InverseKinematics {
 	*  the pitch joints of the ankle, knee and hip.
 	*
 	*  Output angles' sign is positive corresponding to a positive z-axis rotation (in accordance with
-	*  Denavit-Hartenberg direct kinematics convention).
+	*  Denavit-Hartenberg direct kinematics convention), considering that the chain starts from the ground
+	*  (supporting leg), and the lengths and joints numbers start counting from there.
 	*  Coordinate frame of each link is positioned as:
 	*  - Center is positioned on the joints center.
 	*  - X-axis is pointing to the extension of the link.
 	*  - Y-axis is pointing to the frontal direction (over the x-y plane of the base's coordinate frame).
-	*  - Z-axis is pointing to the lateral direction (normal to the x-y plane of the base's coordinate frame).
+	*  - Z-axis is pointing to the lateral direction (left, normal to the x-y plane of the base's coordinate frame).
 	*
-	*  @param[in] _desired_leg_length Leg length, from the ankle pitch joint to the hip pitch joint, in mm.
+	*  @param[in] _desired_prismatic_length Leg length, from the ankle pitch joint to the hip pitch joint, in mm.
 	*  @param[in] _forward_angle Angle of the vector that goes from the ankle pitch joint to the hip pitch joint,
 	*  relative to the vertical axis, in rads.
 	*  @param[in] _first_link_length Length of the first link, from the ankle pitch joint to the knee pitch joint.
@@ -56,8 +57,8 @@ namespace InverseKinematics {
 	*  @param[out] _final_effector_target_angle Hip pitch joint angle, in rads.
 	*  @return False if desired position is non reachable. True if successful calculation.
 	*/
-	bool get_leg_joints_angles_from_desired_length_and_orientation(
-													const double& _desired_leg_length,
+	bool get_supporting_leg_joints_angles_from_desired_length_and_orientation(
+													const double& _desired_prismatic_length,
 													const double& _forward_angle_rad,
 													const double& _first_link_length,
 													const double& _second_link_length,
