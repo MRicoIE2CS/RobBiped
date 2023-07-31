@@ -126,7 +126,7 @@ class JointsManager : public I_PeriodicTask{
 		*  @param[in] _joint Joint name.
 		*  @return double Last joint setpoint angle.
 		*/
-		double get_last_joint_setpoints(Configuration::JointsNames& _joint);
+		double get_last_joint_setpoints(Configuration::JointsNames _joint);
 
 		void update(UserInput& _user_input);
 		void servo_update();

@@ -133,7 +133,7 @@ std::map<Configuration::JointsNames, double> JointsManager::get_last_joint_setpo
 	return last_joint_setpoints_;
 }
 
-double JointsManager::get_last_joint_setpoints(Configuration::JointsNames& _joint)
+double JointsManager::get_last_joint_setpoints(Configuration::JointsNames _joint)
 {
 	return last_joint_setpoints_[_joint];
 }
