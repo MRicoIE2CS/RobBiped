@@ -148,11 +148,11 @@ void Executor::always_executes()
 
 	if (force_sensors_manager_.has_been_updated)
 	{
-		double potentiometer_value = user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0;
-		// Desired leg length
-		double local_zmp_lateral_deviation_setpoint_ = -37.0/2.0 + 37.0 * potentiometer_value;
-		left_foot_roll_centering_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
-		right_foot_roll_centering_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
+// 		double potentiometer_value = user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0;
+// 		// Desired leg length
+// 		double local_zmp_lateral_deviation_setpoint_ = -37.0/2.0 + 37.0 * potentiometer_value;
+// 		left_foot_roll_centering_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
+// 		right_foot_roll_centering_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
 
 		left_foot_roll_centering_action = 0.0;
 		if (force_sensors_manager_.is_tare_left_performed())
@@ -180,7 +180,33 @@ void Executor::always_executes()
 
 void Executor::state0_execution()
 {
-	if (!state0_first_time) state0_first_time = true;
+	if (state0_first_time)
+	{
+		state0_first_time = false;
+
+		double home_roll_angle = global_kinematics_.get_home_roll_angle();
+		Serial.println("home_roll_angle: " + (String)home_roll_angle);
+
+		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, home_roll_angle);
+		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -home_roll_angle);
+		bool ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, -home_roll_angle);
+		bool ret_val4 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, home_roll_angle);
+
+		double home_leg_length = global_kinematics_.get_home_leg_lengths();
+		home_leg_length = home_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
+		double ankle_pitch_angle;
+		double knee_pitch_angle;
+		double hip_pitch_angle;
+		bool ret_val5 = global_kinematics_.get_joint_angles_for_leg_length(home_leg_length, 0.0, ankle_pitch_angle, knee_pitch_angle, hip_pitch_angle);
+
+		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_pitch_angle);
+		ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, knee_pitch_angle);
+		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, hip_pitch_angle);
+
+		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_pitch_angle);
+		ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, knee_pitch_angle);
+		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, hip_pitch_angle);
+	}
 
 	// Robot starts in home position: All Joints' angles = 0.
 	// After "servo.pwr" command, the "app.on" command starts the execution of 
@@ -194,6 +220,13 @@ void Executor::state1_execution()
 
 	if (force_sensors_manager_.has_been_updated)
 	{
+		// Potentiometer value sets the CM setpoint in Double Support Phase, along the Y-axis
+		double potentiometer_value = some_exp_filter_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0);
+		// Desired leg length
+		double DSP_CM_setpoint_ = global_kinematics_.get_step_width() * potentiometer_value;
+		left_foot_roll_centering_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
+		right_foot_roll_centering_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
+
 		// Joint setpoint assignation.
 		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, left_foot_roll_centering_action);
 		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, right_foot_roll_centering_action);

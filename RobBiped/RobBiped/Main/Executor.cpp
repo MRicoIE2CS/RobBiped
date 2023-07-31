@@ -54,6 +54,7 @@ void Executor::init()
 	servo_updater_.set_execution_period(I_PeriodicTask::execType::inMillis, 2);
 	servo_updater_.init();
 
+	// Initialize application specific tasks and objects
 	initialize_application();
 
 	// END TASKS CONFIGURATION
@@ -66,6 +67,10 @@ void Executor::init()
 
 void Executor::initialize_application()
 {
+	// Kinematics will be updated each time the sensors are updated, so task timing configuration is not needed.
+	global_kinematics_.init(right_foot_center_, initial_phase_, desired_hip_height_, desired_step_width_);
+
+	some_exp_filter_.set_time_constant(250);
 }
 
 void Executor::inputs()
