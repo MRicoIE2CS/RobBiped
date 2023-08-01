@@ -26,6 +26,7 @@ void GlobalKinematics::assoc_config(Configuration::Configs::Kinematics &_config)
 void GlobalKinematics::init(double _centerof_right_foot, PosePhases _phase, double _desired_hip_height, double _desired_step_width)
 {
 	right_foot_center_ = _centerof_right_foot;
+	left_foot_center_ = right_foot_center_ + _desired_step_width;
 	phase_ = _phase;
 	set_desired_hip_height(_desired_hip_height);
 	set_desired_step_width(_desired_step_width);
