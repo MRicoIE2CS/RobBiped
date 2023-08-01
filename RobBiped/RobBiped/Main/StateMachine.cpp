@@ -40,6 +40,7 @@ void Executor::state_machine_switch()
 			{
 				state_number++;
 				state1_phase = 0;
+				sin_signal.init();
 				break;
 			}
 			break;
@@ -183,7 +184,6 @@ void Executor::state0_execution()
 		state0_first_time = false;
 
 		double home_roll_angle = global_kinematics_.get_home_roll_angle();
-		Serial.println("home_roll_angle: " + (String)home_roll_angle);
 
 		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, home_roll_angle);
 		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -home_roll_angle);
@@ -191,17 +191,11 @@ void Executor::state0_execution()
 		bool ret_val4 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, home_roll_angle);
 
 		double home_leg_length = global_kinematics_.get_home_leg_lengths();
-		Serial.println("home_leg_length: " + (String)home_leg_length);
 		home_leg_length = home_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
-		Serial.println("home_leg_length: " + (String)home_leg_length);
 		double ankle_pitch_angle;
 		double knee_pitch_angle;
 		double hip_pitch_angle;
 		bool ret_val5 = global_kinematics_.get_joint_angles_for_leg_length(home_leg_length, 0.0, ankle_pitch_angle, knee_pitch_angle, hip_pitch_angle);
-		Serial.println("ret_val5: " + (String)ret_val5);
-		Serial.println("ankle_pitch_angle: " + (String)ankle_pitch_angle);
-		Serial.println("knee_pitch_angle: " + (String)knee_pitch_angle);
-		Serial.println("hip_pitch_angle: " + (String)hip_pitch_angle);
 
 		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_pitch_angle);
 		ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, knee_pitch_angle);
@@ -226,16 +220,18 @@ void Executor::state1_execution()
 	{
 		// Potentiometer value sets the CM setpoint in Double Support Phase, along the Y-axis
 		double potentiometer_value = some_exp_filter_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0);
+		
+		// Sinusoidal signal to obtain trajectory
+		double unitary_value = sin_signal.generate_trajectory();
+		Serial.println("sin_signal: \t" + (String)unitary_value);
+		
 		// Desired leg length
-		double DSP_CM_setpoint_ = desired_step_width_ * potentiometer_value;
-		Serial.println("DSP_CM_setpoint_: " + (String)DSP_CM_setpoint_);
+		double DSP_CM_setpoint_ = 20 + (desired_step_width_ - 40) * unitary_value;
 		bool retcode_compute_lateral_DSP_kinematics = global_kinematics_.compute_lateral_DSP_kinematics(DSP_CM_setpoint_);
 		
 		double left_roll_angle;
 		double right_roll_angle;
 		global_kinematics_.get_computed_angles(left_roll_angle, right_roll_angle);
-		Serial.println("left_roll_angle: " + (String)left_roll_angle);
-		Serial.println("right_roll_angle: " + (String)right_roll_angle);
 		
 		// Joint setpoint assignation.
 		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, left_roll_angle);
@@ -246,17 +242,12 @@ void Executor::state1_execution()
 		double left_leg_length;
 		double right_leg_length;
 		global_kinematics_.get_computed_leg_lengths(left_leg_length, right_leg_length);
-		Serial.println("left_leg_length: " + (String)left_leg_length);
-		Serial.println("right_leg_length: " + (String)right_leg_length);
 
 		left_leg_length = left_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
 		double ankle_pitch_angle;
 		double knee_pitch_angle;
 		double hip_pitch_angle;
 		global_kinematics_.get_joint_angles_for_leg_length(left_leg_length, 0.0, ankle_pitch_angle, knee_pitch_angle, hip_pitch_angle);
-		Serial.println("ankle_pitch_angle: " + (String)ankle_pitch_angle);
-		Serial.println("knee_pitch_angle: " + (String)knee_pitch_angle);
-		Serial.println("hip_pitch_angle: " + (String)hip_pitch_angle);
 		
 		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_pitch_angle);
 		ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, knee_pitch_angle);

@@ -92,6 +92,9 @@ class Executor {
 		bool application_on = false;
 
 		ExpFilter some_exp_filter_;
+		
+		// 
+		SignalGenerator sin_signal;
 
 		// Kinematic objects and definitions
 		double right_foot_center_ = 0.0;
@@ -99,7 +102,7 @@ class Executor {
 		// Defined desired hip height
 		double desired_hip_height_ = 280.0;
 		// Defined desired step width
-		double desired_step_width_ = 180.0;
+		double desired_step_width_ = 150.0;
 		
 		// Control tasks' objects
 		double torso_upright_pitch_control_action = 0.0;
