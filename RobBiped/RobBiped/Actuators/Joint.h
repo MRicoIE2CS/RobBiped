@@ -43,13 +43,14 @@ class Joint {
 	void calibration_set_min_angle(bool catch_current_angle, double _angle);
 	void calibration_set_max_angle(bool catch_current_angle, double _angle);
 	void calibration_set_zero(bool catch_current_angle, double _angle);
-	void calibration__zero_fine_adjust();	//How to do?	
 
 	uint16_t get_PWM_pulse_width_update();
 	//unsigned int getPulseWidthApplied();
 	bool is_update_needed();
 
+	// [-PI, PI]
 	bool set_angle_target_rad(double _ang);
+
 	double get_assigned_anlge();
 	double get_zero_offset();
 };

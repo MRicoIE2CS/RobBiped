@@ -32,11 +32,17 @@ bool Joint::set_angle_target_rad(double _ang){
 	if (invert_direction_) _ang = - _ang;
 
 	if (_ang < -PI || _ang > PI
-	|| (_ang < min_angle_allowed_ || _ang > max_angle_allowed_)
+	|| (!invert_direction_ && (_ang < min_angle_allowed_ || _ang > max_angle_allowed_))
+	|| (invert_direction_ && (_ang < max_angle_allowed_ || _ang > min_angle_allowed_))
 	)
 	{
-		if (_ang < min_angle_allowed_) servo_.set_target_angle(min_angle_allowed_ + calibration_offset_angle_);
-		else if (_ang > max_angle_allowed_) servo_.set_target_angle(max_angle_allowed_ + calibration_offset_angle_);
+		if (!invert_direction_ && _ang < min_angle_allowed_
+				|| invert_direction_ &&_ang > min_angle_allowed_)
+			servo_.set_target_angle(min_angle_allowed_ + calibration_offset_angle_);
+
+		else if (!invert_direction_ && _ang > max_angle_allowed_
+				|| invert_direction_ && _ang < max_angle_allowed_)
+			servo_.set_target_angle(max_angle_allowed_ + calibration_offset_angle_);
 
 		return false;
 	}
@@ -57,8 +63,8 @@ bool Joint::set_angle_target_rad(double _ang){
 
 void Joint::clean_calibration_values(){
 
-	max_angle_allowed_ = PI;
-	min_angle_allowed_ = -PI;
+	max_angle_allowed_ = (invert_direction_) ? -PI : PI;
+	min_angle_allowed_ = (invert_direction_) ? PI : -PI;
 	calibration_offset_angle_ = HALF_PI;
 }
 
@@ -70,7 +76,7 @@ void Joint::calibration_set_min_angle(bool catch_current_angle, double _angle){
 	}
 	else {
 
-		min_angle_allowed_ = _angle;
+		min_angle_allowed_ = (invert_direction_) ? - _angle : _angle;
 	}
 }
 
@@ -82,7 +88,7 @@ void Joint::calibration_set_max_angle(bool catch_current_angle, double _angle){
 	}
 	else {
 
-		max_angle_allowed_ = _angle;
+		max_angle_allowed_ = (invert_direction_) ? - _angle : _angle;
 	}
 }
 
@@ -94,13 +100,8 @@ void Joint::calibration_set_zero(bool catch_current_angle, double _angle){
 	} 
 	else {
 
-		calibration_offset_angle_ = _angle + HALF_PI;
+		calibration_offset_angle_ = ((invert_direction_) ? - _angle : _angle) + HALF_PI;
 	}
-}
-
-void Joint::calibration__zero_fine_adjust(){
-
-	// TODO: Useful?
 }
 
 void Joint::invert_angle_sign(bool yes_no){
@@ -115,5 +116,5 @@ double Joint::get_assigned_anlge(){
 
 double Joint::get_zero_offset(){
 
-	return calibration_offset_angle_;
+	return calibration_offset_angle_ - HALF_PI;
 }

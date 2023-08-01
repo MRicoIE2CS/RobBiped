@@ -37,6 +37,7 @@ struct Command
 	{
 		bool init = false;
 		bool servo_onoff_toggle = false;
+		bool servo_calibration_onoff_toggle = false;
 		bool servo_selection_button_emulation = false;
 		bool force_tare_left = false;
 		bool force_tare_right = false;

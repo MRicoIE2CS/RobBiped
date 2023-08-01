@@ -110,9 +110,12 @@ void Executor::inputs()
 
 void Executor::main_execution()
 {
-	state_machine_switch();
+	if (servo_updater_.get_current_state() != JointsManager::State::calibrating)
+	{
+		state_machine_switch();
 
-	state_machine_execution();
+		state_machine_execution();
+	}
 }
 
 void Executor::outputs()
