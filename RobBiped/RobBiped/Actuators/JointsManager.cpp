@@ -32,9 +32,11 @@ void JointsManager::init(){
 	
 void JointsManager::update(UserInput& _user_input){
 
-	check_state(command_->commands.servo_selection_button_emulation,
+	check_state(command_->commands.servo_onoff_toggle,
+				command_->commands.servo_calibration_onoff_toggle,
+				command_->commands.servo_selection_button_emulation,
 				_user_input.get_digital_value(UserInput::DigitalInputList::forward_button),
-				_user_input.get_digital_value(UserInput::DigitalInputList::forward_button));
+				_user_input.get_digital_value(UserInput::DigitalInputList::back_button));
 				
 	if (current_state_ == State::calibrating){
 		calibration_set_angle_to_servo(_user_input.get_analog_value(UserInput::AnalogInputList::potentiometer1));
@@ -43,26 +45,26 @@ void JointsManager::update(UserInput& _user_input){
 	servo_update();
 }
 
-void JointsManager::check_state(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed){
+// TODO: Document the flowchart of the modes and calibration modes/mechanism
+void JointsManager::check_state(bool &_power_onoff_command, bool &_calibration_onoff, bool &_sel_button_pressed, bool forward_button_pressed, bool back_button_pressed){
 	uint32_t current_millis = millis();
 
-	if (change_state_conditions(current_millis, command_->commands.servo_onoff_toggle)) change_state(current_millis);	// run/sleep to servos
+	// Run/sleep to servos
+	if (change_state_conditions(current_millis, _power_onoff_command)) change_state(current_millis);
 
-// Servo calibration deactivated.
-// TODO: Change servo calibration operation in order to use serial commands, instead of physical buttons.
+	// Calibration mode on/off
+	calibration_mode_enter_exit_conditions(current_millis, _calibration_onoff);
+	// Calibration state machine
+	if (current_state_ == State::calibrating) calibration_state_machine(current_millis, _sel_button_pressed, forward_button_pressed, back_button_pressed);
+	// Mechanism fro limiting the speed of mode change
+	calibration_button_pressed_flag_mechanism(current_millis);
 
-// 	calibration_mode_enter_exit_conditions(current_millis, sel_button_pressed, forward_button_pressed, back_button_pressed);
-// 	if (current_state_ == State::calibrating) calibration_state_machine(current_millis, sel_button_pressed, forward_button_pressed, back_button_pressed);
-// 	calibration_button_pressed_flag_mechanism(current_millis);
-
-	sel_button_pressed = false;
+	_sel_button_pressed = false;
 }
 
 bool JointsManager::change_state_conditions(uint32_t& current_millis, bool& switch_command){
 
 	bool conditions = switch_command && (current_state_ != State::calibrating);
-						//&& (calibrationData.calibrationStateButtonChangeFlag == false)
-						//&& (abs(current_millis - lastMillisChangedState) > 2000);
 	if (conditions) switch_command = false;
 	return conditions;
 }
@@ -133,7 +135,7 @@ std::map<Configuration::JointsNames, double> JointsManager::get_last_joint_setpo
 	return last_joint_setpoints_;
 }
 
-double JointsManager::get_last_joint_setpoints(Configuration::JointsNames& _joint)
+double JointsManager::get_last_joint_setpoints(Configuration::JointsNames _joint)
 {
 	return last_joint_setpoints_[_joint];
 }

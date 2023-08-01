@@ -28,6 +28,7 @@ void Executor::associations()
 	torso_posture_controller_.assoc_config(config_.control.torso_posture);
 	left_foot_roll_centering_controller_.assoc_config(config_.control.foot_roll_centering);
 	right_foot_roll_centering_controller_.assoc_config(config_.control.foot_roll_centering);
+	global_kinematics_.assoc_config(config_.kinematics);
 }
 
 void Executor::initialize_servo_setpoints()

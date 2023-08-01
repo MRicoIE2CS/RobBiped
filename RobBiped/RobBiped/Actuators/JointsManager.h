@@ -64,8 +64,8 @@ class JointsManager : public I_PeriodicTask{
 			uint32_t serial_print_period_ms = 400;
 		} calibration_data_;
 
-		void check_state(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
-		void calibration_mode_enter_exit_conditions(uint32_t current_millis, bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
+		void check_state(bool &_power_onoff_command, bool &_calibration_onoff, bool &_sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
+		void calibration_mode_enter_exit_conditions(uint32_t current_millis, bool &calibration_onoff_command);
 		void calibration_state_machine(uint32_t current_millis, bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
 		void calibration_button_pressed_flag_mechanism(uint32_t current_millis);
 		void calibration_servo_selection(bool& sel_button_pressed, bool forward_button_pressed, bool back_button_pressed);
@@ -126,7 +126,7 @@ class JointsManager : public I_PeriodicTask{
 		*  @param[in] _joint Joint name.
 		*  @return double Last joint setpoint angle.
 		*/
-		double get_last_joint_setpoints(Configuration::JointsNames& _joint);
+		double get_last_joint_setpoints(Configuration::JointsNames _joint);
 
 		void update(UserInput& _user_input);
 		void servo_update();

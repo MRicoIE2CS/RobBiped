@@ -82,6 +82,7 @@ struct Configs
 		}gyro_acc;
 
 	struct Kinematics {
+		double d_hip_width = 90.4;		// Lateral distance between both hip roll joints (lh)
 		double height_hip = 85;			// Height between joints of the hip (l1)
 		double height_hip_knee = 79;	// Height between knee and the first joint of the hip (thigh) (l2)
 		double height_knee_ankle = 63;	// Height between ankle and knee (calf) (l3)

@@ -26,6 +26,7 @@
 #include "../Actuators/JointsManager.h"
 #include "../Control/FootSupport/FootRollCentering.h"
 #include "../Control/TorsoPosture/TorsoPosture.h"
+#include "../Kinematics/GlobalKinematics.h"
 #include "../Sensors/GyroscopeAccelerometerManager.h"
 #include "../Sensors/ForceSensorsManager.h"
 #include "../UserInput/UserInput.h"
@@ -51,6 +52,7 @@ class Executor {
 		Control::TorsoPosture torso_posture_controller_;
 		Control::FootRollCentering left_foot_roll_centering_controller_;
 		Control::FootRollCentering right_foot_roll_centering_controller_;
+		GlobalKinematics global_kinematics_;
 		///// END OBJECT TASKS __//
 
 		/////____________ APPLICATION EXCLUSIVE OBJECTS AND METHODS: __//
@@ -88,14 +90,25 @@ class Executor {
 
 		// Other state machine flags
 		bool application_on = false;
+
+		ExpFilter some_exp_filter_;
+		
+		// 
+		SignalGenerator sin_signal;
+
+		// Kinematic objects and definitions
+		double right_foot_center_ = 0.0;
+		GlobalKinematics::PosePhases initial_phase_ = GlobalKinematics::PosePhases::DSP_right;
+		// Defined desired hip height
+		double desired_hip_height_ = 280.0;
+		// Defined desired step width
+		double desired_step_width_ = 150.0;
 		
 		// Control tasks' objects
 		double torso_upright_pitch_control_action = 0.0;
-		double torso_setpoint_ = -0.05;
+		double torso_setpoint_ = 0.05;
 		ExpFilter torso_pitch_exp_filter_;
 		double local_zmp_lateral_deviation_setpoint_ = 0.0;
-		ExpFilter left_zmp_lateral_exp_filter_;
-		ExpFilter right_zmp_lateral_exp_filter_;
 		double left_foot_roll_centering_action = 0.0;
 		double right_foot_roll_centering_action = 0.0;
 

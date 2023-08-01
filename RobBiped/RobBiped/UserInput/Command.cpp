@@ -39,6 +39,9 @@ void Command::listen_for_commands()
 		else if (command.equals("servo.pwr")){
 			commands.servo_onoff_toggle = true;
 		}
+		else if (command.equals("servo.calib")){
+			commands.servo_calibration_onoff_toggle = true;
+		}
 		else if (command.equals("servo.sel")){
 			commands.servo_selection_button_emulation = true;
 		}
