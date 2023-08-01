@@ -73,11 +73,12 @@ void ForwardKinematics::Geometric::get_position_from_length_and_angles(
 const double &_leg_length_mm, const double &_forward_angle_rad, const double &_lateral_angle_rad,
 Vector3d &_desired_position)
 {
-	_desired_position(0) = _leg_length_mm * cos(_forward_angle_rad) * cos(_lateral_angle_rad);
-	_desired_position(1) = _leg_length_mm * sin(_forward_angle_rad) * cos(_lateral_angle_rad);
-	_desired_position(2) = _leg_length_mm * cos(_forward_angle_rad) * sin(_lateral_angle_rad);
+	_desired_position(0) = _leg_length_mm * sin(_forward_angle_rad);
+	_desired_position(1) = _leg_length_mm * sin(_lateral_angle_rad);
+	_desired_position(2) = _leg_length_mm * cos(_forward_angle_rad) * cos(_lateral_angle_rad);
 }
 
+// TODO: Check method to comply with conventions
 void ForwardKinematics::Geometric::get_length_and_angles_from_position(
 		const Vector3d &_position,
 		double &_leg_length_mm, double &_forward_angle_rad, double &_lateral_angle_rad)

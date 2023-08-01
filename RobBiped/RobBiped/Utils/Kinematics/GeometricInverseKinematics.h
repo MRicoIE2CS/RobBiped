@@ -49,17 +49,17 @@ namespace Geometric {
 	*  calculation, a `true` bool value can be passed to the optional _invert_knee_side parameter.
 	*
 	*  Coordinate frame of the base:
-	*  - The forward direction corresponds to the y axis.
-	*  - The lateral direction corresponds to the z axis (not being used in this calculation).
-	*  - When in home position, the leg is extended through the x axis.
+	*  - The forward direction corresponds to the x axis.
+	*  - The lateral direction corresponds to the y axis (not being used in this calculation).
+	*  - When in home position, the leg is extended through the z axis.
 	*
 	*  Output angles' sign is positive corresponding to a positive z-axis rotation (in accordance with Denavit-Hartenberg direct
 	*  kinematics convention).
-	*  Coordinate frame of each link is positioned as:
+	*  Considering a supporting leg, the coordinate frame of each link is positioned as:
 	*  - Center is positioned on the joints center.
 	*  - X-axis is pointing to the extension of the link.
-	*  - Y-axis is pointing to the frontal direction (over the x-y plane of the base's coordinate frame).
-	*  - Z-axis is pointing to the lateral direction (normal to the x-y plane of the base's coordinate frame).
+	*  - Y-axis is pointing to the frontal direction (over the x-z plane of the base's coordinate frame).
+	*  - Z-axis is pointing to the lateral direction (normal to the x-z plane of the base's coordinate frame).
 	*
 	*  @param[in] _desired_position Desired position (x, y, z) vector(3) of the final effector relative to the base.
 	*  @param[in] _links_lengths Links lengths, in mm.

@@ -108,9 +108,9 @@ namespace Geometric {
 	*  desired frontal and lateral angles (against the vertical axis) of the final effector relative to the base coordinate frame.
 	*
 	*  Coordinate frame of the base:
-	*  - The forward direction corresponds to the y axis.
-	*  - The lateral direction corresponds to the z axis.
-	*  - When in home position, the leg is extended through the x axis.
+	*  - The forward direction corresponds to the x axis.
+	*  - The lateral direction corresponds to the y axis.
+	*  - When in home position, the leg is extended through the z axis.
 	*
 	*  @param[in] _leg_length_mm Desired leg length, in mm.
 	*  @param[in] _forward_angle_rad Desired frontal angle, in radians.
@@ -121,6 +121,7 @@ namespace Geometric {
 			const double &_leg_length_mm, const double &_forward_angle_rad, const double &_lateral_angle_rad,
 			Vector3d &_desired_position);
 
+	// TODO: Check method to comply with conventions
 	/*
 	*  @fn void get_length_and_angles_from_position(
 	*				const Vector3d &_position,
@@ -138,6 +139,7 @@ namespace Geometric {
 	*  @param[out] _forward_angle_rad Frontal angle, in radians.
 	*  @param[out] _lateral_angle_rad Lateral angle, in radians.
 	*/
+	// TODO: Check method to comply with conventions
 	void get_length_and_angles_from_position(
 			const Vector3d &_position,
 			double &_leg_length_mm, double &_forward_angle_rad, double &_lateral_angle_rad);

@@ -18,6 +18,8 @@
 
 #include "LegLength_IK.h"
 
+#include <iostream>
+
 #include "../../LinearAlgebra/ArduinoEigenDense.h"
 
 #include "../ForwardKinematics.h"
@@ -25,6 +27,9 @@
 
 using Eigen::Matrix3d;
 using Eigen::Vector3d;
+using Eigen::IOFormat;
+
+IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
 
 bool InverseKinematics::get_supporting_leg_joints_angles_from_desired_length_and_orientation(
 												const double& _desired_prismatic_length,
@@ -45,6 +50,7 @@ bool InverseKinematics::get_supporting_leg_joints_angles_from_desired_length_and
 
 	if (ret_val)
 	{
+		// TODO: Check if all this could be substituted by simply _final_effector_target_angle = _first_joint_target_angle - _second_joint_target_angle;
 		// Denavit-Hartenberg table
 		std::vector<Vector4d> DH_table;
 		Vector4d DH_row_1;
@@ -52,7 +58,7 @@ bool InverseKinematics::get_supporting_leg_joints_angles_from_desired_length_and
 		Vector4d DH_row_2;
 		DH_row_2 << _first_joint_target_angle, 0, _first_link_length, 0;
 		Vector4d DH_row_3;
-		DH_row_2 << _second_joint_target_angle, 0, _second_link_length, -HALF_PI;
+		DH_row_3 << _second_joint_target_angle, 0, _second_link_length, -HALF_PI;
 		DH_table.push_back(DH_row_1);
 		DH_table.push_back(DH_row_2);
 		DH_table.push_back(DH_row_3);

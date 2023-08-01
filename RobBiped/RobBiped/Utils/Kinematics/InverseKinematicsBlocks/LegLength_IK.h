@@ -44,8 +44,8 @@ namespace InverseKinematics {
 	*  Coordinate frame of each link is positioned as:
 	*  - Center is positioned on the joints center.
 	*  - X-axis is pointing to the extension of the link.
-	*  - Y-axis is pointing to the frontal direction (over the x-y plane of the base's coordinate frame).
-	*  - Z-axis is pointing to the lateral direction (left, normal to the x-y plane of the base's coordinate frame).
+	*  - Y-axis is pointing to the frontal direction (over the x-z plane of the base's coordinate frame).
+	*  - Z-axis is pointing to the lateral direction (left, normal to the x-z plane of the base's coordinate frame).
 	*
 	*  @param[in] _desired_prismatic_length Leg length, from the ankle pitch joint to the hip pitch joint, in mm.
 	*  @param[in] _forward_angle Angle of the vector that goes from the ankle pitch joint to the hip pitch joint,
