@@ -105,15 +105,28 @@ void GlobalKinematics::get_computed_leg_lengths(double &_left_leg_length_setpoin
 bool GlobalKinematics::get_joint_angles_for_leg_length(const double &_desired_prismatic_length, const double &_desired_forward_inclination_angle,
 														double &_down_joint, double &_mid_joint, double &_up_joint)
 {
-	return InverseKinematics::get_supporting_leg_joints_angles_from_desired_length_and_orientation(_desired_prismatic_length, _desired_forward_inclination_angle,
+	// Limits for prismatic length
+	// TODO: Get limits from configuration
+	double desired_prismatic_length = _desired_prismatic_length;
+	if (desired_prismatic_length < 115)
+	{
+		desired_prismatic_length = 115;
+	}
+	else if (desired_prismatic_length > 140)
+	{
+		desired_prismatic_length = 140;
+	}
+
+	// Computation
+	return InverseKinematics::get_supporting_leg_joints_angles_from_desired_length_and_orientation(desired_prismatic_length, _desired_forward_inclination_angle,
 														config_->height_knee_ankle, config_->height_hip_knee,
 														_down_joint, _mid_joint, _up_joint);
 }
 
 void GlobalKinematics::get_feet_distance(double &_frontal_distance, double &_lateral_distance)
 {
-	_frontal_distance = right_foot_center_x_ - left_foot_center_x_;
-	_lateral_distance = right_foot_center_y_ - left_foot_center_y_;
+	_frontal_distance = left_foot_center_x_ - right_foot_center_x_;
+	_lateral_distance = left_foot_center_y_ - right_foot_center_y_;
 }
 
 void GlobalKinematics::get_right_foot_coordinates(double &_x, double &_y)

@@ -98,10 +98,12 @@ class GlobalKinematics : public I_PeriodicTask {
 
 		// Computes forward and inverse kinematics to obtain joint angles from desired prismatic length (leg length,
 		// from hip pitch joint to ankle pitch joint) and desired forward inclination angle
+		// Prismatic length allowed range: [115-140]
+		// TODO: Get limits from configuration
 		bool get_joint_angles_for_leg_length(const double &_desired_prismatic_length, const double &_desired_forward_inclination_angle,
 											double &_down_joint, double &_mid_joint, double &_up_joint);
 
-		// Returns the distance from the right foot to the left foot
+		// Returns the distance to the left foot from the right foot
 		void get_feet_distance(double &_frontal_distance, double &_lateral_distance);
 		// Returns the coordinates of the right foot
 		void get_right_foot_coordinates(double &_x, double &_y);
