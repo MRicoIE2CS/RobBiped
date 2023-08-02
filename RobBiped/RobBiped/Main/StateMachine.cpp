@@ -155,6 +155,7 @@ void Executor::always_executes()
 // 		left_foot_roll_centering_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
 // 		right_foot_roll_centering_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
 
+		// Foot-roll controllers
 		left_foot_roll_centering_action = 0.0;
 		if (force_sensors_manager_.is_tare_left_performed())
 		{
@@ -223,11 +224,20 @@ void Executor::state1_execution()
 		
 		// Sinusoidal signal to obtain trajectory
 		double unitary_value = sin_signal.generate_trajectory();
-		Serial.println("sin_signal: \t" + (String)unitary_value);
+		
+		// TODO: Ask forceSensorsManager if we have changed walking phase, and change the state machine accordingly
+		Serial.println("Touching ground? left,right: \t" + (String)force_sensors_manager_.is_left_foot_touching_ground() + "\t" + (String)force_sensors_manager_.is_right_foot_touching_ground());
 		
 		// Desired leg length
 		double DSP_CM_setpoint_ = 20 + (desired_step_width_ - 40) * unitary_value;
 		bool retcode_compute_lateral_DSP_kinematics = global_kinematics_.compute_lateral_DSP_kinematics(DSP_CM_setpoint_);
+
+		// Computation of global coordinates of the ZMP
+		force_sensors_manager_.compute_global_ZMP(global_kinematics_);
+		int16_t ZMP_x_mm;
+		int16_t ZMP_y_mm;
+		force_sensors_manager_.get_global_ZMP(ZMP_x_mm, ZMP_y_mm);
+		Serial.println("ZMP_x,y: \t" + (String)ZMP_x_mm + "\t" + (String)ZMP_y_mm);
 		
 		double left_roll_angle;
 		double right_roll_angle;
