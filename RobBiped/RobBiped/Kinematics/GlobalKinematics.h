@@ -58,9 +58,9 @@ class GlobalKinematics : public I_PeriodicTask {
 		double home_roll_angle_;
 		double home_leg_length_;
 
-		// Lateral coordinates in ground (Y-axis)
-		double right_foot_center_;
-		double left_foot_center_;
+		// Coordinates in ground, for each feet
+		double right_foot_center_x_, left_foot_center_x_ = 0.0;
+		double right_foot_center_y_, left_foot_center_y_ = 0.0;
 
 		// Computed lateral roll angle setpoints
 		double left_foot_roll_setpoint_, right_foot_roll_setpoint_;
@@ -98,9 +98,17 @@ class GlobalKinematics : public I_PeriodicTask {
 
 		// Computes forward and inverse kinematics to obtain joint angles from desired prismatic length (leg length,
 		// from hip pitch joint to ankle pitch joint) and desired forward inclination angle
+		// Prismatic length allowed range: [115-140]
+		// TODO: Get limits from configuration
 		bool get_joint_angles_for_leg_length(const double &_desired_prismatic_length, const double &_desired_forward_inclination_angle,
 											double &_down_joint, double &_mid_joint, double &_up_joint);
 
+		// Returns the distance to the left foot from the right foot
+		void get_feet_distance(double &_frontal_distance, double &_lateral_distance);
+		// Returns the coordinates of the right foot
+		void get_right_foot_coordinates(double &_x, double &_y);
+		// Returns the coordinates of the left foot
+		void get_left_foot_coordinates(double &_x, double &_y);
 	};
 
 #endif

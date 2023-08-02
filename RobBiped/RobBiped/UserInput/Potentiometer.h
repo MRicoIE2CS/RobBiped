@@ -19,31 +19,26 @@
 #ifndef _POTENTIOMETER_h
 #define _POTENTIOMETER_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#include "Arduino.h"
 
 #include "../Utils/Filters/ExponentialFilter.h"
 
 class Potentiometer {
-	
+
 	private:
-		
+
 		uint8_t HW_pin_;
 		uint16_t value_;
 		ExpFilter exp_filter_;
-		
+
 	public:
-	
+
 		void setup(uint8_t _pin, uint32_t _time_filter);
-	
+
+		// 0-4095 for 12 bits on 0-3.3V. [ESP32]
 		uint16_t read_HW_value();
-		
+
 		uint16_t get_value();
 	};
 
-
 #endif
-

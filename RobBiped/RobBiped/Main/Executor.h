@@ -66,6 +66,7 @@ class Executor {
 		bool state0_first_time = true;
 		bool state0_finished = false;
 		void state0_execution();
+		bool state1_first_time = true;
 		uint8_t state1_phase = 0;
 		bool state1_finished = false;
 		void state1_execution();
@@ -90,6 +91,7 @@ class Executor {
 
 		// Other state machine flags
 		bool application_on = false;
+		bool get_up = false;
 
 		ExpFilter some_exp_filter_;
 		

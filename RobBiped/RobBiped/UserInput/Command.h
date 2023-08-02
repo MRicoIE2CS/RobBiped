@@ -62,7 +62,8 @@ struct Command
 		bool squats_off = false;
 		bool squats_debug_on = false;
 		bool squats_debug_off = false;
-		bool application_on = false;
+		bool application_onoff = false;
+		bool get_up_down = false;
 	}commands;
 	
 private:
