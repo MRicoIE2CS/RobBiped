@@ -138,7 +138,7 @@ public:
 	bool is_left_foot_touching_ground();
 	bool is_right_foot_touching_ground();
 
-	void compute_global_ZMP(GlobalKinematics &_global_kinematics);
+	void compute_global_ZMP(GlobalKinematics *_global_kinematics);
 	void get_global_ZMP(int16_t &_x_mm, int16_t &_y_mm);
 };
 
