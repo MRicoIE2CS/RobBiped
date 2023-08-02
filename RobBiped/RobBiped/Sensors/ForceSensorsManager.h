@@ -21,6 +21,7 @@
 
 #include "arduino.h"
 
+#include "../Kinematics/GlobalKinematics.h"
 #include "../Main/I_PeriodicTask.h"
 #include "../Main/Configs.h"
 #include "../UserInput/Command.h"
@@ -64,6 +65,7 @@ private:
 	ExpFilterPeakReject filter_RightFoot_RightFront_;
 
 	Configuration::Configs::ForceSensors *config_;
+	Configuration::Configs::Kinematics *kinematics_config_;
 
 	double *calibration_LeftFoot_LeftFront_cell_;
 	double *calibration_LeftFoot_RightFront_cell_;
@@ -95,7 +97,11 @@ private:
 	ExpFilter filter_zmp_left_foot_y_mm_;
 	ExpFilter filter_zmp_right_foot_x_mm_;
 	ExpFilter filter_zmp_right_foot_y_mm_;
-	void calculate_ZMP();
+	void calculate_local_ZMP();
+	int16_t global_zmp_x_mm_;
+	int16_t global_zmp_y_mm_;
+	ExpFilter filter_zmp_x_mm_;
+	ExpFilter filter_zmp_y_mm_;
 
 	void print_values();
 	void print_ZMP();
@@ -131,6 +137,9 @@ public:
 	
 	bool is_left_foot_touching_ground();
 	bool is_right_foot_touching_ground();
+
+	void compute_global_ZMP(GlobalKinematics &_global_kinematics);
+	void get_global_ZMP(int16_t &_x_mm, int16_t &_y_mm);
 };
 
 #endif

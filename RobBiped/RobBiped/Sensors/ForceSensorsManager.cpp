@@ -114,7 +114,7 @@ bool ForceSensorsManager::update()
 		value_RightFoot_RightFront_ = filter_RightFoot_RightFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(7u)) * *calibration_RightFoot_RightFront_cell_;
 		value_RightFoot_RightFront_ = (value_RightFoot_RightFront_ < 0) ? 0 : value_RightFoot_RightFront_;
 		
-		calculate_ZMP();
+		calculate_local_ZMP();
 
 		check_touch_detection();
 		
@@ -225,43 +225,47 @@ void ForceSensorsManager::tare_RightFoot()
 	is_tare_right_performed_ = true;
 }
 
-void ForceSensorsManager::calculate_ZMP()
+void ForceSensorsManager::calculate_local_ZMP()
 {
 	int32_t force_sum =
 			value_LeftFoot_LeftBack_ + value_LeftFoot_LeftFront_ + value_LeftFoot_RightBack_ + value_LeftFoot_RightFront_;
 	int32_t force_ponderatedSum =
-			(value_LeftFoot_LeftFront_ * *separation_FrontBack_mm_) + (value_LeftFoot_RightFront_ * *separation_FrontBack_mm_);
+			(value_LeftFoot_LeftFront_ + value_LeftFoot_RightFront_) * *separation_FrontBack_mm_;
 
 	// ZMP X coordinate of the left foot, in mm, from the left-back sensor
-	zmp_left_foot_x_mm_ = filter_zmp_left_foot_x_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
+	//zmp_left_foot_x_mm_ = filter_zmp_left_foot_x_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
+	zmp_left_foot_x_mm_ = (force_sum == 0) ? 0 : force_ponderatedSum / force_sum;
 	// ZMP coordinate frame translation to the foot center
 	zmp_left_foot_x_mm_ -= *separation_FrontBack_mm_ / 2;
 
 	// Y coordinate axis is positive pointing to the outside of the body
 	force_ponderatedSum =
-			(value_LeftFoot_LeftBack_ * *separation_LeftRight_mm_) + (value_LeftFoot_LeftFront_ * *separation_LeftRight_mm_);
+			(value_LeftFoot_LeftBack_ + value_LeftFoot_RightFront_) * *separation_LeftRight_mm_;
 
 	// ZMP Y coordinate of the left foot, in mm, from the left-back sensor
-	zmp_left_foot_y_mm_ = filter_zmp_left_foot_y_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
+	//zmp_left_foot_y_mm_ = filter_zmp_left_foot_y_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
+	zmp_left_foot_y_mm_ = (force_sum == 0) ? 0 : force_ponderatedSum / force_sum;
 	// ZMP coordinate frame translation to the foot center
 	zmp_left_foot_y_mm_ -= *separation_LeftRight_mm_ / 2;
 
 	force_sum =
 			value_RightFoot_LeftBack_ + value_RightFoot_LeftFront_ + value_RightFoot_RightBack_ + value_RightFoot_RightFront_;
 	force_ponderatedSum =
-			(value_RightFoot_LeftFront_ * *separation_FrontBack_mm_) + (value_RightFoot_RightFront_ * *separation_FrontBack_mm_);
+			(value_RightFoot_LeftFront_ + value_RightFoot_RightFront_) * *separation_FrontBack_mm_;
 
 	// ZMP X coordinate of the right foot, in mm, from the left-back sensor
-	zmp_right_foot_x_mm_ = filter_zmp_right_foot_x_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
+	//zmp_right_foot_x_mm_ = filter_zmp_right_foot_x_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
+	zmp_right_foot_x_mm_ = (force_sum == 0) ? 0 : force_ponderatedSum / force_sum;
 	// ZMP coordinate frame translation to the foot center
 	zmp_right_foot_x_mm_ -= *separation_FrontBack_mm_ / 2;
 
 	// Y coordinate axis is positive pointing to the outside of the body
 	force_ponderatedSum =
-			(value_RightFoot_LeftBack_ * *separation_LeftRight_mm_) + (value_RightFoot_LeftFront_ * *separation_LeftRight_mm_);
+			(value_RightFoot_LeftBack_ + value_RightFoot_LeftFront_) * *separation_LeftRight_mm_;
 
 	// ZMP Y coordinate of the right foot, in mm, from the left-back sensor
-	zmp_right_foot_y_mm_ = filter_zmp_right_foot_y_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
+	//zmp_right_foot_y_mm_ = filter_zmp_right_foot_y_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
+	zmp_right_foot_y_mm_ = (force_sum == 0) ? 0 : force_ponderatedSum / force_sum;
 	// ZMP coordinate frame translation to the foot center
 	zmp_right_foot_y_mm_ -= *separation_LeftRight_mm_ / 2;
 }
@@ -384,4 +388,32 @@ bool ForceSensorsManager::is_left_foot_touching_ground()
 bool ForceSensorsManager::is_right_foot_touching_ground()
 {
 	return is_right_foot_touching_ground_;
+}
+
+void ForceSensorsManager::compute_global_ZMP(GlobalKinematics &_global_kinematics)
+{
+	// Coordinates of the center of the right foot
+	double right_foot_x, right_foot_y;
+	_global_kinematics.get_right_foot_coordinates(right_foot_x, right_foot_y);
+	// Distance between feet on the ground
+	double feet_distance_x, feet_distance_y;
+	_global_kinematics.get_feet_distance(feet_distance_x, feet_distance_y);
+
+	// X coordinate
+	int32_t all_force_sum =
+			value_LeftFoot_LeftBack_ + value_LeftFoot_LeftFront_ + value_LeftFoot_RightBack_ + value_LeftFoot_RightFront_
+			+ value_RightFoot_LeftBack_ + value_RightFoot_LeftFront_ + value_RightFoot_RightBack_ + value_RightFoot_RightFront_;
+	int32_t force_left_sum =
+			value_LeftFoot_LeftBack_ + value_LeftFoot_LeftFront_ + value_LeftFoot_RightBack_ + value_LeftFoot_RightFront_;
+
+	global_zmp_x_mm_ = right_foot_x + zmp_right_foot_x_mm_ + (force_left_sum / all_force_sum) * (zmp_left_foot_x_mm_ - zmp_right_foot_x_mm_ + feet_distance_x);
+
+	// Y coordinate
+	global_zmp_y_mm_ = right_foot_y + zmp_right_foot_y_mm_ + (force_left_sum / all_force_sum) * (zmp_left_foot_y_mm_ - zmp_right_foot_y_mm_ + feet_distance_y);
+}
+
+void ForceSensorsManager::get_global_ZMP(int16_t &_x_mm, int16_t &_y_mm)
+{
+	_x_mm = global_zmp_x_mm_;
+	_y_mm = global_zmp_y_mm_;
 }
