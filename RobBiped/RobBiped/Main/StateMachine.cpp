@@ -21,11 +21,29 @@ using Eigen::Matrix2d;
 void Executor::read_commands()
 {
 	// Commands
-	if (command_->commands.application_on)
+	if (command_->commands.application_onoff && !application_on)
 	{
 		application_on = true;
 		Serial.println("application on::: ");
-		command_->commands.application_on = false;
+		command_->commands.application_onoff = false;
+	}
+	if (command_->commands.application_onoff && application_on)
+	{
+		application_on = false;
+		Serial.println("application off::: ");
+		command_->commands.application_onoff = false;
+	}
+	if (command_->commands.get_up_down && !get_up)
+	{
+		get_up = true;
+		Serial.println("get up::: ");
+		command_->commands.get_up_down = false;
+	}
+	if (command_->commands.get_up_down && get_up)
+	{
+		get_up = false;
+		Serial.println("get down::: ");
+		command_->commands.get_up_down = false;
 	}
 }
 
@@ -38,25 +56,44 @@ void Executor::state_machine_switch()
 		case 0:
 			if (application_on)
 			{
-				state_number++;
+				state_number = 1;
+				state1_first_time = true;
 				state1_phase = 0;
 				sin_signal.init();
+				break;
+			}
+			if (get_up)
+			{
+				state_number = 2;
+				state2_first_time = true;
 				break;
 			}
 			break;
 		case 1:
 			if (state1_phase && state1_finished)
 			{
-				state_number++;
-				waiting_first_time_ = true;
+// 				state_number++;
+// 				waiting_first_time_ = true;
+				break;
+			}
+			if (!application_on)
+			{
+				state_number = 0;
+				state0_first_time = true;
 				break;
 			}
 			break;
 		case 2:
 			if (!waiting_first_time_ && state2_finished)
 			{
-				state_number++;
-				state3_phase = 0;
+// 				state_number++;
+// 				state3_phase = 0;
+				break;
+			}
+			if (!get_up)
+			{
+				state_number = 0;
+				state0_first_time = true;
 				break;
 			}
 			break;
@@ -217,6 +254,13 @@ void Executor::state1_execution()
 {
 	// STATE 1: Just apply setpoints to ankle joints, and torso orientation
 
+	if (state1_first_time)
+	{
+		state1_first_time = false;
+		desired_hip_height_ = 280.0;
+		global_kinematics_.set_desired_hip_height(desired_hip_height_);
+	}
+
 	if (force_sensors_manager_.has_been_updated)
 	{
 		// Potentiometer value sets the CM setpoint in Double Support Phase, along the Y-axis
@@ -226,18 +270,18 @@ void Executor::state1_execution()
 		double unitary_value = sin_signal.generate_trajectory();
 		
 		// TODO: Ask forceSensorsManager if we have changed walking phase, and change the state machine accordingly
-		Serial.println("Touching ground? left,right: \t" + (String)force_sensors_manager_.is_left_foot_touching_ground() + "\t" + (String)force_sensors_manager_.is_right_foot_touching_ground());
+		//Serial.println("Touching ground? left,right: \t" + (String)force_sensors_manager_.is_left_foot_touching_ground() + "\t" + (String)force_sensors_manager_.is_right_foot_touching_ground());
 		
-		// Desired leg length
+		// Desired CM position
 		double DSP_CM_setpoint_ = 20 + (desired_step_width_ - 40) * unitary_value;
 		bool retcode_compute_lateral_DSP_kinematics = global_kinematics_.compute_lateral_DSP_kinematics(DSP_CM_setpoint_);
 
 		// Computation of global coordinates of the ZMP
-		force_sensors_manager_.compute_global_ZMP(global_kinematics_);
+		force_sensors_manager_.compute_global_ZMP(&global_kinematics_);
 		int16_t ZMP_x_mm;
 		int16_t ZMP_y_mm;
 		force_sensors_manager_.get_global_ZMP(ZMP_x_mm, ZMP_y_mm);
-		Serial.println("ZMP_x,y: \t" + (String)ZMP_x_mm + "\t" + (String)ZMP_y_mm);
+		//Serial.println("ZMP_x,y: \t" + (String)ZMP_x_mm + "\t" + (String)ZMP_y_mm);
 		
 		double left_roll_angle;
 		double right_roll_angle;
@@ -275,6 +319,52 @@ void Executor::state1_execution()
 void Executor::state2_execution()
 {
 	// STATE 2: 
+	
+	if (state2_first_time)
+	{
+		state2_first_time = false;
+
+		
+	}
+
+	if (force_sensors_manager_.has_been_updated)
+	{
+		// Potentiometer value sets the CM setpoint in Double Support Phase, along the Y-axis
+		double potentiometer_value = some_exp_filter_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0);
+		// Desired hip height
+		double desired_hip_height = 280 + 25 * potentiometer_value;
+		Serial.println("desired_hip_height: \t" + (String)desired_hip_height);
+
+		global_kinematics_.set_desired_hip_height(desired_hip_height);
+		
+		double home_roll_angle = 0.0;
+
+		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, home_roll_angle);
+		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -home_roll_angle);
+		bool ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, -home_roll_angle);
+		bool ret_val4 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, home_roll_angle);
+
+		double leg_length = desired_hip_height - config_.kinematics.height_hip - config_.kinematics.height_ankle - config_.kinematics.height_foot;
+		double ankle_pitch_angle;
+		double knee_pitch_angle;
+		double hip_pitch_angle;
+		bool ret_val5 = global_kinematics_.get_joint_angles_for_leg_length(leg_length, 0.0, ankle_pitch_angle, knee_pitch_angle, hip_pitch_angle);
+
+		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_pitch_angle);
+		ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, knee_pitch_angle);
+		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, hip_pitch_angle);
+
+		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_pitch_angle);
+		ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, knee_pitch_angle);
+		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, hip_pitch_angle);
+
+		// Computation of global coordinates of the ZMP
+// 		force_sensors_manager_.compute_global_ZMP(&global_kinematics_);
+// 		int16_t ZMP_x_mm;
+// 		int16_t ZMP_y_mm;
+// 		force_sensors_manager_.get_global_ZMP(ZMP_x_mm, ZMP_y_mm);
+// 		Serial.println("ZMP_x,y: \t" + (String)ZMP_x_mm + "\t" + (String)ZMP_y_mm);
+	}
 }
 
 void Executor::state3_execution()

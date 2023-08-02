@@ -120,12 +120,12 @@ void Command::listen_for_commands()
 		else if (command.equals("squats.deb.off")){
 			commands.squats_debug_off = true;
 		}
-		else if (command.equals("app.on")){
-			commands.application_on = true;
+		else if (command.equals("app.onoff")){
+			commands.application_onoff = true;
 		}
-		else if (command.equals("app.off"))
+		else if (command.equals("get.up"))
 		{
-			commands.application_on = false;
+			commands.get_up_down = true;
 		}
 		else if (command.equals("off"))
 		{

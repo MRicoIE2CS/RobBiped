@@ -70,7 +70,7 @@ void Executor::initialize_application()
 	// Kinematics will be updated each time the sensors are updated, so task timing configuration is not needed.
 	global_kinematics_.init(right_foot_center_, initial_phase_, desired_hip_height_, desired_step_width_);
 
-	some_exp_filter_.set_time_constant(250);
+	some_exp_filter_.set_time_constant(20);
 
 	sin_signal.configure_signal(SignalGenerator::SignalType::sine, 2000, 0.5, 0.5, 0);
 }

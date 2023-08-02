@@ -19,11 +19,7 @@
 #ifndef _READUSERINPUT_h
 #define _READUSERINPUT_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "Arduino.h"
-#else
-	#include "WProgram.h"
-#endif
+#include "Arduino.h"
 
 #include "../Main/I_PeriodicTask.h"
 #include "../Main/Configs.h"
@@ -49,6 +45,7 @@ class UserInput : public I_PeriodicTask {
 		enum class AnalogInputList { potentiometer1, potentiometer2 };
 
 		// 0-4095 for 12 bits on 0-3.3V. [ESP32]
+		// TODO: Offer the measurement in double, in the range [0-1]
 		uint16_t get_analog_value(AnalogInputList select_input);
 
 		bool get_digital_value(DigitalInputList select_input);
