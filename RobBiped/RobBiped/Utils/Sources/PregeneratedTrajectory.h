@@ -16,8 +16,46 @@
  * limitations under the License.
  */ 
 
+#ifndef _PREGENERATED_TRAJECTORY_h
+#define _PREGENERATED_TRAJECTORY_h
+
+#include "Arduino.h"
+
+#include <vector>
+
+#include "../../Main/I_PeriodicTask.h"
 #include "../FilesystemStorage/LittleFS/LITTLEFS.h"
 
 using fs::LITTLEFSFS;
 
+// This class reads an specified file within the LittleFS filesystem,
+// and parses the file, getting interpolated samples of the signal.
+// The file must be formatted as a comma separated values (CSV) file.
+class PregeneratedTrajectory : public I_PeriodicTask{
 
+	private:
+
+	uint32_t initial_time_;
+	
+	uint32_t sampling_time_ms_ = 10;
+
+	String filename_ = "/pregenerated_trajectory.txt";
+
+	std::vector<double> trajectory_vector_;
+	uint32_t numberof_samples_;
+	uint32_t final_time_ms_;
+
+	public:
+
+	void set_file_name(String &_filename);
+
+	void set_sampling_time_ms(uint32_t _sampling_time_ms);
+
+	void init();
+
+	void start_trajectory();
+
+	double get_value();
+};
+
+#endif
