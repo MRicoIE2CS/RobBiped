@@ -73,6 +73,10 @@ void Executor::initialize_application()
 	some_exp_filter_.set_time_constant(20);
 
 	sin_signal.configure_signal(SignalGenerator::SignalType::sine, 2000, 0.5, 0.5, 0);
+
+	CM_path_y.set_sampling_time_ms(CM_path_y_sampletime);
+	CM_path_y.set_file_name(CM_path_y_filename);
+	CM_path_y.init();
 }
 
 void Executor::inputs()

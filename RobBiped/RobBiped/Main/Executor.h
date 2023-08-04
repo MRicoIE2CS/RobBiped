@@ -34,6 +34,7 @@
 #include "../Utils/Control/Waiting.h"
 #include "../Utils/Filters/ExponentialFilter.h"
 #include "../Utils/SignalGenerator.h"
+#include "../Utils/Sources/PregeneratedTrajectory.h"
 
 class Executor {
 
@@ -94,17 +95,23 @@ class Executor {
 		bool get_up = false;
 
 		ExpFilter some_exp_filter_;
+
+		// Pregenerated trajectories
+		PregeneratedTrajectory CM_path_y;
+		String CM_path_y_filename = "/CM_y.txt";
+		uint32_t CM_path_y_sampletime = 100;
+		//PregeneratedTrajectory ZMP_path_y;
 		
 		// 
 		SignalGenerator sin_signal;
 
 		// Kinematic objects and definitions
-		double right_foot_center_ = 0.0;
+		double right_foot_center_ = -15.0;
 		GlobalKinematics::PosePhases initial_phase_ = GlobalKinematics::PosePhases::DSP_right;
 		// Defined desired hip height
 		double desired_hip_height_ = 280.0;
 		// Defined desired step width
-		double desired_step_width_ = 150.0;
+		double desired_step_width_ = 100.0;
 		
 		// Control tasks' objects
 		double torso_upright_pitch_control_action = 0.0;
