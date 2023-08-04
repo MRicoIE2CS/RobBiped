@@ -314,40 +314,40 @@ float GyroscopeAccelerometerManager::get_value_gz_deg_s()
 
 void GyroscopeAccelerometerManager::get_value_angle_z_pitch_deg(float& _ang_pitch)
 {
-	_ang_pitch = ang_x_;
+	_ang_pitch = - ang_x_;
 }
 
 float GyroscopeAccelerometerManager::get_value_angle_z_pitch_deg()
 {
-	return ang_x_;
+	return - ang_x_;
 }
 
 void GyroscopeAccelerometerManager::get_value_angle_z_roll_deg(float& _ang_roll)
 {
-	_ang_roll = ang_y_;
+	_ang_roll = - ang_y_;
 }
 
 float GyroscopeAccelerometerManager::get_value_angle_z_roll_deg()
 {
-	return ang_y_;
+	return - ang_y_;
 }
 
 void GyroscopeAccelerometerManager::get_value_angle_z_pitch_rad(float& _ang_pitch)
 {
-	_ang_pitch = ang_x_ * DEG_TO_RAD;
+	_ang_pitch = - ang_x_ * DEG_TO_RAD;
 }
 
 float GyroscopeAccelerometerManager::get_value_angle_z_pitch_rad()
 {
-	return ang_x_ * DEG_TO_RAD;
+	return - ang_x_ * DEG_TO_RAD;
 }
 
 void GyroscopeAccelerometerManager::get_value_angle_z_roll_rad(float& _ang_roll)
 {
-	_ang_roll = ang_y_ * DEG_TO_RAD;
+	_ang_roll = - ang_y_ * DEG_TO_RAD;
 }
 
 float GyroscopeAccelerometerManager::get_value_angle_z_roll_rad()
 {
-	return ang_y_ * DEG_TO_RAD;
+	return - ang_y_ * DEG_TO_RAD;
 }

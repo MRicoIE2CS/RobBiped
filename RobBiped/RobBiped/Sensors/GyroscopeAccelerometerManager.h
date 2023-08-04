@@ -93,6 +93,8 @@ public:
 	void init();
 
 	bool update();
+	
+	// TODO!: Check sign convention of all the getters
 
 	void get_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2, float& _gx_deg_s, float& _gy_deg_s, float& _gz_deg_s);
 
