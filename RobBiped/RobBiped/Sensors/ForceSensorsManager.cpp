@@ -240,7 +240,7 @@ void ForceSensorsManager::calculate_local_ZMP()
 
 	// Y coordinate axis is positive pointing to the outside of the body
 	force_ponderatedSum =
-			(value_LeftFoot_LeftBack_ + value_LeftFoot_RightFront_) * *separation_LeftRight_mm_;
+			(value_LeftFoot_LeftBack_ + value_LeftFoot_LeftFront_) * *separation_LeftRight_mm_;
 
 	// ZMP Y coordinate of the left foot, in mm, from the left-back sensor
 	//zmp_left_foot_y_mm_ = filter_zmp_left_foot_y_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);

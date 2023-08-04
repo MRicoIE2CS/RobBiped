@@ -223,8 +223,8 @@ void Executor::state0_execution()
 
 		double home_roll_angle = global_kinematics_.get_home_roll_angle();
 
-		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, home_roll_angle);
-		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -home_roll_angle);
+		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, global_kinematics_.compensate_hip_roll_angle(home_roll_angle));
+		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -global_kinematics_.compensate_hip_roll_angle(home_roll_angle));
 		bool ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, -home_roll_angle);
 		bool ret_val4 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, home_roll_angle);
 
@@ -237,11 +237,29 @@ void Executor::state0_execution()
 
 		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_pitch_angle);
 		ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, knee_pitch_angle);
-		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, hip_pitch_angle);
+		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, hip_pitch_angle + torso_upright_pitch_control_action);
 
 		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_pitch_angle);
 		ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, knee_pitch_angle);
-		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, hip_pitch_angle);
+		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, hip_pitch_angle + torso_upright_pitch_control_action);
+	}
+
+	if (gyroscope_accelerometer_manager_.has_been_updated)
+	{
+		double home_leg_length = global_kinematics_.get_home_leg_lengths();
+		home_leg_length = home_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
+		double ankle_pitch_angle;
+		double knee_pitch_angle;
+		double hip_pitch_angle;
+		global_kinematics_.get_joint_angles_for_leg_length(home_leg_length, 0.0, ankle_pitch_angle, knee_pitch_angle, hip_pitch_angle);
+
+		servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_pitch_angle);
+		servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, knee_pitch_angle);
+		servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, hip_pitch_angle + torso_upright_pitch_control_action);
+
+		servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_pitch_angle);
+		servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, knee_pitch_angle);
+		servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, hip_pitch_angle + torso_upright_pitch_control_action);
 	}
 
 	// Robot starts in home position: All Joints' angles = 0.
@@ -259,22 +277,27 @@ void Executor::state1_execution()
 		state1_first_time = false;
 		desired_hip_height_ = 280.0;
 		global_kinematics_.set_desired_hip_height(desired_hip_height_);
+		CM_path_y.start_trajectory();
 	}
 
 	if (force_sensors_manager_.has_been_updated)
 	{
-		// Potentiometer value sets the CM setpoint in Double Support Phase, along the Y-axis
-		double potentiometer_value = some_exp_filter_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0);
+		double value_CM_ref = CM_path_y.get_value();
+		Serial.print("value_CM_ref \t");
+		Serial.println(value_CM_ref, 2);
 		
-		// Sinusoidal signal to obtain trajectory
-		double unitary_value = sin_signal.generate_trajectory();
+// 		// Potentiometer value sets the CM setpoint in Double Support Phase, along the Y-axis
+// 		double potentiometer_value = some_exp_filter_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0);
+// 		
+// 		// Sinusoidal signal to obtain trajectory
+// 		double unitary_value = sin_signal.generate_trajectory();
 		
 		// TODO: Ask forceSensorsManager if we have changed walking phase, and change the state machine accordingly
 		//Serial.println("Touching ground? left,right: \t" + (String)force_sensors_manager_.is_left_foot_touching_ground() + "\t" + (String)force_sensors_manager_.is_right_foot_touching_ground());
 		
 		// Desired CM position
-		double DSP_CM_setpoint_ = 20 + (desired_step_width_ - 40) * unitary_value;
-		bool retcode_compute_lateral_DSP_kinematics = global_kinematics_.compute_lateral_DSP_kinematics(DSP_CM_setpoint_);
+//		double DSP_CM_setpoint_ = 20 + (desired_step_width_ - 40) * unitary_value;
+		bool retcode_compute_lateral_DSP_kinematics = global_kinematics_.compute_lateral_DSP_kinematics(value_CM_ref);
 
 		// Computation of global coordinates of the ZMP
 		force_sensors_manager_.compute_global_ZMP(&global_kinematics_);
@@ -288,8 +311,8 @@ void Executor::state1_execution()
 		global_kinematics_.get_computed_angles(left_roll_angle, right_roll_angle);
 		
 		// Joint setpoint assignation.
-		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, left_roll_angle);
-		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -right_roll_angle);
+		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, global_kinematics_.compensate_hip_roll_angle(left_roll_angle));
+		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -global_kinematics_.compensate_hip_roll_angle(right_roll_angle));
 		bool ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, -left_roll_angle);
 		bool ret_val4 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, right_roll_angle);
 		
@@ -305,14 +328,14 @@ void Executor::state1_execution()
 		
 		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_pitch_angle);
 		ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, knee_pitch_angle);
-		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, hip_pitch_angle);
+		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, hip_pitch_angle + torso_upright_pitch_control_action);
 		
 		right_leg_length = right_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
 		global_kinematics_.get_joint_angles_for_leg_length(right_leg_length, 0.0, ankle_pitch_angle, knee_pitch_angle, hip_pitch_angle);
 
 		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_pitch_angle);
 		ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, knee_pitch_angle);
-		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, hip_pitch_angle);
+		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, hip_pitch_angle + torso_upright_pitch_control_action);
 	}
 }
 
@@ -333,7 +356,7 @@ void Executor::state2_execution()
 		double potentiometer_value = some_exp_filter_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0);
 		// Desired hip height
 		double desired_hip_height = 280 + 25 * potentiometer_value;
-		Serial.println("desired_hip_height: \t" + (String)desired_hip_height);
+		//Serial.println("desired_hip_height: \t" + (String)desired_hip_height);
 
 		global_kinematics_.set_desired_hip_height(desired_hip_height);
 		

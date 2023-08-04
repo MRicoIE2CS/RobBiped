@@ -109,6 +109,8 @@ class GlobalKinematics : public I_PeriodicTask {
 		void get_right_foot_coordinates(double &_x, double &_y);
 		// Returns the coordinates of the left foot
 		void get_left_foot_coordinates(double &_x, double &_y);
+
+		double compensate_hip_roll_angle(double &_desired_hip_roll_angle);
 	};
 
 #endif
