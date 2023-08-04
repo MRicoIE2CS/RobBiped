@@ -1,0 +1,10 @@
+Ay = 15; %10; % (mm) Adjustable parameter (Half width of the foot?)
+Bx = 50; %50; % (mm) Adjustable parameter (Length of the foot?)
+
+B = 85; %100; % (mm) Length of the step
+A = 70; %90; %150 - Ay; % Distance between the foot centers in Y direction (lateral)
+
+h = 240; %300; % (mm) Height of the center of mass (For the LIP model)
+
+T = 1; % (s) Period of the gait
+td = 1*T/4; %3*T/4; % (s) Time of DSP (Double Support Phase)
