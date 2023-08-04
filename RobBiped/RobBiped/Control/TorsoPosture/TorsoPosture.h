@@ -28,6 +28,7 @@
 
 namespace Control {
 
+// TODO: Include deadband compensation
 class TorsoPosture : public I_PeriodicTask
 {
 	private:

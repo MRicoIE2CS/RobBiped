@@ -26,16 +26,16 @@ Command* serial_command = Command::get_instance();
 void setup()
 {
 	Serial.begin(500000);
-	
+
 	while (!serial_command->commands.init)
 	{
 		Serial.println("type in 'init' to initialize");
 		serial_command->listen_for_commands();
 		delay(1000);
 	}
-	
+
 	executor.init();
-	
+
 	Serial.println("Initialize execution!");
 }
 
