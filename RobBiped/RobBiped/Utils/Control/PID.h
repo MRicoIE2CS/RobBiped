@@ -48,6 +48,12 @@ class PID {
 		// Setpoint weighting for derivative action
 		double on_derivative_setpoint_weight_ = 0.0;
 
+		// Deadband compensation constants
+		double negative_db_compensation = 0.0;
+		double positive_db_compensation = 0.0;
+		// Deadband compensation
+		double apply_inverse_deadband(const double &_u);
+
 		// Saturation constants
 		// By default, no saturation is applied, nor anti-windup technique for integral part
 		bool apply_saturation_ = false;
@@ -80,7 +86,7 @@ class PID {
 		void set_constants(double& _Kp, double& _Ki, double& _Kd);
 
 		/*
-		*  @fn void set_antiwindup(double& _Kw);
+		*  @fn void set_antiwindup(double& _Kw)
 		*  @brief Setter for the anti-windup constant.
 		*
 		*  @param[in] _Kw Anti-windup constant.
@@ -96,7 +102,7 @@ class PID {
 		void set_time_constant_millis(uint16_t& _millis);
 
 		/*
-		*  @fn void set_saturation_constants(bool& _apply_saturation = false, double& _lower_limit = 0.0, double& _upper_limit = 0.0);
+		*  @fn void set_saturation_constants(bool& _apply_saturation = false, double& _lower_limit = 0.0, double& _upper_limit = 0.0)
 		*  @brief Setter for the saturation limits to apply on the output of the controller.
 		*  This saturation will be used for the anti-windup mechanism of the integral part.
 		*  By default (when no calling this method), the PID does not apply saturation limitations to the output of the controller,
@@ -118,7 +124,18 @@ class PID {
 		void set_setpoint_weighting(double& _on_proportional, double& _on_derivative);
 
 		/*
-		*  @fn void compute_output(const double& _setpoint, const double& _feedback, double& _output);
+		*  @fn void set_deadband_compensation(double& _negative_deadband, double& _positive_deadband)
+		*  @brief Setter for the deadband values, for deadband compensation.
+		*  If the call is performed without arguments, or with values equal to 0, the deadband compensation is disabled.
+		*  (Deadband compensation is disabled by default)
+		*
+		*  @param[in] _negative_deadband Negative deadband.
+		*  @param[in] _positive_deadband Positive deadband.
+		*/
+		void set_deadband_compensation(const double& _negative_deadband = 0, const double& _positive_deadband = 0);
+
+		/*
+		*  @fn void compute_output(const double& _setpoint, const double& _feedback, double& _output)
 		*  @brief Output computation.
 		*
 		*  @param[in] _setpoint Setpoint.
@@ -128,7 +145,7 @@ class PID {
 		void compute_output(const double& _setpoint, const double& _feedback, double& _output);
 
 		/*
-		*  @fn void get_control_action_values(const double& _kp, const double& _ki, double& _kd);
+		*  @fn void get_control_action_values(const double& _kp, const double& _ki, double& _kd)
 		*  @brief Getter for the last values of the separated control components of the PID.
 		*
 		*  @param[out] _kp Proportional component.

@@ -48,6 +48,21 @@ void Control::PID::set_setpoint_weighting(double& _on_proportional, double& _on_
 	on_derivative_setpoint_weight_ = _on_derivative;
 }
 
+void Control::PID::set_deadband_compensation(const double& _negative_deadband, const double& _positive_deadband)
+{
+	negative_db_compensation = _negative_deadband;
+	positive_db_compensation = _positive_deadband;
+}
+
+double Control::PID::apply_inverse_deadband(const double &_u)
+{
+	if (0.0 == negative_db_compensation && 0.0 == positive_db_compensation) return _u;
+
+	if (_u > 0.0) return _u + positive_db_compensation;
+	else if (_u < 0.0) return _u - negative_db_compensation;
+	else return _u;
+}
+
 void Control::PID::compute_output(const double& _setpoint, const double& _feedback, double& _output)
 {
 	uint64_t current_millis_computation = millis();
@@ -97,6 +112,9 @@ void Control::PID::compute_output(const double& _setpoint, const double& _feedba
 	
 	// Sum of the components
 	double sum = proportional_action + integral_action + derivative_action;
+
+	// Deadband compensation
+	sum = apply_inverse_deadband(sum);
 
 	// Saturation
 	if (apply_saturation_) saturation(sum, lower_limit_, upper_limit_, _output);
