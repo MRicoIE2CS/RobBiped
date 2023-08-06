@@ -108,6 +108,8 @@ struct Configs
 			// Setpoint weighting constants
 			double proportional_setpoint_weight = 1.0;
 			double derivative_setpoint_weight = 0.0;
+			double negative_db_compensation = -0.1;
+			double positive_db_compensation = 0.1;
 			// Saturation limits
 			double lower_saturation_degrees = -45;
 			double upper_saturation_degrees = 45;
