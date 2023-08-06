@@ -31,6 +31,8 @@ void Control::TorsoPosture::init()
 	k_windup_ = &(config_->k_windup);
 	proportional_setpoint_weight_ = &(config_->proportional_setpoint_weight);
 	derivative_setpoint_weight_ = &(config_->derivative_setpoint_weight);
+	negative_db_compensation = &(config_->negative_db_compensation);
+	positive_db_compensation = &(config_->positive_db_compensation);
 	lower_saturation_degrees_ = &(config_->lower_saturation_degrees);
 	upper_saturation_degrees_ = &(config_->upper_saturation_degrees);
 	
@@ -43,6 +45,7 @@ void Control::TorsoPosture::init()
 	pid_.set_saturation_constants(true, lower_saturation_radians, upper_saturation_radians);
 	pid_.set_antiwindup(*k_windup_);
 	pid_.set_setpoint_weighting(*proportional_setpoint_weight_, *derivative_setpoint_weight_);
+	pid_.set_deadband_compensation(*negative_db_compensation, *positive_db_compensation);
 }
 
 void Control::TorsoPosture::set_setpoint_rad(double& _desired_torso_pitch_angle)

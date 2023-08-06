@@ -49,6 +49,9 @@ class TorsoPosture : public I_PeriodicTask
 		// Setpoint weighting constants
 		double *proportional_setpoint_weight_;
 		double *derivative_setpoint_weight_;
+		// Deadband compensation constants
+		double *negative_db_compensation;
+		double *positive_db_compensation;
 		// Saturation limits, in degrees
 		double *lower_saturation_degrees_;
 		double *upper_saturation_degrees_;
