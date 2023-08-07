@@ -72,12 +72,12 @@ struct Configs
 
 	struct GyroscpeAccelerometer {
 		struct Offsets {
-			int16_t ax_o = -303;	// Accelerometer offsets
-			int16_t ay_o = -214;
-			int16_t az_o = 911;
-			int16_t gx_o = 1;		// Gyroscope offsets
-			int16_t gy_o = -35;
-			int16_t gz_o = -15;
+			int16_t ax_o = -356;//-303;	// Accelerometer offsets
+			int16_t ay_o = -289;//-214;
+			int16_t az_o = 920;//911;
+			int16_t gx_o = 2;//1;		// Gyroscope offsets
+			int16_t gy_o = -40;//-35;
+			int16_t gz_o = -14;//-15;
 			}offsets;
 		}gyro_acc;
 
@@ -100,16 +100,19 @@ struct Configs
 
 		struct TorsoPosture {
 			// PID constants
-			double kp = 0.5;
-			double ki = 0.1;
-			double kd = 0.0;
+			double kp = 1.0;
+			double ki = 0.0;
+			double kd = 0.35;
 			// Anti-windup constant
 			double k_windup = 0.5;
-			// Setpoint weighting constants
+			// Setpoint weighting constants [0.0 - 1.0]
 			double proportional_setpoint_weight = 1.0;
 			double derivative_setpoint_weight = 0.0;
-			double negative_db_compensation = -0.1;
-			double positive_db_compensation = 0.1;
+			// Deadband compensation
+			double negative_db_compensation_rad = -0.05;
+			double positive_db_compensation_rad = 0.05;
+			// Derivative filter time constant
+			uint32_t derivative_time_constant_ms_ = 40;
 			// Saturation limits
 			double lower_saturation_degrees = -45;
 			double upper_saturation_degrees = 45;

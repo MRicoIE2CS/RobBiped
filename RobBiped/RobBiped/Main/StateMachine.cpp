@@ -283,8 +283,8 @@ void Executor::state1_execution()
 	if (force_sensors_manager_.has_been_updated)
 	{
 		double value_CM_ref = CM_path_y.get_value();
-		Serial.print("value_CM_ref \t");
-		Serial.println(value_CM_ref, 2);
+// 		Serial.print("value_CM_ref \t");
+// 		Serial.println(value_CM_ref, 2);
 		
 // 		// Potentiometer value sets the CM setpoint in Double Support Phase, along the Y-axis
 // 		double potentiometer_value = some_exp_filter_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0);
