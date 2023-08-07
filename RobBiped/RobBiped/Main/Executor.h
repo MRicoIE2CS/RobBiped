@@ -26,7 +26,7 @@
 #include "../Actuators/JointsManager.h"
 #include "../Control/FootSupport/FootRollCentering.h"
 #include "../Control/TorsoPosture/TorsoPosture.h"
-#include "../Kinematics/GlobalKinematics.h"
+#include "../Kinematics_Dynamics/GlobalKinematics.h"
 #include "../Sensors/GyroscopeAccelerometerManager.h"
 #include "../Sensors/ForceSensorsManager.h"
 #include "../UserInput/UserInput.h"

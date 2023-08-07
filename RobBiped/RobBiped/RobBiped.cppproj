@@ -612,10 +612,10 @@
     <Compile Include="Control\TorsoPosture\TorsoPosture.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Kinematics\CoM_location.cpp">
+    <Compile Include="Kinematics_Dynamics\CoM_location.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Kinematics\CoM_location.h">
+    <Compile Include="Kinematics_Dynamics\CoM_location.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Main\Configs.h">
@@ -651,10 +651,10 @@
     <Compile Include="Main\StateMachine.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Kinematics\GlobalKinematics.cpp">
+    <Compile Include="Kinematics_Dynamics\GlobalKinematics.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Kinematics\GlobalKinematics.h">
+    <Compile Include="Kinematics_Dynamics\GlobalKinematics.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="RobBiped.ino">
@@ -1812,7 +1812,7 @@
     <Folder Include="Main\examples\auto_tare_and_squats" />
     <Folder Include="Main\examples\state_machine" />
     <Folder Include="Main\examples\no_state_machine" />
-    <Folder Include="Kinematics" />
+    <Folder Include="Kinematics_Dynamics" />
     <Folder Include="Sensors" />
     <Folder Include="Sensors\GyroAcc\MPU6050" />
     <Folder Include="Sensors\HX711" />

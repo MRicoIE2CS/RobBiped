@@ -22,6 +22,8 @@
 
 #include "Arduino.h"
 
+#include "../Main/Configs.h"
+
 class COMLocation {
 
 	private:
