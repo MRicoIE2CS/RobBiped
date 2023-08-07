@@ -21,6 +21,7 @@
 
 #include "arduino.h"
 
+#include "../Filters/ExponentialFilter.h"
 #include "FunctionBocks.h"
 
 namespace Control {
@@ -52,7 +53,7 @@ class PID {
 		double negative_db_compensation = 0.0;
 		double positive_db_compensation = 0.0;
 		// Deadband compensation
-		double apply_inverse_deadband(const double &_u);
+		double apply_inverse_deadband(const double &_sign_variable, const double &_u);
 
 		// Saturation constants
 		// By default, no saturation is applied, nor anti-windup technique for integral part
@@ -69,6 +70,9 @@ class PID {
 		double last_derivative_action_ = 0.0;
 		double last_controller_output_ = 0.0;
 		double last_saturated_controller_output_ = 0.0;
+
+		// Differential filter
+		ExpFilter diferential_filter_;
 
 		// In sleep mode, control action is not computed, and the internal components do not grow (as the integral part).
 		bool sleep_ = true;
@@ -135,14 +139,25 @@ class PID {
 		void set_deadband_compensation(const double& _negative_deadband = 0, const double& _positive_deadband = 0);
 
 		/*
-		*  @fn void compute_output(const double& _setpoint, const double& _feedback, double& _output)
+		*  @fn void set_derivative_filter_time_constant(const uint32_t& _time_constant_ms)
+		*  @brief Sets the time constant of the derivative filter.
+		*  The time constant is the amount of time for the smoothed response of a unit step function to reach
+		*  1 - 1/e proportion of the original signal, which approximates to 63.2%.
+		*
+		*  @param[in] _time_constant_ms Time constant in ms.
+		*/
+		void set_derivative_filter_time_constant(const uint32_t& _time_constant_ms);
+
+		/*
+		*  @fn void compute_output(const double& _setpoint, const double& _feedback, double& _output, const double& _sign_of_deadband = 0)
 		*  @brief Output computation.
 		*
 		*  @param[in] _setpoint Setpoint.
 		*  @param[in] _feedback Feedback measurement.
+		*  @param[in] _sign_of_deadband Signal that determines the sign of the deadband compensation.
 		*  @param[out] _output Output of the controller.
 		*/
-		void compute_output(const double& _setpoint, const double& _feedback, double& _output);
+		void compute_output(const double& _setpoint, const double& _feedback, double& _output, const double& _sign_of_deadband = 0);
 
 		/*
 		*  @fn void get_control_action_values(const double& _kp, const double& _ki, double& _kd)
