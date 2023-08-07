@@ -19,6 +19,8 @@
 #ifndef _GLOBAL_KINEMATICS_h
 #define _GLOBAL_KINEMATICS_h
 
+#include "Arduino.h"
+
 #include "../Main/Configs.h"
 #include "../Main/I_PeriodicTask.h"
 #include "../Utils/Kinematics/InverseKinematicsBlocks/LegLength_IK.h"
@@ -39,7 +41,7 @@ class GlobalKinematics : public I_PeriodicTask {
 
 	private:
 
-		// Definitions (configuration)
+		// Configuration
 		Configuration::Configs::Kinematics *config_;
 
 		// Phase
@@ -110,6 +112,7 @@ class GlobalKinematics : public I_PeriodicTask {
 		// Returns the coordinates of the left foot
 		void get_left_foot_coordinates(double &_x, double &_y);
 
+		// Returns the angle setpoint for hip roll, with compensation for the deadband (dead zone)
 		double compensate_hip_roll_angle(double &_desired_hip_roll_angle);
 	};
 

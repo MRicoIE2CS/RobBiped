@@ -612,6 +612,12 @@
     <Compile Include="Control\TorsoPosture\TorsoPosture.cpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Kinematics\CoM_location.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kinematics\CoM_location.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Main\Configs.h">
       <SubType>compile</SubType>
     </Compile>
