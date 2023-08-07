@@ -1798,9 +1798,7 @@
   <ItemGroup>
     <Folder Include="Actuators\" />
     <Folder Include="Actuators\PCA9685" />
-    <Folder Include="Control\LegExtensionOrientation" />
     <Folder Include="Control\FootSupport" />
-    <Folder Include="Control\SwingingLeg" />
     <Folder Include="Control\TorsoPosture" />
     <Folder Include="Main" />
     <Folder Include="Control" />

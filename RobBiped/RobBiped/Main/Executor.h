@@ -99,7 +99,7 @@ class Executor {
 		// Pregenerated trajectories
 		PregeneratedTrajectory CM_path_y;
 		String CM_path_y_filename = "/CM_y.txt";
-		uint32_t CM_path_y_sampletime = 100;
+		uint32_t CM_path_y_sampletime = 30;
 		//PregeneratedTrajectory ZMP_path_y;
 		
 		// 
@@ -115,7 +115,7 @@ class Executor {
 		
 		// Control tasks' objects
 		double torso_upright_pitch_control_action = 0.0;
-		double torso_setpoint_ = 0.05;
+		double torso_setpoint_ = 0.00;
 		ExpFilter torso_pitch_exp_filter_;
 		double local_zmp_lateral_deviation_setpoint_ = 0.0;
 		double left_foot_roll_centering_action = 0.0;

@@ -48,7 +48,27 @@ void Control::PID::set_setpoint_weighting(double& _on_proportional, double& _on_
 	on_derivative_setpoint_weight_ = _on_derivative;
 }
 
-void Control::PID::compute_output(const double& _setpoint, const double& _feedback, double& _output)
+void Control::PID::set_deadband_compensation(const double& _negative_deadband, const double& _positive_deadband)
+{
+	negative_db_compensation = _negative_deadband;
+	positive_db_compensation = _positive_deadband;
+}
+
+void Control::PID::set_derivative_filter_time_constant(const uint32_t& _time_constant_ms)
+{
+	diferential_filter_.set_time_constant(_time_constant_ms);
+}
+
+double Control::PID::apply_inverse_deadband(const double &_sign_variable, const double &_u)
+{
+	if (0.0 == negative_db_compensation && 0.0 == positive_db_compensation) return _u;
+
+	if (_sign_variable > 0.0) return _u + positive_db_compensation;
+	else if (_sign_variable < 0.0) return _u - negative_db_compensation;
+	else return _u;
+}
+
+void Control::PID::compute_output(const double& _setpoint, const double& _feedback, double& _output, const double& _sign_of_deadband)
 {
 	uint64_t current_millis_computation = millis();
 	uint64_t current_time_interval = current_millis_computation - last_millis_computation;
@@ -82,21 +102,23 @@ void Control::PID::compute_output(const double& _setpoint, const double& _feedba
 
 	// Derivative component
 	double derivative_action;
-	// TODO: Implement derivative filtering
 	if (0.0 != Kd_ & !sleep_)
 	{
 		double diff_feedback = _feedback - last_feedback_;
 		if (0.0 != on_derivative_setpoint_weight_)
 		{
 			double diff_setpoint = _setpoint - last_setpoint_;
-			derivative_action = Kd_ * ( on_derivative_setpoint_weight_ * diff_setpoint - diff_feedback ) / time_fraction;
+			derivative_action = diferential_filter_.filter(Kd_ * ( on_derivative_setpoint_weight_ * diff_setpoint - diff_feedback ) / time_fraction);
 		}
-		else derivative_action = Kd_ * diff_feedback / time_fraction;
+		else derivative_action = diferential_filter_.filter(Kd_ * diff_feedback / time_fraction);
 	}
 	else derivative_action = 0.0;
 	
 	// Sum of the components
 	double sum = proportional_action + integral_action + derivative_action;
+
+	// Deadband compensation
+	sum = apply_inverse_deadband(_sign_of_deadband, sum);
 
 	// Saturation
 	if (apply_saturation_) saturation(sum, lower_limit_, upper_limit_, _output);

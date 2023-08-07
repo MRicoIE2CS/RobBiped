@@ -21,6 +21,7 @@
 
 #include "arduino.h"
 
+#include "../Filters/ExponentialFilter.h"
 #include "FunctionBocks.h"
 
 namespace Control {
@@ -48,6 +49,12 @@ class PID {
 		// Setpoint weighting for derivative action
 		double on_derivative_setpoint_weight_ = 0.0;
 
+		// Deadband compensation constants
+		double negative_db_compensation = 0.0;
+		double positive_db_compensation = 0.0;
+		// Deadband compensation
+		double apply_inverse_deadband(const double &_sign_variable, const double &_u);
+
 		// Saturation constants
 		// By default, no saturation is applied, nor anti-windup technique for integral part
 		bool apply_saturation_ = false;
@@ -63,6 +70,9 @@ class PID {
 		double last_derivative_action_ = 0.0;
 		double last_controller_output_ = 0.0;
 		double last_saturated_controller_output_ = 0.0;
+
+		// Differential filter
+		ExpFilter diferential_filter_;
 
 		// In sleep mode, control action is not computed, and the internal components do not grow (as the integral part).
 		bool sleep_ = true;
@@ -80,7 +90,7 @@ class PID {
 		void set_constants(double& _Kp, double& _Ki, double& _Kd);
 
 		/*
-		*  @fn void set_antiwindup(double& _Kw);
+		*  @fn void set_antiwindup(double& _Kw)
 		*  @brief Setter for the anti-windup constant.
 		*
 		*  @param[in] _Kw Anti-windup constant.
@@ -96,7 +106,7 @@ class PID {
 		void set_time_constant_millis(uint16_t& _millis);
 
 		/*
-		*  @fn void set_saturation_constants(bool& _apply_saturation = false, double& _lower_limit = 0.0, double& _upper_limit = 0.0);
+		*  @fn void set_saturation_constants(bool& _apply_saturation = false, double& _lower_limit = 0.0, double& _upper_limit = 0.0)
 		*  @brief Setter for the saturation limits to apply on the output of the controller.
 		*  This saturation will be used for the anti-windup mechanism of the integral part.
 		*  By default (when no calling this method), the PID does not apply saturation limitations to the output of the controller,
@@ -118,17 +128,39 @@ class PID {
 		void set_setpoint_weighting(double& _on_proportional, double& _on_derivative);
 
 		/*
-		*  @fn void compute_output(const double& _setpoint, const double& _feedback, double& _output);
+		*  @fn void set_deadband_compensation(double& _negative_deadband, double& _positive_deadband)
+		*  @brief Setter for the deadband values, for deadband compensation.
+		*  If the call is performed without arguments, or with values equal to 0, the deadband compensation is disabled.
+		*  (Deadband compensation is disabled by default)
+		*
+		*  @param[in] _negative_deadband Negative deadband.
+		*  @param[in] _positive_deadband Positive deadband.
+		*/
+		void set_deadband_compensation(const double& _negative_deadband = 0, const double& _positive_deadband = 0);
+
+		/*
+		*  @fn void set_derivative_filter_time_constant(const uint32_t& _time_constant_ms)
+		*  @brief Sets the time constant of the derivative filter.
+		*  The time constant is the amount of time for the smoothed response of a unit step function to reach
+		*  1 - 1/e proportion of the original signal, which approximates to 63.2%.
+		*
+		*  @param[in] _time_constant_ms Time constant in ms.
+		*/
+		void set_derivative_filter_time_constant(const uint32_t& _time_constant_ms);
+
+		/*
+		*  @fn void compute_output(const double& _setpoint, const double& _feedback, double& _output, const double& _sign_of_deadband = 0)
 		*  @brief Output computation.
 		*
 		*  @param[in] _setpoint Setpoint.
 		*  @param[in] _feedback Feedback measurement.
+		*  @param[in] _sign_of_deadband Signal that determines the sign of the deadband compensation.
 		*  @param[out] _output Output of the controller.
 		*/
-		void compute_output(const double& _setpoint, const double& _feedback, double& _output);
+		void compute_output(const double& _setpoint, const double& _feedback, double& _output, const double& _sign_of_deadband = 0);
 
 		/*
-		*  @fn void get_control_action_values(const double& _kp, const double& _ki, double& _kd);
+		*  @fn void get_control_action_values(const double& _kp, const double& _ki, double& _kd)
 		*  @brief Getter for the last values of the separated control components of the PID.
 		*
 		*  @param[out] _kp Proportional component.
