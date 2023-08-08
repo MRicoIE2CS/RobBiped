@@ -28,7 +28,7 @@
 using Eigen::Vector2d;
 using Eigen::Vector3d;
 
-class COMLocation {
+class CoMLocation {
 
 	private:
 
@@ -37,19 +37,21 @@ class COMLocation {
 		Vector3d CoM_location_;
 		Vector3d CoM_velocity_;
 		Vector3d CoM_acceleration_;
-		Vector2d CM_inclination_xy_;
+		Vector2d CoM_inclination_xy_;
 
 		// Gravity constant, in mm/s^2
 		const double gravity_constant_ = 9800;
 
+		Vector3d correct_acceleration_inclination(const Vector3d &_CoM_acceleration_measurements_xyz, const Vector2d &_CoM_inclination_xy);
+
 	public:
 
 		// Set CM height.
-		// CM is considered restricted to an horizontal plane, in LIPM
-		void Set_CM_height(double &_CM_height);
+		// CoM is considered restricted to an horizontal plane, in LIPM
+		void Set_CoM_height(const double &_CM_height);
 
 		// Compute position from Linear Inverted Pendulum Model
-		void compute_position_from_LIPM(Vector3d &_CM_acceleration_measurements_xyz, Vector2d &_CM_inclination_xy, Vector2d &_ZMP_position_xy);
+		Vector3d compute_position_from_LIPM(const Vector3d &_CoM_acceleration_measurements_xyz, const Vector2d &_CoM_inclination_xy, const Vector2d &_ZMP_position_xy);
 };
 
 #endif
