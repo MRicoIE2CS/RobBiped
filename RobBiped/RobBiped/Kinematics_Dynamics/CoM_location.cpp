@@ -18,12 +18,7 @@
 
 #include "CoM_location.h"
 
-void COMLocation::assoc_config(Configuration::Configs::Kinematics &_config)
+void COMLocation::Set_CM_height(double &_CM_height)
 {
-	config_ = &_config;
-}
-
-void COMLocation::init()
-{
-	
+	CoM_location_(3) = _CM_height;
 }

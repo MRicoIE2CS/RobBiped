@@ -23,18 +23,33 @@
 #include "Arduino.h"
 
 #include "../Main/Configs.h"
+#include "../Utils/LinearAlgebra/ArduinoEigenDense.h"
+
+using Eigen::Vector2d;
+using Eigen::Vector3d;
 
 class COMLocation {
 
 	private:
 
-	Configuration::Configs::Kinematics *config_;
+		Configuration::Configs::Kinematics *config_;
+
+		Vector3d CoM_location_;
+		Vector3d CoM_velocity_;
+		Vector3d CoM_acceleration_;
+		Vector2d CM_inclination_xy_;
+
+		// Gravity constant, in mm/s^2
+		const double gravity_constant_ = 9800;
 
 	public:
 
-	void assoc_config(Configuration::Configs::Kinematics &_config);
+		// Set CM height.
+		// CM is considered restricted to an horizontal plane, in LIPM
+		void Set_CM_height(double &_CM_height);
 
-	void init();
+		// Compute position from Linear Inverted Pendulum Model
+		void compute_position_from_LIPM(Vector3d &_CM_acceleration_measurements_xyz, Vector2d &_CM_inclination_xy, Vector2d &_ZMP_position_xy);
 };
 
 #endif
