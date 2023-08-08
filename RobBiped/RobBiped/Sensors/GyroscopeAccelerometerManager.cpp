@@ -70,8 +70,10 @@ void GyroscopeAccelerometerManager::units_conversion()
 void GyroscopeAccelerometerManager::calculate_accelerometer_angle()
 {
 	// Calculate inclination angles
-	accel_ang_x_ = atan( ax_/ sqrt( pow(ay_,2) + pow(az_,2) ) ) * (180.0/3.14);
-	accel_ang_y_ = atan( ay_/ sqrt( pow(ax_,2) + pow(az_,2) ) ) * (180.0/3.14);
+// 	accel_ang_x_ = atan( ax_/ sqrt( pow(ay_,2) + pow(az_,2) ) ) * (180.0/3.14);
+// 	accel_ang_y_ = atan( ay_/ sqrt( pow(ax_,2) + pow(az_,2) ) ) * (180.0/3.14);
+	accel_ang_x_ = atan( ax_m_s2_/ sqrt( pow(ay_m_s2_,2) + pow(az_m_s2_,2) ) ) * (180.0/3.14);
+	accel_ang_y_ = atan( ay_m_s2_/ sqrt( pow(ax_m_s2_,2) + pow(az_m_s2_,2) ) ) * (180.0/3.14);
 }
 
 void GyroscopeAccelerometerManager::complementary_filter_for_angle()
@@ -246,6 +248,20 @@ void GyroscopeAccelerometerManager::print_values()
 	Serial.print(ang_x_);
 	Serial.print(" , ");
 	Serial.println(ang_y_);
+}
+
+void GyroscopeAccelerometerManager::get_acc_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2)
+{
+	_ax_m_s2 = ax_m_s2_;
+	_ay_m_s2 = ay_m_s2_;
+	_az_m_s2 = az_m_s2_;
+}
+
+void GyroscopeAccelerometerManager::get_gyro_values(float& _gx_deg_s, float& _gy_deg_s, float& _gz_deg_s)
+{
+	_gx_deg_s = gx_deg_s_;
+	_gy_deg_s = gy_deg_s_;
+	_gz_deg_s = gz_deg_s_;
 }
 
 void GyroscopeAccelerometerManager::get_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2, float& _gx_deg_s, float& _gy_deg_s, float& _gz_deg_s)

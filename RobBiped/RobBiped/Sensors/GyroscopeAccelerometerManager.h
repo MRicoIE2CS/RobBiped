@@ -96,6 +96,8 @@ public:
 	
 	// TODO!: Check sign convention of all the getters
 
+	void get_acc_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2);
+	void get_gyro_values(float& _gx_deg_s, float& _gy_deg_s, float& _gz_deg_s);
 	void get_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2, float& _gx_deg_s, float& _gy_deg_s, float& _gz_deg_s);
 
 	void get_value_ax_m_s2(float& _ax_m_s2);
