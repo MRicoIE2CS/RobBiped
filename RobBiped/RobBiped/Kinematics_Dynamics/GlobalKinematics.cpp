@@ -18,9 +18,18 @@
 
 #include "GlobalKinematics.h"
 
+#include "../Sensors/GyroscopeAccelerometerManager.h"
+#include "../Sensors/ForceSensorsManager.h"
+
 void GlobalKinematics::assoc_config(Configuration::Configs::Kinematics &_config)
 {
 	config_ = &_config;
+}
+
+void GlobalKinematics::assoc_sensors(ForceSensorsManager &_force_sensors_manager, GyroscopeAccelerometerManager &_gyroscope_accelerometer_manager)
+{
+	force_sensors_manager_ = &_force_sensors_manager;
+	gyroscope_accelerometer_manager_ = &_gyroscope_accelerometer_manager;
 }
 
 void GlobalKinematics::init(double _centerof_right_foot, PosePhases _phase, double _desired_hip_height, double _desired_step_width)
@@ -31,17 +40,22 @@ void GlobalKinematics::init(double _centerof_right_foot, PosePhases _phase, doub
 	set_desired_hip_height(_desired_hip_height);
 	set_desired_step_width(_desired_step_width);
 
+	CoM_location_.set_CoM_height(_desired_hip_height + config_->height_CM_from_hip);
+	filter_CoM_location_.set_time_constant(100);
+
 	compute_lateral_DSP_home_kinematics();
 }
 
 void GlobalKinematics::set_desired_hip_height(double _desired_hip_height)
 {
 	desired_hip_height_ = _desired_hip_height;
+	CoM_location_.set_CoM_height(desired_hip_height_ - config_->height_CM_from_hip);
 }
 
 void GlobalKinematics::set_desired_step_width(double _desired_step_width)
 {
 	desired_step_width_ = _desired_step_width;
+	left_foot_center_y_ = right_foot_center_y_ + _desired_step_width;
 }
 
 void GlobalKinematics::compute_lateral_DSP_home_kinematics()
@@ -144,10 +158,10 @@ void GlobalKinematics::get_left_foot_coordinates(double &_x, double &_y)
 double GlobalKinematics::compensate_hip_roll_angle(double &_desired_hip_roll_angle)
 {
 	double compensated_angle;
-	double hi_x = 0.15;
-	double lo_x = 0.05;
-	double hi_y = 0.15;
-	double lo_y = 0.05;
+	double hi_x = 0.1;
+	double lo_x = 0.0;
+	double hi_y = 0.1;
+	double lo_y = 0.0;
 	if (_desired_hip_roll_angle <= lo_x) compensated_angle = _desired_hip_roll_angle + lo_y;
 	else if (_desired_hip_roll_angle >= hi_x) compensated_angle = _desired_hip_roll_angle + hi_y;
 	else
@@ -156,4 +170,53 @@ double GlobalKinematics::compensate_hip_roll_angle(double &_desired_hip_roll_ang
 		compensated_angle = _desired_hip_roll_angle + (_desired_hip_roll_angle - lo_x) * slope;
 	}
 	return compensated_angle;
+}
+
+Vector3d GlobalKinematics::correct_acceleration_inclination(const Vector3d &_CoM_acceleration_measurements_xyz, const Vector2d &_CoM_inclination_xy)
+{
+	double xz_mod = sqrt( pow(_CoM_acceleration_measurements_xyz(0),2) + pow(_CoM_acceleration_measurements_xyz(2),2) );
+	double gamma_x = atan(_CoM_acceleration_measurements_xyz(0) / (-_CoM_acceleration_measurements_xyz(2)));
+	double yz_mod = sqrt( pow(_CoM_acceleration_measurements_xyz(1),2) + pow(_CoM_acceleration_measurements_xyz(2),2) );
+	double gamma_y = atan(_CoM_acceleration_measurements_xyz(1) / (-_CoM_acceleration_measurements_xyz(2)));
+	Vector3d corrected_CoM_acceleration_xyz;
+	corrected_CoM_acceleration_xyz(0) = xz_mod * sin(gamma_x - _CoM_inclination_xy(0));
+	corrected_CoM_acceleration_xyz(1) = yz_mod * sin(gamma_y - _CoM_inclination_xy(1));
+	corrected_CoM_acceleration_xyz(2) = -xz_mod * cos(gamma_x - _CoM_inclination_xy(0));
+// 	if (isnan(corrected_CoM_acceleration_xyz(1)))
+// 		Serial.println("NAN!\t" + (String)yz_mod + "\t" + (String)gamma_y + "\t" + (String)_CoM_inclination_xy(1));
+	return corrected_CoM_acceleration_xyz;
+}
+
+Vector3d GlobalKinematics::get_CoM_location()
+{
+
+	float incl_pitch, incl_roll;
+	gyroscope_accelerometer_manager_->get_value_angle_z_pitch_rad(incl_pitch);
+	gyroscope_accelerometer_manager_->get_value_angle_z_roll_rad(incl_roll);
+	Vector2d inclination;
+	inclination(0) = incl_pitch;
+	inclination(1) = incl_roll;
+
+	float ax, ay, az;
+	gyroscope_accelerometer_manager_->get_filtered_acc_values(ax, ay, az);
+	Vector3d CoM_measured_accelerations;
+	CoM_measured_accelerations(0) = ax;
+	CoM_measured_accelerations(1) = ay;
+	CoM_measured_accelerations(2) = az;
+	Vector3d CoM_corrected_accelerations = correct_acceleration_inclination(CoM_measured_accelerations, inclination);
+
+	double x_zmp, y_zmp;
+	force_sensors_manager_->get_global_ZMP(x_zmp, y_zmp);
+	Vector2d ZMP_location;
+	ZMP_location(0) = x_zmp;
+	ZMP_location(1) = y_zmp;
+
+	Vector3d CoM_location;
+	CoM_location = CoM_location_.compute_position_from_LIPM(CoM_corrected_accelerations, inclination, ZMP_location);
+
+// // _____ SIGNAL RECORD
+// 		Serial.println("CoM_fCoM_ZMP_y / accy_aCM_y: \t" + (String)suposed_com_location_ + "\t" + (String)CoM_location(1) + "\t" + (String)filter_CoM_location_.filter(CoM_location(1)) + "\t" + (String)ZMP_location(1) + "\t" + (String)CoM_measured_accelerations(1) + "\t" + (String)CoM_corrected_accelerations(1));
+// // _____suposed_com_location_
+
+	return CoM_location;
 }
