@@ -21,14 +21,13 @@
 void Executor::associations()
 {
 	user_input_.assoc_GPIO(config_.user_input_pins);
-	//TODO: Associate buttons to servo updater calibration
-	//servoUpdater.assocButtons(config.gpio.thinButton1, config.gpio.thinButton2);
 	force_sensors_manager_.assoc_config(config_.force_sensors);
 	gyroscope_accelerometer_manager_.assoc_config(config_.gyro_acc);
 	torso_posture_controller_.assoc_config(config_.control.torso_posture);
 	left_foot_roll_centering_controller_.assoc_config(config_.control.foot_roll_centering);
 	right_foot_roll_centering_controller_.assoc_config(config_.control.foot_roll_centering);
 	global_kinematics_.assoc_config(config_.kinematics);
+	global_kinematics_.assoc_sensors(force_sensors_manager_, gyroscope_accelerometer_manager_);
 }
 
 void Executor::initialize_servo_setpoints()
@@ -39,14 +38,14 @@ void Executor::initialize_servo_setpoints()
 	servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, initial_setpoint);
 	servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, initial_setpoint);
 	servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, initial_setpoint);
-	servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, initial_setpoint);	// TODO: Open hip support a bit
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, initial_setpoint);
 	servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftShoulderSagittal, initial_setpoint);
 	servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftShoulderAmplitude, initial_setpoint);
 	servo_updater_.set_angle_to_joint(Configuration::JointsNames::Unused1, initial_setpoint);
 	servo_updater_.set_angle_to_joint(Configuration::JointsNames::Unused2, initial_setpoint);
 	servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightShoulderAmplitude, initial_setpoint);
 	servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightShoulderSagittal, initial_setpoint);
-	servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, initial_setpoint);	// TODO: Open hip support a bit
+	servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, initial_setpoint);
 	servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, initial_setpoint);
 	servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, initial_setpoint);
 	servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, initial_setpoint);

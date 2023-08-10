@@ -21,7 +21,6 @@
 
 #include "arduino.h"
 
-#include "../Kinematics/GlobalKinematics.h"
 #include "../Main/I_PeriodicTask.h"
 #include "../Main/Configs.h"
 #include "../UserInput/Command.h"
@@ -30,6 +29,8 @@
 #include "../Utils/Filters/ExponentialFilterWithPeakRejection.h"
 
 using namespace Configuration;
+
+class GlobalKinematics; // Forward declaration
 
 // This class manages the use of multiple HX711 ICs in one object, filtering, adjusting and interpreting the obtained values.
 // As the use of multiple HX711 and interpretation of the measured magnitudes hardly depends on the HW setup configured for the robot,
@@ -89,17 +90,17 @@ private:
 
 	int16_t *separation_FrontBack_mm_;
 	int16_t *separation_LeftRight_mm_;
-	int16_t zmp_left_foot_x_mm_;
-	int16_t zmp_left_foot_y_mm_;
-	int16_t zmp_right_foot_x_mm_;
-	int16_t zmp_right_foot_y_mm_;
+	double zmp_left_foot_x_mm_;
+	double zmp_left_foot_y_mm_;
+	double zmp_right_foot_x_mm_;
+	double zmp_right_foot_y_mm_;
 	ExpFilter filter_zmp_left_foot_x_mm_;
 	ExpFilter filter_zmp_left_foot_y_mm_;
 	ExpFilter filter_zmp_right_foot_x_mm_;
 	ExpFilter filter_zmp_right_foot_y_mm_;
 	void calculate_local_ZMP();
-	int16_t global_zmp_x_mm_;
-	int16_t global_zmp_y_mm_;
+	double global_zmp_x_mm_;
+	double global_zmp_y_mm_;
 	ExpFilter filter_zmp_x_mm_;
 	ExpFilter filter_zmp_y_mm_;
 
@@ -132,14 +133,14 @@ public:
 	bool is_tare_left_performed();
 	bool is_tare_right_performed();
 
-	void get_values_ZMP_LeftFoot(int16_t& x_mm, int16_t& y_mm);
-	void get_values_ZMP_RightFoot(int16_t& x_mm, int16_t& y_mm);
+	void get_values_ZMP_LeftFoot(double& x_mm, double& y_mm);
+	void get_values_ZMP_RightFoot(double& x_mm, double& y_mm);
 	
 	bool is_left_foot_touching_ground();
 	bool is_right_foot_touching_ground();
 
 	void compute_global_ZMP(GlobalKinematics *_global_kinematics);
-	void get_global_ZMP(int16_t &_x_mm, int16_t &_y_mm);
+	void get_global_ZMP(double &_x_mm, double &_y_mm);
 };
 
 #endif

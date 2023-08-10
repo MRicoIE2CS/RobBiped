@@ -26,7 +26,7 @@
 #include "../Actuators/JointsManager.h"
 #include "../Control/FootSupport/FootRollCentering.h"
 #include "../Control/TorsoPosture/TorsoPosture.h"
-#include "../Kinematics/GlobalKinematics.h"
+#include "../Kinematics_Dynamics/GlobalKinematics.h"
 #include "../Sensors/GyroscopeAccelerometerManager.h"
 #include "../Sensors/ForceSensorsManager.h"
 #include "../UserInput/UserInput.h"
@@ -95,6 +95,7 @@ class Executor {
 		bool get_up = false;
 
 		ExpFilter some_exp_filter_;
+		ExpFilter some_exp_filter_2_;
 
 		// Pregenerated trajectories
 		PregeneratedTrajectory CM_path_y;
@@ -104,14 +105,15 @@ class Executor {
 		
 		// 
 		SignalGenerator sin_signal;
+		uint32_t sin_period = 2500;
 
 		// Kinematic objects and definitions
-		double right_foot_center_ = -15.0;
+		double right_foot_center_ = -15.0-7.5;
 		GlobalKinematics::PosePhases initial_phase_ = GlobalKinematics::PosePhases::DSP_right;
 		// Defined desired hip height
 		double desired_hip_height_ = 280.0;
 		// Defined desired step width
-		double desired_step_width_ = 100.0;
+		double desired_step_width_ = 115.0;
 		
 		// Control tasks' objects
 		double torso_upright_pitch_control_action = 0.0;

@@ -16,7 +16,6 @@
 #include "../Utils/LinearAlgebra/ArduinoEigenDense.h"
 
 using Eigen::IOFormat;
-using Eigen::Matrix2d;
 
 void Executor::read_commands()
 {
@@ -196,20 +195,20 @@ void Executor::always_executes()
 		left_foot_roll_centering_action = 0.0;
 		if (force_sensors_manager_.is_tare_left_performed())
 		{
-			int16_t left_foot_zmp_lateral_deviation;
-			int16_t ignored;
+			double left_foot_zmp_lateral_deviation;
+			double ignored;
 			force_sensors_manager_.get_values_ZMP_LeftFoot(ignored, left_foot_zmp_lateral_deviation);
-			double d_left_foot_zmp_lateral_deviation = - static_cast<double>(left_foot_zmp_lateral_deviation);
+			double d_left_foot_zmp_lateral_deviation = - left_foot_zmp_lateral_deviation;
 			left_foot_roll_centering_action = left_foot_roll_centering_controller_.compute(d_left_foot_zmp_lateral_deviation);
 		}
 
 		right_foot_roll_centering_action = 0.0;
 		if (force_sensors_manager_.is_tare_right_performed())
 		{
-			int16_t right_foot_zmp_lateral_deviation;
-			int16_t ignored;
+			double right_foot_zmp_lateral_deviation;
+			double ignored;
 			force_sensors_manager_.get_values_ZMP_RightFoot(ignored, right_foot_zmp_lateral_deviation);
-			double d_right_foot_zmp_lateral_deviation = - static_cast<double>(right_foot_zmp_lateral_deviation);
+			double d_right_foot_zmp_lateral_deviation = - right_foot_zmp_lateral_deviation;
 			right_foot_roll_centering_action = right_foot_roll_centering_controller_.compute(d_right_foot_zmp_lateral_deviation);
 		}
 	}
@@ -221,10 +220,12 @@ void Executor::state0_execution()
 	{
 		state0_first_time = false;
 
+		global_kinematics_.set_desired_hip_height(desired_hip_height_);
+
 		double home_roll_angle = global_kinematics_.get_home_roll_angle();
 
-		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, global_kinematics_.compensate_hip_roll_angle(home_roll_angle));
-		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -global_kinematics_.compensate_hip_roll_angle(home_roll_angle));
+		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, home_roll_angle);//global_kinematics_.compensate_hip_roll_angle(home_roll_angle));
+		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -home_roll_angle);//global_kinematics_.compensate_hip_roll_angle(home_roll_angle));
 		bool ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, -home_roll_angle);
 		bool ret_val4 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, home_roll_angle);
 
@@ -282,27 +283,51 @@ void Executor::state1_execution()
 
 	if (force_sensors_manager_.has_been_updated)
 	{
-		double value_CM_ref = CM_path_y.get_value();
-// 		Serial.print("value_CM_ref \t");
-// 		Serial.println(value_CM_ref, 2);
-		
+		// From pregenerated trajectory:
+//		double value_CM_ref = CM_path_y.get_value();
+
+// 		// From potentiometer:
 // 		// Potentiometer value sets the CM setpoint in Double Support Phase, along the Y-axis
-// 		double potentiometer_value = some_exp_filter_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0);
-// 		
-// 		// Sinusoidal signal to obtain trajectory
-// 		double unitary_value = sin_signal.generate_trajectory();
+// 		double potentiometer_value1 = some_exp_filter_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0);
+// 		// Desired CM position
+// 		double DSP_CM_setpoint_ = right_foot_center_ + 20 + (desired_step_width_ - 40) * potentiometer_value1;
+// 		Serial.println("DSP_CM_setpoint_: \t" + (String)DSP_CM_setpoint_);
+
+		// Sinusoidal signal to obtain trajectory
+		double unitary_value = sin_signal.generate_trajectory();
+		//double DSP_CM_setpoint_ = right_foot_center_ + 20 + (desired_step_width_ - 40) * unitary_value;
+		double DSP_CM_setpoint_ = -7.7 + (77+7.7) * unitary_value;
 		
 		// TODO: Ask forceSensorsManager if we have changed walking phase, and change the state machine accordingly
 		//Serial.println("Touching ground? left,right: \t" + (String)force_sensors_manager_.is_left_foot_touching_ground() + "\t" + (String)force_sensors_manager_.is_right_foot_touching_ground());
+
+		// Potentiometer value sets the CM setpoint in Double Support Phase, along the Y-axis
+		double potentiometer_value2 = some_exp_filter_2_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer2) / 4095.0);
+		// Desired hip height
+		double desired_hip_height = 280 + 25 * potentiometer_value2;
+		//Serial.println("desired_hip_height: \t" + (String)desired_hip_height);
+		global_kinematics_.set_desired_hip_height(desired_hip_height);
+// 		// Desired step width
+// 		desired_step_width_ = 90 + 70 * potentiometer_value2;
+// 		global_kinematics_.set_desired_step_width(desired_step_width_);
+// 		Serial.println("desired_step_width_: \t" + (String)desired_step_width_);
 		
-		// Desired CM position
-//		double DSP_CM_setpoint_ = 20 + (desired_step_width_ - 40) * unitary_value;
-		bool retcode_compute_lateral_DSP_kinematics = global_kinematics_.compute_lateral_DSP_kinematics(value_CM_ref);
+		bool retcode_compute_lateral_DSP_kinematics = global_kinematics_.compute_lateral_DSP_kinematics(DSP_CM_setpoint_);
+
+// _____ SIGNAL RECORD
+		Vector3d CoM_location;
+		global_kinematics_.suposed_com_location_ = DSP_CM_setpoint_;
+		CoM_location = global_kinematics_.get_CoM_location();
+		double ZMP_loc_x, ZMP_loc_y;
+		force_sensors_manager_.get_global_ZMP(ZMP_loc_x, ZMP_loc_y);
+		gyroscope_accelerometer_manager_.get_value_ax_m_s2()
+		Serial.println("CoM_ZMP_x / CoM_ZMP_y: \t" + (String)CoM_location(0) + "\t" + (String)ZMP_loc_x + "\t" + (String)CoM_location(1) + "\t" + (String)ZMP_loc_y);
+// _____
 
 		// Computation of global coordinates of the ZMP
 		force_sensors_manager_.compute_global_ZMP(&global_kinematics_);
-		int16_t ZMP_x_mm;
-		int16_t ZMP_y_mm;
+		double ZMP_x_mm;
+		double ZMP_y_mm;
 		force_sensors_manager_.get_global_ZMP(ZMP_x_mm, ZMP_y_mm);
 		//Serial.println("ZMP_x,y: \t" + (String)ZMP_x_mm + "\t" + (String)ZMP_y_mm);
 		
@@ -311,8 +336,8 @@ void Executor::state1_execution()
 		global_kinematics_.get_computed_angles(left_roll_angle, right_roll_angle);
 		
 		// Joint setpoint assignation.
-		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, global_kinematics_.compensate_hip_roll_angle(left_roll_angle));
-		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -global_kinematics_.compensate_hip_roll_angle(right_roll_angle));
+		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, left_roll_angle);//global_kinematics_.compensate_hip_roll_angle(left_roll_angle));
+		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -right_roll_angle);//global_kinematics_.compensate_hip_roll_angle(right_roll_angle));
 		bool ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, -left_roll_angle);
 		bool ret_val4 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, right_roll_angle);
 		
@@ -375,11 +400,11 @@ void Executor::state2_execution()
 
 		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_pitch_angle);
 		ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, knee_pitch_angle);
-		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, hip_pitch_angle);
+		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, hip_pitch_angle + torso_upright_pitch_control_action);
 
 		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_pitch_angle);
 		ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, knee_pitch_angle);
-		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, hip_pitch_angle);
+		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, hip_pitch_angle + torso_upright_pitch_control_action);
 
 		// Computation of global coordinates of the ZMP
 // 		force_sensors_manager_.compute_global_ZMP(&global_kinematics_);

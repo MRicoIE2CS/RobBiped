@@ -72,13 +72,14 @@ struct Configs
 
 	struct GyroscpeAccelerometer {
 		struct Offsets {
-			int16_t ax_o = -356;//-303;	// Accelerometer offsets
-			int16_t ay_o = -289;//-214;
+			int16_t ax_o = -310;//-303;	// Accelerometer offsets
+			int16_t ay_o = -239;//-214;
 			int16_t az_o = 920;//911;
 			int16_t gx_o = 2;//1;		// Gyroscope offsets
 			int16_t gy_o = -40;//-35;
 			int16_t gz_o = -14;//-15;
 			}offsets;
+		uint32_t filter_time_constant_ms = 20;
 		}gyro_acc;
 
 	struct Kinematics {
@@ -89,6 +90,7 @@ struct Configs
 		double height_ankle = 45;		// Height between joints of the ankle (l4)
 		double height_foot = 35;		// Height between floor and first joint of the ankle (l5)
 		double d_lateral_foot = 13;		// Lateral distance between foot center and the axis of the first ankle joint (a1)
+		double height_CM_from_hip = -30.0;
 		}kinematics;
 
 
@@ -102,7 +104,7 @@ struct Configs
 			// PID constants
 			double kp = 1.0;
 			double ki = 0.0;
-			double kd = 0.35;
+			double kd = 0.25;
 			// Anti-windup constant
 			double k_windup = 0.5;
 			// Setpoint weighting constants [0.0 - 1.0]

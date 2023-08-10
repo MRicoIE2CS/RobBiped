@@ -19,13 +19,22 @@
 #ifndef _GLOBAL_KINEMATICS_h
 #define _GLOBAL_KINEMATICS_h
 
+#include "Arduino.h"
+
+#include "CoM_location.h"
 #include "../Main/Configs.h"
 #include "../Main/I_PeriodicTask.h"
 #include "../Utils/Kinematics/InverseKinematicsBlocks/LegLength_IK.h"
 #include "../Utils/LinearAlgebra/ArduinoEigenDense.h"
+#include "../Utils/Filters/ExponentialFilter.h"
 
+using Eigen::Vector2d;
 using Eigen::Vector3d;
 using Eigen::Vector4d;
+
+// Forward declarations
+class ForceSensorsManager;
+class GyroscopeAccelerometerManager;
 
 class GlobalKinematics : public I_PeriodicTask {
 
@@ -39,8 +48,12 @@ class GlobalKinematics : public I_PeriodicTask {
 
 	private:
 
-		// Definitions (configuration)
+		// Configuration
 		Configuration::Configs::Kinematics *config_;
+
+		// Sensors access
+		ForceSensorsManager *force_sensors_manager_;
+		GyroscopeAccelerometerManager *gyroscope_accelerometer_manager_;
 
 		// Phase
 		PosePhases phase_;
@@ -51,8 +64,12 @@ class GlobalKinematics : public I_PeriodicTask {
 		// Defined desired step width
 		double desired_step_width_;
 
-		// Computes the necessary roll angle and leg lengths at home position, for the desired hip height and step width
-		void compute_lateral_DSP_home_kinematics();
+		// Location of the Center of Mass
+		CoMLocation CoM_location_;
+		ExpFilter filter_CoM_location_;
+
+		// Returns the estimated accelerations of the CoM, considering the inclination of the torso
+		Vector3d correct_acceleration_inclination(const Vector3d &_CoM_acceleration_measurements_xyz, const Vector2d &_CoM_inclination_xy);
 
 		// Home-position variables
 		double home_roll_angle_;
@@ -61,6 +78,9 @@ class GlobalKinematics : public I_PeriodicTask {
 		// Coordinates in ground, for each feet
 		double right_foot_center_x_, left_foot_center_x_ = 0.0;
 		double right_foot_center_y_, left_foot_center_y_ = 0.0;
+
+		// Computes the necessary roll angle and leg lengths at home position, for the desired hip height and step width
+		void compute_lateral_DSP_home_kinematics();
 
 		// Computed lateral roll angle setpoints
 		double left_foot_roll_setpoint_, right_foot_roll_setpoint_;
@@ -71,6 +91,7 @@ class GlobalKinematics : public I_PeriodicTask {
 	public:
 
 		void assoc_config(Configuration::Configs::Kinematics &_config);
+		void assoc_sensors(ForceSensorsManager &_force_sensors_manager, GyroscopeAccelerometerManager &_gyroscope_accelerometer_manager);
 
 		void init(double _centerof_right_foot, PosePhases _phase, double _desired_hip_height, double _desired_step_width);
 
@@ -110,7 +131,13 @@ class GlobalKinematics : public I_PeriodicTask {
 		// Returns the coordinates of the left foot
 		void get_left_foot_coordinates(double &_x, double &_y);
 
+		// Returns the angle setpoint for hip roll, with compensation for the deadband (dead zone)
 		double compensate_hip_roll_angle(double &_desired_hip_roll_angle);
+
+		// Returns the CoM location
+		Vector3d get_CoM_location();
+		
+		double suposed_com_location_;
 	};
 
 #endif

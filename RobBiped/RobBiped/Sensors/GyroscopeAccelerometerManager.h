@@ -29,6 +29,7 @@
 
 #include "../Main/I_PeriodicTask.h"
 #include "../UserInput/Command.h"
+#include "../Utils/Filters/ExponentialFilter.h"
 #include "../Main/Configs.h"
 
 using namespace Configuration;
@@ -50,6 +51,8 @@ private:
 
 	// Scaled values of accelerometer and gyroscope
 	float ax_m_s2_, ay_m_s2_, az_m_s2_;
+	ExpFilter ax_m_s2_filtered_, ay_m_s2_filtered_, az_m_s2_filtered_;
+	
 	float gx_deg_s_, gy_deg_s_, gz_deg_s_;
 
 	// Inclination angle of sensor, obtained from accelerometer
@@ -58,14 +61,16 @@ private:
 
 	// Rotation of sensor, obtained from gyroscope
 	int64_t tiempo_prev_, dt_;
-	float ang_x_, ang_y_;
-	float ang_x_prev_, ang_y_prev_;
+	float ang_deg_x_, ang_deg_y_;
+	float ang_deg_x_prev_, ang_deg_y_prev_;
 
 	void get_readings();
 	void units_conversion();
 	void calculate_accelerometer_angle();
 	void complementary_filter_for_angle();
 	void process_readings();
+	void gain_adjust();
+	void filter_acc_values();
 
 	// Calibration variables
 	int64_t f_ax_,f_ay_, f_az_;	// Used in filter
@@ -96,6 +101,9 @@ public:
 	
 	// TODO!: Check sign convention of all the getters
 
+	void get_acc_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2);
+	void get_filtered_acc_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2);
+	void get_gyro_values(float& _gx_deg_s, float& _gy_deg_s, float& _gz_deg_s);
 	void get_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2, float& _gx_deg_s, float& _gy_deg_s, float& _gz_deg_s);
 
 	void get_value_ax_m_s2(float& _ax_m_s2);
@@ -113,7 +121,7 @@ public:
 	float get_value_gz_deg_s();
 
 	/*
-	*  @fn void get_value_angle_z_pitch_deg(float* _ang_pitch);
+	*  @fn void get_value_angle_z_pitch_deg(float& _ang_pitch);
 	*  @fn float get_value_angle_z_pitch_deg();
 	*  @brief Getter for the inclination angle of the z axis of the sensor, relative to the vertical
 	*  axis (of the world), over the sagittal plane. Pitch rotation (rotation over the local X axis of the sensor).
@@ -124,7 +132,7 @@ public:
 	float get_value_angle_z_pitch_deg();
 
 	/*
-	*  @fn void get_value_angle_z_roll_deg(float* _ang_roll);
+	*  @fn void get_value_angle_z_roll_deg(float& _ang_roll);
 	*  @fn float get_value_angle_z_roll_deg();
 	*  @brief Getter for the inclination angle of the z axis of the sensor, relative to the vertical
 	*  axis (of the world), over the frontal plane. Roll rotation (rotation over the local Y axis of the sensor).
@@ -135,7 +143,7 @@ public:
 	float get_value_angle_z_roll_deg();
 
 	/*
-	*  @fn void get_value_angle_z_pitch_rad(float* _ang_pitch);
+	*  @fn void get_value_angle_z_pitch_rad(float& _ang_pitch);
 	*  @fn float get_value_angle_z_pitch_rad();
 	*  @brief Getter for the inclination angle of the z axis of the sensor, relative to the vertical
 	*  axis (of the world), over the sagittal plane. Pitch rotation (rotation over the local X axis of the sensor).
@@ -146,7 +154,7 @@ public:
 	float get_value_angle_z_pitch_rad();
 
 	/*
-	*  @fn void get_value_angle_z_roll_rad(float* _ang_roll);
+	*  @fn void get_value_angle_z_roll_rad(float& _ang_roll);
 	*  @fn float get_value_angle_z_roll_rad();
 	*  @brief Getter for the inclination angle of the z axis of the sensor, relative to the vertical
 	*  axis (of the world), over the frontal plane. Roll rotation (rotation over the local Y axis of the sensor).

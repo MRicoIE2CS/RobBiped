@@ -24,6 +24,11 @@ bool ExpFilter::set_time_constant(uint32_t _t_ms){
 	return true;
 }
 
+double ExpFilter::get_filtered_value()
+{
+	return last_filtered_value_;
+}
+
 double ExpFilter::filter(double raw_value){
 	uint32_t current_millis = millis();
 	uint32_t time_interval = current_millis - last_time_executed;

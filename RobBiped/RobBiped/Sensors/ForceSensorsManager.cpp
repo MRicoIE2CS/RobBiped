@@ -18,6 +18,8 @@
 
 #include "ForceSensorsManager.h"
 
+#include "../Kinematics/GlobalKinematics.h"
+
 void ForceSensorsManager::assoc_config(Configs::ForceSensors &_config){
 	config_ = &_config;
 }
@@ -234,9 +236,9 @@ void ForceSensorsManager::calculate_local_ZMP()
 
 	// ZMP X coordinate of the left foot, in mm, from the left-back sensor
 	//zmp_left_foot_x_mm_ = filter_zmp_left_foot_x_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
-	zmp_left_foot_x_mm_ = (force_sum == 0) ? 0 : force_ponderatedSum / force_sum;
+	zmp_left_foot_x_mm_ = (force_sum == 0) ? 0 : (double)force_ponderatedSum / (double)force_sum;
 	// ZMP coordinate frame translation to the foot center
-	zmp_left_foot_x_mm_ -= *separation_FrontBack_mm_ / 2;
+	zmp_left_foot_x_mm_ -= (double)*separation_FrontBack_mm_ / 2.0;
 
 	// Y coordinate axis is positive pointing to the outside of the body
 	force_ponderatedSum =
@@ -244,9 +246,9 @@ void ForceSensorsManager::calculate_local_ZMP()
 
 	// ZMP Y coordinate of the left foot, in mm, from the left-back sensor
 	//zmp_left_foot_y_mm_ = filter_zmp_left_foot_y_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
-	zmp_left_foot_y_mm_ = (force_sum == 0) ? 0 : force_ponderatedSum / force_sum;
+	zmp_left_foot_y_mm_ = (force_sum == 0) ? 0 : (double)force_ponderatedSum / (double)force_sum;
 	// ZMP coordinate frame translation to the foot center
-	zmp_left_foot_y_mm_ -= *separation_LeftRight_mm_ / 2;
+	zmp_left_foot_y_mm_ -= (double)*separation_LeftRight_mm_ / 2.0;
 
 	force_sum =
 			value_RightFoot_LeftBack_ + value_RightFoot_LeftFront_ + value_RightFoot_RightBack_ + value_RightFoot_RightFront_;
@@ -255,9 +257,9 @@ void ForceSensorsManager::calculate_local_ZMP()
 
 	// ZMP X coordinate of the right foot, in mm, from the left-back sensor
 	//zmp_right_foot_x_mm_ = filter_zmp_right_foot_x_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
-	zmp_right_foot_x_mm_ = (force_sum == 0) ? 0 : force_ponderatedSum / force_sum;
+	zmp_right_foot_x_mm_ = (force_sum == 0) ? 0 : (double)force_ponderatedSum / (double)force_sum;
 	// ZMP coordinate frame translation to the foot center
-	zmp_right_foot_x_mm_ -= *separation_FrontBack_mm_ / 2;
+	zmp_right_foot_x_mm_ -= (double)*separation_FrontBack_mm_ / 2.0;
 
 	// Y coordinate axis is positive pointing to the outside of the body
 	force_ponderatedSum =
@@ -265,18 +267,18 @@ void ForceSensorsManager::calculate_local_ZMP()
 
 	// ZMP Y coordinate of the right foot, in mm, from the left-back sensor
 	//zmp_right_foot_y_mm_ = filter_zmp_right_foot_y_mm_.filter((force_sum == 0) ? 0 : force_ponderatedSum / force_sum);
-	zmp_right_foot_y_mm_ = (force_sum == 0) ? 0 : force_ponderatedSum / force_sum;
+	zmp_right_foot_y_mm_ = (force_sum == 0) ? 0 : (double)force_ponderatedSum / (double)force_sum;
 	// ZMP coordinate frame translation to the foot center
-	zmp_right_foot_y_mm_ -= *separation_LeftRight_mm_ / 2;
+	zmp_right_foot_y_mm_ -= (double)*separation_LeftRight_mm_ / 2.0;
 }
 
-void ForceSensorsManager::get_values_ZMP_LeftFoot(int16_t& x_mm, int16_t& y_mm)
+void ForceSensorsManager::get_values_ZMP_LeftFoot(double& x_mm, double& y_mm)
 {
 	x_mm = zmp_left_foot_x_mm_;
 	y_mm = zmp_left_foot_y_mm_;
 }
 
-void ForceSensorsManager::get_values_ZMP_RightFoot(int16_t& x_mm, int16_t& y_mm)
+void ForceSensorsManager::get_values_ZMP_RightFoot(double& x_mm, double& y_mm)
 {
 	x_mm = zmp_right_foot_x_mm_;
 	y_mm = zmp_right_foot_y_mm_;
@@ -419,7 +421,7 @@ void ForceSensorsManager::compute_global_ZMP(GlobalKinematics *_global_kinematic
 //	Serial.println("global_zmp_x_mm_,global_zmp_y_mm_: \t" + (String)global_zmp_y_mm_ + "\t" + (String)global_zmp_y_mm_);
 }
 
-void ForceSensorsManager::get_global_ZMP(int16_t &_x_mm, int16_t &_y_mm)
+void ForceSensorsManager::get_global_ZMP(double &_x_mm, double &_y_mm)
 {
 	_x_mm = global_zmp_x_mm_;
 	_y_mm = global_zmp_y_mm_;

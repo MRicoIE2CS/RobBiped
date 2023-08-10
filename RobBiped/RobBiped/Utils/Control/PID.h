@@ -30,6 +30,8 @@ class PID {
 
 	private:
 
+	// TODO: Implement new saturation limits for the integral action
+
 		// PID constants
 		double Kp_ = 0.0;
 		double Ki_ = 0.0;
