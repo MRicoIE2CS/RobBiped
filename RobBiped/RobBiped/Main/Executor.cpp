@@ -33,7 +33,7 @@ void Executor::init()
 
 	// Every time a new measurement of the gyroscope/accelerometer is taken, reading requires 2ms of elapsed time.
 	// This task sets the calculation period of the torso posture control.
-	gyroscope_accelerometer_manager_.set_execution_period(I_PeriodicTask::execType::inMillis, 9);
+	gyroscope_accelerometer_manager_.set_execution_period(I_PeriodicTask::execType::inMillis, 2);
 	gyroscope_accelerometer_manager_.init();
 	
 	// This task will be computed each time a new gyroscope/accelerometer measurement is performed.
@@ -72,7 +72,7 @@ void Executor::initialize_application()
 
 	some_exp_filter_.set_time_constant(20);
 
-	sin_signal.configure_signal(SignalGenerator::SignalType::sine, 2000, 0.5, 0.5, 0);
+	sin_signal.configure_signal(SignalGenerator::SignalType::sine, sin_period, 0.5, 0.5, 0);
 
 	CM_path_y.set_sampling_time_ms(CM_path_y_sampletime);
 	CM_path_y.set_file_name(CM_path_y_filename);
@@ -103,11 +103,11 @@ void Executor::inputs()
 	// Also, gyro/acc requires considerable more time to be read (2ms elapsed time when reading data).
 	// So, gyro/acc will be read 9ms after the force sensors reading, spending 2ms elapsed, then force sensors will be read again,
 	// triggering the execution of the application's control scheme. -> Cycle of the same period of the force sensors measurement.
-	if(force_sensors_manager_.has_been_updated)
-	{
-		// Gyro/acc sensor is read, counting time after force sensors update.
-		gyroscope_accelerometer_manager_.reset_timer();
-	}
+// 	if(force_sensors_manager_.has_been_updated)
+// 	{
+// 		// Gyro/acc sensor is read, counting time after force sensors update.
+// 		gyroscope_accelerometer_manager_.reset_timer();
+// 	}
 	if (gyroscope_accelerometer_manager_.get_execution_flag())
 	{
 		gyroscope_accelerometer_manager_.has_been_updated = gyroscope_accelerometer_manager_.update();
