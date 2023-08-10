@@ -50,6 +50,12 @@ class ExpFilter {
 		*/
 		bool set_time_constant(uint32_t _t_ms);
 
+		/*
+		*  @fn double get_filtered_value()
+		*  @brief Returns the filtered value.
+		*/
+		double get_filtered_value();
+
 		double filter(double raw_value);
 		double filter(uint8_t raw_value);
 		double filter(int8_t raw_value);
