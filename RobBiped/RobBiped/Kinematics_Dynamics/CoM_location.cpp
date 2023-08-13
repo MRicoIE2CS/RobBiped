@@ -95,7 +95,8 @@ Vector3d CoMLocation::compute_location(Vector3d &_CoM_acceleration_measurements_
 	last_millis_ = current_millis;
 	
 // 	Serial.println("__DEBUG___");
- 	Serial.println("a, itgr, lipm, fusd, zmp: \t" + (String)new_acc_measure_mms2_xyz(1) + "\t" + (String)intgr_com_location(1) + "\t" + (String)lipm_com_location(1) + "\t" + (String)fused_com_location(1) + "\t" + (String)_ZMP_position_xy(1));
+ 	//Serial.println("a, itgr, lipm, fusd, zmp: \t" + (String)new_acc_measure_mms2_xyz(1) + "\t" + (String)intgr_com_location(1) + "\t" + (String)lipm_com_location(1) + "\t" + (String)fused_com_location(1) + "\t" + (String)_ZMP_position_xy(1));
+	//Serial.println("a, itgr, lipm, fusd, zmp: \t" + (String)new_acc_measure_mms2_xyz(0) + "\t" + (String)intgr_com_location(0) + "\t" + (String)lipm_com_location(0) + "\t" + (String)fused_com_location(0) + "\t" + (String)_ZMP_position_xy(0));
 
 // 	//Serial.println("_acc_measure_xyz: \t" + (String)_CoM_acceleration_measurements_xyz(0) + "\t" + (String)_CoM_acceleration_measurements_xyz(1) + "\t" + (String)_CoM_acceleration_measurements_xyz(2));
 // 	//Serial.println("_corrected_acc_xyz: \t" + (String)corrected_CoM_acceleration_xyz(0) + "\t" + (String)corrected_CoM_acceleration_xyz(1) + "\t" + (String)corrected_CoM_acceleration_xyz(2));

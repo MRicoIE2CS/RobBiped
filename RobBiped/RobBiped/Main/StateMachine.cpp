@@ -175,6 +175,9 @@ void Executor::always_executes()
 {
 	if (gyroscope_accelerometer_manager_.has_been_updated)
 	{
+		// CM estimation computation:::
+		global_kinematics_.compute_CoM_location();
+
 		// Torso upright control:::
 
 		// Get torso pitch orientation measurement.
@@ -185,6 +188,9 @@ void Executor::always_executes()
 
 	if (force_sensors_manager_.has_been_updated)
 	{
+		// ZMP Measurement computation
+		force_sensors_manager_.compute_global_ZMP(&global_kinematics_);
+
 // 		double potentiometer_value = user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0;
 // 		// Desired leg length
 // 		double local_zmp_lateral_deviation_setpoint_ = -37.0/2.0 + 37.0 * potentiometer_value;
@@ -279,6 +285,7 @@ void Executor::state1_execution()
 		desired_hip_height_ = 280.0;
 		global_kinematics_.set_desired_hip_height(desired_hip_height_);
 		CM_path_y.start_trajectory();
+		global_kinematics_.init_CoM_location();
 	}
 
 	if (force_sensors_manager_.has_been_updated)
@@ -302,11 +309,11 @@ void Executor::state1_execution()
 		//Serial.println("Touching ground? left,right: \t" + (String)force_sensors_manager_.is_left_foot_touching_ground() + "\t" + (String)force_sensors_manager_.is_right_foot_touching_ground());
 
 		// Potentiometer value sets the CM setpoint in Double Support Phase, along the Y-axis
-		double potentiometer_value2 = some_exp_filter_2_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer2) / 4095.0);
-		// Desired hip height
-		double desired_hip_height = 280 + 25 * potentiometer_value2;
-		//Serial.println("desired_hip_height: \t" + (String)desired_hip_height);
-		global_kinematics_.set_desired_hip_height(desired_hip_height);
+// 		double potentiometer_value2 = some_exp_filter_2_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer2) / 4095.0);
+// 		// Desired hip height
+// 		double desired_hip_height = 280 + 25 * potentiometer_value2;
+// 		//Serial.println("desired_hip_height: \t" + (String)desired_hip_height);
+// 		global_kinematics_.set_desired_hip_height(desired_hip_height_);
 // 		// Desired step width
 // 		desired_step_width_ = 90 + 70 * potentiometer_value2;
 // 		global_kinematics_.set_desired_step_width(desired_step_width_);
@@ -315,21 +322,18 @@ void Executor::state1_execution()
 		bool retcode_compute_lateral_DSP_kinematics = global_kinematics_.compute_lateral_DSP_kinematics(DSP_CM_setpoint_);
 
 // _____ SIGNAL RECORD
-		Vector3d CoM_location;
-		global_kinematics_.suposed_com_location_ = DSP_CM_setpoint_;
-		CoM_location = global_kinematics_.get_CoM_location();
-		double ZMP_loc_x, ZMP_loc_y;
-		force_sensors_manager_.get_global_ZMP(ZMP_loc_x, ZMP_loc_y);
-		gyroscope_accelerometer_manager_.get_value_ax_m_s2()
-		Serial.println("CoM_ZMP_x / CoM_ZMP_y: \t" + (String)CoM_location(0) + "\t" + (String)ZMP_loc_x + "\t" + (String)CoM_location(1) + "\t" + (String)ZMP_loc_y);
+// 		Vector3d CoM_location;
+// 		CoM_location = global_kinematics_.get_CoM_location();
+// 		double ZMP_loc_x, ZMP_loc_y;
+// 		force_sensors_manager_.get_global_ZMP(ZMP_loc_x, ZMP_loc_y);
+// 		Serial.println("CoM_ZMP_x / CoM_ZMP_y: \t" + (String)CoM_location(0) + "\t" + (String)ZMP_loc_x + "\t" + (String)CoM_location(1) + "\t" + (String)ZMP_loc_y);
 // _____
 
-		// Computation of global coordinates of the ZMP
-		force_sensors_manager_.compute_global_ZMP(&global_kinematics_);
-		double ZMP_x_mm;
-		double ZMP_y_mm;
-		force_sensors_manager_.get_global_ZMP(ZMP_x_mm, ZMP_y_mm);
-		//Serial.println("ZMP_x,y: \t" + (String)ZMP_x_mm + "\t" + (String)ZMP_y_mm);
+// 		// Computation of global coordinates of the ZMP
+// 		double ZMP_x_mm;
+// 		double ZMP_y_mm;
+// 		force_sensors_manager_.get_global_ZMP(ZMP_x_mm, ZMP_y_mm);
+// 		Serial.println("ZMP_x,y: \t" + (String)ZMP_x_mm + "\t" + (String)ZMP_y_mm);
 		
 		double left_roll_angle;
 		double right_roll_angle;
