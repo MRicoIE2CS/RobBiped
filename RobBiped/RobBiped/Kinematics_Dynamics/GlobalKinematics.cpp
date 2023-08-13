@@ -20,6 +20,7 @@
 
 #include "../Sensors/GyroscopeAccelerometerManager.h"
 #include "../Sensors/ForceSensorsManager.h"
+#include "../Utils/Kinematics/Geometry/Rotation.h"
 
 void GlobalKinematics::assoc_config(Configuration::Configs::Kinematics &_config)
 {
@@ -41,6 +42,8 @@ void GlobalKinematics::init(double _centerof_right_foot, PosePhases _phase, doub
 	set_desired_step_width(_desired_step_width);
 
 	CoM_location_.set_CoM_height(_desired_hip_height + config_->height_CM_from_hip);
+	CoM_location_.set_filter_complement_k(config_->Kfilter_CM_location);
+	init_CoM_location();
 	filter_CoM_location_.set_time_constant(100);
 
 	compute_lateral_DSP_home_kinematics();
@@ -172,22 +175,26 @@ double GlobalKinematics::compensate_hip_roll_angle(double &_desired_hip_roll_ang
 	return compensated_angle;
 }
 
-Vector3d GlobalKinematics::correct_acceleration_inclination(const Vector3d &_CoM_acceleration_measurements_xyz, const Vector2d &_CoM_inclination_xy)
+Vector3d GlobalKinematics::correct_acceleration_inclination(const Vector3d &_CoM_acceleration_measurements_xyz, const Vector2d &_CoM_inclinations)
 {
-	double xz_mod = sqrt( pow(_CoM_acceleration_measurements_xyz(0),2) + pow(_CoM_acceleration_measurements_xyz(2),2) );
-	double gamma_x = atan(_CoM_acceleration_measurements_xyz(0) / (-_CoM_acceleration_measurements_xyz(2)));
-	double yz_mod = sqrt( pow(_CoM_acceleration_measurements_xyz(1),2) + pow(_CoM_acceleration_measurements_xyz(2),2) );
-	double gamma_y = atan(_CoM_acceleration_measurements_xyz(1) / (-_CoM_acceleration_measurements_xyz(2)));
-	Vector3d corrected_CoM_acceleration_xyz;
-	corrected_CoM_acceleration_xyz(0) = xz_mod * sin(gamma_x - _CoM_inclination_xy(0));
-	corrected_CoM_acceleration_xyz(1) = yz_mod * sin(gamma_y - _CoM_inclination_xy(1));
-	corrected_CoM_acceleration_xyz(2) = -xz_mod * cos(gamma_x - _CoM_inclination_xy(0));
-// 	if (isnan(corrected_CoM_acceleration_xyz(1)))
-// 		Serial.println("NAN!\t" + (String)yz_mod + "\t" + (String)gamma_y + "\t" + (String)_CoM_inclination_xy(1));
+	// For the rotation of the roll (inclination in the yz plane), the sign must be inversed to comply with right hand convention.
+	Vector3d corrected_CoM_acceleration_xyz = Geometry::rotate_in_xy(_CoM_acceleration_measurements_xyz, - _CoM_inclinations(1), _CoM_inclinations(0));
+
 	return corrected_CoM_acceleration_xyz;
 }
 
-Vector3d GlobalKinematics::get_CoM_location()
+void GlobalKinematics::init_CoM_location()
+{
+	double x_zmp, y_zmp;
+	force_sensors_manager_->get_global_ZMP(x_zmp, y_zmp);
+	Vector3d ZMP_location;
+	ZMP_location(0) = x_zmp;
+	ZMP_location(1) = y_zmp;
+	ZMP_location(2) = desired_hip_height_ + config_->height_CM_from_hip;
+	CoM_location_.init_location(ZMP_location);
+}
+
+Vector3d GlobalKinematics::compute_CoM_location()
 {
 
 	float incl_pitch, incl_roll;
@@ -212,11 +219,18 @@ Vector3d GlobalKinematics::get_CoM_location()
 	ZMP_location(1) = y_zmp;
 
 	Vector3d CoM_location;
-	CoM_location = CoM_location_.compute_position_from_LIPM(CoM_corrected_accelerations, inclination, ZMP_location);
+	CoM_location = CoM_location_.compute_location(CoM_corrected_accelerations, ZMP_location);
 
 // // _____ SIGNAL RECORD
-// 		Serial.println("CoM_fCoM_ZMP_y / accy_aCM_y: \t" + (String)suposed_com_location_ + "\t" + (String)CoM_location(1) + "\t" + (String)filter_CoM_location_.filter(CoM_location(1)) + "\t" + (String)ZMP_location(1) + "\t" + (String)CoM_measured_accelerations(1) + "\t" + (String)CoM_corrected_accelerations(1));
+// 		Serial.println("CoM_fCoM_ZMP_y / accy_aCM_y: \t" + (String)filter_CoM_location_.filter(CoM_location(1)) + "\t" + (String)ZMP_location(1) + "\t" + (String)CoM_corrected_accelerations(1));
+//Serial.println("accy_aCM_y: \t" + (String)CoM_measured_accelerations(1) + "\t" + (String)CoM_corrected_accelerations(1) + "\t" + (String)incl_pitch + "\t" + (String)incl_roll);
+//Serial.println("accy_aCM_y: \t" + (String)CoM_corrected_accelerations(0) + "\t" + (String)CoM_corrected_accelerations(1) + "\t" + (String)CoM_corrected_accelerations(2) + "\t" + (String)incl_pitch + "\t" + (String)incl_roll);
 // // _____suposed_com_location_
 
 	return CoM_location;
+}
+
+Vector3d GlobalKinematics::get_CoM_location()
+{
+	return CoM_location_.get_location();
 }

@@ -79,10 +79,11 @@ struct Configs
 			int16_t gy_o = -40;//-35;
 			int16_t gz_o = -14;//-15;
 			}offsets;
-		uint32_t filter_time_constant_ms = 20;
+		uint32_t filter_time_constant_ms = 100;
 		}gyro_acc;
 
 	struct Kinematics {
+		// Body distances:
 		double d_hip_width = 90.4;		// Lateral distance between both hip roll joints (lh)
 		double height_hip = 85;			// Height between joints of the hip (l1)
 		double height_hip_knee = 79;	// Height between knee and the first joint of the hip (thigh) (l2)
@@ -90,13 +91,10 @@ struct Configs
 		double height_ankle = 45;		// Height between joints of the ankle (l4)
 		double height_foot = 35;		// Height between floor and first joint of the ankle (l5)
 		double d_lateral_foot = 13;		// Lateral distance between foot center and the axis of the first ankle joint (a1)
-		double height_CM_from_hip = -30.0;
+		// CM location :
+		double height_CM_from_hip = -50.0;	// Vertical distance from hip joints to estimated CM height
+		double Kfilter_CM_location = 0.98;	// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
 		}kinematics;
-
-
-	struct PCA9685 {
-		
-		}pca9685;
 
 	struct Control {
 

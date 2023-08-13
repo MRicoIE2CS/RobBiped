@@ -30,7 +30,6 @@
 
 using Eigen::Vector2d;
 using Eigen::Vector3d;
-using Eigen::Vector4d;
 
 // Forward declarations
 class ForceSensorsManager;
@@ -69,7 +68,7 @@ class GlobalKinematics : public I_PeriodicTask {
 		ExpFilter filter_CoM_location_;
 
 		// Returns the estimated accelerations of the CoM, considering the inclination of the torso
-		Vector3d correct_acceleration_inclination(const Vector3d &_CoM_acceleration_measurements_xyz, const Vector2d &_CoM_inclination_xy);
+		Vector3d correct_acceleration_inclination(const Vector3d &_CoM_acceleration_measurements_xyz, const Vector2d &_CoM_inclinations);
 
 		// Home-position variables
 		double home_roll_angle_;
@@ -135,9 +134,13 @@ class GlobalKinematics : public I_PeriodicTask {
 		double compensate_hip_roll_angle(double &_desired_hip_roll_angle);
 
 		// Returns the CoM location
+		void init_CoM_location();
+
+		// Returns the CoM location
+		Vector3d compute_CoM_location();
+
+		// Returns the CoM location
 		Vector3d get_CoM_location();
-		
-		double suposed_com_location_;
 	};
 
 #endif
