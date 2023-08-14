@@ -24,7 +24,6 @@
 
 #include "../../Kinematics_Dynamics/GlobalKinematics.h"
 #include "../../Main/Configs.h"
-#include "../../Sensors/GyroscopeAccelerometerManager.h"
 #include "../../Sensors/ForceSensorsManager.h"
 #include "../../UserInput/Command.h"
 #include "../../Utils/LinearAlgebra/ArduinoEigenDense.h"
@@ -38,7 +37,7 @@ class GlobalStabilization
 {
 	public:
 
-		enum class Mode { Stabilization, Tracking };
+		enum class Mode { OnlineReference, OfflineReference };
 
 	private:
 
@@ -51,30 +50,31 @@ class GlobalStabilization
 
 		// Height of the CM
 		double h_;
+		
+		// Constants for the delayed response on the ZMP tracking
+		double Tra_x_, Tra_y_;
 
 		// Pregenerated trajectories
+		PregeneratedTrajectory CM_path_x_;
+		PregeneratedTrajectory dCM_path_x_;
+		PregeneratedTrajectory ddCM_path_x_;
+		PregeneratedTrajectory dddCM_path_x_;
 		PregeneratedTrajectory CM_path_y_;
-		String CM_path_y_filename_ = "/CM_y.txt";
-		uint32_t CM_path_y_sampletime_ = 10;
 		PregeneratedTrajectory dCM_path_y_;
-		String dCM_path_y_filename_ = "/dCM_y.txt";
-		uint32_t dCM_path_y_sampletime_ = 10;
 		PregeneratedTrajectory ddCM_path_y_;
-		String ddCM_path_y_filename_ = "/ddCM_y.txt";
-		uint32_t ddCM_path_y_sampletime_ = 10;
 		PregeneratedTrajectory dddCM_path_y_;
-		String dddCM_path_y_filename_ = "/dddCM_y.txt";
-		uint32_t dddCM_path_y_sampletime_ = 10;
 		
 		// Pointers to signal holders
 		GlobalKinematics *global_kinematics_;
-		GyroscopeAccelerometerManager *gyroacc_sensor_;
 		ForceSensorsManager *force_sensor_;
 
-		void get_all_signals(double _reference_signals_x[4], double _reference_signals_y[4], double _feedback_signals_x[4], double _feedback_signals_y[4]);
+		start_trajectories();
+
+		void get_reference_signals(Vector2d &_CM_ref, Vector2d &_vCM_ref, Vector2d &_aCM_ref, Vector2d &_jCM_ref);
+		void get_feedback_signals(Vector2d &_CM_est, Vector2d &_vCM_est, Vector2d &_aCM_med, Vector2d &_ZMP_med);
 		
 		// Mode
-		Mode mode_ = Mode::Tracking;
+		Mode mode_ = Mode::OfflineReference;
 		
 		// Flag for the running state
 		bool is_runnning_ = false;
@@ -87,7 +87,10 @@ class GlobalStabilization
 		// Associations
 		void assoc_config(Configuration::Configs::Control::CMTracking &_config);
 		void assoc_globalkinematics(GlobalKinematics &global_kinematics_);
-		void assoc_sensors(ForceSensorsManager &_force_sensors_manager, GyroscopeAccelerometerManager &_gyroscope_accelerometer_manager);
+		void assoc_sensors(ForceSensorsManager &_force_sensors_manager);
+		
+		// Initialization
+		void init();
 		
 		// Sets the operating mode
 		void set_mode(Mode &_mode);

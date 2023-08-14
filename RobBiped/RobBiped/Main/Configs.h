@@ -104,9 +104,11 @@ struct Configs
 			String CM_path_y_filename = "/CM_y.txt";
 			String dCM_path_y_filename = "/dCM_y.txt";
 			String ddCM_path_y_filename = "/ddCM_y.txt";
+			String dddCM_path_y_filename = "/ddCM_y.txt";
 			String CM_path_x_filename = "/CM_x.txt";
 			String dCM_path_x_filename = "/dCM_x.txt";
 			String ddCM_path_x_filename = "/ddCM_x.txt";
+			String dddCM_path_x_filename = "/ddCM_x.txt";
 			uint32_t paths_sampletime_ms = 10;
 			double Tra_x = 0.001;	// Rising time of ZMP actuation dynamics
 			double Tra_y = 0.001;	// Rising time of ZMP actuation dynamics

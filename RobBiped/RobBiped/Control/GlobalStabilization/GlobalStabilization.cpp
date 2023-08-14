@@ -28,10 +28,50 @@ void Control::GlobalStabilization::assoc_globalkinematics(GlobalKinematics &_glo
 	global_kinematics_ = &_global_kinematics;
 }
 
-void Control::GlobalStabilization::assoc_sensors(ForceSensorsManager &_force_sensors_manager, GyroscopeAccelerometerManager &_gyroscope_accelerometer_manager)
+void Control::GlobalStabilization::assoc_sensors(ForceSensorsManager &_force_sensors_manager)
 {
-	gyroacc_sensor_ = &_gyroscope_accelerometer_manager;
 	force_sensor_ = &_force_sensors_manager;
+}
+
+void Control::GlobalStabilization::init()
+{
+	Tra_x_ = config_->Tra_x;
+	Tra_y_ = config_->Tra_y;
+	
+	PregeneratedTrajectory CM_path_x_;
+	PregeneratedTrajectory dCM_path_x_;
+	PregeneratedTrajectory ddCM_path_x_;
+	PregeneratedTrajectory dddCM_path_x_;
+	PregeneratedTrajectory CM_path_y_;
+	PregeneratedTrajectory dCM_path_y_;
+	PregeneratedTrajectory ddCM_path_y_;
+	PregeneratedTrajectory dddCM_path_y_;
+
+	CM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
+	CM_path_x_.set_file_name(config_->CM_path_x_filename);
+	CM_path_x_.init();
+	dCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
+	dCM_path_x_.set_file_name(config_->dCM_path_x_filename);
+	dCM_path_x_.init();
+	ddCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
+	ddCM_path_x_.set_file_name(config_->ddCM_path_x_filename);
+	ddCM_path_x_.init();
+	dddCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
+	dddCM_path_x_.set_file_name(config_->dddCM_path_x_filename);
+	dddCM_path_x_.init();
+
+	CM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
+	CM_path_y_.set_file_name(config_->CM_path_y_filename);
+	CM_path_y_.init();
+	dCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
+	dCM_path_y_.set_file_name(config_->dCM_path_y_filename);
+	dCM_path_y_.init();
+	ddCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
+	ddCM_path_y_.set_file_name(config_->ddCM_path_y_filename);
+	ddCM_path_y_.init();
+	dddCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
+	dddCM_path_y_.set_file_name(config_->dddCM_path_y_filename);
+	dddCM_path_y_.init();
 }
 
 void Control::GlobalStabilization::set_mode(Mode &_mode)
@@ -44,55 +84,62 @@ void Control::GlobalStabilization::reset_trajectory()
 	is_runnning_ = false;
 }
 
-void Control::GlobalStabilization::get_all_signals(double _reference_signals_x[4], double _reference_signals_y[4], double _feedback_signals_x[4], double _feedback_signals_y[4])
+void Control::GlobalStabilization::start_trajectories()
 {
-	// Reference signals
-	
+	CM_path_x_.start_trajectory();
+	dCM_path_x_.start_trajectory();
+	ddCM_path_x_.start_trajectory();
+	dddCM_path_x_.start_trajectory();
+	CM_path_y_.start_trajectory();
+	dCM_path_y_.start_trajectory();
+	ddCM_path_y_.start_trajectory();
+	dddCM_path_y_.start_trajectory();
+}
 
-	// Feedback signals
+void Control::GlobalStabilization::get_reference_signals(Vector2d &_CM_ref, Vector2d &_vCM_ref, Vector2d &_aCM_ref, Vector2d &_jCM_ref)
+{
+	_CM_ref(0) = CM_path_x_.get_value();
+	_CM_ref(1) = CM_path_y_.get_value();
+	_vCM_ref(0) = dCM_path_x_.get_value();
+	_vCM_ref(1) = dCM_path_y_.get_value();
+	_aCM_ref(0) = ddCM_path_x_.get_value();
+	_aCM_ref(1) = ddCM_path_y_.get_value();
+	_jCM_ref(0) = dddCM_path_x_.get_value();
+	_jCM_ref(1) = dddCM_path_y_.get_value();
+}
+
+void Control::GlobalStabilization::get_feedback_signals(Vector2d &_CM_est, Vector2d &_vCM_est, Vector2d &_aCM_med, Vector2d &_ZMP_med)
+{
 	Vector3d CoM_location_xyz = global_kinematics_->get_CoM_location();
-	_feedback_signals_x[0] = CoM_location_xyz(0);
-	_feedback_signals_y[0] = CoM_location_xyz(1);
+	_CM_est(0) = CoM_location_xyz(0);
+	_CM_est(1) = CoM_location_xyz(1);
 	h_ = CoM_location_xyz(2);
 	Vector3d CoM_velocity_xyz = global_kinematics_->get_CoM_velocity();
-	_feedback_signals_x[1] = CoM_velocity_xyz(0);
-	_feedback_signals_y[1] = CoM_velocity_xyz(1);
+	_vCM_est(0) = CoM_velocity_xyz(0);
+	_vCM_est(1) = CoM_velocity_xyz(1);
 	Vector3d CoM_acceleration_xyz = global_kinematics_->get_CoM_acceleration();
-	_feedback_signals_x[2] = CoM_acceleration_xyz(0);
-	_feedback_signals_y[2] = CoM_acceleration_xyz(1);
+	_aCM_med(0) = CoM_acceleration_xyz(0);
+	_aCM_med(1) = CoM_acceleration_xyz(1);
 	Vector3d ZMP_xy = force_sensor_->get_global_ZMP()
-	_feedback_signals_x[3] = ZMP_xy(0);
-	_feedback_signals_y[3] = ZMP_xy(1);
+	_ZMP_med(0) = ZMP_xy(0);
+	_ZMP_med(1) = ZMP_xy(1);
 }
 
 Vector2d Control::GlobalStabilization::compute_ZMP_action()
 {
-	// Feedback of the CM position, velocity and acceleration, and ZMP position
-	Vector2d CM_est, vCM_est, aCM_med, ZMP_med;
-	double feedback_signals_x[4];
-	double feedback_signals_y[4];
+	if (!is_runnning_)
+	{
+		is_runnning_ = true;
+		start_trajectories();
+	}
+
 	// References for CM position, velocity, acceleration and jerk
 	Vector2d CM_ref, vCM_ref, aCM_ref, jCM_ref;
-	double reference_signals_x[4];
-	double reference_signals_y[4];
-	// Obtain of all the signals
-	get_all_signals(reference_signals_x, reference_signals_y, feedback_signals_x, feedback_signals_y);
-	CM_est(0) = feedback_signals_x[0];
-	CM_est(1) = feedback_signals_y[0];
-	vCM_est(0) = feedback_signals_x[1];
-	vCM_est(1) = feedback_signals_y[1];
-	aCM_med(0) = feedback_signals_x[2];
-	aCM_med(1) = feedback_signals_y[2];
-	ZMP_med(0) = feedback_signals_x[3];
-	ZMP_med(1) = feedback_signals_y[3];
-	CM_ref(0) = reference_signals_x[0];
-	CM_ref(1) = reference_signals_y[0];
-	vCM_ref(0) = reference_signals_x[1];
-	vCM_ref(1) = reference_signals_y[1];
-	aCM_ref(0) = reference_signals_x[2];
-	aCM_ref(1) = reference_signals_y[2];
-	jCM_ref(0) = reference_signals_x[3];
-	jCM_ref(1) = reference_signals_y[3];
+	get_reference_signals(CM_ref, vCM_ref, aCM_ref, jCM_ref);
+	
+	// Feedback of the CM position, velocity and acceleration, and ZMP position
+	Vector2d CM_est, vCM_est, aCM_med, ZMP_med;
+	get_feedback_signals(CM_est, vCM_est, aCM_med, ZMP_med);
 
 	// Error computation
 	
