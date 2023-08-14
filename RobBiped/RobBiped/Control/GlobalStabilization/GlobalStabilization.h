@@ -54,6 +54,9 @@ class GlobalStabilization
 		// Constants for the delayed response on the ZMP tracking
 		double Tra_x_, Tra_y_;
 
+		// Proportional constants of the controller
+		double d0x, d1x, d2x, d0y, d1y, d2y;
+
 		// Pregenerated trajectories
 		PregeneratedTrajectory CM_path_x_;
 		PregeneratedTrajectory dCM_path_x_;
@@ -68,7 +71,7 @@ class GlobalStabilization
 		GlobalKinematics *global_kinematics_;
 		ForceSensorsManager *force_sensor_;
 
-		start_trajectories();
+		void start_trajectories();
 
 		void get_reference_signals(Vector2d &_CM_ref, Vector2d &_vCM_ref, Vector2d &_aCM_ref, Vector2d &_jCM_ref);
 		void get_feedback_signals(Vector2d &_CM_est, Vector2d &_vCM_est, Vector2d &_aCM_med, Vector2d &_ZMP_med);

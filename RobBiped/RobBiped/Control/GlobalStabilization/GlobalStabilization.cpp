@@ -37,6 +37,13 @@ void Control::GlobalStabilization::init()
 {
 	Tra_x_ = config_->Tra_x;
 	Tra_y_ = config_->Tra_y;
+
+	d0x = config_->d0_x;
+	d1x = config_->d1_x;
+	d2x = config_->d2_x;
+	d0y = config_->d0_y;
+	d1y = config_->d1_y;
+	d2y = config_->d2_y;
 	
 	PregeneratedTrajectory CM_path_x_;
 	PregeneratedTrajectory dCM_path_x_;
@@ -120,7 +127,7 @@ void Control::GlobalStabilization::get_feedback_signals(Vector2d &_CM_est, Vecto
 	Vector3d CoM_acceleration_xyz = global_kinematics_->get_CoM_acceleration();
 	_aCM_med(0) = CoM_acceleration_xyz(0);
 	_aCM_med(1) = CoM_acceleration_xyz(1);
-	Vector3d ZMP_xy = force_sensor_->get_global_ZMP()
+	Vector2d ZMP_xy = force_sensor_->get_global_ZMP();
 	_ZMP_med(0) = ZMP_xy(0);
 	_ZMP_med(1) = ZMP_xy(1);
 }
@@ -136,18 +143,30 @@ Vector2d Control::GlobalStabilization::compute_ZMP_action()
 	// References for CM position, velocity, acceleration and jerk
 	Vector2d CM_ref, vCM_ref, aCM_ref, jCM_ref;
 	get_reference_signals(CM_ref, vCM_ref, aCM_ref, jCM_ref);
-	
+
 	// Feedback of the CM position, velocity and acceleration, and ZMP position
 	Vector2d CM_est, vCM_est, aCM_med, ZMP_med;
 	get_feedback_signals(CM_est, vCM_est, aCM_med, ZMP_med);
 
-	// Error computation
-	
-	// v computation
-	
-	// u computation
-	
+	// Error computation - x
+	double err_x = CM_ref(0) - CM_est(0);
+	double v_err_x = vCM_ref(0) - vCM_est(0);
+	double a_err_x = aCM_ref(0) - aCM_med(0);
+	// Error computation - y
+	double err_y = CM_ref(1) - CM_est(1);
+	double v_err_y = vCM_ref(1) - vCM_est(1);
+	double a_err_y = aCM_ref(1) - aCM_med(1);
 
+	// v computation
+	double v_x = d0x * err_x + d1x * v_err_x + d2x * a_err_x + jCM_ref(0);
+	double v_y = d0y * err_y + d1y * v_err_y + d2y * a_err_y + jCM_ref(1);
+
+	// u computation
+	double u_x = (Tra_x_ * h_ / g_) * ((g_/h_) * vCM_est(0) + (g_/(Tra_x_*h_) * ZMP_med(0) - v_x));
+	double u_y = (Tra_y_ * h_ / g_) * ((g_/h_) * vCM_est(1) + (g_/(Tra_y_*h_) * ZMP_med(1) - v_y));
+
+	control_action_(0) = u_x;
+	control_action_(1) = u_y;
 	return control_action_;
 }
 
