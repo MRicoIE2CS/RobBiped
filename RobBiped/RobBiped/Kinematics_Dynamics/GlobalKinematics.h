@@ -135,12 +135,14 @@ class GlobalKinematics : public I_PeriodicTask {
 
 		// Returns the CoM location
 		void init_CoM_location();
-
 		// Returns the CoM location
 		Vector3d compute_CoM_location();
-
 		// Returns the CoM location
 		Vector3d get_CoM_location();
+		// Returns the CoM velocity
+		Vector3d get_CoM_velocity();
+		// Returns the CoM acceleration
+		Vector3d get_CoM_acceleration();
 	};
 
 #endif

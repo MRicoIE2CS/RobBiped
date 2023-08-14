@@ -71,8 +71,14 @@ class CoMLocation {
 		// Compute position
 		Vector3d compute_location(Vector3d &_CoM_acceleration_measurements_ms2_xyz, Vector2d &_ZMP_position_xy);
 
-		// Compute position
+		// Get location
 		Vector3d get_location();
+
+		// Get velocity
+		Vector3d get_velocity();
+
+		// Get acceleration
+		Vector3d get_acceleration();
 };
 
 #endif

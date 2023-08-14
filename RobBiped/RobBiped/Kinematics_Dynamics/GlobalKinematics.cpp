@@ -42,7 +42,7 @@ void GlobalKinematics::init(double _centerof_right_foot, PosePhases _phase, doub
 	set_desired_step_width(_desired_step_width);
 
 	CoM_location_.set_CoM_height(_desired_hip_height + config_->height_CM_from_hip);
-	CoM_location_.set_filter_complement_k(config_->Kfilter_CM_location);
+	CoM_location_.set_filter_complement_k(config_->Kfilter_CM_location, config_->Kfilter_CM_velocity);
 	init_CoM_location();
 	filter_CoM_location_.set_time_constant(100);
 
@@ -210,6 +210,7 @@ Vector3d GlobalKinematics::compute_CoM_location()
 	CoM_measured_accelerations(0) = ax;
 	CoM_measured_accelerations(1) = ay;
 	CoM_measured_accelerations(2) = az;
+
 	Vector3d CoM_corrected_accelerations = correct_acceleration_inclination(CoM_measured_accelerations, inclination);
 
 	double x_zmp, y_zmp;
@@ -233,4 +234,14 @@ Vector3d GlobalKinematics::compute_CoM_location()
 Vector3d GlobalKinematics::get_CoM_location()
 {
 	return CoM_location_.get_location();
+}
+
+Vector3d GlobalKinematics::get_CoM_velocity()
+{
+	return CoM_location_.get_velocity();
+}
+
+Vector3d GlobalKinematics::get_CoM_acceleration()
+{
+	return CoM_location_.get_acceleration();
 }

@@ -103,7 +103,7 @@ Vector3d CoMLocation::compute_location(Vector3d &_CoM_acceleration_measurements_
 	last_millis_ = current_millis;
 	
 // 	Serial.println("__DEBUG___");
- 	Serial.println("a, itgr, lipm, fusd, zmp: \t" + (String)new_acc_measure_mms2_xyz(1) + "\t" + (String)intgr_com_location_velocity(1,0) + "\t" + (String)lipm_com_location(1) + "\t" + (String)fused_com_location(1) + "\t" + (String)_ZMP_position_xy(1));
+ 	//Serial.println("a, itgr, lipm, fusd, zmp: \t" + (String)new_acc_measure_mms2_xyz(1) + "\t" + (String)intgr_com_location_velocity(1,0) + "\t" + (String)lipm_com_location(1) + "\t" + (String)fused_com_location(1) + "\t" + (String)_ZMP_position_xy(1));
 	//Serial.println("a, itgr, lipm, fusd, zmp: \t" + (String)new_acc_measure_mms2_xyz(0) + "\t" + (String)intgr_com_location(0) + "\t" + (String)lipm_com_location(0) + "\t" + (String)fused_com_location(0) + "\t" + (String)_ZMP_position_xy(0));
 
  	//Serial.println("_corrected_acc_xyz: \t" + (String)new_acc_measure_mms2_xyz(0) + "\t" + (String)new_acc_measure_mms2_xyz(1) + "\t" + (String)new_acc_measure_mms2_xyz(2));
@@ -123,4 +123,14 @@ Vector3d CoMLocation::compute_location(Vector3d &_CoM_acceleration_measurements_
 Vector3d CoMLocation::get_location()
 {
 	return last_CoM_location_;
+}
+
+Vector3d CoMLocation::get_velocity()
+{
+	return last_CoM_velocity_;
+}
+
+Vector3d CoMLocation::get_acceleration()
+{
+	return last_CoM_acceleration_;
 }
