@@ -98,6 +98,24 @@ struct Configs
 
 	struct Control {
 
+		struct CMTracking {
+			String CM_path_y_filename = "/CM_y.txt";
+			String dCM_path_y_filename = "/dCM_y.txt";
+			String ddCM_path_y_filename = "/ddCM_y.txt";
+			String CM_path_x_filename = "/CM_x.txt";
+			String dCM_path_x_filename = "/dCM_x.txt";
+			String ddCM_path_x_filename = "/ddCM_x.txt";
+			uint32_t paths_sampletime_ms = 10;
+			double Tra_x = 0.001;	// Rising time of ZMP actuation dynamics
+			double Tra_y = 0.001;	// Rising time of ZMP actuation dynamics
+			double d0_x = 40;
+			double d1_x = 40;
+			double d2_x = 40;
+			double d0_y = 40;
+			double d1_y = 40;
+			double d2_y = 40;
+		};
+
 		struct TorsoPosture {
 			// PID constants
 			double kp = 1.0;
