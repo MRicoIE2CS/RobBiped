@@ -47,7 +47,10 @@ class GlobalStabilization
 
 		// Configuration
 		Configuration::Configs::Control::CMTracking *config_;
-		const double g = 9800; // mm/s^2
+		const double g_ = 9800; // mm/s^2
+
+		// Height of the CM
+		double h_;
 
 		// Pregenerated trajectories
 		PregeneratedTrajectory CM_path_y_;
@@ -67,12 +70,14 @@ class GlobalStabilization
 		GlobalKinematics *global_kinematics_;
 		GyroscopeAccelerometerManager *gyroacc_sensor_;
 		ForceSensorsManager *force_sensor_;
+
+		void get_all_signals(double _reference_signals_x[4], double _reference_signals_y[4], double _feedback_signals_x[4], double _feedback_signals_y[4]);
 		
 		// Mode
 		Mode mode_ = Mode::Tracking;
 		
 		// Flag for the running state
-		bool is_runnning = false;
+		bool is_runnning_ = false;
 		
 		// Output of the controller
 		Vector2d control_action_;
@@ -81,6 +86,7 @@ class GlobalStabilization
 
 		// Associations
 		void assoc_config(Configuration::Configs::Control::CMTracking &_config);
+		void assoc_globalkinematics(GlobalKinematics &global_kinematics_);
 		void assoc_sensors(ForceSensorsManager &_force_sensors_manager, GyroscopeAccelerometerManager &_gyroscope_accelerometer_manager);
 		
 		// Sets the operating mode
