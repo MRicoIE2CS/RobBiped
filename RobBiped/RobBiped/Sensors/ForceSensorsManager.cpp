@@ -426,3 +426,10 @@ void ForceSensorsManager::get_global_ZMP(double &_x_mm, double &_y_mm)
 	_x_mm = global_zmp_x_mm_;
 	_y_mm = global_zmp_y_mm_;
 }
+
+Vector2d ForceSensorsManager::get_global_ZMP()
+{
+	Vector2d zmp;
+	zmp(0) = global_zmp_x_mm_;
+	zmp(1) = global_zmp_y_mm_;
+}

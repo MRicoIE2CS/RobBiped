@@ -27,6 +27,9 @@
 #include "HX711/multiple_HX711.h"
 #include "../Utils/Filters/ExponentialFilter.h"
 #include "../Utils/Filters/ExponentialFilterWithPeakRejection.h"
+#include "../Utils/LinearAlgebra/ArduinoEigenDense.h"
+
+using Eigen::Vector2d;
 
 using namespace Configuration;
 
@@ -141,6 +144,7 @@ public:
 
 	void compute_global_ZMP(GlobalKinematics *_global_kinematics);
 	void get_global_ZMP(double &_x_mm, double &_y_mm);
+	Vector2d get_global_ZMP();
 };
 
 #endif
