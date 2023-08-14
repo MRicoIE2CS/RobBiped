@@ -100,10 +100,10 @@ class Executor {
 		// Pregenerated trajectories
 		PregeneratedTrajectory CM_path_y;
 		String CM_path_y_filename = "/CM_y.txt";
-		uint32_t CM_path_y_sampletime = 30;
+		uint32_t CM_path_y_sampletime = 10;
 		//PregeneratedTrajectory ZMP_path_y;
 		
-		// 
+		// Sin periodic signal
 		SignalGenerator sin_signal;
 		uint32_t sin_period = 2500;
 
