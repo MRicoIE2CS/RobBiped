@@ -63,6 +63,9 @@ private:
 	int64_t tiempo_prev_, dt_;
 	float ang_deg_x_, ang_deg_y_;
 	float ang_deg_x_prev_, ang_deg_y_prev_;
+	
+	// Constant for complementary filter
+	double Kf = 0.98;
 
 	void get_readings();
 	void units_conversion();

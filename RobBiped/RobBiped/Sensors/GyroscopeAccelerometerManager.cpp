@@ -45,6 +45,8 @@ void GyroscopeAccelerometerManager::init()
 	ax_m_s2_filtered_.set_time_constant(config_->filter_time_constant_ms);
 	ay_m_s2_filtered_.set_time_constant(config_->filter_time_constant_ms);
 	az_m_s2_filtered_.set_time_constant(config_->filter_time_constant_ms);
+
+	Kf = config_->Kf_complement_filter;
 	
 	// Get Command singleton instance
 	command_ = Command::get_instance();
@@ -88,9 +90,8 @@ void GyroscopeAccelerometerManager::complementary_filter_for_angle()
 	dt_ = currentMillis - tiempo_prev_;
 	tiempo_prev_ = currentMillis;
 
-	// TODO: Make the 0.98 a configurable constant
-	ang_deg_x_ = 0.98 * (gx_deg_s_ * dt_ / 1000.0 + ang_deg_x_prev_) + 0.02 * accel_ang_x_;
-	ang_deg_y_ = 0.98 * (gy_deg_s_ * dt_ / 1000.0 + ang_deg_y_prev_) + 0.02 * accel_ang_y_;
+	ang_deg_x_ = Kf * (gx_deg_s_ * dt_ / 1000.0 + ang_deg_x_prev_) + (1-Kf) * accel_ang_x_;
+	ang_deg_y_ = Kf * (gy_deg_s_ * dt_ / 1000.0 + ang_deg_y_prev_) + (1-Kf) * accel_ang_y_;
 
 	ang_deg_x_prev_ = ang_deg_x_;
 	ang_deg_y_prev_ = ang_deg_y_;
@@ -285,16 +286,16 @@ void GyroscopeAccelerometerManager::print_values()
 
 void GyroscopeAccelerometerManager::get_acc_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2)
 {
-	_ax_m_s2 = - ax_m_s2_;
-	_ay_m_s2 = - ay_m_s2_;
-	_az_m_s2 = - az_m_s2_;
+	_ax_m_s2 = ax_m_s2_;
+	_ay_m_s2 = ay_m_s2_;
+	_az_m_s2 = az_m_s2_;
 }
 
 void GyroscopeAccelerometerManager::get_filtered_acc_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2)
 {
-	_ax_m_s2 = - ax_m_s2_filtered_.get_filtered_value();
-	_ay_m_s2 = - ay_m_s2_filtered_.get_filtered_value();
-	_az_m_s2 = - az_m_s2_filtered_.get_filtered_value();
+	_ax_m_s2 = ax_m_s2_filtered_.get_filtered_value();
+	_ay_m_s2 = ay_m_s2_filtered_.get_filtered_value();
+	_az_m_s2 = az_m_s2_filtered_.get_filtered_value();
 }
 
 void GyroscopeAccelerometerManager::get_gyro_values(float& _gx_deg_s, float& _gy_deg_s, float& _gz_deg_s)
@@ -306,9 +307,9 @@ void GyroscopeAccelerometerManager::get_gyro_values(float& _gx_deg_s, float& _gy
 
 void GyroscopeAccelerometerManager::get_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2, float& _gx_deg_s, float& _gy_deg_s, float& _gz_deg_s)
 {
-	_ax_m_s2 = - ax_m_s2_;
-	_ay_m_s2 = - ay_m_s2_;
-	_az_m_s2 = - az_m_s2_;
+	_ax_m_s2 = ax_m_s2_;
+	_ay_m_s2 = ay_m_s2_;
+	_az_m_s2 = az_m_s2_;
 	_gx_deg_s = gx_deg_s_;
 	_gy_deg_s = gy_deg_s_;
 	_gz_deg_s = gz_deg_s_;
@@ -316,29 +317,29 @@ void GyroscopeAccelerometerManager::get_values(float& _ax_m_s2, float& _ay_m_s2,
 
 void GyroscopeAccelerometerManager::get_value_ax_m_s2(float& _ax_m_s2)
 {
-	_ax_m_s2 = - ax_m_s2_;
+	_ax_m_s2 = ax_m_s2_;
 }
 float GyroscopeAccelerometerManager::get_value_ax_m_s2()
 {
-	return - ax_m_s2_;
+	return ax_m_s2_;
 }
 
 void GyroscopeAccelerometerManager::get_value_ay_m_s2(float& _ay_m_s2)
 {
-	_ay_m_s2 = - ay_m_s2_;
+	_ay_m_s2 = ay_m_s2_;
 }
 float GyroscopeAccelerometerManager::get_value_ay_m_s2()
 {
-	return - ay_m_s2_;
+	return ay_m_s2_;
 }
 
 void GyroscopeAccelerometerManager::get_value_az_m_s2(float& _az_m_s2)
 {
-	_az_m_s2 = - az_m_s2_;
+	_az_m_s2 = az_m_s2_;
 }
 float GyroscopeAccelerometerManager::get_value_az_m_s2()
 {
-	return - az_m_s2_;
+	return az_m_s2_;
 }
 
 void GyroscopeAccelerometerManager::get_value_gx_deg_s(float& _gx_deg_s)
