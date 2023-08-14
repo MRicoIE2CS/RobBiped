@@ -79,7 +79,8 @@ struct Configs
 			int16_t gy_o = -40;//-35;
 			int16_t gz_o = -14;//-15;
 			}offsets;
-		uint32_t filter_time_constant_ms = 100;
+		uint32_t filter_time_constant_ms = 40;
+		double Kf_complement_filter = 0.99;	// Constant of the complement filter for the calculation of the inclination angle [0.0-1.0]
 		}gyro_acc;
 
 	struct Kinematics {
@@ -93,7 +94,8 @@ struct Configs
 		double d_lateral_foot = 13;		// Lateral distance between foot center and the axis of the first ankle joint (a1)
 		// CM location :
 		double height_CM_from_hip = -50.0;	// Vertical distance from hip joints to estimated CM height
-		double Kfilter_CM_location = 0.98;	// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
+		double Kfilter_CM_location = 0.955;	// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
+		double Kfilter_CM_velocity = 0.99;	// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
 		}kinematics;
 
 	struct Control {

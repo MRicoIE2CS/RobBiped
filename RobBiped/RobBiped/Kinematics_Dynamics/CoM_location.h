@@ -25,6 +25,7 @@
 #include "../Main/Configs.h"
 #include "../Utils/LinearAlgebra/ArduinoEigenDense.h"
 
+using Eigen::Matrix2d;
 using Eigen::Vector2d;
 using Eigen::Vector3d;
 
@@ -37,8 +38,9 @@ class CoMLocation {
 		Vector3d last_CoM_velocity_;
 		Vector3d last_CoM_acceleration_;
 
-		// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
-		double Kf = 1;
+		// Constant of the complement filter for the estimation of the CM location and velocity [0.0-1.0]
+		double Kf_l = 1;
+		double Kf_v = 1;
 
 		// Gravity constant (mm/s^2)
 		const double gravity_constant_ = 9807;
@@ -50,7 +52,7 @@ class CoMLocation {
 		Vector2d compute_location_from_LIPM(Vector3d &_acc_measure_mms2_xyz, Vector2d &_ZMP_position_xy);
 
 		// Compute position integrating from accelerometer measurement
-		Vector2d compute_location_from_integration(Vector3d &_acc_mean_mms2_xyz, double &_time_incr);
+		Matrix2d compute_location_from_integration(Vector3d &_acc_mean_mms2_xyz, double &_time_incr);
 
 	public:
 
@@ -64,7 +66,7 @@ class CoMLocation {
 		// Set the constant of the complement filter for the estimation of the CM location [0.0-1.0]
 		// A value of 1.0, gives all the weight to the calculation from the integration of the acceleration measurements
 		// A value of 0.0, gives all the weight to the calculation from the linear inverted pendulum model and the acceleration and ZMP measurements
-		void set_filter_complement_k(const double &_kf);
+		void set_filter_complement_k(const double &_kf_l, const double &_kf_v);
 
 		// Compute position
 		Vector3d compute_location(Vector3d &_CoM_acceleration_measurements_ms2_xyz, Vector2d &_ZMP_position_xy);
