@@ -24,7 +24,7 @@
 #include "Configs.h"
 #include "I_PeriodicTask.h"
 #include "../Actuators/JointsManager.h"
-#include "../Control/FootSupport/FootRollCentering.h"
+#include "../Control/ZMPTracking/Foot_ZMPTracking.h"
 #include "../Control/TorsoPosture/TorsoPosture.h"
 #include "../Kinematics_Dynamics/GlobalKinematics.h"
 #include "../Sensors/GyroscopeAccelerometerManager.h"
@@ -51,14 +51,15 @@ class Executor {
 		ForceSensorsManager force_sensors_manager_;
 		GyroscopeAccelerometerManager gyroscope_accelerometer_manager_;
 		Control::TorsoPosture torso_posture_controller_;
-		Control::FootRollCentering left_foot_roll_centering_controller_;
-		Control::FootRollCentering right_foot_roll_centering_controller_;
+		Control::Foot_ZMPTracking left_foot_roll_centering_controller_;
+		Control::Foot_ZMPTracking right_foot_roll_centering_controller_;
 		GlobalKinematics global_kinematics_;
 		///// END OBJECT TASKS __//
 
 		/////____________ APPLICATION EXCLUSIVE OBJECTS AND METHODS: __//
 
 		// State machine related objects and methods
+		// TODO: Create new class "State" that unites all necessities from a state
 		uint8_t state_number = 0;
 		void state_machine_switch();
 		void state_machine_execution();
@@ -89,6 +90,9 @@ class Executor {
 		uint8_t state7_phase = 0;
 		bool state7_finished = false;
 		void state7_execution();
+		uint8_t state10_phase = 0;
+		bool state10_finished = false;
+		void state10_execution();
 
 		// Other state machine flags
 		bool application_on = false;

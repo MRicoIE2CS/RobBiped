@@ -1,5 +1,5 @@
 /*
- * FootRollCentering.cpp
+ * Foot_ZMPTracking.cpp
  *
  * Copyright 2023 Mikel Rico Abajo (https://github.com/MRicoIE2CS)
 
@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-#include "FootRollCentering.h"
+#include "Foot_ZMPTracking.h"
 
-void Control::FootRollCentering::assoc_config(Configuration::Configs::Control::FootRollCentering& _config)
+void Control::Foot_ZMPTracking::assoc_config(Configuration::Configs::Control::FootRollCentering& _config)
 {
 	config_ = &_config;
 }
 
-void Control::FootRollCentering::init()
+void Control::Foot_ZMPTracking::init()
 {
 	kp_ = &(config_->kp);
 	ki_ = &(config_->ki);
@@ -45,12 +45,12 @@ void Control::FootRollCentering::init()
 	pid_.set_setpoint_weighting(*proportional_setpoint_weight_, *derivative_setpoint_weight_);
 }
 
-void Control::FootRollCentering::set_setpoint_mm(double& _desired_zmp_lateral_deviation_mm)
+void Control::Foot_ZMPTracking::set_setpoint_mm(double& _desired_zmp_lateral_deviation_mm)
 {
 	setpoint_mm_ = _desired_zmp_lateral_deviation_mm;
 }
 
-double Control::FootRollCentering::compute(double& _current_foot_zmp_lateral_deviation_mm)
+double Control::Foot_ZMPTracking::compute(double& _current_foot_zmp_lateral_deviation_mm)
 {
 	double output_rad = 0.0;
 	
@@ -85,7 +85,7 @@ double Control::FootRollCentering::compute(double& _current_foot_zmp_lateral_dev
 	return output_rad;
 }
 
-bool Control::FootRollCentering::is_on()
+bool Control::Foot_ZMPTracking::is_on()
 {
 	return controller_on;
 }

@@ -600,10 +600,10 @@
     <Compile Include="Actuators\PCA9685\Adafruit_PWMServoDriver.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Control\FootSupport\FootRollCentering.cpp">
+    <Compile Include="Control\ZMPTracking\Foot_ZMPTracking.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Control\FootSupport\FootRollCentering.h">
+    <Compile Include="Control\ZMPTracking\Foot_ZMPTracking.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Control\CMTracking\CMTracking.cpp">
@@ -1813,7 +1813,7 @@
   <ItemGroup>
     <Folder Include="Actuators\" />
     <Folder Include="Actuators\PCA9685" />
-    <Folder Include="Control\FootSupport" />
+    <Folder Include="Control\ZMPTracking" />
     <Folder Include="Control\CMTracking" />
     <Folder Include="Control\TorsoPosture" />
     <Folder Include="Main" />

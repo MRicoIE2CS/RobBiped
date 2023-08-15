@@ -1,5 +1,5 @@
 /*
- * FootRollCentering.h
+ * Foot_ZMPTracking.h
  *
  * Copyright 2023 Mikel Rico Abajo (https://github.com/MRicoIE2CS)
 
@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef _FOOT_ROLL_CENTERING_h
-#define _FOOT_ROLL_CENTERING_h
+#ifndef _FOOT_ZMP_TRACKING_h
+#define _FOOT_ZMP_TRACKING_h
 
 #include "arduino.h"
 
@@ -28,7 +28,7 @@
 
 namespace Control {
 
-class FootRollCentering : public I_PeriodicTask
+class Foot_ZMPTracking : public I_PeriodicTask
 {
 	private:
 
