@@ -79,7 +79,8 @@ struct Configs
 			int16_t gy_o = -40;//-35;
 			int16_t gz_o = -14;//-15;
 			}offsets;
-		uint32_t filter_time_constant_ms = 100;
+		uint32_t filter_time_constant_ms = 40;
+		double Kf_complement_filter = 0.99;	// Constant of the complement filter for the calculation of the inclination angle [0.0-1.0]
 		}gyro_acc;
 
 	struct Kinematics {
@@ -93,10 +94,31 @@ struct Configs
 		double d_lateral_foot = 13;		// Lateral distance between foot center and the axis of the first ankle joint (a1)
 		// CM location :
 		double height_CM_from_hip = -50.0;	// Vertical distance from hip joints to estimated CM height
-		double Kfilter_CM_location = 0.98;	// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
+		double Kfilter_CM_location = 0.955;	// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
+		double Kfilter_CM_velocity = 0.99;	// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
 		}kinematics;
 
 	struct Control {
+
+		struct CMTracking {
+			String CM_path_y_filename = "/CM_y.txt";
+			String dCM_path_y_filename = "/dCM_y.txt";
+			String ddCM_path_y_filename = "/ddCM_y.txt";
+			String dddCM_path_y_filename = "/ddCM_y.txt";
+			String CM_path_x_filename = "/CM_x.txt";
+			String dCM_path_x_filename = "/dCM_x.txt";
+			String ddCM_path_x_filename = "/ddCM_x.txt";
+			String dddCM_path_x_filename = "/ddCM_x.txt";
+			uint32_t paths_sampletime_ms = 10;
+			double Tra_x = 0.001;	// Rising time of ZMP actuation dynamics
+			double Tra_y = 0.001;	// Rising time of ZMP actuation dynamics
+			double d0_x = 40;
+			double d1_x = 40;
+			double d2_x = 40;
+			double d0_y = 40;
+			double d1_y = 40;
+			double d2_y = 40;
+		};
 
 		struct TorsoPosture {
 			// PID constants

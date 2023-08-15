@@ -606,6 +606,12 @@
     <Compile Include="Control\FootSupport\FootRollCentering.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Control\GlobalStabilization\GlobalStabilization.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Control\GlobalStabilization\GlobalStabilization.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Control\TorsoPosture\TorsoPosture.h">
       <SubType>compile</SubType>
     </Compile>
@@ -1808,6 +1814,7 @@
     <Folder Include="Actuators\" />
     <Folder Include="Actuators\PCA9685" />
     <Folder Include="Control\FootSupport" />
+    <Folder Include="Control\GlobalStabilization" />
     <Folder Include="Control\TorsoPosture" />
     <Folder Include="Main" />
     <Folder Include="Control" />
