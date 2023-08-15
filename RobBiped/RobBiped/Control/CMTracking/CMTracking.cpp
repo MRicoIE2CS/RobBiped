@@ -106,14 +106,36 @@ void Control::CMTracking::start_trajectories()
 
 void Control::CMTracking::get_reference_signals(Vector2d &_CM_ref, Vector2d &_vCM_ref, Vector2d &_aCM_ref, Vector2d &_jCM_ref)
 {
-	_CM_ref(0) = CM_path_x_.get_value();
-	_CM_ref(1) = CM_path_y_.get_value();
-	_vCM_ref(0) = dCM_path_x_.get_value();
-	_vCM_ref(1) = dCM_path_y_.get_value();
-	_aCM_ref(0) = ddCM_path_x_.get_value();
-	_aCM_ref(1) = ddCM_path_y_.get_value();
-	_jCM_ref(0) = dddCM_path_x_.get_value();
-	_jCM_ref(1) = dddCM_path_y_.get_value();
+	if (mode_x_ == Mode::OfflineReference)
+	{
+		_CM_ref(0) = CM_path_x_.get_value();
+		_vCM_ref(0) = dCM_path_x_.get_value();
+		_aCM_ref(0) = ddCM_path_x_.get_value();
+		_jCM_ref(0) = dddCM_path_x_.get_value();
+	}
+	else if (mode_x_ == Mode::OnlineReference)
+	{
+		// TODO: Derive the rest of the references, and apply a jerk limit
+		_CM_ref(0) = CM_online_reference_(0);
+		_vCM_ref(0) = 0.0;
+		_aCM_ref(0) = 0.0;
+		_jCM_ref(0) = 0.0;
+	}
+	if (mode_y_ == Mode::OfflineReference)
+	{
+		_CM_ref(1) = CM_path_y_.get_value();
+		_vCM_ref(1) = dCM_path_y_.get_value();
+		_aCM_ref(1) = ddCM_path_y_.get_value();
+		_jCM_ref(1) = dddCM_path_y_.get_value();
+	}
+	else if (mode_y_ == Mode::OnlineReference)
+	{
+		// TODO: Derive the rest of the references, and apply a jerk limit
+		_CM_ref(1) = CM_online_reference_(1);
+		_vCM_ref(1) = 0.0;
+		_aCM_ref(1) = 0.0;
+		_jCM_ref(1) = 0.0;
+	}
 }
 
 void Control::CMTracking::get_feedback_signals(Vector2d &_CM_est, Vector2d &_vCM_est, Vector2d &_aCM_med, Vector2d &_ZMP_med)
@@ -131,6 +153,16 @@ void Control::CMTracking::get_feedback_signals(Vector2d &_CM_est, Vector2d &_vCM
 	Vector2d ZMP_xy = force_sensor_->get_global_ZMP();
 	_ZMP_med(0) = ZMP_xy(0);
 	_ZMP_med(1) = ZMP_xy(1);
+}
+
+void Control::CMTracking::set_CM_x_online_reference(double &_CM_reference_x)
+{
+	CM_online_reference_(0) = _CM_reference_x;
+}
+
+void Control::CMTracking::set_CM_y_online_reference(double &_CM_reference_y)
+{
+	CM_online_reference_(1) = _CM_reference_y;
 }
 
 Vector2d Control::CMTracking::compute_ZMP_action()

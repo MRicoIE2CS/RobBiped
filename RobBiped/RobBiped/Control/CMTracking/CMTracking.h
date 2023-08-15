@@ -79,6 +79,9 @@ class CMTracking
 		// Mode
 		Mode mode_x_ = Mode::OfflineReference;
 		Mode mode_y_ = Mode::OfflineReference;
+
+		// Online tracking reference
+		Vector2d CM_online_reference_;
 		
 		// Flag for the running state
 		bool is_runnning_ = false;
@@ -103,6 +106,9 @@ class CMTracking
 		// Sets the running state of the controller to off
 		void reset_trajectory();
 
+		// Sets the CM reference for the case of online reference tracking
+		void set_CM_x_online_reference(double &_CM_reference_x);
+		void set_CM_y_online_reference(double &_CM_reference_y);
 		// Computes and returns the ZMP action
 		Vector2d compute_ZMP_action();
 		// Returns the computed ZMP action
