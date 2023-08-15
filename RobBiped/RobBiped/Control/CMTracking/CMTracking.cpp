@@ -1,5 +1,5 @@
 /*
- * GlobalStabilization.cpp
+ * CMTracking.cpp
  *
  * Copyright 2023 Mikel Rico Abajo (https://github.com/MRicoIE2CS)
 
@@ -16,24 +16,24 @@
  * limitations under the License.
  */
 
-#include "GlobalStabilization.h"
+#include "CMTracking.h"
 
-void Control::GlobalStabilization::assoc_config(Configuration::Configs::Control::CMTracking &_config)
+void Control::CMTracking::assoc_config(Configuration::Configs::Control::CMTracking &_config)
 {
 	config_ = &_config;
 }
 
-void Control::GlobalStabilization::assoc_globalkinematics(GlobalKinematics &_global_kinematics)
+void Control::CMTracking::assoc_globalkinematics(GlobalKinematics &_global_kinematics)
 {
 	global_kinematics_ = &_global_kinematics;
 }
 
-void Control::GlobalStabilization::assoc_sensors(ForceSensorsManager &_force_sensors_manager)
+void Control::CMTracking::assoc_sensors(ForceSensorsManager &_force_sensors_manager)
 {
 	force_sensor_ = &_force_sensors_manager;
 }
 
-void Control::GlobalStabilization::init()
+void Control::CMTracking::init()
 {
 	Tra_x_ = config_->Tra_x;
 	Tra_y_ = config_->Tra_y;
@@ -81,17 +81,18 @@ void Control::GlobalStabilization::init()
 	dddCM_path_y_.init();
 }
 
-void Control::GlobalStabilization::set_mode(Mode &_mode)
+void Control::CMTracking::set_mode(Mode &_mode_x, Mode &_mode_y)
 {
-	mode_ = _mode;
+	mode_x_ = _mode_x;
+	mode_y_ = _mode_y;
 }
 
-void Control::GlobalStabilization::reset_trajectory()
+void Control::CMTracking::reset_trajectory()
 {
 	is_runnning_ = false;
 }
 
-void Control::GlobalStabilization::start_trajectories()
+void Control::CMTracking::start_trajectories()
 {
 	CM_path_x_.start_trajectory();
 	dCM_path_x_.start_trajectory();
@@ -103,7 +104,7 @@ void Control::GlobalStabilization::start_trajectories()
 	dddCM_path_y_.start_trajectory();
 }
 
-void Control::GlobalStabilization::get_reference_signals(Vector2d &_CM_ref, Vector2d &_vCM_ref, Vector2d &_aCM_ref, Vector2d &_jCM_ref)
+void Control::CMTracking::get_reference_signals(Vector2d &_CM_ref, Vector2d &_vCM_ref, Vector2d &_aCM_ref, Vector2d &_jCM_ref)
 {
 	_CM_ref(0) = CM_path_x_.get_value();
 	_CM_ref(1) = CM_path_y_.get_value();
@@ -115,7 +116,7 @@ void Control::GlobalStabilization::get_reference_signals(Vector2d &_CM_ref, Vect
 	_jCM_ref(1) = dddCM_path_y_.get_value();
 }
 
-void Control::GlobalStabilization::get_feedback_signals(Vector2d &_CM_est, Vector2d &_vCM_est, Vector2d &_aCM_med, Vector2d &_ZMP_med)
+void Control::CMTracking::get_feedback_signals(Vector2d &_CM_est, Vector2d &_vCM_est, Vector2d &_aCM_med, Vector2d &_ZMP_med)
 {
 	Vector3d CoM_location_xyz = global_kinematics_->get_CoM_location();
 	_CM_est(0) = CoM_location_xyz(0);
@@ -132,7 +133,7 @@ void Control::GlobalStabilization::get_feedback_signals(Vector2d &_CM_est, Vecto
 	_ZMP_med(1) = ZMP_xy(1);
 }
 
-Vector2d Control::GlobalStabilization::compute_ZMP_action()
+Vector2d Control::CMTracking::compute_ZMP_action()
 {
 	if (!is_runnning_)
 	{
@@ -170,7 +171,7 @@ Vector2d Control::GlobalStabilization::compute_ZMP_action()
 	return control_action_;
 }
 
-Vector2d Control::GlobalStabilization::get_ZMP_action()
+Vector2d Control::CMTracking::get_ZMP_action()
 {
 	return control_action_;
 }

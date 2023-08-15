@@ -1,5 +1,5 @@
 /*
- * GlobalStabilization.h
+ * CMTracking.h
  *
  * Copyright 2023 Mikel Rico Abajo (https://github.com/MRicoIE2CS)
 
@@ -17,8 +17,8 @@
  */
 
 
-#ifndef _GLOBAL_STABILIZATION_h
-#define _GLOBAL_STABILIZATION_h
+#ifndef _CM_TRACKING_h
+#define _CM_TRACKING_h
 
 #include "arduino.h"
 
@@ -33,7 +33,7 @@ using Eigen::Vector2d;
 
 namespace Control {
 
-class GlobalStabilization
+class CMTracking
 {
 	public:
 
@@ -77,7 +77,8 @@ class GlobalStabilization
 		void get_feedback_signals(Vector2d &_CM_est, Vector2d &_vCM_est, Vector2d &_aCM_med, Vector2d &_ZMP_med);
 		
 		// Mode
-		Mode mode_ = Mode::OfflineReference;
+		Mode mode_x_ = Mode::OfflineReference;
+		Mode mode_y_ = Mode::OfflineReference;
 		
 		// Flag for the running state
 		bool is_runnning_ = false;
@@ -96,7 +97,7 @@ class GlobalStabilization
 		void init();
 		
 		// Sets the operating mode
-		void set_mode(Mode &_mode);
+		void set_mode(Mode &_mode_x, Mode &_mode_y);
 
 		// Reset the pregenerated trajectory tracking
 		// Sets the running state of the controller to off
