@@ -102,8 +102,8 @@ private:
 	ExpFilter filter_zmp_right_foot_x_mm_;
 	ExpFilter filter_zmp_right_foot_y_mm_;
 	void calculate_local_ZMP();
-	double global_zmp_x_mm_;
-	double global_zmp_y_mm_;
+	double global_zmp_x_mm_ = 0.0;
+	double global_zmp_y_mm_ = 0.0;
 	ExpFilter filter_zmp_x_mm_;
 	ExpFilter filter_zmp_y_mm_;
 

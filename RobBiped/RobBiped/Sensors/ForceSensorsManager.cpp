@@ -394,7 +394,7 @@ bool ForceSensorsManager::is_right_foot_touching_ground()
 
 void ForceSensorsManager::compute_global_ZMP(GlobalKinematics *_global_kinematics)
 {
-//	Serial.println("__________");
+// 	Serial.println("____compute_global_ZMP______");
 	// Coordinates of the center of the right foot
 	double right_foot_x, right_foot_y;
 	_global_kinematics->get_right_foot_coordinates(right_foot_x, right_foot_y);
@@ -411,10 +411,15 @@ void ForceSensorsManager::compute_global_ZMP(GlobalKinematics *_global_kinematic
 	int32_t force_left_sum =
 			value_LeftFoot_LeftBack_ + value_LeftFoot_LeftFront_ + value_LeftFoot_RightBack_ + value_LeftFoot_RightFront_;
 
+	if (0.0 == all_force_sum)
+	{
+		return;
+	}
+
 	global_zmp_x_mm_ = right_foot_x + zmp_right_foot_x_mm_ + ((double)force_left_sum / (double)all_force_sum) * (double)(zmp_left_foot_x_mm_ - zmp_right_foot_x_mm_ + feet_distance_x);
-// 	Serial.println("zmp_right_foot_x,y: \t" + (String)zmp_right_foot_x_mm_ + "\t" + (String)zmp_right_foot_y_mm_);
-// 	Serial.println("zmp_left_foot_x,y: \t" + (String)zmp_left_foot_x_mm_ + "\t" + (String)zmp_left_foot_y_mm_);
-// 	Serial.println("force_left_sum,all_force_sum: \t" + (String)force_left_sum + "\t" + (String)all_force_sum);
+//  	Serial.println("zmp_right_foot_x,y: \t" + (String)zmp_right_foot_x_mm_ + "\t" + (String)zmp_right_foot_y_mm_);
+//  	Serial.println("zmp_left_foot_x,y: \t" + (String)zmp_left_foot_x_mm_ + "\t" + (String)zmp_left_foot_y_mm_);
+//  	Serial.println("force_left_sum,all_force_sum: \t" + (String)force_left_sum + "\t" + (String)all_force_sum);
 
 	// Y coordinate
 	global_zmp_y_mm_ = right_foot_y + zmp_right_foot_y_mm_ + ((double)force_left_sum / (double)all_force_sum) * (double)(zmp_left_foot_y_mm_ - zmp_right_foot_y_mm_ + feet_distance_y);
