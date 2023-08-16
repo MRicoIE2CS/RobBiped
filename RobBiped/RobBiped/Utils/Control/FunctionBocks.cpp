@@ -32,3 +32,12 @@ double Control::saturation(double& _input, double& _lower_limit, double& _upper_
 	else if (_input > _upper_limit) _output = _upper_limit;
 	else _output = _input;
 }
+
+double Control::inverse_deadband(const double &_sign_variable, const double &_u, const double &_positive_compensation, const double &_negative_compensation)
+{
+	if (0.0 == _negative_compensation && 0.0 == _positive_compensation) return _u;
+
+	if (_sign_variable > 0.0) return _u + _positive_compensation;
+	else if (_sign_variable < 0.0) return _u - _negative_compensation;
+	else return _u;
+}

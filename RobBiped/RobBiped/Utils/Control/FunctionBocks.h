@@ -26,6 +26,8 @@ namespace Control {
 	void saturation(double& _input, double& _lower_limit, double& _upper_limit, double& _output);
 	double saturation(double& _input, double& _lower_limit, double& _upper_limit);
 
+	double inverse_deadband(const double &_sign_variable, const double &_u, const double &_positive_compensation, const double &_negative_compensation);
+
 }	// End namespace Control
 
 #endif

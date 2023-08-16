@@ -61,11 +61,7 @@ void Control::PID::set_derivative_filter_time_constant(const uint32_t& _time_con
 
 double Control::PID::apply_inverse_deadband(const double &_sign_variable, const double &_u)
 {
-	if (0.0 == negative_db_compensation && 0.0 == positive_db_compensation) return _u;
-
-	if (_sign_variable > 0.0) return _u + positive_db_compensation;
-	else if (_sign_variable < 0.0) return _u - negative_db_compensation;
-	else return _u;
+	return Control::inverse_deadband(_sign_variable, _u, positive_db_compensation, negative_db_compensation);
 }
 
 void Control::PID::compute_output(const double& _setpoint, const double& _feedback, double& _output, const double& _sign_of_deadband)
@@ -117,11 +113,11 @@ void Control::PID::compute_output(const double& _setpoint, const double& _feedba
 	// Sum of the components
 	double sum = proportional_action + integral_action + derivative_action;
 
-	// Deadband compensation
-	sum = apply_inverse_deadband(_sign_of_deadband, sum);
-
 	// Saturation
 	if (apply_saturation_) saturation(sum, lower_limit_, upper_limit_, _output);
+
+	// Deadband compensation
+	sum = apply_inverse_deadband(_sign_of_deadband, sum);
 
 	// Memory update
 	last_millis_computation = current_millis_computation;
