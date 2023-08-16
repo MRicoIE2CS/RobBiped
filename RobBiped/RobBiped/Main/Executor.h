@@ -50,11 +50,16 @@ class Executor {
 		JointsManager servo_updater_;
 		ForceSensorsManager force_sensors_manager_;
 		GyroscopeAccelerometerManager gyroscope_accelerometer_manager_;
-		Control::TorsoPosture torso_posture_controller_;
-		Control::Foot_ZMPTracking left_foot_roll_centering_controller_;
-		Control::Foot_ZMPTracking right_foot_roll_centering_controller_;
 		GlobalKinematics global_kinematics_;
 		///// END OBJECT TASKS __//
+
+		/////____________ CONTROLLERS: __//
+		Control::TorsoPosture torso_posture_controller_;
+		Control::Foot_ZMPTracking left_foot_xZMP_tracking_controller_;
+		Control::Foot_ZMPTracking left_foot_yZMP_tracking_controller_;
+		Control::Foot_ZMPTracking right_foot_xZMP_tracking_controller_;
+		Control::Foot_ZMPTracking right_foot_yZMP_tracking_controller_;
+		///// END CONTROLLERS __//
 
 		/////____________ APPLICATION EXCLUSIVE OBJECTS AND METHODS: __//
 
@@ -87,9 +92,6 @@ class Executor {
 		uint8_t state6_phase = 0;
 		bool state6_finished = false;
 		void state6_execution();
-		uint8_t state7_phase = 0;
-		bool state7_finished = false;
-		void state7_execution();
 		uint8_t state10_phase = 0;
 		bool state10_finished = false;
 		void state10_execution();

@@ -63,8 +63,8 @@ struct Configs
 		double calibration_RightFoot_LeftBack_cell = 0.048;
 		double calibration_RightFoot_RightBack_cell = 0.048;
 		struct Location {
-			int16_t frontBack_separation = 103;
-			int16_t leftRight_separation = 37;
+			int16_t frontBack_separation = 115; //103;
+			int16_t leftRight_separation = 60; //37;
 			}location_mm;
 		uint32_t touch_detection_up_threshold_gr = 175;
 		uint32_t touch_detection_down_threshold_gr = 125;
@@ -118,13 +118,13 @@ struct Configs
 			double d0_y = 40;
 			double d1_y = 40;
 			double d2_y = 40;
-		};
+			}cm_tracking;
 
 		struct TorsoPosture {
 			// PID constants
 			double kp = 1.0;
 			double ki = 0.0;
-			double kd = 0.25;
+			double kd = 0.1;//0.25;
 			// Anti-windup constant
 			double k_windup = 0.5;
 			// Setpoint weighting constants [0.0 - 1.0]
@@ -140,10 +140,20 @@ struct Configs
 			double upper_saturation_degrees = 45;
 			}torso_posture;
 
-		struct FootRollCentering {
-				// PID constants
+		struct Foot_ZMPTracking_x {
+			struct FeedforwardCurve {
+				double curve_points_x[4] = { -50, -40, 40, 50 };
+				double curve_points_y[4] = { 0.2, 0.05, -0.05, -0.2 };
+				}feedforward_curve;
+			struct DeadbandCompensation {
+				// Limiting value at which desired ZMP requires negative or positive DB compensation
+				double db_delimiting_value = 0.0;
+				double negative_db_compensation_rad = -0.05;
+				double positive_db_compensation_rad = 0.05;
+				}deadband_compensation;
+			struct PID {
 				double kp = 0.001;
-				double ki = 0.001;
+				double ki = 0.0;
 				double kd = 0.0;
 				// Anti-windup constant
 				double k_windup = 5;
@@ -151,9 +161,35 @@ struct Configs
 				double proportional_setpoint_weight = 1.0;
 				double derivative_setpoint_weight = 0.0;
 				// Saturation limits
-				double lower_saturation_degrees = -40;
-				double upper_saturation_degrees = 40;
-			}foot_roll_centering;
+				double lower_saturation_degrees = -10;
+				double upper_saturation_degrees = 10;
+				}pid;
+			}foot_x_zmp_tracking;
+
+		struct Foot_ZMPTracking_y {
+			struct FeedforwardCurve {
+				double curve_points_xy[2][2] = { {-40, 40} , {0.2, -0.2} };
+				}feedforward_curve;
+			struct DeadbandCompensation {
+				// Limiting value at which desired ZMP requires negative or positive DB compensation
+				double db_delimiting_value = 0.0;
+				double negative_db_compensation_rad = -0.05;
+				double positive_db_compensation_rad = 0.05;
+				}deadband_compensation;
+			struct PID {
+				double kp = 0.001;
+				double ki = 0.0;
+				double kd = 0.0;
+				// Anti-windup constant
+				double k_windup = 5;
+				// Setpoint weighting constants
+				double proportional_setpoint_weight = 1.0;
+				double derivative_setpoint_weight = 0.0;
+				// Saturation limits
+				double lower_saturation_degrees = -10;
+				double upper_saturation_degrees = 10;
+				}pid;
+			}foot_y_zmp_tracking;
 
 		}control;
 };
