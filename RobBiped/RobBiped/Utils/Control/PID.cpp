@@ -66,6 +66,12 @@ double Control::PID::apply_inverse_deadband(const double &_sign_variable, const 
 
 void Control::PID::compute_output(const double& _setpoint, const double& _feedback, double& _output, const double& _sign_of_deadband)
 {
+	_output = compute_output(_setpoint, _feedback, _sign_of_deadband);
+}
+
+double Control::PID::compute_output(const double& _setpoint, const double& _feedback, const double& _sign_of_deadband)
+{
+	double _output;
 	uint64_t current_millis_computation = millis();
 	uint64_t current_time_interval = current_millis_computation - last_millis_computation;
 	double time_fraction = static_cast<double>(current_time_interval) / static_cast<double>(time_constant_millis_);
@@ -131,6 +137,8 @@ void Control::PID::compute_output(const double& _setpoint, const double& _feedba
 	
 	// Clean sleep state
 	sleep_ = false;
+
+	return _output;
 }
 
 void Control::PID::get_control_action_values(double& _kp, double& _ki, double& _kd)
