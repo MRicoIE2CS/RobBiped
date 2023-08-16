@@ -59,6 +59,7 @@ struct Command
 		bool zmp_ytracking_toggle = false;
 		bool application_toggle = false;
 		bool get_up_toggle = false;
+		bool test_x_balance_toggle = false;
 	}commands;
 	
 private:
