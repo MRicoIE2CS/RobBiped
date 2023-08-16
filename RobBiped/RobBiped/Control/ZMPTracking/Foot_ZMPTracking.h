@@ -25,6 +25,9 @@
 #include "../../Main/I_PeriodicTask.h"
 #include "../../UserInput/Command.h"
 #include "../../Utils/Control/PID.h"
+#include "../../Utils/LinearAlgebra/ArduinoEigenDense.h"
+
+using Eigen::Vector2d;
 
 namespace Control {
 
@@ -57,8 +60,7 @@ class Foot_ZMPTracking : public I_PeriodicTask
 		double setpoint_y_mm_ = 0.0;
 
 		// Output action, in rad
-		double out_x_rad_ = 0.0;
-		double out_y_rad_ = 0.0;
+		Vector2d output_rad;
 
 		// ON state of the controller
 		bool controller_x_on = false;
@@ -66,6 +68,8 @@ class Foot_ZMPTracking : public I_PeriodicTask
 
 		// Read serial commands
 		void read_commands();
+
+		double custom_curve_x(Configuration::Configs::Control::Foot_ZMPTracking_x::FeedforwardCurve &_curve);
 
 	public:
 
@@ -84,15 +88,17 @@ class Foot_ZMPTracking : public I_PeriodicTask
 		void set_setpoint_y_mm(double& _desired_zmp_lateral_deviation_mm);
 
 		/*
-		*  @fn double compute(double& _x_zmp_feedback, double& _y_zmp_feedback)
+		*  @fn Vector2d compute(double& _x_zmp_feedback, double& _y_zmp_feedback)
 		*  @brief Compute controller.
 		*  It returns the computed output value, in radians, to be applied to the foot pitch/roll joint.
 		*
 		*  @param[in] _current_foot_zmp_lateral_deviation_mm Feedback value; Current ZMP deviation, in mm.
 		*/
-		double compute(double& _x_zmp_feedback, double& _y_zmp_feedback);
+		Vector2d compute(double& _x_zmp_feedback, double& _y_zmp_feedback);
 		double compute_x(double& _x_zmp_feedback);
 		double compute_y(double& _y_zmp_feedback);
+
+		Vector2d get_control_action();
 
 		bool switch_x_on();
 		bool switch_y_on();

@@ -21,6 +21,8 @@
 
 #include "Arduino.h"
 
+#include <vector>
+
 namespace Configuration
 {
 
@@ -142,8 +144,8 @@ struct Configs
 
 		struct Foot_ZMPTracking_x {
 			struct FeedforwardCurve {
-				double curve_points_x[4] = { -50, -40, 40, 50 };
-				double curve_points_y[4] = { 0.2, 0.05, -0.05, -0.2 };
+				std::vector<double> curve_points_x = { -50, -40, 40, 50 };
+				std::vector<double> curve_points_y = { 0.2, 0.05, -0.05, -0.2 };
 				}feedforward_curve;
 			struct DeadbandCompensation {
 				// Limiting value at which desired ZMP requires negative or positive DB compensation
@@ -152,7 +154,7 @@ struct Configs
 				double positive_db_compensation_rad = 0.05;
 				}deadband_compensation;
 			struct PID {
-				double kp = 0.001;
+				double kp = 0.0;//0.001;
 				double ki = 0.0;
 				double kd = 0.0;
 				// Anti-windup constant
@@ -168,7 +170,8 @@ struct Configs
 
 		struct Foot_ZMPTracking_y {
 			struct FeedforwardCurve {
-				double curve_points_xy[2][2] = { {-40, 40} , {0.2, -0.2} };
+				std::vector<double> curve_points_x = { -40, 40 };
+				std::vector<double> curve_points_y = { 0.2, -0.2 };
 				}feedforward_curve;
 			struct DeadbandCompensation {
 				// Limiting value at which desired ZMP requires negative or positive DB compensation

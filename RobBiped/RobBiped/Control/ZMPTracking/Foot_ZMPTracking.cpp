@@ -18,6 +18,8 @@
 
 #include "Foot_ZMPTracking.h"
 
+#include "../../Utils/Control/FunctionBocks.h"
+
 void Control::Foot_ZMPTracking::assoc_config(Configuration::Configs::Control::Foot_ZMPTracking_x& _config)
 {
 	config_x_ = &_config;
@@ -67,10 +69,8 @@ void Control::Foot_ZMPTracking::set_setpoint_y_mm(double& _desired_zmp_lateral_d
 	setpoint_y_mm_ = _desired_zmp_lateral_deviation_mm;
 }
 
-double Control::Foot_ZMPTracking::compute(double& _x_zmp_feedback, double& _y_zmp_feedback)
+Vector2d Control::Foot_ZMPTracking::compute(double& _x_zmp_feedback, double& _y_zmp_feedback)
 {
-	double output_rad = 0.0;
-	
 	if (command_->commands.zmp_tracking_deb_toggle)
 	{
 		// TODO: Prints for debug
@@ -84,7 +84,6 @@ double Control::Foot_ZMPTracking::compute(double& _x_zmp_feedback, double& _y_zm
 	if (!controller_y_on & command_->commands.zmp_ytracking_toggle) switch_x_on();
 	if (controller_y_on & command_->commands.zmp_ytracking_toggle) switch_x_off();
 
-	Vector2d output_rad;
 	if (controller_x_on)
 	{
 		output_rad(0) = compute_x(_x_zmp_feedback);
@@ -95,25 +94,33 @@ double Control::Foot_ZMPTracking::compute(double& _x_zmp_feedback, double& _y_zm
 	}
 
 	return output_rad;
-	return 0.0;
 }
 
 double Control::Foot_ZMPTracking::compute_x(double& _x_zmp_feedback)
 {
-	// TODO
+	double branch1 = Control::custom_curve_interpolation(setpoint_x_mm_, conf_curve_x_->curve_points_x, conf_curve_x_->curve_points_y);
+	branch1 = Control::inverse_deadband(-(_x_zmp_feedback - conf_db_x_->db_delimiting_value), branch1, conf_db_x_->positive_db_compensation_rad, conf_db_x_->negative_db_compensation_rad);
 	
+	double branch2 = pid_x_.compute_output(setpoint_x_mm_, _x_zmp_feedback);
 	
-	double out = pid_x_.compute_output(setpoint_x_mm_, _x_zmp_feedback);
+	double out = branch1 + branch2;
 	return out;
 }
 
 double Control::Foot_ZMPTracking::compute_y(double& _y_zmp_feedback)
 {
-	// TODO
+	double branch1 = Control::custom_curve_interpolation(setpoint_y_mm_, conf_curve_y_->curve_points_x, conf_curve_y_->curve_points_y);
+	branch1 = Control::inverse_deadband(-(_y_zmp_feedback - conf_db_y_->db_delimiting_value), branch1, conf_db_y_->positive_db_compensation_rad, conf_db_y_->negative_db_compensation_rad);
 	
+	double branch2 = pid_y_.compute_output(setpoint_y_mm_, _y_zmp_feedback);
 	
-	double out = pid_y_.compute_output(setpoint_y_mm_, _y_zmp_feedback);
+	double out = branch1 + branch2;
 	return out;
+}
+
+Vector2d Control::Foot_ZMPTracking::get_control_action()
+{
+	return output_rad;
 }
 
 bool Control::Foot_ZMPTracking::is_x_on()
