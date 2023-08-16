@@ -54,16 +54,11 @@ struct Command
 		bool torso_posture_debug_off = false;
 		bool torso_posture_on = false;
 		bool torso_posture_off = false;
-		bool foot_roll_centering_debug_on = false;
-		bool foot_roll_centering_debug_off = false;
-		bool foot_roll_centering_on = false;
-		bool foot_roll_centering_off = false;
-		bool squats_on = false;
-		bool squats_off = false;
-		bool squats_debug_on = false;
-		bool squats_debug_off = false;
-		bool application_onoff = false;
-		bool get_up_down = false;
+		bool zmp_tracking_deb_toggle = false;
+		bool zmp_xtracking_toggle = false;
+		bool zmp_ytracking_toggle = false;
+		bool application_toggle = false;
+		bool get_up_toggle = false;
 	}commands;
 	
 private:

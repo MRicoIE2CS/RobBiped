@@ -94,38 +94,25 @@ void Command::listen_for_commands()
 		else if (command.equals("torso.off")){
 			commands.torso_posture_off = true;
 		}
-		else if (command.equals("footroll.deb.on")){
-			commands.foot_roll_centering_debug_on = true;
+		else if (command.equals("zmptr.deb")){
+			if (commands.zmp_tracking_deb_toggle) commands.zmp_tracking_deb_toggle = false;
+			else commands.zmp_tracking_deb_toggle = true;
 		}
-		else if (command.equals("footroll.deb.off")){
-			commands.foot_roll_centering_debug_off = true;
+		else if (command.equals("zmptrx.tgl")){
+			if (commands.zmp_xtracking_toggle) commands.zmp_xtracking_toggle = false;
+			else commands.zmp_xtracking_toggle = true;
 		}
-		else if (command.equals("footroll.on")){
-			commands.foot_roll_centering_on = true;
-			commands.foot_roll_centering_off = false;
+		else if (command.equals("zmptry.tgl")){
+			if (commands.zmp_ytracking_toggle) commands.zmp_ytracking_toggle = false;
+			else commands.zmp_ytracking_toggle = true;
 		}
-		else if (command.equals("footroll.off")){
-			commands.foot_roll_centering_off = true;
-			commands.foot_roll_centering_on = false;
+		else if (command.equals("app.tgl")){
+			if (commands.application_toggle) commands.application_toggle = false;
+			else commands.application_toggle = true;
 		}
-		else if (command.equals("squats.on")){
-			commands.squats_on = true;
-		}
-		else if (command.equals("squats.off")){
-			commands.squats_off = true;
-		}
-		else if (command.equals("squats.deb.on")){
-			commands.squats_debug_on = true;
-		}
-		else if (command.equals("squats.deb.off")){
-			commands.squats_debug_off = true;
-		}
-		else if (command.equals("app.onoff")){
-			commands.application_onoff = true;
-		}
-		else if (command.equals("get.up"))
-		{
-			commands.get_up_down = true;
+		else if (command.equals("get.up")){
+			if (commands.get_up_toggle) commands.get_up_toggle = false;
+			else commands.get_up_toggle = true;
 		}
 		else if (command.equals("off"))
 		{

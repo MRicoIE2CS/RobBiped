@@ -20,29 +20,29 @@ using Eigen::IOFormat;
 void Executor::read_commands()
 {
 	// Commands
-	if (command_->commands.application_onoff && !application_on)
+	if (command_->commands.application_toggle && !application_on)
 	{
 		application_on = true;
 		Serial.println("application on::: ");
-		command_->commands.application_onoff = false;
+		command_->commands.application_toggle = false;
 	}
-	if (command_->commands.application_onoff && application_on)
+	if (command_->commands.application_toggle && application_on)
 	{
 		application_on = false;
 		Serial.println("application off::: ");
-		command_->commands.application_onoff = false;
+		command_->commands.application_toggle = false;
 	}
-	if (command_->commands.get_up_down && !get_up)
+	if (command_->commands.get_up_toggle && !get_up)
 	{
 		get_up = true;
 		Serial.println("get up::: ");
-		command_->commands.get_up_down = false;
+		command_->commands.get_up_toggle = false;
 	}
-	if (command_->commands.get_up_down && get_up)
+	if (command_->commands.get_up_toggle && get_up)
 	{
 		get_up = false;
 		Serial.println("get down::: ");
-		command_->commands.get_up_down = false;
+		command_->commands.get_up_toggle = false;
 	}
 }
 
