@@ -24,7 +24,7 @@
 #include "Configs.h"
 #include "I_PeriodicTask.h"
 #include "../Actuators/JointsManager.h"
-#include "../Control/FootSupport/FootRollCentering.h"
+#include "../Control/ZMPTracking/Foot_ZMPTracking.h"
 #include "../Control/TorsoPosture/TorsoPosture.h"
 #include "../Kinematics_Dynamics/GlobalKinematics.h"
 #include "../Sensors/GyroscopeAccelerometerManager.h"
@@ -50,15 +50,19 @@ class Executor {
 		JointsManager servo_updater_;
 		ForceSensorsManager force_sensors_manager_;
 		GyroscopeAccelerometerManager gyroscope_accelerometer_manager_;
-		Control::TorsoPosture torso_posture_controller_;
-		Control::FootRollCentering left_foot_roll_centering_controller_;
-		Control::FootRollCentering right_foot_roll_centering_controller_;
 		GlobalKinematics global_kinematics_;
 		///// END OBJECT TASKS __//
+
+		/////____________ CONTROLLERS: __//
+		Control::TorsoPosture torso_posture_controller_;
+		Control::Foot_ZMPTracking left_foot_ZMP_tracking_controller_;
+		Control::Foot_ZMPTracking right_foot_ZMP_tracking_controller_;
+		///// END CONTROLLERS __//
 
 		/////____________ APPLICATION EXCLUSIVE OBJECTS AND METHODS: __//
 
 		// State machine related objects and methods
+		// TODO: Create new class "State" that unites all necessities from a state
 		uint8_t state_number = 0;
 		void state_machine_switch();
 		void state_machine_execution();
@@ -86,9 +90,9 @@ class Executor {
 		uint8_t state6_phase = 0;
 		bool state6_finished = false;
 		void state6_execution();
-		uint8_t state7_phase = 0;
-		bool state7_finished = false;
-		void state7_execution();
+		uint8_t state10_phase = 0;
+		bool state10_finished = false;
+		void state10_execution();
 
 		// Other state machine flags
 		bool application_on = false;
@@ -119,9 +123,6 @@ class Executor {
 		double torso_upright_pitch_control_action = 0.0;
 		double torso_setpoint_ = 0.00;
 		ExpFilter torso_pitch_exp_filter_;
-		double local_zmp_lateral_deviation_setpoint_ = 0.0;
-		double left_foot_roll_centering_action = 0.0;
-		double right_foot_roll_centering_action = 0.0;
 
 		// Waiting object
 		Control::Waiting waiting_;

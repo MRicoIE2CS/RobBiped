@@ -20,29 +20,29 @@ using Eigen::IOFormat;
 void Executor::read_commands()
 {
 	// Commands
-	if (command_->commands.application_onoff && !application_on)
+	if (command_->commands.application_toggle && !application_on)
 	{
 		application_on = true;
 		Serial.println("application on::: ");
-		command_->commands.application_onoff = false;
+		command_->commands.application_toggle = false;
 	}
-	if (command_->commands.application_onoff && application_on)
+	if (command_->commands.application_toggle && application_on)
 	{
 		application_on = false;
 		Serial.println("application off::: ");
-		command_->commands.application_onoff = false;
+		command_->commands.application_toggle = false;
 	}
-	if (command_->commands.get_up_down && !get_up)
+	if (command_->commands.get_up_toggle && !get_up)
 	{
 		get_up = true;
 		Serial.println("get up::: ");
-		command_->commands.get_up_down = false;
+		command_->commands.get_up_toggle = false;
 	}
-	if (command_->commands.get_up_down && get_up)
+	if (command_->commands.get_up_toggle && get_up)
 	{
 		get_up = false;
 		Serial.println("get down::: ");
-		command_->commands.get_up_down = false;
+		command_->commands.get_up_toggle = false;
 	}
 }
 
@@ -124,14 +124,13 @@ void Executor::state_machine_switch()
 			if (state6_phase && state6_finished)
 			{
 				state_number++;
-				state7_phase = 0;
 				break;
 			}
 			break;
-		case 7:
-			if (state7_finished)
+		case 10:
+			if (state10_finished)
 			{
-				state_number++;
+				//state_number++;
 				break;
 			}
 			break;
@@ -165,8 +164,8 @@ void Executor::state_machine_execution()
 		case 6:
 			state6_execution();
 			break;
-		case 7:
-			state7_execution();
+		case 10:
+			state10_execution();
 			break;
 	}
 }
@@ -197,26 +196,26 @@ void Executor::always_executes()
 // 		left_foot_roll_centering_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
 // 		right_foot_roll_centering_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
 
-		// Foot-roll controllers
-		left_foot_roll_centering_action = 0.0;
-		if (force_sensors_manager_.is_tare_left_performed())
-		{
-			double left_foot_zmp_lateral_deviation;
-			double ignored;
-			force_sensors_manager_.get_values_ZMP_LeftFoot(ignored, left_foot_zmp_lateral_deviation);
-			double d_left_foot_zmp_lateral_deviation = - left_foot_zmp_lateral_deviation;
-			left_foot_roll_centering_action = left_foot_roll_centering_controller_.compute(d_left_foot_zmp_lateral_deviation);
-		}
-
-		right_foot_roll_centering_action = 0.0;
-		if (force_sensors_manager_.is_tare_right_performed())
-		{
-			double right_foot_zmp_lateral_deviation;
-			double ignored;
-			force_sensors_manager_.get_values_ZMP_RightFoot(ignored, right_foot_zmp_lateral_deviation);
-			double d_right_foot_zmp_lateral_deviation = - right_foot_zmp_lateral_deviation;
-			right_foot_roll_centering_action = right_foot_roll_centering_controller_.compute(d_right_foot_zmp_lateral_deviation);
-		}
+// 		// Foot-roll controllers
+// 		left_foot_roll_centering_action = 0.0;
+// 		if (force_sensors_manager_.is_tare_left_performed())
+// 		{
+// 			double left_foot_zmp_lateral_deviation;
+// 			double ignored;
+// 			force_sensors_manager_.get_values_ZMP_LeftFoot(ignored, left_foot_zmp_lateral_deviation);
+// 			double d_left_foot_zmp_lateral_deviation = - left_foot_zmp_lateral_deviation;
+// 			left_foot_roll_centering_action = left_foot_xZMP_tracking_controller_.compute(d_left_foot_zmp_lateral_deviation);
+// 		}
+// 
+// 		right_foot_roll_centering_action = 0.0;
+// 		if (force_sensors_manager_.is_tare_right_performed())
+// 		{
+// 			double right_foot_zmp_lateral_deviation;
+// 			double ignored;
+// 			force_sensors_manager_.get_values_ZMP_RightFoot(ignored, right_foot_zmp_lateral_deviation);
+// 			double d_right_foot_zmp_lateral_deviation = - right_foot_zmp_lateral_deviation;
+// 			right_foot_roll_centering_action = right_foot_xZMP_tracking_controller_.compute(d_right_foot_zmp_lateral_deviation);
+// 		}
 	}
 }
 
@@ -439,6 +438,6 @@ void Executor::state6_execution()
 	// STATE 6: 
 }
 
-void Executor::state7_execution()
+void Executor::state10_execution()
 {
 }

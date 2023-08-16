@@ -151,6 +151,7 @@ class PID {
 		void set_derivative_filter_time_constant(const uint32_t& _time_constant_ms);
 
 		/*
+		*  @fn double compute_output(const double& _setpoint, const double& _feedback, const double& _sign_of_deadband = 0)
 		*  @fn void compute_output(const double& _setpoint, const double& _feedback, double& _output, const double& _sign_of_deadband = 0)
 		*  @brief Output computation.
 		*
@@ -159,6 +160,7 @@ class PID {
 		*  @param[in] _sign_of_deadband Signal that determines the sign of the deadband compensation.
 		*  @param[out] _output Output of the controller.
 		*/
+		double compute_output(const double& _setpoint, const double& _feedback, const double& _sign_of_deadband = 0);
 		void compute_output(const double& _setpoint, const double& _feedback, double& _output, const double& _sign_of_deadband = 0);
 
 		/*

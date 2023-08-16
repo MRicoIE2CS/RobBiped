@@ -394,36 +394,43 @@ bool ForceSensorsManager::is_right_foot_touching_ground()
 
 void ForceSensorsManager::compute_global_ZMP(GlobalKinematics *_global_kinematics)
 {
-// 	Serial.println("____compute_global_ZMP______");
-	// Coordinates of the center of the right foot
-	double right_foot_x, right_foot_y;
-	_global_kinematics->get_right_foot_coordinates(right_foot_x, right_foot_y);
-//	Serial.println("right_foot_x,y: \t" + (String)right_foot_x + "\t" + (String)right_foot_y);
-	// Distance between feet on the ground
-	double feet_distance_x, feet_distance_y;
-	_global_kinematics->get_feet_distance(feet_distance_x, feet_distance_y);
-//	Serial.println("feet_distance_x,y: \t" + (String)feet_distance_x + "\t" + (String)feet_distance_y);
-
-	// X coordinate
-	int32_t all_force_sum =
-			value_LeftFoot_LeftBack_ + value_LeftFoot_LeftFront_ + value_LeftFoot_RightBack_ + value_LeftFoot_RightFront_
-			+ value_RightFoot_LeftBack_ + value_RightFoot_LeftFront_ + value_RightFoot_RightBack_ + value_RightFoot_RightFront_;
-	int32_t force_left_sum =
-			value_LeftFoot_LeftBack_ + value_LeftFoot_LeftFront_ + value_LeftFoot_RightBack_ + value_LeftFoot_RightFront_;
-
-	if (0.0 == all_force_sum)
+	if (is_left_foot_touching_ground_ && !is_right_foot_touching_ground_)
 	{
+		global_zmp_x_mm_ = zmp_left_foot_x_mm_;
+		global_zmp_y_mm_ = zmp_left_foot_y_mm_;
+	}
+	else if (!is_left_foot_touching_ground_ && is_right_foot_touching_ground_)
+	{
+		global_zmp_x_mm_ = zmp_right_foot_x_mm_;
+		global_zmp_y_mm_ = zmp_right_foot_y_mm_;
+	}
+	else if (!is_left_foot_touching_ground_ && !is_right_foot_touching_ground_)
+	{
+		Serial.println("Robot is not touching ground!");
 		return;
 	}
+	else
+	{
+		// Coordinates of the center of the right foot
+		double right_foot_x, right_foot_y;
+		_global_kinematics->get_right_foot_coordinates(right_foot_x, right_foot_y);
+		// Distance between feet on the ground
+		double feet_distance_x, feet_distance_y;
+		_global_kinematics->get_feet_distance(feet_distance_x, feet_distance_y);
 
-	global_zmp_x_mm_ = right_foot_x + zmp_right_foot_x_mm_ + ((double)force_left_sum / (double)all_force_sum) * (double)(zmp_left_foot_x_mm_ - zmp_right_foot_x_mm_ + feet_distance_x);
-//  	Serial.println("zmp_right_foot_x,y: \t" + (String)zmp_right_foot_x_mm_ + "\t" + (String)zmp_right_foot_y_mm_);
-//  	Serial.println("zmp_left_foot_x,y: \t" + (String)zmp_left_foot_x_mm_ + "\t" + (String)zmp_left_foot_y_mm_);
-//  	Serial.println("force_left_sum,all_force_sum: \t" + (String)force_left_sum + "\t" + (String)all_force_sum);
+		// X coordinate
+		int32_t all_force_sum =
+		value_LeftFoot_LeftBack_ + value_LeftFoot_LeftFront_ + value_LeftFoot_RightBack_ + value_LeftFoot_RightFront_
+		+ value_RightFoot_LeftBack_ + value_RightFoot_LeftFront_ + value_RightFoot_RightBack_ + value_RightFoot_RightFront_;
+		if (0.0 == all_force_sum) return;	// Division by 0 protection
+		int32_t force_left_sum =
+		value_LeftFoot_LeftBack_ + value_LeftFoot_LeftFront_ + value_LeftFoot_RightBack_ + value_LeftFoot_RightFront_;
 
-	// Y coordinate
-	global_zmp_y_mm_ = right_foot_y + zmp_right_foot_y_mm_ + ((double)force_left_sum / (double)all_force_sum) * (double)(zmp_left_foot_y_mm_ - zmp_right_foot_y_mm_ + feet_distance_y);
-//	Serial.println("global_zmp_x_mm_,global_zmp_y_mm_: \t" + (String)global_zmp_y_mm_ + "\t" + (String)global_zmp_y_mm_);
+		global_zmp_x_mm_ = right_foot_x + zmp_right_foot_x_mm_ + ((double)force_left_sum / (double)all_force_sum) * (double)(zmp_left_foot_x_mm_ - zmp_right_foot_x_mm_ + feet_distance_x);
+
+		// Y coordinate
+		global_zmp_y_mm_ = right_foot_y + zmp_right_foot_y_mm_ + ((double)force_left_sum / (double)all_force_sum) * (double)(zmp_left_foot_y_mm_ - zmp_right_foot_y_mm_ + feet_distance_y);
+	}
 }
 
 void ForceSensorsManager::get_global_ZMP(double &_x_mm, double &_y_mm)

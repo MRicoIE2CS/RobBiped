@@ -61,15 +61,17 @@ void Control::PID::set_derivative_filter_time_constant(const uint32_t& _time_con
 
 double Control::PID::apply_inverse_deadband(const double &_sign_variable, const double &_u)
 {
-	if (0.0 == negative_db_compensation && 0.0 == positive_db_compensation) return _u;
-
-	if (_sign_variable > 0.0) return _u + positive_db_compensation;
-	else if (_sign_variable < 0.0) return _u - negative_db_compensation;
-	else return _u;
+	return Control::inverse_deadband(_sign_variable, _u, positive_db_compensation, negative_db_compensation);
 }
 
 void Control::PID::compute_output(const double& _setpoint, const double& _feedback, double& _output, const double& _sign_of_deadband)
 {
+	_output = compute_output(_setpoint, _feedback, _sign_of_deadband);
+}
+
+double Control::PID::compute_output(const double& _setpoint, const double& _feedback, const double& _sign_of_deadband)
+{
+	double _output;
 	uint64_t current_millis_computation = millis();
 	uint64_t current_time_interval = current_millis_computation - last_millis_computation;
 	double time_fraction = static_cast<double>(current_time_interval) / static_cast<double>(time_constant_millis_);
@@ -117,11 +119,11 @@ void Control::PID::compute_output(const double& _setpoint, const double& _feedba
 	// Sum of the components
 	double sum = proportional_action + integral_action + derivative_action;
 
-	// Deadband compensation
-	sum = apply_inverse_deadband(_sign_of_deadband, sum);
-
 	// Saturation
 	if (apply_saturation_) saturation(sum, lower_limit_, upper_limit_, _output);
+
+	// Deadband compensation
+	sum = apply_inverse_deadband(_sign_of_deadband, sum);
 
 	// Memory update
 	last_millis_computation = current_millis_computation;
@@ -135,6 +137,8 @@ void Control::PID::compute_output(const double& _setpoint, const double& _feedba
 	
 	// Clean sleep state
 	sleep_ = false;
+
+	return _output;
 }
 
 void Control::PID::get_control_action_values(double& _kp, double& _ki, double& _kd)
