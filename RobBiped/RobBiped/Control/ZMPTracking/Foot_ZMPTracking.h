@@ -84,15 +84,15 @@ class Foot_ZMPTracking : public I_PeriodicTask
 		void set_setpoint_y_mm(double& _desired_zmp_lateral_deviation_mm);
 
 		/*
-		*  @fn double compute_x(double& _current_foot_roll_angle_rad)
-		*  @fn double compute_y(double& _current_foot_roll_angle_rad)
+		*  @fn double compute(double& _x_zmp_feedback, double& _y_zmp_feedback)
 		*  @brief Compute controller.
 		*  It returns the computed output value, in radians, to be applied to the foot pitch/roll joint.
 		*
 		*  @param[in] _current_foot_zmp_lateral_deviation_mm Feedback value; Current ZMP deviation, in mm.
 		*/
-		double compute_x(double& _current_foot_zmp_lateral_deviation_mm);
-		double compute_y(double& _current_foot_zmp_lateral_deviation_mm);
+		double compute(double& _x_zmp_feedback, double& _y_zmp_feedback);
+		double compute_x(double& _x_zmp_feedback);
+		double compute_y(double& _y_zmp_feedback);
 
 		bool switch_x_on();
 		bool switch_y_on();

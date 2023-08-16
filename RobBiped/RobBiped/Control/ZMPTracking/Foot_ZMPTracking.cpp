@@ -67,45 +67,53 @@ void Control::Foot_ZMPTracking::set_setpoint_y_mm(double& _desired_zmp_lateral_d
 	setpoint_y_mm_ = _desired_zmp_lateral_deviation_mm;
 }
 
-double Control::Foot_ZMPTracking::compute_x(double& _current_foot_zmp_lateral_deviation_mm)
+double Control::Foot_ZMPTracking::compute(double& _x_zmp_feedback, double& _y_zmp_feedback)
 {
-// 	double output_rad = 0.0;
-// 	
-// 	if (command_->commands.foot_roll_centering_debug_on)
-// 	{
+	double output_rad = 0.0;
+	
+	if (command_->commands.zmp_tracking_deb_toggle)
+	{
+		// TODO: Prints for debug
 // 		double kp, ki, kd;
 // 		pid_.get_control_action_values(kp, ki, kd);
 // 		Serial.println("Action::: " + (String)output_rad + "\tKp = " + (String)kp + "\tKi = " + (String)ki + "\tKd = " + (String)kd);
-// 
-// 		if (command_->commands.foot_roll_centering_debug_off)
-// 		{
-// 			command_->commands.foot_roll_centering_debug_on = false;
-// 			command_->commands.foot_roll_centering_debug_off = false;
-// 		}
-// 	}
-// 
-// 	if (!controller_on & command_->commands.foot_roll_centering_on)
-// 	{
-// 		controller_on = true;
-// 	}
-// 	if (controller_on & command_->commands.foot_roll_centering_off)
-// 	{
-// 		pid_.sleep();
-// 		controller_on = false;
-// 	}
-// 
-// 	if (controller_on)
-// 	{
-// 		pid_.compute_output(setpoint_mm_, _current_foot_zmp_lateral_deviation_mm, output_rad);
-// 	}
-// 
-// 	return output_rad;
+	}
+
+	if (!controller_x_on & command_->commands.zmp_xtracking_toggle) switch_y_on();
+	if (controller_x_on & command_->commands.zmp_xtracking_toggle) switch_x_off();
+	if (!controller_y_on & command_->commands.zmp_ytracking_toggle) switch_x_on();
+	if (controller_y_on & command_->commands.zmp_ytracking_toggle) switch_x_off();
+
+	Vector2d output_rad;
+	if (controller_x_on)
+	{
+		output_rad(0) = compute_x(_x_zmp_feedback);
+	}
+	if (controller_y_on)
+	{
+		output_rad(1) = compute_y(_x_zmp_feedback);
+	}
+
+	return output_rad;
 	return 0.0;
 }
 
-double Control::Foot_ZMPTracking::compute_y(double& _current_foot_zmp_lateral_deviation_mm)
+double Control::Foot_ZMPTracking::compute_x(double& _x_zmp_feedback)
 {
-	return 0.0;
+	// TODO
+	
+	
+	double out = pid_x_.compute_output(setpoint_x_mm_, _x_zmp_feedback);
+	return out;
+}
+
+double Control::Foot_ZMPTracking::compute_y(double& _y_zmp_feedback)
+{
+	// TODO
+	
+	
+	double out = pid_y_.compute_output(setpoint_y_mm_, _y_zmp_feedback);
+	return out;
 }
 
 bool Control::Foot_ZMPTracking::is_x_on()
@@ -131,9 +139,11 @@ bool Control::Foot_ZMPTracking::switch_y_on()
 bool Control::Foot_ZMPTracking::switch_x_off()
 {
 	controller_x_on = false;
+	pid_x_.sleep();
 }
 
 bool Control::Foot_ZMPTracking::switch_y_off()
 {
 	controller_y_on = false;
+	pid_y_.sleep();
 }
