@@ -28,6 +28,8 @@
 
 namespace Control {
 
+// Controller that gets a desired ZMP setpoint, for X and Y axis, and the local ZMP position feedback,
+// then returns a pitch (X) or roll(Y) angle setpoints.
 class Foot_ZMPTracking : public I_PeriodicTask
 {
 	private:
@@ -35,51 +37,70 @@ class Foot_ZMPTracking : public I_PeriodicTask
 		// Serial Commands pointer
 		Command* command_;
 
-		PID pid_;
+		PID pid_x_;
+		PID pid_y_;
 
-		Configuration::Configs::Control::FootRollCentering *config_;
+		Configuration::Configs::Control::Foot_ZMPTracking_x *config_x_;
+		Configuration::Configs::Control::Foot_ZMPTracking_y *config_y_;
 
-		// PID constants
-		double *kp_;
-		double *ki_;
-		double *kd_;
-		// Anti-windup constant
-		double *k_windup_;
-		// Setpoint weighting constants
-		double *proportional_setpoint_weight_;
-		double *derivative_setpoint_weight_;
-		// Saturation limits, in degrees
-		double *lower_saturation_degrees_;
-		double *upper_saturation_degrees_;
+		Configuration::Configs::Control::Foot_ZMPTracking_x::PID *conf_pid_x_;
+		Configuration::Configs::Control::Foot_ZMPTracking_y::PID *conf_pid_y_;
 
-		// Desired setpoint, in radians
-		double setpoint_mm_ = 0.0;
+		Configuration::Configs::Control::Foot_ZMPTracking_x::FeedforwardCurve *conf_curve_x_;
+		Configuration::Configs::Control::Foot_ZMPTracking_y::FeedforwardCurve *conf_curve_y_;
+
+		Configuration::Configs::Control::Foot_ZMPTracking_x::DeadbandCompensation *conf_db_x_;
+		Configuration::Configs::Control::Foot_ZMPTracking_y::DeadbandCompensation *conf_db_y_;
+
+		// Desired setpoint, in mm
+		double setpoint_x_mm_ = 0.0;
+		double setpoint_y_mm_ = 0.0;
+
+		// Output action, in rad
+		double out_x_rad_ = 0.0;
+		double out_y_rad_ = 0.0;
 
 		// ON state of the controller
-		bool controller_on = false;
+		bool controller_x_on = false;
+		bool controller_y_on = false;
+
+		// Read serial commands
+		void read_commands();
 
 	public:
 
-		void assoc_config(Configuration::Configs::Control::FootRollCentering& _config);
-		void init();
-		bool is_on();
+		void assoc_config(Configuration::Configs::Control::Foot_ZMPTracking_x& _config);
+		void assoc_config(Configuration::Configs::Control::Foot_ZMPTracking_y& _config);
+		void configure();
 
 		/*
-		*  @fn void set_setpoint_mm(double& _desired_zmp_lateral_deviation_mm);
-		*  @brief Setter for desired foot roll angle, in radians.
+		*  @fn void set_setpoint_x_mm(double& _desired_zmp_lateral_deviation_mm)
+		*  @fn void set_setpoint_y_mm(double& _desired_zmp_lateral_deviation_mm)
+		*  @brief Setter for desired ZMP setpoint, in mm.
 		*
-		*  @param[in] _desired_foot_roll_angle Desired foot roll angle, in radians.
+		*  @param[in] _desired_zmp_lateral_deviation_mm Desired ZMP setpoint, in mm.
 		*/
-		void set_setpoint_mm(double& _desired_zmp_lateral_deviation_mm);
+		void set_setpoint_x_mm(double& _desired_zmp_lateral_deviation_mm);
+		void set_setpoint_y_mm(double& _desired_zmp_lateral_deviation_mm);
 
 		/*
-		*  @fn double compute(double& _current_foot_roll_angle_rad)
+		*  @fn double compute_x(double& _current_foot_roll_angle_rad)
+		*  @fn double compute_y(double& _current_foot_roll_angle_rad)
 		*  @brief Compute controller.
-		*  It returns the computed output value, in radians, to be applied to the foot roll joint.
+		*  It returns the computed output value, in radians, to be applied to the foot pitch/roll joint.
 		*
-		*  @param[in] _current_foot_roll_angle_rad Feedback value; Current foot roll angle, in radians.
+		*  @param[in] _current_foot_zmp_lateral_deviation_mm Feedback value; Current ZMP deviation, in mm.
 		*/
-		double compute(double& _current_foot_zmp_lateral_deviation_mm);
+		double compute_x(double& _current_foot_zmp_lateral_deviation_mm);
+		double compute_y(double& _current_foot_zmp_lateral_deviation_mm);
+
+		bool switch_x_on();
+		bool switch_y_on();
+		bool switch_x_off();
+		bool switch_y_off();
+
+		bool is_x_on();
+		bool is_y_on();
 };
 
 }
