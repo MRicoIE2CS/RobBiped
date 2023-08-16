@@ -24,8 +24,12 @@ void Executor::associations()
 	force_sensors_manager_.assoc_config(config_.force_sensors);
 	gyroscope_accelerometer_manager_.assoc_config(config_.gyro_acc);
 	torso_posture_controller_.assoc_config(config_.control.torso_posture);
-// 	left_foot_roll_centering_controller_.assoc_config(config_.control.foot_roll_centering);
-// 	right_foot_roll_centering_controller_.assoc_config(config_.control.foot_roll_centering);
+	left_foot_ZMP_tracking_controller_.assoc_config(config_.control.foot_x_zmp_tracking);
+	left_foot_ZMP_tracking_controller_.assoc_config(config_.control.foot_y_zmp_tracking);
+	left_foot_ZMP_tracking_controller_.configure();
+	right_foot_ZMP_tracking_controller_.assoc_config(config_.control.foot_x_zmp_tracking);
+	right_foot_ZMP_tracking_controller_.assoc_config(config_.control.foot_y_zmp_tracking);
+	right_foot_ZMP_tracking_controller_.configure();
 	global_kinematics_.assoc_config(config_.kinematics);
 	global_kinematics_.assoc_sensors(force_sensors_manager_, gyroscope_accelerometer_manager_);
 }

@@ -41,13 +41,6 @@ void Executor::init()
 	torso_posture_controller_.init();
 	torso_posture_controller_.set_setpoint_rad(torso_setpoint_);
 
-	// This task will be computed each time a new measurement is performed.
-	// For that reason, there is no need to set an execution period for it.
-// 	left_foot_xZMP_tracking_controller_.init();
-// 	left_foot_xZMP_tracking_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
-// 	right_foot_xZMP_tracking_controller_.init();
-// 	right_foot_xZMP_tracking_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
-
 	// This task could be updated in response to a request from other task, using `should_be_updated` member,
 	// or every execution period of the task could be checked if it needs to be updated.
 	// The signal generation will be updated each time a new gyroscope/accelerometer measure is taken.

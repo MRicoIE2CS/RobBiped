@@ -55,10 +55,8 @@ class Executor {
 
 		/////____________ CONTROLLERS: __//
 		Control::TorsoPosture torso_posture_controller_;
-		Control::Foot_ZMPTracking left_foot_xZMP_tracking_controller_;
-		Control::Foot_ZMPTracking left_foot_yZMP_tracking_controller_;
-		Control::Foot_ZMPTracking right_foot_xZMP_tracking_controller_;
-		Control::Foot_ZMPTracking right_foot_yZMP_tracking_controller_;
+		Control::Foot_ZMPTracking left_foot_ZMP_tracking_controller_;
+		Control::Foot_ZMPTracking right_foot_ZMP_tracking_controller_;
 		///// END CONTROLLERS __//
 
 		/////____________ APPLICATION EXCLUSIVE OBJECTS AND METHODS: __//
@@ -125,9 +123,6 @@ class Executor {
 		double torso_upright_pitch_control_action = 0.0;
 		double torso_setpoint_ = 0.00;
 		ExpFilter torso_pitch_exp_filter_;
-		double local_zmp_lateral_deviation_setpoint_ = 0.0;
-		double left_foot_roll_centering_action = 0.0;
-		double right_foot_roll_centering_action = 0.0;
 
 		// Waiting object
 		Control::Waiting waiting_;
