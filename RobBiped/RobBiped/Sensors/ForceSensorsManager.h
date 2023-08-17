@@ -137,7 +137,9 @@ public:
 	bool is_tare_right_performed();
 
 	void get_values_ZMP_LeftFoot(double& x_mm, double& y_mm);
+	Vector2d get_values_ZMP_LeftFoot();
 	void get_values_ZMP_RightFoot(double& x_mm, double& y_mm);
+	Vector2d get_values_ZMP_RightFoot();
 	
 	bool is_left_foot_touching_ground();
 	bool is_right_foot_touching_ground();

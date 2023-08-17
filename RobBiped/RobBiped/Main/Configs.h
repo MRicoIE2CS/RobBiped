@@ -96,7 +96,7 @@ struct Configs
 		double d_lateral_foot = 13;		// Lateral distance between foot center and the axis of the first ankle joint (a1)
 		// CM location :
 		double height_CM_from_hip = -50.0;	// Vertical distance from hip joints to estimated CM height
-		double Kfilter_CM_location = 0.955;	// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
+		double Kfilter_CM_location = 0.98;//0.955;	// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
 		double Kfilter_CM_velocity = 0.99;	// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
 		}kinematics;
 
@@ -114,27 +114,27 @@ struct Configs
 			uint32_t paths_sampletime_ms = 10;
 			double Tra_x = 0.001;	// Rising time of ZMP actuation dynamics
 			double Tra_y = 0.001;	// Rising time of ZMP actuation dynamics
-			double d0_x = 40;
-			double d1_x = 40;
-			double d2_x = 40;
-			double d0_y = 40;
-			double d1_y = 40;
-			double d2_y = 40;
+			double d0_x = 1;
+			double d1_x = 1;
+			double d2_x = 1;
+			double d0_y = 1;
+			double d1_y = 1;
+			double d2_y = 1;
 			}cm_tracking;
 
 		struct TorsoPosture {
 			// PID constants
-			double kp = 1.0;
+			double kp = 0.4;
 			double ki = 0.0;
-			double kd = 0.1;//0.25;
+			double kd = 0.0;//0.1;//0.25;
 			// Anti-windup constant
 			double k_windup = 0.5;
 			// Setpoint weighting constants [0.0 - 1.0]
 			double proportional_setpoint_weight = 1.0;
 			double derivative_setpoint_weight = 0.0;
 			// Deadband compensation
-			double negative_db_compensation_rad = -0.05;
-			double positive_db_compensation_rad = 0.05;
+			double negative_db_compensation_rad = -0.05;//-0.05;
+			double positive_db_compensation_rad = 0.05;//0.05;
 			// Derivative filter time constant
 			uint32_t derivative_time_constant_ms_ = 40;
 			// Saturation limits
@@ -142,17 +142,19 @@ struct Configs
 			double upper_saturation_degrees = 45;
 			}torso_posture;
 
-		struct Foot_ZMPTracking_x {
+		struct ZMPTracking_x {
 			struct FeedforwardCurve {
-				std::vector<double> curve_points_x = { -50, -40, 40, 50 };
-				std::vector<double> curve_points_y = { 0.2, 0.05, -0.05, -0.2 };
+				std::vector<double> curve_points_x = { -55, -45, 45, 55 };
+				std::vector<double> curve_points_y = { 0.2, 0.05, -0.05, -0.1 };//{ 0.3, 0.1, -0.05, -0.2 };//{ 0.1, 0.05, -0.05, -0.1 };
 				}feedforward_curve;
 			struct DeadbandCompensation {
 				// Limiting value at which desired ZMP requires negative or positive DB compensation
-				double db_delimiting_value = 0.0;
-				double negative_db_compensation_rad = -0.05;
-				double positive_db_compensation_rad = 0.05;
-				}deadband_compensation;
+				double db_delimiting_value;
+				double negative_db_compensation_rad;
+				double positive_db_compensation_rad;
+				};
+			DeadbandCompensation leftfoot_deadband_compensation = { 0.0, 0.05, 0.1 };//{ 0.0, 0.075, 0.225 };
+			DeadbandCompensation rightfoot_deadband_compensation = { 0.0, 0.05, 0.1 };//{ 0.0, 0.075, 0.225 };
 			struct PID {
 				double kp = 0.0;//0.001;
 				double ki = 0.0;
@@ -163,12 +165,12 @@ struct Configs
 				double proportional_setpoint_weight = 1.0;
 				double derivative_setpoint_weight = 0.0;
 				// Saturation limits
-				double lower_saturation_degrees = -10;
-				double upper_saturation_degrees = 10;
+				double lower_saturation_degrees = -20;
+				double upper_saturation_degrees = 20;
 				}pid;
-			}foot_x_zmp_tracking;
+			}x_zmp_tracking;
 
-		struct Foot_ZMPTracking_y {
+		struct ZMPTracking_y {
 			struct FeedforwardCurve {
 				std::vector<double> curve_points_x = { -40, 40 };
 				std::vector<double> curve_points_y = { 0.2, -0.2 };
@@ -180,7 +182,7 @@ struct Configs
 				double positive_db_compensation_rad = 0.05;
 				}deadband_compensation;
 			struct PID {
-				double kp = 0.001;
+				double kp = 0.0;
 				double ki = 0.0;
 				double kd = 0.0;
 				// Anti-windup constant
@@ -192,7 +194,7 @@ struct Configs
 				double lower_saturation_degrees = -10;
 				double upper_saturation_degrees = 10;
 				}pid;
-			}foot_y_zmp_tracking;
+			}y_zmp_tracking;
 
 		}control;
 };

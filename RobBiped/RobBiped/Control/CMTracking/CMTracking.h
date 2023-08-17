@@ -30,6 +30,7 @@
 #include "../../Utils/Sources/PregeneratedTrajectory.h"
 
 using Eigen::Vector2d;
+using Eigen::Vector3d;
 
 namespace Control {
 
@@ -100,19 +101,19 @@ class CMTracking
 		void init();
 		
 		// Sets the operating mode
-		void set_mode(Mode &_mode_x, Mode &_mode_y);
+		void set_mode(Mode _mode_x, Mode _mode_y);
 
 		// Reset the pregenerated trajectory tracking
 		// Sets the running state of the controller to off
 		void reset_trajectory();
 
 		// Sets the CM reference for the case of online reference tracking
-		void set_CM_x_online_reference(double &_CM_reference_x);
-		void set_CM_y_online_reference(double &_CM_reference_y);
-		// Computes and returns the ZMP action
-		Vector2d compute_ZMP_action();
-		// Returns the computed ZMP action
-		Vector2d get_ZMP_action();
+		void set_CM_x_online_reference(double _CM_reference_x);
+		void set_CM_y_online_reference(double _CM_reference_y);
+		// Computes and returns the ZMP setpoint
+		Vector2d compute_ZMP_setpoint();
+		// Returns the computed ZMP setpoint
+		Vector2d get_ZMP_setpoint();
 };
 
 }	// End namespace Control

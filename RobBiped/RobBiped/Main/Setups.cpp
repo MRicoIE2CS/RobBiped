@@ -23,15 +23,18 @@ void Executor::associations()
 	user_input_.assoc_GPIO(config_.user_input_pins);
 	force_sensors_manager_.assoc_config(config_.force_sensors);
 	gyroscope_accelerometer_manager_.assoc_config(config_.gyro_acc);
-	torso_posture_controller_.assoc_config(config_.control.torso_posture);
-	left_foot_ZMP_tracking_controller_.assoc_config(config_.control.foot_x_zmp_tracking);
-	left_foot_ZMP_tracking_controller_.assoc_config(config_.control.foot_y_zmp_tracking);
-	left_foot_ZMP_tracking_controller_.configure();
-	right_foot_ZMP_tracking_controller_.assoc_config(config_.control.foot_x_zmp_tracking);
-	right_foot_ZMP_tracking_controller_.assoc_config(config_.control.foot_y_zmp_tracking);
-	right_foot_ZMP_tracking_controller_.configure();
 	global_kinematics_.assoc_config(config_.kinematics);
 	global_kinematics_.assoc_sensors(force_sensors_manager_, gyroscope_accelerometer_manager_);
+	cm_tracking_controller_.assoc_config(config_.control.cm_tracking);
+	cm_tracking_controller_.assoc_globalkinematics(global_kinematics_);
+	cm_tracking_controller_.assoc_sensors(force_sensors_manager_);
+	left_foot_ZMP_tracking_controller_.assoc_config(config_.control.x_zmp_tracking);
+	left_foot_ZMP_tracking_controller_.assoc_config(config_.control.y_zmp_tracking);
+	left_foot_ZMP_tracking_controller_.configure(Control::Foot_ZMPTracking::Foot::Left);
+	right_foot_ZMP_tracking_controller_.assoc_config(config_.control.x_zmp_tracking);
+	right_foot_ZMP_tracking_controller_.assoc_config(config_.control.y_zmp_tracking);
+	right_foot_ZMP_tracking_controller_.configure(Control::Foot_ZMPTracking::Foot::Right);
+	torso_posture_controller_.assoc_config(config_.control.torso_posture);
 }
 
 void Executor::initialize_servo_setpoints()

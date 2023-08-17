@@ -75,6 +75,7 @@ double Control::PID::compute_output(const double& _setpoint, const double& _feed
 	uint64_t current_millis_computation = millis();
 	uint64_t current_time_interval = current_millis_computation - last_millis_computation;
 	double time_fraction = static_cast<double>(current_time_interval) / static_cast<double>(time_constant_millis_);
+	if (0 == current_time_interval) return last_saturated_controller_output_;	// Avoid division by 0
 
 	// Error calculation
 	double error = _setpoint - _feedback;

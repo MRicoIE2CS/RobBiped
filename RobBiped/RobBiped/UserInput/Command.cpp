@@ -98,11 +98,11 @@ void Command::listen_for_commands()
 			if (commands.zmp_tracking_deb_toggle) commands.zmp_tracking_deb_toggle = false;
 			else commands.zmp_tracking_deb_toggle = true;
 		}
-		else if (command.equals("zmptrx.tgl")){
+		else if (command.equals("zmptrx")){
 			if (commands.zmp_xtracking_toggle) commands.zmp_xtracking_toggle = false;
 			else commands.zmp_xtracking_toggle = true;
 		}
-		else if (command.equals("zmptry.tgl")){
+		else if (command.equals("zmptry")){
 			if (commands.zmp_ytracking_toggle) commands.zmp_ytracking_toggle = false;
 			else commands.zmp_ytracking_toggle = true;
 		}
@@ -113,6 +113,10 @@ void Command::listen_for_commands()
 		else if (command.equals("get.up")){
 			if (commands.get_up_toggle) commands.get_up_toggle = false;
 			else commands.get_up_toggle = true;
+		}
+		else if (command.equals("xbalance")){
+			if (commands.test_x_balance_toggle) commands.test_x_balance_toggle = false;
+			else commands.test_x_balance_toggle = true;
 		}
 		else if (command.equals("off"))
 		{

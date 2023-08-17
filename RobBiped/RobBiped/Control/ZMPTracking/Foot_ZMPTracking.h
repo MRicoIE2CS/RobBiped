@@ -35,6 +35,10 @@ namespace Control {
 // then returns a pitch (X) or roll(Y) angle setpoints.
 class Foot_ZMPTracking : public I_PeriodicTask
 {
+	public:
+
+		enum class Foot { Left, Right };
+
 	private:
 
 		// Serial Commands pointer
@@ -43,17 +47,17 @@ class Foot_ZMPTracking : public I_PeriodicTask
 		PID pid_x_;
 		PID pid_y_;
 
-		Configuration::Configs::Control::Foot_ZMPTracking_x *config_x_;
-		Configuration::Configs::Control::Foot_ZMPTracking_y *config_y_;
+		Configuration::Configs::Control::ZMPTracking_x *config_x_;
+		Configuration::Configs::Control::ZMPTracking_y *config_y_;
 
-		Configuration::Configs::Control::Foot_ZMPTracking_x::PID *conf_pid_x_;
-		Configuration::Configs::Control::Foot_ZMPTracking_y::PID *conf_pid_y_;
+		Configuration::Configs::Control::ZMPTracking_x::PID *conf_pid_x_;
+		Configuration::Configs::Control::ZMPTracking_y::PID *conf_pid_y_;
 
-		Configuration::Configs::Control::Foot_ZMPTracking_x::FeedforwardCurve *conf_curve_x_;
-		Configuration::Configs::Control::Foot_ZMPTracking_y::FeedforwardCurve *conf_curve_y_;
+		Configuration::Configs::Control::ZMPTracking_x::FeedforwardCurve *conf_curve_x_;
+		Configuration::Configs::Control::ZMPTracking_y::FeedforwardCurve *conf_curve_y_;
 
-		Configuration::Configs::Control::Foot_ZMPTracking_x::DeadbandCompensation *conf_db_x_;
-		Configuration::Configs::Control::Foot_ZMPTracking_y::DeadbandCompensation *conf_db_y_;
+		Configuration::Configs::Control::ZMPTracking_x::DeadbandCompensation *conf_db_x_;
+		Configuration::Configs::Control::ZMPTracking_y::DeadbandCompensation *conf_db_y_;
 
 		// Desired setpoint, in mm
 		double setpoint_x_mm_ = 0.0;
@@ -69,13 +73,13 @@ class Foot_ZMPTracking : public I_PeriodicTask
 		// Read serial commands
 		void read_commands();
 
-		double custom_curve_x(Configuration::Configs::Control::Foot_ZMPTracking_x::FeedforwardCurve &_curve);
+		double custom_curve_x(Configuration::Configs::Control::ZMPTracking_x::FeedforwardCurve &_curve);
 
 	public:
 
-		void assoc_config(Configuration::Configs::Control::Foot_ZMPTracking_x& _config);
-		void assoc_config(Configuration::Configs::Control::Foot_ZMPTracking_y& _config);
-		void configure();
+		void assoc_config(Configuration::Configs::Control::ZMPTracking_x& _config);
+		void assoc_config(Configuration::Configs::Control::ZMPTracking_y& _config);
+		void configure(Foot _foot);
 
 		/*
 		*  @fn void set_setpoint_x_mm(double& _desired_zmp_lateral_deviation_mm)

@@ -24,8 +24,9 @@
 #include "Configs.h"
 #include "I_PeriodicTask.h"
 #include "../Actuators/JointsManager.h"
-#include "../Control/ZMPTracking/Foot_ZMPTracking.h"
+#include "../Control/CMTracking/CMTracking.h"
 #include "../Control/TorsoPosture/TorsoPosture.h"
+#include "../Control/ZMPTracking/Foot_ZMPTracking.h"
 #include "../Kinematics_Dynamics/GlobalKinematics.h"
 #include "../Sensors/GyroscopeAccelerometerManager.h"
 #include "../Sensors/ForceSensorsManager.h"
@@ -54,9 +55,10 @@ class Executor {
 		///// END OBJECT TASKS __//
 
 		/////____________ CONTROLLERS: __//
-		Control::TorsoPosture torso_posture_controller_;
+		Control::CMTracking cm_tracking_controller_;
 		Control::Foot_ZMPTracking left_foot_ZMP_tracking_controller_;
 		Control::Foot_ZMPTracking right_foot_ZMP_tracking_controller_;
+		Control::TorsoPosture torso_posture_controller_;
 		///// END CONTROLLERS __//
 
 		/////____________ APPLICATION EXCLUSIVE OBJECTS AND METHODS: __//
@@ -78,19 +80,9 @@ class Executor {
 		bool state2_first_time = true;
 		bool state2_finished = false;
 		void state2_execution();
-		uint8_t state3_phase = 0;
-		bool state3_finished = false;
-		void state3_execution();
-		uint8_t state4_phase = 0;
-		bool state4_finished = false;
-		void state4_execution();
-		bool state5_first_time = true;
-		bool state5_finished = false;
-		void state5_execution();
-		uint8_t state6_phase = 0;
-		bool state6_finished = false;
-		void state6_execution();
-		uint8_t state10_phase = 0;
+
+		// State for the X-balance test, with potentiometer manually controlling lateral DSP movement
+		bool state10_first_time = true;
 		bool state10_finished = false;
 		void state10_execution();
 

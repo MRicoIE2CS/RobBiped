@@ -278,10 +278,26 @@ void ForceSensorsManager::get_values_ZMP_LeftFoot(double& x_mm, double& y_mm)
 	y_mm = zmp_left_foot_y_mm_;
 }
 
+Vector2d ForceSensorsManager::get_values_ZMP_LeftFoot()
+{
+	Vector2d values;
+	values(0) = zmp_left_foot_x_mm_;
+	values(1) = zmp_left_foot_y_mm_;
+	return values;
+}
+
 void ForceSensorsManager::get_values_ZMP_RightFoot(double& x_mm, double& y_mm)
 {
 	x_mm = zmp_right_foot_x_mm_;
 	y_mm = zmp_right_foot_y_mm_;
+}
+
+Vector2d ForceSensorsManager::get_values_ZMP_RightFoot()
+{
+	Vector2d values;
+	values(0) = zmp_right_foot_x_mm_;
+	values(1) = zmp_right_foot_y_mm_;
+	return values;
 }
 
 void ForceSensorsManager::print_values()
@@ -444,4 +460,5 @@ Vector2d ForceSensorsManager::get_global_ZMP()
 	Vector2d zmp;
 	zmp(0) = global_zmp_x_mm_;
 	zmp(1) = global_zmp_y_mm_;
+	return zmp;
 }

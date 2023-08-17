@@ -35,6 +35,9 @@ void Control::CMTracking::assoc_sensors(ForceSensorsManager &_force_sensors_mana
 
 void Control::CMTracking::init()
 {
+	// Get Command singleton instance
+	command_ = Command::get_instance();
+
 	Tra_x_ = config_->Tra_x;
 	Tra_y_ = config_->Tra_y;
 
@@ -44,44 +47,41 @@ void Control::CMTracking::init()
 	d0y = config_->d0_y;
 	d1y = config_->d1_y;
 	d2y = config_->d2_y;
-	
-	PregeneratedTrajectory CM_path_x_;
-	PregeneratedTrajectory dCM_path_x_;
-	PregeneratedTrajectory ddCM_path_x_;
-	PregeneratedTrajectory dddCM_path_x_;
-	PregeneratedTrajectory CM_path_y_;
-	PregeneratedTrajectory dCM_path_y_;
-	PregeneratedTrajectory ddCM_path_y_;
-	PregeneratedTrajectory dddCM_path_y_;
 
-	CM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
-	CM_path_x_.set_file_name(config_->CM_path_x_filename);
-	CM_path_x_.init();
-	dCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
-	dCM_path_x_.set_file_name(config_->dCM_path_x_filename);
-	dCM_path_x_.init();
-	ddCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
-	ddCM_path_x_.set_file_name(config_->ddCM_path_x_filename);
-	ddCM_path_x_.init();
-	dddCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
-	dddCM_path_x_.set_file_name(config_->dddCM_path_x_filename);
-	dddCM_path_x_.init();
+	if (mode_x_ == Mode::OfflineReference)
+	{
+		CM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
+		CM_path_x_.set_file_name(config_->CM_path_x_filename);
+		CM_path_x_.init();
+		dCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
+		dCM_path_x_.set_file_name(config_->dCM_path_x_filename);
+		dCM_path_x_.init();
+		ddCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
+		ddCM_path_x_.set_file_name(config_->ddCM_path_x_filename);
+		ddCM_path_x_.init();
+		dddCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
+		dddCM_path_x_.set_file_name(config_->dddCM_path_x_filename);
+		dddCM_path_x_.init();
+	}
 
-	CM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
-	CM_path_y_.set_file_name(config_->CM_path_y_filename);
-	CM_path_y_.init();
-	dCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
-	dCM_path_y_.set_file_name(config_->dCM_path_y_filename);
-	dCM_path_y_.init();
-	ddCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
-	ddCM_path_y_.set_file_name(config_->ddCM_path_y_filename);
-	ddCM_path_y_.init();
-	dddCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
-	dddCM_path_y_.set_file_name(config_->dddCM_path_y_filename);
-	dddCM_path_y_.init();
+	if (mode_y_ == Mode::OfflineReference)
+	{
+		CM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
+		CM_path_y_.set_file_name(config_->CM_path_y_filename);
+		CM_path_y_.init();
+		dCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
+		dCM_path_y_.set_file_name(config_->dCM_path_y_filename);
+		dCM_path_y_.init();
+		ddCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
+		ddCM_path_y_.set_file_name(config_->ddCM_path_y_filename);
+		ddCM_path_y_.init();
+		dddCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
+		dddCM_path_y_.set_file_name(config_->dddCM_path_y_filename);
+		dddCM_path_y_.init();
+	}
 }
 
-void Control::CMTracking::set_mode(Mode &_mode_x, Mode &_mode_y)
+void Control::CMTracking::set_mode(Mode _mode_x, Mode _mode_y)
 {
 	mode_x_ = _mode_x;
 	mode_y_ = _mode_y;
@@ -94,14 +94,20 @@ void Control::CMTracking::reset_trajectory()
 
 void Control::CMTracking::start_trajectories()
 {
-	CM_path_x_.start_trajectory();
-	dCM_path_x_.start_trajectory();
-	ddCM_path_x_.start_trajectory();
-	dddCM_path_x_.start_trajectory();
-	CM_path_y_.start_trajectory();
-	dCM_path_y_.start_trajectory();
-	ddCM_path_y_.start_trajectory();
-	dddCM_path_y_.start_trajectory();
+	if (mode_x_ == Mode::OfflineReference)
+	{
+		CM_path_x_.start_trajectory();
+		dCM_path_x_.start_trajectory();
+		ddCM_path_x_.start_trajectory();
+		dddCM_path_x_.start_trajectory();
+	}
+	if (mode_y_ == Mode::OfflineReference)
+	{
+		CM_path_y_.start_trajectory();
+		dCM_path_y_.start_trajectory();
+		ddCM_path_y_.start_trajectory();
+		dddCM_path_y_.start_trajectory();
+	}
 }
 
 void Control::CMTracking::get_reference_signals(Vector2d &_CM_ref, Vector2d &_vCM_ref, Vector2d &_aCM_ref, Vector2d &_jCM_ref)
@@ -155,17 +161,17 @@ void Control::CMTracking::get_feedback_signals(Vector2d &_CM_est, Vector2d &_vCM
 	_ZMP_med(1) = ZMP_xy(1);
 }
 
-void Control::CMTracking::set_CM_x_online_reference(double &_CM_reference_x)
+void Control::CMTracking::set_CM_x_online_reference(double _CM_reference_x)
 {
 	CM_online_reference_(0) = _CM_reference_x;
 }
 
-void Control::CMTracking::set_CM_y_online_reference(double &_CM_reference_y)
+void Control::CMTracking::set_CM_y_online_reference(double _CM_reference_y)
 {
 	CM_online_reference_(1) = _CM_reference_y;
 }
 
-Vector2d Control::CMTracking::compute_ZMP_action()
+Vector2d Control::CMTracking::compute_ZMP_setpoint()
 {
 	if (!is_runnning_)
 	{
@@ -198,12 +204,23 @@ Vector2d Control::CMTracking::compute_ZMP_action()
 	double u_x = (Tra_x_ * h_ / g_) * ((g_/h_) * vCM_est(0) + (g_/(Tra_x_*h_) * ZMP_med(0) - v_x));
 	double u_y = (Tra_y_ * h_ / g_) * ((g_/h_) * vCM_est(1) + (g_/(Tra_y_*h_) * ZMP_med(1) - v_y));
 
+	// TODO: Delete this nan check
+	if (isnan(u_x) || isnan(u_y) || isnan(vCM_est(0)) || isnan(vCM_est(1)) || isnan(ZMP_med(0)) || isnan(ZMP_med(1)))
+	{
+		Serial.print("ISNAN!!!!\t");
+		Serial.print(u_x);Serial.print("\t");Serial.print(u_y);Serial.print("\t");
+		Serial.print(CM_est(0));Serial.print("\t");Serial.print(CM_est(1));Serial.print("\t");
+		Serial.print(ZMP_med(0));Serial.print("\t");Serial.print(ZMP_med(1));Serial.print("\t");
+		Serial.print(vCM_est(0));Serial.print("\t");Serial.print(vCM_est(1));Serial.print("\t");
+		Serial.print(aCM_med(0));Serial.print("\t");Serial.print(aCM_med(1));Serial.print("\t");
+	}
+
 	control_action_(0) = u_x;
 	control_action_(1) = u_y;
 	return control_action_;
 }
 
-Vector2d Control::CMTracking::get_ZMP_action()
+Vector2d Control::CMTracking::get_ZMP_setpoint()
 {
 	return control_action_;
 }

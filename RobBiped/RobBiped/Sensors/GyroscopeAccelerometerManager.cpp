@@ -73,15 +73,18 @@ void GyroscopeAccelerometerManager::units_conversion()
 	gx_deg_s_ = gx_ * (250.0/32768.0);	// +-250deg/s scale -> +-32768
 	gy_deg_s_ = gy_ * (250.0/32768.0);
 	gz_deg_s_ = gz_ * (250.0/32768.0);
+
+	if (0.0 == gx_deg_s_ && 0.0 == gy_deg_s_ && 0.0 == gz_deg_s_) Serial.println("NOT GETTING GYROSCOPE READINGS!!!");
 }
 
 void GyroscopeAccelerometerManager::calculate_accelerometer_angle()
 {
 	// Calculate inclination angles
-// 	accel_ang_x_ = atan( ax_/ sqrt( pow(ay_,2) + pow(az_,2) ) ) * (180.0/3.14);
-// 	accel_ang_y_ = atan( ay_/ sqrt( pow(ax_,2) + pow(az_,2) ) ) * (180.0/3.14);
-	accel_ang_x_ = atan( ax_m_s2_/ sqrt( pow(ay_m_s2_,2) + pow(az_m_s2_,2) ) ) * (180.0/3.14);	// In degrees
-	accel_ang_y_ = atan( ay_m_s2_/ sqrt( pow(ax_m_s2_,2) + pow(az_m_s2_,2) ) ) * (180.0/3.14);	// In degrees
+	double sum_of_squares_yz = pow(ay_m_s2_,2) + pow(az_m_s2_,2);
+	double sum_of_squares_xz = pow(ax_m_s2_,2) + pow(az_m_s2_,2);
+	if ( (0.0 == sum_of_squares_yz) || (0.0 == sum_of_squares_xz) ) return; // Avoid division by zero or NaN
+	accel_ang_x_ = atan( ax_m_s2_/ sqrt( sum_of_squares_yz ) ) * (180.0/3.14);	// In degrees
+	accel_ang_y_ = atan( ay_m_s2_/ sqrt( sum_of_squares_xz ) ) * (180.0/3.14);	// In degrees
 }
 
 void GyroscopeAccelerometerManager::complementary_filter_for_angle()
@@ -279,9 +282,9 @@ void GyroscopeAccelerometerManager::print_values()
 
 	// This angle is obtained by complementary filter
 	Serial.print("Pitch angle (x,y):\t");
-	Serial.print(ang_deg_x_);
+	Serial.print(-ang_deg_x_);
 	Serial.print(" , ");
-	Serial.println(ang_deg_y_);
+	Serial.println(-ang_deg_y_);
 }
 
 void GyroscopeAccelerometerManager::get_acc_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2)
