@@ -119,11 +119,7 @@ void Executor::always_executes()
 {
 	if (gyroscope_accelerometer_manager_.has_been_updated)
 	{
-		// CM estimation computation:::
-		global_kinematics_.compute_CoM_location();
-
 		// Torso upright control:::
-
 		// Get torso pitch orientation measurement.
 		double filtered_torso_pitch_angle_rad = torso_pitch_exp_filter_.filter(gyroscope_accelerometer_manager_.get_value_angle_z_pitch_rad());
 		// Compute the control action for torso pitch.
@@ -132,38 +128,12 @@ void Executor::always_executes()
 
 	if (force_sensors_manager_.has_been_updated)
 	{
-		// ZMP Measurement computation
+		// ZMP Measurement computation:::
 		force_sensors_manager_.compute_global_ZMP(&global_kinematics_);
-		// CM estimation computation:::
-		global_kinematics_.compute_CoM_location();
-
-// 		double potentiometer_value = user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0;
-// 		// Desired leg length
-// 		double local_zmp_lateral_deviation_setpoint_ = -37.0/2.0 + 37.0 * potentiometer_value;
-// 		left_foot_roll_centering_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
-// 		right_foot_roll_centering_controller_.set_setpoint_mm(local_zmp_lateral_deviation_setpoint_);
-
-// 		// Foot-roll controllers
-// 		left_foot_roll_centering_action = 0.0;
-// 		if (force_sensors_manager_.is_tare_left_performed())
-// 		{
-// 			double left_foot_zmp_lateral_deviation;
-// 			double ignored;
-// 			force_sensors_manager_.get_values_ZMP_LeftFoot(ignored, left_foot_zmp_lateral_deviation);
-// 			double d_left_foot_zmp_lateral_deviation = - left_foot_zmp_lateral_deviation;
-// 			left_foot_roll_centering_action = left_foot_xZMP_tracking_controller_.compute(d_left_foot_zmp_lateral_deviation);
-// 		}
-// 
-// 		right_foot_roll_centering_action = 0.0;
-// 		if (force_sensors_manager_.is_tare_right_performed())
-// 		{
-// 			double right_foot_zmp_lateral_deviation;
-// 			double ignored;
-// 			force_sensors_manager_.get_values_ZMP_RightFoot(ignored, right_foot_zmp_lateral_deviation);
-// 			double d_right_foot_zmp_lateral_deviation = - right_foot_zmp_lateral_deviation;
-// 			right_foot_roll_centering_action = right_foot_xZMP_tracking_controller_.compute(d_right_foot_zmp_lateral_deviation);
-// 		}
 	}
+	
+	// CM estimation computation:::
+	if (gyroscope_accelerometer_manager_.has_been_updated || force_sensors_manager_.has_been_updated) global_kinematics_.compute_CoM_location();
 }
 
 void Executor::state0_execution()
@@ -426,18 +396,20 @@ void Executor::state10_execution()
 		// Compute ZMP tracking control: The output is the increment no the setpoint angles for ankle joints
 		Vector2d left_foot_ZMP_tracking_action = left_foot_ZMP_tracking_controller_.compute(current_left_ZMP(0), current_left_ZMP(1));
 		Vector2d right_foot_ZMP_tracking_action = right_foot_ZMP_tracking_controller_.compute(current_right_ZMP(0), current_right_ZMP(1));
-		
+
 		// Apply left leg's pitch angle setpoints
 		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_pitch_angle + left_foot_ZMP_tracking_action(0));
 		ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftKnee, knee_pitch_angle);
 		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipPitch, hip_pitch_angle + torso_upright_pitch_control_action);
-		
+
 		// Apply right leg's pitch angle setpoints
-		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_pitch_angle + right_foot_ZMP_tracking_action(1));
+		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootPitch, ankle_pitch_angle + right_foot_ZMP_tracking_action(0));
 		ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightKnee, knee_pitch_angle);
 		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, hip_pitch_angle + torso_upright_pitch_control_action);
-		
-		
+
+// DEBUG
+Serial.println("ZMPref_x, ZMPl, lAct, ZMPr, rAct: \t" + (String)ZMP_ref_xy(0) + "\t" + (String)current_left_ZMP(0) + "\t" + (String)left_foot_ZMP_tracking_action(0) + "\t" + (String)current_right_ZMP(0) + "\t" + (String)right_foot_ZMP_tracking_action(0));
+
 		// Set flag to send servo setpoints
 		servo_updater_.should_be_updated = true;
 	}
