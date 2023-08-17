@@ -18,8 +18,6 @@
 
 #include "CoM_location.h"
 
-#include "cmath"
-
 void CoMLocation::init_location(Vector3d &_initial_location)
 {
 	last_CoM_location_ = _initial_location;
@@ -73,6 +71,7 @@ Vector3d CoMLocation::compute_location(Vector3d &_CoM_acceleration_measurements_
 	// Adequate inputs
 	uint32_t current_millis = millis();
 	double time_incr = static_cast<double>(current_millis - last_millis_)/1000.0;	// (s)
+	if (0.0 == time_incr) return last_CoM_location_;	// Avoid division by 0
 	Vector3d new_acc_measure_mms2_xyz;
 	new_acc_measure_mms2_xyz(0) = _CoM_acceleration_measurements_ms2_xyz(0)*1000.0;
 	new_acc_measure_mms2_xyz(1) = _CoM_acceleration_measurements_ms2_xyz(1)*1000.0;
