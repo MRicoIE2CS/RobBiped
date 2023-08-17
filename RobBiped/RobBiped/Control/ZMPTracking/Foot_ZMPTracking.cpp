@@ -20,17 +20,17 @@
 
 #include "../../Utils/Control/FunctionBocks.h"
 
-void Control::Foot_ZMPTracking::assoc_config(Configuration::Configs::Control::Foot_ZMPTracking_x& _config)
+void Control::Foot_ZMPTracking::assoc_config(Configuration::Configs::Control::ZMPTracking_x& _config)
 {
 	config_x_ = &_config;
 }
 
-void Control::Foot_ZMPTracking::assoc_config(Configuration::Configs::Control::Foot_ZMPTracking_y& _config)
+void Control::Foot_ZMPTracking::assoc_config(Configuration::Configs::Control::ZMPTracking_y& _config)
 {
 	config_y_ = &_config;
 }
 
-void Control::Foot_ZMPTracking::configure()
+void Control::Foot_ZMPTracking::configure(Foot _foot)
 {
 	conf_pid_x_ = &(config_x_->pid);
 	conf_pid_y_ = &(config_y_->pid);
@@ -38,7 +38,9 @@ void Control::Foot_ZMPTracking::configure()
 	conf_curve_x_ = &(config_x_->feedforward_curve);
 	conf_curve_y_ = &(config_y_->feedforward_curve);
 
-	conf_db_x_ = &(config_x_->deadband_compensation);
+	if (Foot::Left == _foot) conf_db_x_ = &(config_x_->leftfoot_deadband_compensation);
+	else if (Foot::Right == _foot) conf_db_x_ = &(config_x_->rightfoot_deadband_compensation);
+
 	conf_db_y_ = &(config_y_->deadband_compensation);
 
 	// Get Command singleton instance
@@ -76,13 +78,13 @@ Vector2d Control::Foot_ZMPTracking::compute(double& _x_zmp_feedback, double& _y_
 		// TODO: Prints for debug
 // 		double kp, ki, kd;
 // 		pid_.get_control_action_values(kp, ki, kd);
-// 		Serial.println("Action::: " + (String)output_rad + "\tKp = " + (String)kp + "\tKi = " + (String)ki + "\tKd = " + (String)kd);
+//		Serial.println("Action::: " + (String)output_rad + "\tKp = " + (String)kp + "\tKi = " + (String)ki + "\tKd = " + (String)kd);
 	}
 
-	if (!controller_x_on & command_->commands.zmp_xtracking_toggle) switch_y_on();
-	if (controller_x_on & command_->commands.zmp_xtracking_toggle) switch_x_off();
-	if (!controller_y_on & command_->commands.zmp_ytracking_toggle) switch_x_on();
-	if (controller_y_on & command_->commands.zmp_ytracking_toggle) switch_x_off();
+	if (!controller_x_on & command_->commands.zmp_xtracking_toggle) switch_x_on();
+	if (controller_x_on & !command_->commands.zmp_xtracking_toggle) switch_x_off();
+	if (!controller_y_on & command_->commands.zmp_ytracking_toggle) switch_y_on();
+	if (controller_y_on & !command_->commands.zmp_ytracking_toggle) switch_y_off();
 
 	if (controller_x_on)
 	{
@@ -99,18 +101,19 @@ Vector2d Control::Foot_ZMPTracking::compute(double& _x_zmp_feedback, double& _y_
 double Control::Foot_ZMPTracking::compute_x(double& _x_zmp_feedback)
 {
 	double branch1 = Control::custom_curve_interpolation(setpoint_x_mm_, conf_curve_x_->curve_points_x, conf_curve_x_->curve_points_y);
-	branch1 = Control::inverse_deadband(-(_x_zmp_feedback - conf_db_x_->db_delimiting_value), branch1, conf_db_x_->positive_db_compensation_rad, conf_db_x_->negative_db_compensation_rad);
+	double branch1_ = Control::inverse_deadband(-(setpoint_x_mm_ - conf_db_x_->db_delimiting_value), branch1, conf_db_x_->positive_db_compensation_rad, conf_db_x_->negative_db_compensation_rad);
 	
-	double branch2 = pid_x_.compute_output(setpoint_x_mm_, _x_zmp_feedback);
+	double branch2 = - pid_x_.compute_output(setpoint_x_mm_, _x_zmp_feedback);
 	
-	double out = branch1 + branch2;
+	double out = branch1_ + branch2;
+	//Serial.println("ZMPref_x, ZMPl, lAct, ZMPr, rAct: \t" + (String)setpoint_x_mm_ + "\t" + (String)_x_zmp_feedback + "\t" + (String)branch1 + "\t" + (String)branch1_ + "\t" + (String)branch2);
 	return out;
 }
 
 double Control::Foot_ZMPTracking::compute_y(double& _y_zmp_feedback)
 {
 	double branch1 = Control::custom_curve_interpolation(setpoint_y_mm_, conf_curve_y_->curve_points_x, conf_curve_y_->curve_points_y);
-	branch1 = Control::inverse_deadband(-(_y_zmp_feedback - conf_db_y_->db_delimiting_value), branch1, conf_db_y_->positive_db_compensation_rad, conf_db_y_->negative_db_compensation_rad);
+	branch1 = Control::inverse_deadband(-(setpoint_y_mm_ - conf_db_y_->db_delimiting_value), branch1, conf_db_y_->positive_db_compensation_rad, conf_db_y_->negative_db_compensation_rad);
 	
 	double branch2 = pid_y_.compute_output(setpoint_y_mm_, _y_zmp_feedback);
 	
