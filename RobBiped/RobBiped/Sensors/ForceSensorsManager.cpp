@@ -460,4 +460,5 @@ Vector2d ForceSensorsManager::get_global_ZMP()
 	Vector2d zmp;
 	zmp(0) = global_zmp_x_mm_;
 	zmp(1) = global_zmp_y_mm_;
+	return zmp;
 }
