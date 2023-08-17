@@ -28,12 +28,12 @@ void Executor::associations()
 	cm_tracking_controller_.assoc_config(config_.control.cm_tracking);
 	cm_tracking_controller_.assoc_globalkinematics(global_kinematics_);
 	cm_tracking_controller_.assoc_sensors(force_sensors_manager_);
-	left_foot_ZMP_tracking_controller_.assoc_config(config_.control.foot_x_zmp_tracking);
-	left_foot_ZMP_tracking_controller_.assoc_config(config_.control.foot_y_zmp_tracking);
-	left_foot_ZMP_tracking_controller_.configure();
-	right_foot_ZMP_tracking_controller_.assoc_config(config_.control.foot_x_zmp_tracking);
-	right_foot_ZMP_tracking_controller_.assoc_config(config_.control.foot_y_zmp_tracking);
-	right_foot_ZMP_tracking_controller_.configure();
+	left_foot_ZMP_tracking_controller_.assoc_config(config_.control.x_zmp_tracking);
+	left_foot_ZMP_tracking_controller_.assoc_config(config_.control.y_zmp_tracking);
+	left_foot_ZMP_tracking_controller_.configure(Control::Foot_ZMPTracking::Foot::Left);
+	right_foot_ZMP_tracking_controller_.assoc_config(config_.control.x_zmp_tracking);
+	right_foot_ZMP_tracking_controller_.assoc_config(config_.control.y_zmp_tracking);
+	right_foot_ZMP_tracking_controller_.configure(Control::Foot_ZMPTracking::Foot::Right);
 	torso_posture_controller_.assoc_config(config_.control.torso_posture);
 }
 
