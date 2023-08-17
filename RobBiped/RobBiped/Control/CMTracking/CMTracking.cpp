@@ -35,6 +35,9 @@ void Control::CMTracking::assoc_sensors(ForceSensorsManager &_force_sensors_mana
 
 void Control::CMTracking::init()
 {
+	// Get Command singleton instance
+	command_ = Command::get_instance();
+
 	Tra_x_ = config_->Tra_x;
 	Tra_y_ = config_->Tra_y;
 
@@ -200,6 +203,17 @@ Vector2d Control::CMTracking::compute_ZMP_setpoint()
 	// u computation
 	double u_x = (Tra_x_ * h_ / g_) * ((g_/h_) * vCM_est(0) + (g_/(Tra_x_*h_) * ZMP_med(0) - v_x));
 	double u_y = (Tra_y_ * h_ / g_) * ((g_/h_) * vCM_est(1) + (g_/(Tra_y_*h_) * ZMP_med(1) - v_y));
+
+	// TODO: Delete this nan check
+	if (isnan(u_x) || isnan(u_y) || isnan(vCM_est(0)) || isnan(vCM_est(1)) || isnan(ZMP_med(0)) || isnan(ZMP_med(1)))
+	{
+		Serial.print("ISNAN!!!!\t");
+		Serial.print(u_x);Serial.print("\t");Serial.print(u_y);Serial.print("\t");
+		Serial.print(CM_est(0));Serial.print("\t");Serial.print(CM_est(1));Serial.print("\t");
+		Serial.print(ZMP_med(0));Serial.print("\t");Serial.print(ZMP_med(1));Serial.print("\t");
+		Serial.print(vCM_est(0));Serial.print("\t");Serial.print(vCM_est(1));Serial.print("\t");
+		Serial.print(aCM_med(0));Serial.print("\t");Serial.print(aCM_med(1));Serial.print("\t");
+	}
 
 	control_action_(0) = u_x;
 	control_action_(1) = u_y;

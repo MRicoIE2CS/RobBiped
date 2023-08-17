@@ -30,6 +30,7 @@
 #include "../../Utils/Sources/PregeneratedTrajectory.h"
 
 using Eigen::Vector2d;
+using Eigen::Vector3d;
 
 namespace Control {
 
