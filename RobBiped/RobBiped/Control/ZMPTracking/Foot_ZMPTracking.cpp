@@ -36,12 +36,15 @@ void Control::Foot_ZMPTracking::configure(Foot _foot)
 	conf_pid_y_ = &(config_y_->pid);
 
 	conf_curve_x_ = &(config_x_->feedforward_curve);
-	conf_curve_y_ = &(config_y_->feedforward_curve);
+	if (Foot::Left == _foot) conf_curve_y_ = &(config_y_->left_feedforward_curve);
+	else if (Foot::Right == _foot) conf_curve_y_ = &(config_y_->right_feedforward_curve);
+	
 
 	if (Foot::Left == _foot) conf_db_x_ = &(config_x_->leftfoot_deadband_compensation);
 	else if (Foot::Right == _foot) conf_db_x_ = &(config_x_->rightfoot_deadband_compensation);
 
-	conf_db_y_ = &(config_y_->deadband_compensation);
+	if (Foot::Left == _foot) conf_db_y_ = &(config_y_->leftfoot_deadband_compensation);
+	else if (Foot::Right == _foot) conf_db_y_ = &(config_y_->rightfoot_deadband_compensation);
 
 	// Get Command singleton instance
 	command_ = Command::get_instance();
@@ -92,7 +95,7 @@ Vector2d Control::Foot_ZMPTracking::compute(double& _x_zmp_feedback, double& _y_
 	}
 	if (controller_y_on)
 	{
-		output_rad(1) = compute_y(_x_zmp_feedback);
+		output_rad(1) = compute_y(_y_zmp_feedback);
 	}
 
 	return output_rad;
@@ -113,9 +116,9 @@ double Control::Foot_ZMPTracking::compute_x(double& _x_zmp_feedback)
 double Control::Foot_ZMPTracking::compute_y(double& _y_zmp_feedback)
 {
 	double branch1 = Control::custom_curve_interpolation(setpoint_y_mm_, conf_curve_y_->curve_points_x, conf_curve_y_->curve_points_y);
-	branch1 = Control::inverse_deadband(-(_y_zmp_feedback - conf_db_y_->db_delimiting_value), branch1, conf_db_y_->positive_db_compensation_rad, conf_db_y_->negative_db_compensation_rad);
+	branch1 = Control::inverse_deadband(-(setpoint_y_mm_ - conf_db_y_->db_delimiting_value), branch1, conf_db_y_->positive_db_compensation_rad, conf_db_y_->negative_db_compensation_rad);
 	
-	double branch2 = pid_y_.compute_output(setpoint_y_mm_, _y_zmp_feedback);
+	double branch2 = - pid_y_.compute_output(setpoint_y_mm_, _y_zmp_feedback);
 	
 	double out = branch1 + branch2;
 	return out;
