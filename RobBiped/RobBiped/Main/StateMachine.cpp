@@ -384,6 +384,12 @@ void Executor::state10_execution()
 
 		// Compute CM tracking control: The output is the ZMP setpoint
 		Vector2d ZMP_ref_xy = cm_tracking_controller_.compute_ZMP_setpoint();
+		
+// This commented lines avoid the CM stabilization computation, and allows setting a ZMP reference to track from the potentiometer2 signal.
+// Potentiometer value sets the ZMP setpoint in Double Support Phase, along the X-axis
+double potentiometer_value2 = some_exp_filter_2_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer2) / 4095.0);
+// Desired CM position
+ZMP_ref_xy(0) = -config_.force_sensors.location_mm.frontBack_separation/2.0 + config_.force_sensors.location_mm.frontBack_separation * potentiometer_value2;
 
 		// Apply new ZMP setpoint for X-axis ZMP tracking controllers
 		left_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
@@ -391,7 +397,7 @@ void Executor::state10_execution()
 
 		// Get local ZMP measurements
 		Vector2d current_left_ZMP = force_sensors_manager_.get_values_ZMP_LeftFoot();
-		Vector2d current_right_ZMP = force_sensors_manager_.get_values_ZMP_LeftFoot();
+		Vector2d current_right_ZMP = force_sensors_manager_.get_values_ZMP_RightFoot();
 
 		// Compute ZMP tracking control: The output is the increment no the setpoint angles for ankle joints
 		Vector2d left_foot_ZMP_tracking_action = left_foot_ZMP_tracking_controller_.compute(current_left_ZMP(0), current_left_ZMP(1));
