@@ -34,7 +34,7 @@ void JointsManager::joints_config(){
 	jointInitializer.invert_angle_sign(false);
 	jointInitializer.calibration_set_zero(false, -0.3);
 	jointInitializer.calibration_set_min_angle(false, -1.0);
-	jointInitializer.calibration_set_max_angle(false, 0.8);
+	jointInitializer.calibration_set_max_angle(false, 1.57);
 	PCA9685_1_servo_map_[1] = jointInitializer;
 
 // LEFT KNEE
@@ -112,7 +112,7 @@ void JointsManager::joints_config(){
 	jointInitializer.invert_angle_sign(true);
 	jointInitializer.calibration_set_zero(false, 0.2);
 	jointInitializer.calibration_set_min_angle(false, -1);
-	jointInitializer.calibration_set_max_angle(false, 0.8);
+	jointInitializer.calibration_set_max_angle(false, 1.57);
 	PCA9685_1_servo_map_[14] = jointInitializer;
 //RIGHT FOOT - ROLL
 	jointInitializer.invert_angle_sign(true);
