@@ -118,6 +118,10 @@ void Command::listen_for_commands()
 			if (commands.test_x_balance_toggle) commands.test_x_balance_toggle = false;
 			else commands.test_x_balance_toggle = true;
 		}
+		else if (command.equals("show.servo.limits")){
+			if (commands.show_alarm_angle_limit) commands.show_alarm_angle_limit = false;
+			else commands.show_alarm_angle_limit = true;
+		}
 		else if (command.equals("off"))
 		{
 		}

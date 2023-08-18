@@ -60,6 +60,7 @@ struct Command
 		bool application_toggle = false;
 		bool get_up_toggle = false;
 		bool test_x_balance_toggle = false;
+		bool show_alarm_angle_limit = false;
 	}commands;
 	
 private:
