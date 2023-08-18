@@ -360,12 +360,6 @@ void Executor::state10_execution()
 		double right_roll_angle;
 		global_kinematics_.get_computed_angles(left_roll_angle, right_roll_angle);
 
-		// Apply roll angle setpoints
-		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, left_roll_angle);//global_kinematics_.compensate_hip_roll_angle(left_roll_angle));
-		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -right_roll_angle);//global_kinematics_.compensate_hip_roll_angle(right_roll_angle));
-		bool ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, -left_roll_angle);
-		bool ret_val4 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, right_roll_angle);
-
 		// Get desired leg lengths computed from DSP kinematics
 		double left_leg_length;
 		double right_leg_length;
@@ -389,11 +383,16 @@ void Executor::state10_execution()
 // Potentiometer value sets the ZMP setpoint in Double Support Phase, along the X-axis
 double potentiometer_value2 = some_exp_filter_2_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer2) / 4095.0);
 // Desired CM position
-ZMP_ref_xy(0) = -config_.force_sensors.location_mm.frontBack_separation/2.0 + config_.force_sensors.location_mm.frontBack_separation * potentiometer_value2;
+//ZMP_ref_xy(0) = -config_.force_sensors.location_mm.frontBack_separation/2.0 + config_.force_sensors.location_mm.frontBack_separation * potentiometer_value2;
+ZMP_ref_xy(1) = -config_.force_sensors.location_mm.leftRight_separation/2.0 + config_.force_sensors.location_mm.leftRight_separation * potentiometer_value2;
 
 		// Apply new ZMP setpoint for X-axis ZMP tracking controllers
 		left_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
 		right_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
+
+		// Apply new ZMP setpoint for X-axis ZMP tracking controllers
+		left_foot_ZMP_tracking_controller_.set_setpoint_y_mm(ZMP_ref_xy(1));
+		right_foot_ZMP_tracking_controller_.set_setpoint_y_mm(ZMP_ref_xy(1));
 
 		// Get local ZMP measurements
 		Vector2d current_left_ZMP = force_sensors_manager_.get_values_ZMP_LeftFoot();
@@ -402,6 +401,12 @@ ZMP_ref_xy(0) = -config_.force_sensors.location_mm.frontBack_separation/2.0 + co
 		// Compute ZMP tracking control: The output is the increment no the setpoint angles for ankle joints
 		Vector2d left_foot_ZMP_tracking_action = left_foot_ZMP_tracking_controller_.compute(current_left_ZMP(0), current_left_ZMP(1));
 		Vector2d right_foot_ZMP_tracking_action = right_foot_ZMP_tracking_controller_.compute(current_right_ZMP(0), current_right_ZMP(1));
+
+		// Apply roll angle setpoints
+		bool ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftHipRoll, left_roll_angle);
+		bool ret_val2 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipRoll, -right_roll_angle);
+		bool ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootRoll, -left_roll_angle + left_foot_ZMP_tracking_action(1));
+		bool ret_val4 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightFootRoll, right_roll_angle + right_foot_ZMP_tracking_action(1));
 
 		// Apply left leg's pitch angle setpoints
 		ret_val1 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::LeftFootPitch, ankle_pitch_angle + left_foot_ZMP_tracking_action(0));
@@ -414,7 +419,8 @@ ZMP_ref_xy(0) = -config_.force_sensors.location_mm.frontBack_separation/2.0 + co
 		ret_val3 = servo_updater_.set_angle_to_joint(Configuration::JointsNames::RightHipPitch, hip_pitch_angle + torso_upright_pitch_control_action);
 
 // DEBUG
-Serial.println("ZMPref_x, ZMPl, lAct, ZMPr, rAct: \t" + (String)ZMP_ref_xy(0) + "\t" + (String)current_left_ZMP(0) + "\t" + (String)left_foot_ZMP_tracking_action(0) + "\t" + (String)current_right_ZMP(0) + "\t" + (String)right_foot_ZMP_tracking_action(0));
+//Serial.println("ZMPref_x, ZMPl, lAct, ZMPr, rAct: \t" + (String)ZMP_ref_xy(0) + "\t" + (String)current_left_ZMP(0) + "\t" + (String)left_foot_ZMP_tracking_action(0) + "\t" + (String)current_right_ZMP(0) + "\t" + (String)right_foot_ZMP_tracking_action(0));
+Serial.println("ZMPref_x, ZMPl, lAct, ZMPr, rAct: \t" + (String)ZMP_ref_xy(1) + "\t" + (String)current_left_ZMP(1) + "\t" + (String)left_foot_ZMP_tracking_action(1) + "\t" + (String)current_right_ZMP(1) + "\t" + (String)right_foot_ZMP_tracking_action(1));
 
 		// Set flag to send servo setpoints
 		servo_updater_.should_be_updated = true;
