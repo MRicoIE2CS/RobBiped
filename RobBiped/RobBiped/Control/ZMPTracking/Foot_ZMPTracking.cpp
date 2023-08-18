@@ -113,7 +113,7 @@ double Control::Foot_ZMPTracking::compute_x(double& _x_zmp_feedback)
 double Control::Foot_ZMPTracking::compute_y(double& _y_zmp_feedback)
 {
 	double branch1 = Control::custom_curve_interpolation(setpoint_y_mm_, conf_curve_y_->curve_points_x, conf_curve_y_->curve_points_y);
-	branch1 = Control::inverse_deadband(-(setpoint_y_mm_ - conf_db_y_->db_delimiting_value), branch1, conf_db_y_->positive_db_compensation_rad, conf_db_y_->negative_db_compensation_rad);
+	branch1 = Control::inverse_deadband(-(_y_zmp_feedback - conf_db_y_->db_delimiting_value), branch1, conf_db_y_->positive_db_compensation_rad, conf_db_y_->negative_db_compensation_rad);
 	
 	double branch2 = pid_y_.compute_output(setpoint_y_mm_, _y_zmp_feedback);
 	
