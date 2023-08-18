@@ -81,7 +81,8 @@ class Executor {
 		bool state2_finished = false;
 		void state2_execution();
 
-		// State for the X-balance test, with potentiometer manually controlling lateral DSP movement
+		// X-balance test, with potentiometer manually controlling lateral DSP movement
+		// "xbalance", "zmptrx", "torso.on"
 		bool state10_first_time = true;
 		bool state10_finished = false;
 		void state10_execution();

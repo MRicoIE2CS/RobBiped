@@ -103,14 +103,14 @@ struct Configs
 	struct Control {
 
 		struct CMTracking {
-			String CM_path_y_filename = "/CM_y.txt";
-			String dCM_path_y_filename = "/dCM_y.txt";
-			String ddCM_path_y_filename = "/ddCM_y.txt";
-			String dddCM_path_y_filename = "/ddCM_y.txt";
-			String CM_path_x_filename = "/CM_x.txt";
-			String dCM_path_x_filename = "/dCM_x.txt";
-			String ddCM_path_x_filename = "/ddCM_x.txt";
-			String dddCM_path_x_filename = "/ddCM_x.txt";
+			String CM_path_y_filename = "/y_com_ref.txt";
+			String dCM_path_y_filename = "/dy_com_ref.txt";
+			String ddCM_path_y_filename = "/ddy_com_ref.txt";
+			String dddCM_path_y_filename = "/dddy_com_ref.txt";
+			String CM_path_x_filename = "/x_com_ref.txt";
+			String dCM_path_x_filename = "/dx_com_ref.txt";
+			String ddCM_path_x_filename = "/ddx_com_ref.txt";
+			String dddCM_path_x_filename = "/dddx_com_ref.txt";
 			uint32_t paths_sampletime_ms = 10;
 			double Tra_x = 0.001;	// Rising time of ZMP actuation dynamics
 			double Tra_y = 0.001;	// Rising time of ZMP actuation dynamics
@@ -145,7 +145,7 @@ struct Configs
 		struct ZMPTracking_x {
 			struct FeedforwardCurve {
 				std::vector<double> curve_points_x = { -55, -45, 45, 55 };
-				std::vector<double> curve_points_y = { 0.2, 0.05, -0.05, -0.1 };//{ 0.3, 0.1, -0.05, -0.2 };//{ 0.1, 0.05, -0.05, -0.1 };
+				std::vector<double> curve_points_y = { 0.2, 0.1, -0.1, -0.2 };//{ 0.2, 0.05, -0.05, -0.1 };//{ 0.3, 0.1, -0.05, -0.2 };//{ 0.1, 0.05, -0.05, -0.1 };
 				}feedforward_curve;
 			struct DeadbandCompensation {
 				// Limiting value at which desired ZMP requires negative or positive DB compensation
@@ -153,10 +153,10 @@ struct Configs
 				double negative_db_compensation_rad;
 				double positive_db_compensation_rad;
 				};
-			DeadbandCompensation leftfoot_deadband_compensation = { 0.0, 0.05, 0.1 };//{ 0.0, 0.075, 0.225 };
-			DeadbandCompensation rightfoot_deadband_compensation = { 0.0, 0.05, 0.1 };//{ 0.0, 0.075, 0.225 };
+			DeadbandCompensation leftfoot_deadband_compensation = { 0.0, 0.05, 0.07 };//{ 0.0, 0.075, 0.225 };
+			DeadbandCompensation rightfoot_deadband_compensation = { 0.0, 0.05, 0.07 };//{ 0.0, 0.075, 0.225 };
 			struct PID {
-				double kp = 0.0;//0.001;
+				double kp = 0.002;//0.0005;
 				double ki = 0.0;
 				double kd = 0.0;
 				// Anti-windup constant
