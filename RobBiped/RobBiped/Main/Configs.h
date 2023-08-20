@@ -103,6 +103,8 @@ struct Configs
 	struct Control {
 
 		struct CMTracking {
+			// WARNING! The limit of memory allocation is 160KB!
+			// Keep these files light.
 			String CM_path_y_filename = "/y_com_ref.txt";
 			String dCM_path_y_filename = "/dy_com_ref.txt";
 			String ddCM_path_y_filename = "/ddy_com_ref.txt";
@@ -114,9 +116,10 @@ struct Configs
 			uint32_t paths_sampletime_ms = 10;
 			double Tra_x = 0.005;	// Rising time of ZMP actuation dynamics
 			double Tra_y = 0.005;	// Rising time of ZMP actuation dynamics
-			double d0_x = 1;
-			double d1_x = 1;
-			double d2_x = 1;
+			// dx: [ 10, 160, 60] for Tra_x=0.005
+			double d0_x = 10;
+			double d1_x = 160;
+			double d2_x = 60;
 			double d0_y = 1;
 			double d1_y = 1;
 			double d2_y = 1;
@@ -124,7 +127,7 @@ struct Configs
 
 		struct TorsoPosture {
 			// PID constants
-			double kp = 0.4;
+			double kp = 0.0;
 			double ki = 0.0;
 			double kd = 0.0;//0.1;//0.25;
 			// Anti-windup constant
