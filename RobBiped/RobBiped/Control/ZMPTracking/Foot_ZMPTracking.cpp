@@ -64,12 +64,12 @@ void Control::Foot_ZMPTracking::configure(Foot _foot)
 	pid_y_.set_setpoint_weighting(conf_pid_y_->proportional_setpoint_weight, conf_pid_y_->derivative_setpoint_weight);
 }
 
-void Control::Foot_ZMPTracking::set_setpoint_x_mm(double& _desired_zmp_lateral_deviation_mm)
+void Control::Foot_ZMPTracking::set_setpoint_x_mm(double _desired_zmp_lateral_deviation_mm)
 {
 	setpoint_x_mm_ = _desired_zmp_lateral_deviation_mm;
 }
 
-void Control::Foot_ZMPTracking::set_setpoint_y_mm(double& _desired_zmp_lateral_deviation_mm)
+void Control::Foot_ZMPTracking::set_setpoint_y_mm(double _desired_zmp_lateral_deviation_mm)
 {
 	setpoint_y_mm_ = _desired_zmp_lateral_deviation_mm;
 }
