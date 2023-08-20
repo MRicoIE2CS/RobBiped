@@ -124,7 +124,7 @@ double Control::PID::compute_output(const double& _setpoint, const double& _feed
 	if (apply_saturation_) saturation(sum, lower_limit_, upper_limit_, _output);
 
 	// Deadband compensation
-	sum = apply_inverse_deadband(_sign_of_deadband, sum);
+	_output = apply_inverse_deadband(_sign_of_deadband, _output);
 
 	// Memory update
 	last_millis_computation = current_millis_computation;
