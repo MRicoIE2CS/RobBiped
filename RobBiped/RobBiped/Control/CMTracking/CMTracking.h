@@ -74,6 +74,9 @@ class CMTracking
 
 		void start_trajectories();
 
+		// Warning: Calling get_reference_signals() with Mode::OnlineReference, without having previously called init() method,
+		// will cause an unhandled exception
+		// TODO: Handle the exception
 		void get_reference_signals(Vector2d &_CM_ref, Vector2d &_vCM_ref, Vector2d &_aCM_ref, Vector2d &_jCM_ref);
 		void get_feedback_signals(Vector2d &_CM_est, Vector2d &_vCM_est, Vector2d &_aCM_med, Vector2d &_ZMP_med);
 

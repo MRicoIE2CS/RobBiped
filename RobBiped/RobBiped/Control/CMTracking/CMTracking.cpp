@@ -119,6 +119,10 @@ void Control::CMTracking::start_trajectories()
 
 void Control::CMTracking::get_reference_signals(Vector2d &_CM_ref, Vector2d &_vCM_ref, Vector2d &_aCM_ref, Vector2d &_jCM_ref)
 {
+	// Warning: Calling this method with Mode::OnlineReference, without having previously called init() method,
+	// will cause an unhandled exception
+	// TODO: Handle the exception.
+
 	if (mode_x_ == Mode::OfflineReference)
 	{
 		_CM_ref(0) = CM_path_x_.get_value();
