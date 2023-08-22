@@ -65,6 +65,7 @@ struct Configs
 		double calibration_RightFoot_LeftBack_cell = 0.048;
 		double calibration_RightFoot_RightBack_cell = 0.048;
 		struct Location {
+			// Warning: This dimentions should be the same as the ones defined in Configs::kinematics.feet_dimensions
 			int16_t frontBack_separation = 115; //103;
 			int16_t leftRight_separation = 60; //37;
 			}location_mm;
@@ -101,6 +102,11 @@ struct Configs
 		// Hip height limits
 		double limit_up_hip_height = 300;
 		double limit_down_hip_height = 235;
+		struct FeetDimensions {
+			// Warning: This dimentions should be the same as the ones defined in Configs::force_sensors.location_mm
+			int16_t frontBack_separation = 115;
+			int16_t leftRight_separation = 60;
+			}feet_dimensions;
 		}kinematics;
 
 	struct Control {

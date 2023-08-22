@@ -22,6 +22,7 @@
 #include "Arduino.h"
 
 #include "CoM_location.h"
+//#include "WalkingPhasesManager.h"
 #include "../Main/Configs.h"
 #include "../Main/I_PeriodicTask.h"
 #include "../Utils/Kinematics/InverseKinematicsBlocks/LegLength_IK.h"
@@ -36,14 +37,13 @@ class ForceSensorsManager;
 class GyroscopeAccelerometerManager;
 
 class GlobalKinematics : public I_PeriodicTask {
-
 	public:
 		// Walking phases:
 		// DSP_left -> DSP and leaning weight towards the left foot (moving to the left)
 		// DSP_right -> DSP and leaning weight towards the right foot (moving to the right)
 		// SSP_left -> SSP with weight on the left foot
 		// SSP_right -> SSP with weight on the right foot
-		enum class PosePhases {DSP_left = 0, DSP_right = 1, SSP_left = 2, SSP_right = 3 };
+		enum class WalkingPhase {DSP_left = 0, DSP_right = 1, SSP_left = 2, SSP_right = 3 };
 
 	private:
 
@@ -55,7 +55,8 @@ class GlobalKinematics : public I_PeriodicTask {
 		GyroscopeAccelerometerManager *gyroscope_accelerometer_manager_;
 
 		// Phase
-		PosePhases phase_;
+		//WalkingPhasesManager phases_manager_;
+		WalkingPhase phase_;
 
 		// Defined desired hip height
 		double desired_hip_height_;
@@ -87,14 +88,24 @@ class GlobalKinematics : public I_PeriodicTask {
 		// These lengths include all length of the leg, without foot roll joint height (from hip roll joint to foot roll joint)
 		double left_leg_length_setpoint_, right_leg_length_setpoint_;
 
+		// Flag that enables the automatic change of biped walking phases
+		bool enable_biped_walking_ = false;
+		// Check whether global ZMP is over left footprint
+		bool is_zmp_over_left_footprint();
+		// Check whether global ZMP is over right footprint
+		bool is_zmp_over_right_footprint();
+		// Flags to know if any foot have been lifted during SSP
+		bool has_left_foot_been_lifted = false;
+		bool has_right_foot_been_lifted = false;
+		// Flag for if there has been a phase change within this execution period
+		bool has_there_been_a_phase_change_ = false;
+
 	public:
 
 		void assoc_config(Configuration::Configs::Kinematics &_config);
 		void assoc_sensors(ForceSensorsManager &_force_sensors_manager, GyroscopeAccelerometerManager &_gyroscope_accelerometer_manager);
 
-		void init(double _centerof_right_foot, PosePhases _phase, double _desired_hip_height, double _desired_step_width);
-
-		PosePhases get_walking_phase();
+		void init(double _centerof_right_foot, WalkingPhase _phase, double _desired_hip_height, double _desired_step_width);
 
 		// Sets desired hip height
 		bool set_desired_hip_height(double _desired_hip_height);
@@ -147,6 +158,15 @@ class GlobalKinematics : public I_PeriodicTask {
 		Vector3d get_CoM_velocity();
 		// Returns the CoM acceleration
 		Vector3d get_CoM_acceleration();
+
+		// Enables the automatic change of walking phases
+		bool enable_biped_walking();
+		// Checks whether to change the walking phase between DSP and SSP
+		bool check_walking_phase();
+		// Returns the current walking phase
+		WalkingPhase get_current_walking_phase();
+		// Returns true if there has been a phase change within this execution period
+		bool has_there_been_a_phase_change();
 	};
 
 #endif

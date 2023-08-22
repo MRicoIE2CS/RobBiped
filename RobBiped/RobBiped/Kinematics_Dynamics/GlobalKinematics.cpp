@@ -33,7 +33,7 @@ void GlobalKinematics::assoc_sensors(ForceSensorsManager &_force_sensors_manager
 	gyroscope_accelerometer_manager_ = &_gyroscope_accelerometer_manager;
 }
 
-void GlobalKinematics::init(double _centerof_right_foot, PosePhases _phase, double _desired_hip_height, double _desired_step_width)
+void GlobalKinematics::init(double _centerof_right_foot, WalkingPhase _phase, double _desired_hip_height, double _desired_step_width)
 {
 	right_foot_center_y_ = _centerof_right_foot;
 	left_foot_center_y_ = right_foot_center_y_ + _desired_step_width;
@@ -83,11 +83,6 @@ void GlobalKinematics::compute_lateral_DSP_home_kinematics()
 	home_roll_angle_ = atan2( (desired_step_width_ - config_->d_hip_width) / 2.0 , (desired_hip_height_ - config_->height_foot) );
 
 	home_leg_length_ = (desired_hip_height_ - config_->height_foot) / (cos(home_roll_angle_));
-}
-
-GlobalKinematics::PosePhases GlobalKinematics::get_walking_phase()
-{
-	return phase_;
 }
 
 double GlobalKinematics::get_home_roll_angle()
@@ -268,11 +263,7 @@ Vector3d GlobalKinematics::compute_CoM_location()
 
 	Vector3d CoM_corrected_accelerations = correct_acceleration_inclination(CoM_measured_accelerations, inclination);
 
-	double x_zmp, y_zmp;
-	force_sensors_manager_->get_global_ZMP(x_zmp, y_zmp);
-	Vector2d ZMP_location;
-	ZMP_location(0) = x_zmp;
-	ZMP_location(1) = y_zmp;
+	Vector2d ZMP_location = force_sensors_manager_->get_global_ZMP();
 
 	Vector3d CoM_location;
 	CoM_location = CoM_location_.compute_location(CoM_corrected_accelerations, ZMP_location);
@@ -299,4 +290,99 @@ Vector3d GlobalKinematics::get_CoM_velocity()
 Vector3d GlobalKinematics::get_CoM_acceleration()
 {
 	return CoM_location_.get_acceleration();
+}
+
+bool GlobalKinematics::enable_biped_walking()
+{
+	return enable_biped_walking_;
+}
+
+bool GlobalKinematics::check_walking_phase()
+{
+	has_there_been_a_phase_change_ = false;
+
+	if (WalkingPhase::DSP_left == phase_)
+	{
+		bool transition_condition = is_zmp_over_left_footprint();
+		if (transition_condition)
+		{
+			phase_ = WalkingPhase::SSP_left;
+			has_right_foot_been_lifted = false;
+			has_there_been_a_phase_change_ = true;
+		}
+	}
+	else if (WalkingPhase::DSP_right == phase_)
+	{
+		bool transition_condition = is_zmp_over_right_footprint();
+		if (transition_condition)
+		{
+			phase_ = WalkingPhase::SSP_right;
+			has_left_foot_been_lifted = false;
+			has_there_been_a_phase_change_ = true;
+		}
+	}
+	else if (WalkingPhase::SSP_left == phase_)
+	{
+		if (!has_right_foot_been_lifted) has_right_foot_been_lifted = !force_sensors_manager_->is_right_foot_touching_ground();
+
+		bool transition_condition = has_right_foot_been_lifted && force_sensors_manager_->is_right_foot_touching_ground();
+		if (transition_condition)
+		{
+			phase_ = WalkingPhase::DSP_right;
+			has_there_been_a_phase_change_ = true;
+		}
+	}
+	else if (WalkingPhase::SSP_right == phase_)
+	{
+		if (!has_left_foot_been_lifted) has_left_foot_been_lifted = !force_sensors_manager_->is_left_foot_touching_ground();
+
+		bool transition_condition = has_left_foot_been_lifted && force_sensors_manager_->is_left_foot_touching_ground();
+		if (transition_condition)
+		{
+			phase_ = WalkingPhase::DSP_left;
+			has_there_been_a_phase_change_ = true;
+		}
+	}
+
+	return has_there_been_a_phase_change_;
+}
+
+GlobalKinematics::WalkingPhase GlobalKinematics::get_current_walking_phase()
+{
+	return phase_;
+}
+
+bool GlobalKinematics::is_zmp_over_left_footprint()
+{
+	Vector2d ZMP_location = force_sensors_manager_->get_global_ZMP();
+	
+	double limit_x_min = left_foot_center_x_ - (config_->feet_dimensions.frontBack_separation / 2);
+	double limit_x_max = left_foot_center_x_ + (config_->feet_dimensions.frontBack_separation / 2);
+
+	bool within_x_limits = (ZMP_location(0) > limit_x_min) && (ZMP_location(0) < limit_x_max);
+
+	double limit_y_min = left_foot_center_y_ - (config_->feet_dimensions.leftRight_separation / 2);
+	double limit_y_max = left_foot_center_y_ + (config_->feet_dimensions.leftRight_separation / 2);
+
+	bool within_y_limits = (ZMP_location(1) > limit_y_min) && (ZMP_location(1) < limit_y_max);
+
+	return within_x_limits && within_y_limits;
+}
+
+bool GlobalKinematics::is_zmp_over_right_footprint()
+{
+	Vector2d ZMP_location = force_sensors_manager_->get_global_ZMP();
+	
+	double limit_x_min = right_foot_center_x_ - (config_->feet_dimensions.frontBack_separation / 2);
+	double limit_x_max = right_foot_center_x_ + (config_->feet_dimensions.frontBack_separation / 2);
+
+	bool within_x_limits = (ZMP_location(0) > limit_x_min) && (ZMP_location(0) < limit_x_max);
+
+	double limit_y_min = right_foot_center_y_ - (config_->feet_dimensions.leftRight_separation / 2);
+	double limit_y_max = right_foot_center_y_ + (config_->feet_dimensions.leftRight_separation / 2);
+
+	bool within_y_limits = (ZMP_location(1) > limit_y_min) && (ZMP_location(1) < limit_y_max);
+
+	
+	return within_x_limits && within_y_limits;
 }
