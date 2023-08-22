@@ -107,7 +107,7 @@ class Executor {
 
 		// Kinematic objects and definitions
 		double right_foot_center_ = 0.0;
-		GlobalKinematics::WalkingPhase initial_phase_ = GlobalKinematics::WalkingPhase::DSP_right;
+		GlobalKinematics::WalkingPhase initial_phase_ = GlobalKinematics::WalkingPhase::DSP_left;
 		// Defined desired hip height
 		double desired_hip_height_ = 260.0;
 		// Defined desired step width

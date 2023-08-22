@@ -292,11 +292,6 @@ Vector3d GlobalKinematics::get_CoM_acceleration()
 	return CoM_location_.get_acceleration();
 }
 
-bool GlobalKinematics::enable_biped_walking()
-{
-	return enable_biped_walking_;
-}
-
 bool GlobalKinematics::check_walking_phase()
 {
 	has_there_been_a_phase_change_ = false;
@@ -329,6 +324,7 @@ bool GlobalKinematics::check_walking_phase()
 		if (transition_condition)
 		{
 			phase_ = WalkingPhase::DSP_right;
+			has_right_foot_been_lifted = false
 			has_there_been_a_phase_change_ = true;
 		}
 	}
@@ -340,6 +336,7 @@ bool GlobalKinematics::check_walking_phase()
 		if (transition_condition)
 		{
 			phase_ = WalkingPhase::DSP_left;
+			has_left_foot_been_lifted = false;
 			has_there_been_a_phase_change_ = true;
 		}
 	}
@@ -350,6 +347,34 @@ bool GlobalKinematics::check_walking_phase()
 GlobalKinematics::WalkingPhase GlobalKinematics::get_current_walking_phase()
 {
 	return phase_;
+}
+
+void GlobalKinematics::force_current_walking_phase(WalkingPhase _phase)
+{
+	if (WalkingPhase::DSP_left == _phase)
+	{
+		phase_ = WalkingPhase::DSP_left;
+		has_left_foot_been_lifted = false;
+		has_there_been_a_phase_change_ = true;
+	}
+	else if (WalkingPhase::DSP_right == _phase)
+	{
+		has_right_foot_been_lifted = false
+		phase_ = WalkingPhase::DSP_right;
+		has_there_been_a_phase_change_ = true;
+	}
+	else if (WalkingPhase::SSP_left == _phase)
+	{
+		phase_ = WalkingPhase::SSP_left;
+		has_right_foot_been_lifted = false;
+		has_there_been_a_phase_change_ = true;
+	}
+	else if (WalkingPhase::SSP_right == _phase)
+	{
+		phase_ = WalkingPhase::SSP_right;
+		has_left_foot_been_lifted = false;
+		has_there_been_a_phase_change_ = true;
+	}
 }
 
 bool GlobalKinematics::is_zmp_over_left_footprint()

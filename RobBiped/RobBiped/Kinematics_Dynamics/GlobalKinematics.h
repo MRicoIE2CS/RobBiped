@@ -88,8 +88,6 @@ class GlobalKinematics : public I_PeriodicTask {
 		// These lengths include all length of the leg, without foot roll joint height (from hip roll joint to foot roll joint)
 		double left_leg_length_setpoint_, right_leg_length_setpoint_;
 
-		// Flag that enables the automatic change of biped walking phases
-		bool enable_biped_walking_ = false;
 		// Check whether global ZMP is over left footprint
 		bool is_zmp_over_left_footprint();
 		// Check whether global ZMP is over right footprint
@@ -159,12 +157,12 @@ class GlobalKinematics : public I_PeriodicTask {
 		// Returns the CoM acceleration
 		Vector3d get_CoM_acceleration();
 
-		// Enables the automatic change of walking phases
-		bool enable_biped_walking();
 		// Checks whether to change the walking phase between DSP and SSP
 		bool check_walking_phase();
 		// Returns the current walking phase
 		WalkingPhase get_current_walking_phase();
+		// Sets the current walking phase
+		void force_current_walking_phase(WalkingPhase _phase);
 		// Returns true if there has been a phase change within this execution period
 		bool has_there_been_a_phase_change();
 	};
