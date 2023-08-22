@@ -61,7 +61,7 @@ struct Command
 		bool get_up_toggle = false;
 		bool test_x_balance_toggle = false;
 		bool test_y_offline_tracking_toggle = false;
-		bool show_alarm_angle_limit = false;
+		bool show_alarm_angle_limit = true;				// True by default!
 	}commands;
 	
 private:
