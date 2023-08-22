@@ -324,7 +324,7 @@ bool GlobalKinematics::check_walking_phase()
 		if (transition_condition)
 		{
 			phase_ = WalkingPhase::DSP_right;
-			has_right_foot_been_lifted = false
+			has_right_foot_been_lifted = false;
 			has_there_been_a_phase_change_ = true;
 		}
 	}
@@ -359,7 +359,7 @@ void GlobalKinematics::force_current_walking_phase(WalkingPhase _phase)
 	}
 	else if (WalkingPhase::DSP_right == _phase)
 	{
-		has_right_foot_been_lifted = false
+		has_right_foot_been_lifted = false;
 		phase_ = WalkingPhase::DSP_right;
 		has_there_been_a_phase_change_ = true;
 	}

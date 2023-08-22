@@ -94,6 +94,12 @@ class Executor {
 		bool state20_finished = false;
 		void state20_execution();
 
+		// State30: Test: Y offline trajectory tracking with walking phases change
+		// ""
+		bool state30_first_time = true;
+		bool state30_finished = false;
+		void state30_execution();
+
 		// Other state machine flags
 		bool application_on = false;
 		bool get_up = false;
