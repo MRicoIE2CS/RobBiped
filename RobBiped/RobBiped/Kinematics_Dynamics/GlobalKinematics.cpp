@@ -49,10 +49,27 @@ void GlobalKinematics::init(double _centerof_right_foot, PosePhases _phase, doub
 	compute_lateral_DSP_home_kinematics();
 }
 
-void GlobalKinematics::set_desired_hip_height(double _desired_hip_height)
+bool GlobalKinematics::set_desired_hip_height(double _desired_hip_height)
 {
-	desired_hip_height_ = _desired_hip_height;
-	CoM_location_.set_CoM_height(desired_hip_height_ - config_->height_CM_from_hip);
+	// Limit for hip heigth
+	bool retcode_OK = true;
+	double desired_hip_height = _desired_hip_height;
+	if (_desired_hip_height < config_->limit_down_hip_height)
+	{
+		Serial.println("GlobalKinematics: Lower Limit for hip height!");
+		desired_hip_height = config_->limit_down_hip_height;
+		retcode_OK = false;
+	}
+	else if (_desired_hip_height > config_->limit_up_hip_height)
+	{
+		Serial.println("GlobalKinematics: Upper Limit for hip height!");
+		desired_hip_height = config_->limit_up_hip_height;
+		retcode_OK = false;
+	}
+	desired_hip_height_ = desired_hip_height;
+
+	CoM_location_.set_CoM_height(desired_hip_height_ + config_->height_CM_from_hip);
+	return retcode_OK;
 }
 
 void GlobalKinematics::set_desired_step_width(double _desired_step_width)
@@ -88,13 +105,15 @@ double GlobalKinematics::get_step_width()
 	return desired_step_width_;
 }
 
-bool GlobalKinematics::compute_lateral_DSP_kinematics(const double &_desired_hip_center_position)
+bool GlobalKinematics::compute_lateral_DSP_kinematics(const double _desired_hip_center_position)
 {
 	if (_desired_hip_center_position < right_foot_center_y_
 		|| _desired_hip_center_position > left_foot_center_y_)
 	{
 		return false;
 	}
+
+	// TODO: Verification to avoid non reachable postures, depending on configuration, desired hip height and desired step width
 
 	right_foot_roll_setpoint_ = atan2( (_desired_hip_center_position - right_foot_center_y_ - config_->d_hip_width / 2.0) ,
 										(desired_hip_height_ - config_->height_foot) );
@@ -119,25 +138,61 @@ void GlobalKinematics::get_computed_leg_lengths(double &_left_leg_length_setpoin
 	_right_leg_length_setpoint = right_leg_length_setpoint_;
 }
 
-bool GlobalKinematics::get_joint_angles_for_leg_length(const double &_desired_prismatic_length, const double &_desired_forward_inclination_angle,
+bool GlobalKinematics::get_computed_prismatic_lengths(double &_left_prismatic_length_setpoint, double &_right_prismatic_length_setpoint)
+{
+	bool retcode1 = get_prismatic_lenght(left_leg_length_setpoint_, _left_prismatic_length_setpoint);
+	bool retcode2 = get_prismatic_lenght(right_leg_length_setpoint_, _right_prismatic_length_setpoint);
+	if (retcode1 && retcode2) return true;
+	else return false;
+}
+
+bool GlobalKinematics::get_prismatic_lenght(const double &_desired_leg_length, double &_desired_prismatic_length)
+{
+	bool retcode_OK = true;
+	// Limits for leg length
+
+	double desired_leg_length = _desired_leg_length;
+	if (_desired_leg_length < config_->limit_down_hip_height - config_->height_foot)
+	{
+		Serial.println("GlobalKinematics: Lower Limit for leg length!");
+		desired_leg_length = config_->limit_down_hip_height - config_->height_foot;
+		retcode_OK = false;
+	}
+	else if (_desired_leg_length > config_->limit_up_hip_height - config_->height_foot)
+	{
+		Serial.println("GlobalKinematics: Upper Limit for leg length!");
+		desired_leg_length = config_->limit_up_hip_height - config_->height_foot;
+		retcode_OK = false;
+	}
+
+	_desired_prismatic_length = desired_leg_length - config_->height_hip - config_->height_ankle;
+	return retcode_OK;
+}
+
+bool GlobalKinematics::get_joint_angles_for_prismatic_length(const double &_desired_prismatic_length, const double &_desired_forward_inclination_angle,
 														double &_down_joint, double &_mid_joint, double &_up_joint)
 {
+	bool retcode_OK = true;
 	// Limits for prismatic length
-	// TODO: Get limits from configuration
 	double desired_prismatic_length = _desired_prismatic_length;
-	if (desired_prismatic_length < 115)
+	if (desired_prismatic_length < config_->limit_down_hip_height - config_->height_hip - config_->height_ankle - config_->height_foot)
 	{
-		desired_prismatic_length = 115;
+		Serial.println("GlobalKinematics: Lower Limit for prismatic length!");
+		desired_prismatic_length = config_->limit_down_hip_height - config_->height_hip - config_->height_ankle - config_->height_foot;
+		retcode_OK = false;
 	}
-	else if (desired_prismatic_length > 140)
+	else if (desired_prismatic_length > config_->limit_up_hip_height - config_->height_hip - config_->height_ankle - config_->height_foot)
 	{
-		desired_prismatic_length = 140;
+		Serial.println("GlobalKinematics: Upper Limit for prismatic length!");
+		desired_prismatic_length = config_->limit_up_hip_height - config_->height_hip - config_->height_ankle - config_->height_foot;
+		retcode_OK = false;
 	}
 
 	// Computation
-	return InverseKinematics::get_supporting_leg_joints_angles_from_desired_length_and_orientation(desired_prismatic_length, _desired_forward_inclination_angle,
+	bool retcode_OK2 = InverseKinematics::get_supporting_leg_joints_angles_from_desired_length_and_orientation(desired_prismatic_length, _desired_forward_inclination_angle,
 														config_->height_knee_ankle, config_->height_hip_knee,
 														_down_joint, _mid_joint, _up_joint);
+	return (retcode_OK && retcode_OK2);
 }
 
 void GlobalKinematics::get_feet_distance(double &_frontal_distance, double &_lateral_distance)

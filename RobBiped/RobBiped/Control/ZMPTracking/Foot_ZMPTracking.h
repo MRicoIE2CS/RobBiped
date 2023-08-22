@@ -82,14 +82,14 @@ class Foot_ZMPTracking : public I_PeriodicTask
 		void configure(Foot _foot);
 
 		/*
-		*  @fn void set_setpoint_x_mm(double& _desired_zmp_lateral_deviation_mm)
-		*  @fn void set_setpoint_y_mm(double& _desired_zmp_lateral_deviation_mm)
+		*  @fn void set_setpoint_x_mm(double _desired_zmp_lateral_deviation_mm)
+		*  @fn void set_setpoint_y_mm(double _desired_zmp_lateral_deviation_mm)
 		*  @brief Setter for desired ZMP setpoint, in mm.
 		*
 		*  @param[in] _desired_zmp_lateral_deviation_mm Desired ZMP setpoint, in mm.
 		*/
-		void set_setpoint_x_mm(double& _desired_zmp_lateral_deviation_mm);
-		void set_setpoint_y_mm(double& _desired_zmp_lateral_deviation_mm);
+		void set_setpoint_x_mm(double _desired_zmp_lateral_deviation_mm);
+		void set_setpoint_y_mm(double _desired_zmp_lateral_deviation_mm);
 
 		/*
 		*  @fn Vector2d compute(double& _x_zmp_feedback, double& _y_zmp_feedback)

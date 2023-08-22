@@ -66,14 +66,6 @@ void Executor::initialize_application()
 	some_exp_filter_.set_time_constant(20);
 
 	sin_signal.configure_signal(SignalGenerator::SignalType::sine, sin_period, 0.5, 0.5, 0);
-
-	CM_path_y.set_sampling_time_ms(CM_path_y_sampletime);
-	CM_path_y.set_file_name(CM_path_y_filename);
-	CM_path_y.init();
-
-	cm_tracking_controller_.set_mode(Control::CMTracking::Mode::OnlineReference, Control::CMTracking::Mode::OnlineReference);
-	cm_tracking_controller_.init();
-	cm_tracking_controller_.set_CM_x_online_reference(0.0);
 }
 
 void Executor::inputs()

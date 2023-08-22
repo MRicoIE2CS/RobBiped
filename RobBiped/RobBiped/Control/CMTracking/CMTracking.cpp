@@ -48,37 +48,44 @@ void Control::CMTracking::init()
 	d1y = config_->d1_y;
 	d2y = config_->d2_y;
 
-	if (mode_x_ == Mode::OfflineReference)
+	if (!has_been_loaded && ((mode_x_ == Mode::OfflineReference) || (mode_y_ == Mode::OfflineReference)))
 	{
-		CM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
-		CM_path_x_.set_file_name(config_->CM_path_x_filename);
-		CM_path_x_.init();
-		dCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
-		dCM_path_x_.set_file_name(config_->dCM_path_x_filename);
-		dCM_path_x_.init();
-		ddCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
-		ddCM_path_x_.set_file_name(config_->ddCM_path_x_filename);
-		ddCM_path_x_.init();
-		dddCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
-		dddCM_path_x_.set_file_name(config_->dddCM_path_x_filename);
-		dddCM_path_x_.init();
+		has_been_loaded = true;
+
+		if (mode_x_ == Mode::OfflineReference)
+		{
+			CM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
+			CM_path_x_.set_file_name(config_->CM_path_x_filename);
+			CM_path_x_.init();
+			dCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
+			dCM_path_x_.set_file_name(config_->dCM_path_x_filename);
+			dCM_path_x_.init();
+			ddCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
+			ddCM_path_x_.set_file_name(config_->ddCM_path_x_filename);
+			ddCM_path_x_.init();
+			dddCM_path_x_.set_sampling_time_ms(config_->paths_sampletime_ms);
+			dddCM_path_x_.set_file_name(config_->dddCM_path_x_filename);
+			dddCM_path_x_.init();
+		}
+
+		if (mode_y_ == Mode::OfflineReference)
+		{
+			CM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
+			CM_path_y_.set_file_name(config_->CM_path_y_filename);
+			CM_path_y_.init();
+			dCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
+			dCM_path_y_.set_file_name(config_->dCM_path_y_filename);
+			dCM_path_y_.init();
+			ddCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
+			ddCM_path_y_.set_file_name(config_->ddCM_path_y_filename);
+			ddCM_path_y_.init();
+			dddCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
+			dddCM_path_y_.set_file_name(config_->dddCM_path_y_filename);
+			dddCM_path_y_.init();
+		}
 	}
 
-	if (mode_y_ == Mode::OfflineReference)
-	{
-		CM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
-		CM_path_y_.set_file_name(config_->CM_path_y_filename);
-		CM_path_y_.init();
-		dCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
-		dCM_path_y_.set_file_name(config_->dCM_path_y_filename);
-		dCM_path_y_.init();
-		ddCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
-		ddCM_path_y_.set_file_name(config_->ddCM_path_y_filename);
-		ddCM_path_y_.init();
-		dddCM_path_y_.set_sampling_time_ms(config_->paths_sampletime_ms);
-		dddCM_path_y_.set_file_name(config_->dddCM_path_y_filename);
-		dddCM_path_y_.init();
-	}
+	reset_trajectory();
 }
 
 void Control::CMTracking::set_mode(Mode _mode_x, Mode _mode_y)
@@ -112,6 +119,10 @@ void Control::CMTracking::start_trajectories()
 
 void Control::CMTracking::get_reference_signals(Vector2d &_CM_ref, Vector2d &_vCM_ref, Vector2d &_aCM_ref, Vector2d &_jCM_ref)
 {
+	// Warning: Calling this method with Mode::OnlineReference, without having previously called init() method,
+	// will cause an unhandled exception
+	// TODO: Handle the exception.
+
 	if (mode_x_ == Mode::OfflineReference)
 	{
 		_CM_ref(0) = CM_path_x_.get_value();
@@ -142,6 +153,7 @@ void Control::CMTracking::get_reference_signals(Vector2d &_CM_ref, Vector2d &_vC
 		_aCM_ref(1) = 0.0;
 		_jCM_ref(1) = 0.0;
 	}
+	last_CM_reference = _CM_ref;
 }
 
 void Control::CMTracking::get_feedback_signals(Vector2d &_CM_est, Vector2d &_vCM_est, Vector2d &_aCM_med, Vector2d &_ZMP_med)
@@ -212,11 +224,12 @@ Vector2d Control::CMTracking::compute_ZMP_setpoint()
 		Serial.print(CM_est(0));Serial.print("\t");Serial.print(CM_est(1));Serial.print("\t");
 		Serial.print(ZMP_med(0));Serial.print("\t");Serial.print(ZMP_med(1));Serial.print("\t");
 		Serial.print(vCM_est(0));Serial.print("\t");Serial.print(vCM_est(1));Serial.print("\t");
-		Serial.print(aCM_med(0));Serial.print("\t");Serial.print(aCM_med(1));Serial.print("\t");
+		Serial.print(aCM_med(0));Serial.print("\t");Serial.print(aCM_med(1));Serial.print("\n");
 	}
 
 	control_action_(0) = u_x;
 	control_action_(1) = u_y;
+
 	return control_action_;
 }
 
@@ -225,3 +238,7 @@ Vector2d Control::CMTracking::get_ZMP_setpoint()
 	return control_action_;
 }
 
+Vector2d Control::CMTracking::get_CM_last_reference_location()
+{
+	return last_CM_reference;
+}

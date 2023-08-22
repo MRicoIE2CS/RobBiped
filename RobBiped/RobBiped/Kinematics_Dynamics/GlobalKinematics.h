@@ -97,7 +97,7 @@ class GlobalKinematics : public I_PeriodicTask {
 		PosePhases get_walking_phase();
 
 		// Sets desired hip height
-		void set_desired_hip_height(double _desired_hip_height);
+		bool set_desired_hip_height(double _desired_hip_height);
 		// Sets desired step_width
 		void set_desired_step_width(double _desired_step_width);
 		// Returns the necessary roll joint angles, for desired step width and hip height, at home position
@@ -110,17 +110,21 @@ class GlobalKinematics : public I_PeriodicTask {
 		double get_step_width();
 
 		// Sets desired hip center position, and computes the necessary roll angle setpoint, and necessary leg lengths, if successful
-		bool compute_lateral_DSP_kinematics(const double &_desired_hip_center_position);
+		bool compute_lateral_DSP_kinematics(const double _desired_hip_center_position);
 		// Returns the last computed roll angles
 		void get_computed_angles(double &_left_foot_roll_setpoint, double &_right_foot_roll_setpoint);
-		// Returns the last computed leg lengths
+		// Returns the last computed leg lengths. Distance from hip roll joint to ankle roll joint
 		void get_computed_leg_lengths(double &_left_leg_length_setpoint, double &_right_leg_length_setpoint);
+		// Returns the last computed prismatic lengths. Distances from hip pitch joint to ankle pitch joint
+		bool get_computed_prismatic_lengths(double &_left_prismatic_length_setpoint, double &_right_prismatic_length_setpoint);
+		// Transforms the desired leg length, from roll joints of hip and ankle, in desired prismatic distance, from pitch joints of hip and ankle
+		bool get_prismatic_lenght(const double &_desired_leg_length, double &_desired_prismatic_length);
 
 		// Computes forward and inverse kinematics to obtain joint angles from desired prismatic length (leg length,
 		// from hip pitch joint to ankle pitch joint) and desired forward inclination angle
 		// Prismatic length allowed range: [115-140]
 		// TODO: Get limits from configuration
-		bool get_joint_angles_for_leg_length(const double &_desired_prismatic_length, const double &_desired_forward_inclination_angle,
+		bool get_joint_angles_for_prismatic_length(const double &_desired_prismatic_length, const double &_desired_forward_inclination_angle,
 											double &_down_joint, double &_mid_joint, double &_up_joint);
 
 		// Returns the distance to the left foot from the right foot
@@ -135,7 +139,7 @@ class GlobalKinematics : public I_PeriodicTask {
 
 		// Returns the CoM location
 		void init_CoM_location();
-		// Returns the CoM location
+		// Computes the CoM location
 		Vector3d compute_CoM_location();
 		// Returns the CoM location
 		Vector3d get_CoM_location();

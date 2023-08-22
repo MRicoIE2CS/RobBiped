@@ -77,14 +77,22 @@ class Executor {
 		uint8_t state1_phase = 0;
 		bool state1_finished = false;
 		void state1_execution();
+
+		// State2: Go UP and DOWN routine
 		bool state2_first_time = true;
 		bool state2_finished = false;
 		void state2_execution();
 
-		// State for the X-balance test, with potentiometer manually controlling lateral DSP movement
+		// State10: Test: X-balance test, with potentiometer manually controlling lateral DSP movement
+		// "xbalance", "zmptrx", "torso.on"
 		bool state10_first_time = true;
 		bool state10_finished = false;
 		void state10_execution();
+
+		// State20: Test: Y offline trajectory tracking with X-axis balance
+		bool state20_first_time = true;
+		bool state20_finished = false;
+		void state20_execution();
 
 		// Other state machine flags
 		bool application_on = false;
@@ -92,24 +100,18 @@ class Executor {
 
 		ExpFilter some_exp_filter_;
 		ExpFilter some_exp_filter_2_;
-
-		// Pregenerated trajectories
-		PregeneratedTrajectory CM_path_y;
-		String CM_path_y_filename = "/CM_y.txt";
-		uint32_t CM_path_y_sampletime = 10;
-		//PregeneratedTrajectory ZMP_path_y;
 		
 		// Sin periodic signal
 		SignalGenerator sin_signal;
 		uint32_t sin_period = 2500;
 
 		// Kinematic objects and definitions
-		double right_foot_center_ = -15.0-7.5;
+		double right_foot_center_ = 0.0;
 		GlobalKinematics::PosePhases initial_phase_ = GlobalKinematics::PosePhases::DSP_right;
 		// Defined desired hip height
-		double desired_hip_height_ = 280.0;
+		double desired_hip_height_ = 260.0;
 		// Defined desired step width
-		double desired_step_width_ = 115.0;
+		double desired_step_width_ = 150.0;
 		
 		// Control tasks' objects
 		double torso_upright_pitch_control_action = 0.0;

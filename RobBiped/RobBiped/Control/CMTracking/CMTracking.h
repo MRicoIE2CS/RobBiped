@@ -74,21 +74,30 @@ class CMTracking
 
 		void start_trajectories();
 
+		// Warning: Calling get_reference_signals() with Mode::OnlineReference, without having previously called init() method,
+		// will cause an unhandled exception
+		// TODO: Handle the exception
 		void get_reference_signals(Vector2d &_CM_ref, Vector2d &_vCM_ref, Vector2d &_aCM_ref, Vector2d &_jCM_ref);
 		void get_feedback_signals(Vector2d &_CM_est, Vector2d &_vCM_est, Vector2d &_aCM_med, Vector2d &_ZMP_med);
+
+		// Last offline reference is stored
+		Vector2d last_CM_reference = {0.0, 0.0};
 		
 		// Mode
 		Mode mode_x_ = Mode::OfflineReference;
 		Mode mode_y_ = Mode::OfflineReference;
 
 		// Online tracking reference
-		Vector2d CM_online_reference_;
+		Vector2d CM_online_reference_ = {0.0, 0.0};
 		
 		// Flag for the running state
 		bool is_runnning_ = false;
+
+		// Flag to know if offline trajectories have been loaded previously
+		bool has_been_loaded = false;
 		
 		// Output of the controller
-		Vector2d control_action_;
+		Vector2d control_action_ = {0.0, 0.0};
 
 	public:
 
@@ -114,6 +123,10 @@ class CMTracking
 		Vector2d compute_ZMP_setpoint();
 		// Returns the computed ZMP setpoint
 		Vector2d get_ZMP_setpoint();
+		// Returns the last CM reference position
+		Vector2d get_CM_last_reference_location();
+
+		// TODO: Getter for future reference points of the offline trajectories (look ahead)
 };
 
 }	// End namespace Control

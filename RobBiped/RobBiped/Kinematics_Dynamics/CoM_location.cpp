@@ -23,8 +23,10 @@ void CoMLocation::init_location(Vector3d &_initial_location)
 	last_CoM_location_ = _initial_location;
 	last_CoM_velocity_(0) = 0.0;
 	last_CoM_velocity_(1) = 0.0;
+	last_CoM_velocity_(2) = 0.0;
 	last_CoM_acceleration_(0) = 0.0;
 	last_CoM_acceleration_(1) = 0.0;
+	last_CoM_acceleration_(2) = 0.0;
 	last_millis_ = millis();
 }
 

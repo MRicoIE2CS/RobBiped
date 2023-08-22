@@ -74,12 +74,12 @@ struct Configs
 
 	struct GyroscpeAccelerometer {
 		struct Offsets {
-			int16_t ax_o = -310;//-303;	// Accelerometer offsets
-			int16_t ay_o = -239;//-214;
-			int16_t az_o = 920;//911;
-			int16_t gx_o = 2;//1;		// Gyroscope offsets
-			int16_t gy_o = -40;//-35;
-			int16_t gz_o = -14;//-15;
+			int16_t ax_o = -174;	// Accelerometer offsets
+			int16_t ay_o = -193;
+			int16_t az_o = 924;
+			int16_t gx_o = -2;		// Gyroscope offsets
+			int16_t gy_o = -44;
+			int16_t gz_o = -14;
 			}offsets;
 		uint32_t filter_time_constant_ms = 40;
 		double Kf_complement_filter = 0.99;	// Constant of the complement filter for the calculation of the inclination angle [0.0-1.0]
@@ -98,25 +98,31 @@ struct Configs
 		double height_CM_from_hip = -50.0;	// Vertical distance from hip joints to estimated CM height
 		double Kfilter_CM_location = 0.98;//0.955;	// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
 		double Kfilter_CM_velocity = 0.99;	// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
+		// Hip height limits
+		double limit_up_hip_height = 300;
+		double limit_down_hip_height = 235;
 		}kinematics;
 
 	struct Control {
 
 		struct CMTracking {
-			String CM_path_y_filename = "/CM_y.txt";
-			String dCM_path_y_filename = "/dCM_y.txt";
-			String ddCM_path_y_filename = "/ddCM_y.txt";
-			String dddCM_path_y_filename = "/ddCM_y.txt";
-			String CM_path_x_filename = "/CM_x.txt";
-			String dCM_path_x_filename = "/dCM_x.txt";
-			String ddCM_path_x_filename = "/ddCM_x.txt";
-			String dddCM_path_x_filename = "/ddCM_x.txt";
+			// WARNING! The limit of memory allocation is 160KB!
+			// Keep these files light.
+			String CM_path_y_filename = "/y_com_ref.txt";
+			String dCM_path_y_filename = "/dy_com_ref.txt";
+			String ddCM_path_y_filename = "/ddy_com_ref.txt";
+			String dddCM_path_y_filename = "/dddy_com_ref.txt";
+			String CM_path_x_filename = "/x_com_ref.txt";
+			String dCM_path_x_filename = "/dx_com_ref.txt";
+			String ddCM_path_x_filename = "/ddx_com_ref.txt";
+			String dddCM_path_x_filename = "/dddx_com_ref.txt";
 			uint32_t paths_sampletime_ms = 10;
-			double Tra_x = 0.001;	// Rising time of ZMP actuation dynamics
-			double Tra_y = 0.001;	// Rising time of ZMP actuation dynamics
-			double d0_x = 1;
-			double d1_x = 1;
-			double d2_x = 1;
+			double Tra_x = 0.005;	// Rising time of ZMP actuation dynamics
+			double Tra_y = 0.005;	// Rising time of ZMP actuation dynamics
+			// dx: for Tra_x=0.005 [ 14, 230, 120] [ 90, 300, 200] 
+			double d0_x = 90;
+			double d1_x = 300;
+			double d2_x = 200;
 			double d0_y = 1;
 			double d1_y = 1;
 			double d2_y = 1;
@@ -124,7 +130,7 @@ struct Configs
 
 		struct TorsoPosture {
 			// PID constants
-			double kp = 0.4;
+			double kp = 0.01;
 			double ki = 0.0;
 			double kd = 0.0;//0.1;//0.25;
 			// Anti-windup constant
@@ -133,7 +139,7 @@ struct Configs
 			double proportional_setpoint_weight = 1.0;
 			double derivative_setpoint_weight = 0.0;
 			// Deadband compensation
-			double negative_db_compensation_rad = -0.05;//-0.05;
+			double negative_db_compensation_rad = -0.0;//-0.05;
 			double positive_db_compensation_rad = 0.05;//0.05;
 			// Derivative filter time constant
 			uint32_t derivative_time_constant_ms_ = 40;
@@ -145,7 +151,7 @@ struct Configs
 		struct ZMPTracking_x {
 			struct FeedforwardCurve {
 				std::vector<double> curve_points_x = { -55, -45, 45, 55 };
-				std::vector<double> curve_points_y = { 0.2, 0.05, -0.05, -0.1 };//{ 0.3, 0.1, -0.05, -0.2 };//{ 0.1, 0.05, -0.05, -0.1 };
+				std::vector<double> curve_points_y = { 0.2, 0.1, -0.1, -0.2 };//{ 0.2, 0.05, -0.05, -0.1 };//{ 0.3, 0.1, -0.05, -0.2 };//{ 0.1, 0.05, -0.05, -0.1 };
 				}feedforward_curve;
 			struct DeadbandCompensation {
 				// Limiting value at which desired ZMP requires negative or positive DB compensation
@@ -153,10 +159,10 @@ struct Configs
 				double negative_db_compensation_rad;
 				double positive_db_compensation_rad;
 				};
-			DeadbandCompensation leftfoot_deadband_compensation = { 0.0, 0.05, 0.1 };//{ 0.0, 0.075, 0.225 };
-			DeadbandCompensation rightfoot_deadband_compensation = { 0.0, 0.05, 0.1 };//{ 0.0, 0.075, 0.225 };
+			DeadbandCompensation leftfoot_deadband_compensation = { 0.0, 0.05, 0.07 };
+			DeadbandCompensation rightfoot_deadband_compensation = { 0.0, 0.05, 0.07 };
 			struct PID {
-				double kp = 0.0;//0.001;
+				double kp = 0.0;//0.0005;
 				double ki = 0.0;
 				double kd = 0.0;
 				// Anti-windup constant
@@ -172,17 +178,21 @@ struct Configs
 
 		struct ZMPTracking_y {
 			struct FeedforwardCurve {
-				std::vector<double> curve_points_x = { -40, 40 };
-				std::vector<double> curve_points_y = { 0.2, -0.2 };
-				}feedforward_curve;
+				std::vector<double> curve_points_x;
+				std::vector<double> curve_points_y;
+				};
+			FeedforwardCurve left_feedforward_curve = {{ -30, -10, 20, 30 }, { 0.1, 0.0, -0.02, -0.05 }};
+			FeedforwardCurve right_feedforward_curve = {{ -30, -20, 10, 30 }, { 0.05, 0.02, 0.0, -0.1 }};
 			struct DeadbandCompensation {
 				// Limiting value at which desired ZMP requires negative or positive DB compensation
-				double db_delimiting_value = 0.0;
-				double negative_db_compensation_rad = -0.05;
-				double positive_db_compensation_rad = 0.05;
-				}deadband_compensation;
+				double db_delimiting_value;
+				double negative_db_compensation_rad;
+				double positive_db_compensation_rad;
+				};
+			DeadbandCompensation leftfoot_deadband_compensation = { -10, 0.08, 0.1 };//{ -10, -0.025, 0.025 };
+			DeadbandCompensation rightfoot_deadband_compensation = { 10, -0.1, -0.08 };//{ 10, -0.025, 0.025 };
 			struct PID {
-				double kp = 0.0;
+				double kp = 0.0012;
 				double ki = 0.0;
 				double kd = 0.0;
 				// Anti-windup constant
