@@ -324,7 +324,7 @@ bool GlobalKinematics::check_walking_phase()
 	{
 		if (!has_right_foot_been_lifted) has_right_foot_been_lifted = !force_sensors_manager_->is_right_foot_touching_ground();
 
-		bool transition_condition = has_right_foot_been_lifted && force_sensors_manager_->is_right_foot_touching_ground();
+		bool transition_condition = has_right_foot_been_lifted && force_sensors_manager_->is_right_foot_touching_ground() && lifting_maneuver_performed;
 		if (transition_condition)
 		{
 			phase_ = WalkingPhase::DSP_right;
@@ -336,7 +336,7 @@ bool GlobalKinematics::check_walking_phase()
 	{
 		if (!has_left_foot_been_lifted) has_left_foot_been_lifted = !force_sensors_manager_->is_left_foot_touching_ground();
 
-		bool transition_condition = has_left_foot_been_lifted && force_sensors_manager_->is_left_foot_touching_ground();
+		bool transition_condition = has_left_foot_been_lifted && force_sensors_manager_->is_left_foot_touching_ground() && lifting_maneuver_performed;
 		if (transition_condition)
 		{
 			phase_ = WalkingPhase::DSP_left;

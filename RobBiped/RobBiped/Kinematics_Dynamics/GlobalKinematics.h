@@ -165,6 +165,8 @@ class GlobalKinematics : public I_PeriodicTask {
 		void force_current_walking_phase(WalkingPhase _phase);
 		// Returns true if there has been a phase change within this execution period
 		bool has_there_been_a_phase_change();
+		// Flag that indicates if the lifting leg maneuver has been performed during SSP
+		bool lifting_maneuver_performed = false;
 	};
 
 #endif
