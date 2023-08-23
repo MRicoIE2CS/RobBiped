@@ -93,10 +93,12 @@ Vector2d Control::Foot_ZMPTracking::compute(double& _x_zmp_feedback, double& _y_
 	{
 		output_rad(0) = compute_x(_x_zmp_feedback);
 	}
+	//else output_rad(0) = 0.0;
 	if (controller_y_on)
 	{
 		output_rad(1) = compute_y(_y_zmp_feedback);
 	}
+	//else output_rad(1) = 0.0;
 
 	return output_rad;
 }
