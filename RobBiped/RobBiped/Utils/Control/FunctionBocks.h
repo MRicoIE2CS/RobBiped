@@ -28,6 +28,8 @@ namespace Control {
 
 	double inverse_deadband(const double &_sign_variable, const double &_u, const double &_positive_compensation, const double &_negative_compensation);
 
+	double smoooth_inverse_deadband(const double &_u, const double _offset_for_zero, const double _positive_compensation, const double _negative_compensation);
+
 	double two_points_interpolate(double &_input, double &_x, double &_pre_x, double &_y, double &_pre_y);
 
 	double custom_curve_interpolation(double &_input, std::vector<double> &_x_points, std::vector<double> &_y_points);
