@@ -69,7 +69,6 @@ void Executor::state_machine_switch()
 			{
 				state_number = 30;
 				state30_first_time = true;
-				state30_not_yet_lifted_a_foot = true;
 				global_kinematics_.force_current_walking_phase(GlobalKinematics::WalkingPhase::DSP_left);
 				break;
 			}
@@ -138,7 +137,6 @@ void Executor::state_machine_switch()
 			{
 				state_number = 0;
 				state0_first_time = true;
-				state30_not_yet_lifted_a_foot = true;
 				global_kinematics_.force_current_walking_phase(GlobalKinematics::WalkingPhase::DSP_left);
 				break;
 			}

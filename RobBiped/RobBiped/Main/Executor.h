@@ -98,6 +98,14 @@ class Executor {
 		// ""
 		bool state30_first_time = true;
 		bool state30_finished = false;
+		double state30_leg_lifting_distance_mm = 40.0;
+		uint32_t state30_leg_lifting_time_ms = 400;
+		double state30_leg_lifting_target = 0.0;
+		bool state30_lifting_finished = false;
+		bool state30_lifting_leg = false;
+		bool state30_lowering_leg = false;
+		bool state30_lowering_leg_finished = false;
+		Control::LinearTrajectoryInterpolator state30_lifting_leg_interpolator;
 		void state30_execution();
 
 		// Other state machine flags
@@ -118,6 +126,8 @@ class Executor {
 		double desired_hip_height_ = 260.0;
 		// Defined desired step width
 		double desired_step_width_ = 150.0;
+		// Step distance
+		double step_distance_ = 85;
 		
 		// Control tasks' objects
 		double torso_upright_pitch_control_action = 0.0;
