@@ -28,6 +28,7 @@ namespace Control {
 /*
 *  @brief This class offers a means to control a linear trajectory over a single double-typed variable.
 */
+// TODO: Offer a smoothed curve, using a sinusoidal function
 class LinearTrajectoryInterpolator : public I_PeriodicTask {
 
 	private:
@@ -72,6 +73,14 @@ class LinearTrajectoryInterpolator : public I_PeriodicTask {
 		*  @return bool True if successfully configured. False if any configured parameter is inconsistent.
 		*/
 		bool configure_trayectory(const double& _initial_value, const double& _target, const uint64_t& _transition_time_ms);
+
+		/*
+		*  @fn void update_target(const double& _target)
+		*  @brief Update target.
+		*
+		*  @param[in] _target Final target of the trajectory.
+		*/
+		void update_target(const double& _target);
 
 		/*
 		*  @fn void compute_output(double& _output)
