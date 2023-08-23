@@ -35,10 +35,12 @@ class WalkingPhasesManager {
 		bool check_walking_phase();
 		WalkingPhase get_walking_phase();
 
+		// TODO
+
 	private:
 		WalkingPhase phase_;
-		
-		
+
+		// TODO
 	};
 
 #endif

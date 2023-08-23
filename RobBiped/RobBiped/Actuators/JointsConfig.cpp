@@ -46,7 +46,7 @@ void JointsManager::joints_config(){
 
 // LEFT HIP - PITCH
 	jointInitializer.invert_angle_sign(false);
-	jointInitializer.calibration_set_zero(false, 0.4);//0.3);
+	jointInitializer.calibration_set_zero(false, 0.4);
 	jointInitializer.calibration_set_min_angle(false, -1);
 	jointInitializer.calibration_set_max_angle(false, 1.2);
 	PCA9685_1_servo_map_[3] = jointInitializer;
@@ -65,7 +65,7 @@ void JointsManager::joints_config(){
 	PCA9685_1_servo_map_[5] = jointInitializer;
 // LEFT SHOULDER LATERAL
 	jointInitializer.invert_angle_sign(false);
-	jointInitializer.calibration_set_zero(false, 0.2);//-0.2);
+	jointInitializer.calibration_set_zero(false, 0.2);
 	jointInitializer.calibration_set_min_angle(false, -0.45);
 	jointInitializer.calibration_set_max_angle(false, 0.45);
 	PCA9685_1_servo_map_[6] = jointInitializer;
@@ -77,7 +77,7 @@ void JointsManager::joints_config(){
 
 // RIGHT SHOULDER LATERAL
 	jointInitializer.invert_angle_sign(true);
-	jointInitializer.calibration_set_zero(false, 0.3);//-0.1);
+	jointInitializer.calibration_set_zero(false, 0.3);
 	jointInitializer.calibration_set_min_angle(false, -0.45);
 	jointInitializer.calibration_set_max_angle(false, 0.45);
 	PCA9685_1_servo_map_[9] = jointInitializer;
@@ -96,7 +96,7 @@ void JointsManager::joints_config(){
 	PCA9685_1_servo_map_[11] = jointInitializer;
 // RIGHT HIP - PITCH
 	jointInitializer.invert_angle_sign(true);
-	jointInitializer.calibration_set_zero(false, 0.0);//-0.10);
+	jointInitializer.calibration_set_zero(false, 0.0);
 	jointInitializer.calibration_set_min_angle(false, -1);
 	jointInitializer.calibration_set_max_angle(false, 1.2);
 	PCA9685_1_servo_map_[12] = jointInitializer;
