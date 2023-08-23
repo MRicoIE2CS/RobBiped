@@ -144,7 +144,7 @@ class GlobalKinematics : public I_PeriodicTask {
 		void get_left_foot_coordinates(double &_x, double &_y);
 
 		// Returns the angle setpoint for hip roll, with compensation for the deadband (dead zone)
-		double compensate_hip_roll_angle(double &_desired_hip_roll_angle);
+		double compensate_hip_roll_angle(double _desired_hip_roll_angle, bool _left_or_right);
 
 		// Returns the CoM location
 		void init_CoM_location();

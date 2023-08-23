@@ -20,6 +20,7 @@
 
 #include "../Sensors/GyroscopeAccelerometerManager.h"
 #include "../Sensors/ForceSensorsManager.h"
+#include "../Utils/Control/FunctionBocks.h"
 #include "../Utils/Kinematics/Geometry/Rotation.h"
 
 void GlobalKinematics::assoc_config(Configuration::Configs::Kinematics &_config)
@@ -208,21 +209,24 @@ void GlobalKinematics::get_left_foot_coordinates(double &_x, double &_y)
 	_y = left_foot_center_y_;
 }
 
-double GlobalKinematics::compensate_hip_roll_angle(double &_desired_hip_roll_angle)
+double GlobalKinematics::compensate_hip_roll_angle(double _desired_hip_roll_angle, bool _left_or_right)
 {
-	double compensated_angle;
-	double hi_x = 0.1;
-	double lo_x = 0.0;
-	double hi_y = 0.1;
-	double lo_y = 0.0;
-	if (_desired_hip_roll_angle <= lo_x) compensated_angle = _desired_hip_roll_angle + lo_y;
-	else if (_desired_hip_roll_angle >= hi_x) compensated_angle = _desired_hip_roll_angle + hi_y;
+	double positive_compensation;
+	double negative_compensation;
+	if (false == _left_or_right)
+	{
+		positive_compensation = config_->left_hip_roll_compensation.positive_compensation;
+		negative_compensation = config_->left_hip_roll_compensation.negative_compensation;
+	}
 	else
 	{
-		double slope = (hi_y - lo_y) / (hi_x - lo_x);
-		compensated_angle = _desired_hip_roll_angle + (_desired_hip_roll_angle - lo_x) * slope;
+		positive_compensation = config_->right_hip_roll_compensation.positive_compensation;
+		negative_compensation = config_->right_hip_roll_compensation.negative_compensation;
 	}
-	return compensated_angle;
+	
+	return Control::smoooth_inverse_deadband(
+					_desired_hip_roll_angle, 0.0,
+					positive_compensation, negative_compensation);
 }
 
 Vector3d GlobalKinematics::correct_acceleration_inclination(const Vector3d &_CoM_acceleration_measurements_xyz, const Vector2d &_CoM_inclinations)
@@ -410,4 +414,9 @@ bool GlobalKinematics::is_zmp_over_right_footprint()
 
 	
 	return within_x_limits && within_y_limits;
+}
+
+bool GlobalKinematics::has_there_been_a_phase_change()
+{
+	return has_there_been_a_phase_change_;
 }
