@@ -669,6 +669,12 @@
     <Compile Include="Kinematics_Dynamics\GlobalKinematics.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Main\TestsRoutines.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Main\WalkingRoutine.cpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="RobBiped.ino">
       <SubType>compile</SubType>
     </Compile>
