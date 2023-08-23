@@ -107,6 +107,12 @@ struct Configs
 			int16_t frontBack_separation = 115;
 			int16_t leftRight_separation = 60;
 			}feet_dimensions;
+		struct HipRollCompensation {
+			double negative_compensation;
+			double positive_compensation;
+			};
+		HipRollCompensation left_hip_roll_compensation = { 0.075, 0.05 };
+		HipRollCompensation right_hip_roll_compensation = { -0.05, -0.075 };
 		}kinematics;
 
 	struct Control {
@@ -129,9 +135,9 @@ struct Configs
 			double d0_x = 90;
 			double d1_x = 300;
 			double d2_x = 200;
-			double d0_y = 1;
-			double d1_y = 1;
-			double d2_y = 1;
+			double d0_y = 90;
+			double d1_y = 300;
+			double d2_y = 200;
 			}cm_tracking;
 
 		struct TorsoPosture {
