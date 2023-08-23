@@ -137,8 +137,10 @@ void Command::listen_for_commands()
 			if (commands.test_y_offline_tracking_toggle) commands.test_y_offline_tracking_toggle = false;
 			else commands.test_y_offline_tracking_toggle = true;
 		}
-		else if (command.equals("off"))
-		{
+	// WALK, (state number 30)
+		else if (command.equals("walk")){
+			if (commands.walk) commands.walk = false;
+			else commands.walk = true;
 		}
 	}
 }

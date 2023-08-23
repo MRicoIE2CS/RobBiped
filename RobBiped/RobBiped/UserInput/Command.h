@@ -39,6 +39,7 @@ struct Command
 		bool servo_onoff_toggle = false;
 		bool servo_calibration_onoff_toggle = false;
 		bool servo_selection_button_emulation = false;
+		bool show_alarm_angle_limit = true;				// True by default!
 		bool force_tare_left = false;
 		bool force_tare_right = false;
 		bool force_auto_tare = false;
@@ -61,7 +62,7 @@ struct Command
 		bool get_up_toggle = false;
 		bool test_x_balance_toggle = false;
 		bool test_y_offline_tracking_toggle = false;
-		bool show_alarm_angle_limit = true;				// True by default!
+		bool walk = false;
 	}commands;
 	
 private:
