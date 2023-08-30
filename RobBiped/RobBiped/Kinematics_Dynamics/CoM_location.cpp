@@ -101,8 +101,8 @@ Vector3d CoMLocation::compute_location(Vector3d &_CoM_acceleration_measurements_
 	last_CoM_velocity_(1) = Kf_v * intgr_com_location_velocity(1,1) + (1.0-Kf_v) * derivated_velocity(1);
 
 	// Update rest of memory variables
-	last_CoM_acceleration_(0) = new_acc_measure_mms2_xyz(0);//(CoM_velocity(0) - last_CoM_velocity_(0)) / time_incr;
-	last_CoM_acceleration_(1) = new_acc_measure_mms2_xyz(1);//(CoM_velocity(0) - last_CoM_velocity_(0)) / time_incr;
+	last_CoM_acceleration_(0) = new_acc_measure_mms2_xyz(0);
+	last_CoM_acceleration_(1) = new_acc_measure_mms2_xyz(1);
 	last_CoM_location_(0) = fused_com_location(0);
 	last_CoM_location_(1) = fused_com_location(1);
 	last_millis_ = current_millis;

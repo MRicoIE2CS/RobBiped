@@ -103,17 +103,17 @@ double GlobalKinematics::get_step_width()
 
 bool GlobalKinematics::compute_lateral_DSP_kinematics(const double _desired_hip_center_position)
 {
-	if (_desired_hip_center_position < right_foot_center_y_
-		|| _desired_hip_center_position > left_foot_center_y_)
-	{
-		return false;
-	}
+// 	if (_desired_hip_center_position < right_foot_center_y_
+// 		|| _desired_hip_center_position > left_foot_center_y_)
+// 	{
+// 		return false;
+// 	}
 
 	// TODO: Verification to avoid non reachable postures, depending on configuration, desired hip height and desired step width
 
 	right_foot_roll_setpoint_ = atan2( (_desired_hip_center_position - right_foot_center_y_ - config_->d_hip_width / 2.0) ,
 										(desired_hip_height_ - config_->height_foot) );
-	left_foot_roll_setpoint_ = atan2( (desired_step_width_ - _desired_hip_center_position - config_->d_hip_width / 2.0) ,
+	left_foot_roll_setpoint_ = atan2( (desired_step_width_ - _desired_hip_center_position - right_foot_center_y_ - config_->d_hip_width / 2.0) ,
 										(desired_hip_height_ - config_->height_foot) );
 	
 	left_leg_length_setpoint_ = (desired_hip_height_ - config_->height_foot) / cos(left_foot_roll_setpoint_);
@@ -273,6 +273,7 @@ Vector3d GlobalKinematics::compute_CoM_location()
 	CoM_location = CoM_location_.compute_location(CoM_corrected_accelerations, ZMP_location);
 
 // // _____ SIGNAL RECORD
+
 // 		Serial.println("CoM_fCoM_ZMP_y / accy_aCM_y: \t" + (String)filter_CoM_location_.filter(CoM_location(1)) + "\t" + (String)ZMP_location(1) + "\t" + (String)CoM_corrected_accelerations(1));
 //Serial.println("accy_aCM_y: \t" + (String)CoM_measured_accelerations(1) + "\t" + (String)CoM_corrected_accelerations(1) + "\t" + (String)incl_pitch + "\t" + (String)incl_roll);
 //Serial.println("accy_aCM_y: \t" + (String)CoM_corrected_accelerations(0) + "\t" + (String)CoM_corrected_accelerations(1) + "\t" + (String)CoM_corrected_accelerations(2) + "\t" + (String)incl_pitch + "\t" + (String)incl_roll);
@@ -302,7 +303,7 @@ bool GlobalKinematics::check_walking_phase()
 
 	if (WalkingPhase::DSP_left == phase_)
 	{
-		bool transition_condition = is_zmp_over_left_footprint();
+		bool transition_condition = is_zmp_over_left_footprint()/* && is_com_over_left_footprint()*/;
 		if (transition_condition)
 		{
 			phase_ = WalkingPhase::SSP_left;
@@ -312,7 +313,7 @@ bool GlobalKinematics::check_walking_phase()
 	}
 	else if (WalkingPhase::DSP_right == phase_)
 	{
-		bool transition_condition = is_zmp_over_right_footprint();
+		bool transition_condition = is_zmp_over_right_footprint()/* && is_com_over_right_footprint()*/;
 		if (transition_condition)
 		{
 			phase_ = WalkingPhase::SSP_right;
@@ -415,6 +416,41 @@ bool GlobalKinematics::is_zmp_over_right_footprint()
 	
 	return within_x_limits && within_y_limits;
 }
+
+// bool GlobalKinematics::is_com_over_left_footprint()
+// {
+// 	Vector2d ZMP_location = force_sensors_manager_->get_global_ZMP();
+// 	
+// 	double limit_x_min = left_foot_center_x_ - (config_->feet_dimensions.frontBack_separation / 2);
+// 	double limit_x_max = left_foot_center_x_ + (config_->feet_dimensions.frontBack_separation / 2);
+// 
+// 	bool within_x_limits = (ZMP_location(0) > limit_x_min) && (ZMP_location(0) < limit_x_max);
+// 
+// 	double limit_y_min = left_foot_center_y_ - (config_->feet_dimensions.leftRight_separation / 2);
+// 	double limit_y_max = left_foot_center_y_ + (config_->feet_dimensions.leftRight_separation / 2);
+// 
+// 	bool within_y_limits = (ZMP_location(1) > limit_y_min) && (ZMP_location(1) < limit_y_max);
+// 
+// 	return within_x_limits && within_y_limits;
+// }
+// 
+// bool GlobalKinematics::is_com_over_right_footprint()
+// {
+// 	Vector2d ZMP_location = force_sensors_manager_->get_global_ZMP();
+// 	
+// 	double limit_x_min = right_foot_center_x_ - (config_->feet_dimensions.frontBack_separation / 2);
+// 	double limit_x_max = right_foot_center_x_ + (config_->feet_dimensions.frontBack_separation / 2);
+// 
+// 	bool within_x_limits = (ZMP_location(0) > limit_x_min) && (ZMP_location(0) < limit_x_max);
+// 
+// 	double limit_y_min = right_foot_center_y_ - (config_->feet_dimensions.leftRight_separation / 2);
+// 	double limit_y_max = right_foot_center_y_ + (config_->feet_dimensions.leftRight_separation / 2);
+// 
+// 	bool within_y_limits = (ZMP_location(1) > limit_y_min) && (ZMP_location(1) < limit_y_max);
+// 
+// 	
+// 	return within_x_limits && within_y_limits;
+// }
 
 bool GlobalKinematics::has_there_been_a_phase_change()
 {
