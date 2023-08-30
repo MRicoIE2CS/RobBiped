@@ -410,15 +410,22 @@ bool ForceSensorsManager::is_right_foot_touching_ground()
 
 void ForceSensorsManager::compute_global_ZMP(GlobalKinematics *_global_kinematics)
 {
+	// Coordinates of the center of the right foot
+	double right_foot_x, right_foot_y;
+	_global_kinematics->get_right_foot_coordinates(right_foot_x, right_foot_y);
+	// Distance between feet on the ground
+	double feet_distance_x, feet_distance_y;
+	_global_kinematics->get_feet_distance(feet_distance_x, feet_distance_y);
+
 	if (is_left_foot_touching_ground_ && !is_right_foot_touching_ground_)
 	{
-		global_zmp_x_mm_ = zmp_left_foot_x_mm_;
-		global_zmp_y_mm_ = zmp_left_foot_y_mm_;
+		global_zmp_x_mm_ = right_foot_x + feet_distance_x +zmp_left_foot_x_mm_;
+		global_zmp_y_mm_ = right_foot_y + feet_distance_y + zmp_left_foot_y_mm_;
 	}
 	else if (!is_left_foot_touching_ground_ && is_right_foot_touching_ground_)
 	{
-		global_zmp_x_mm_ = zmp_right_foot_x_mm_;
-		global_zmp_y_mm_ = zmp_right_foot_y_mm_;
+		global_zmp_x_mm_ = right_foot_x + zmp_right_foot_x_mm_;
+		global_zmp_y_mm_ = right_foot_y + zmp_right_foot_y_mm_;
 	}
 	else if (!is_left_foot_touching_ground_ && !is_right_foot_touching_ground_)
 	{
@@ -427,13 +434,6 @@ void ForceSensorsManager::compute_global_ZMP(GlobalKinematics *_global_kinematic
 	}
 	else
 	{
-		// Coordinates of the center of the right foot
-		double right_foot_x, right_foot_y;
-		_global_kinematics->get_right_foot_coordinates(right_foot_x, right_foot_y);
-		// Distance between feet on the ground
-		double feet_distance_x, feet_distance_y;
-		_global_kinematics->get_feet_distance(feet_distance_x, feet_distance_y);
-
 		// X coordinate
 		int32_t all_force_sum =
 		value_LeftFoot_LeftBack_ + value_LeftFoot_LeftFront_ + value_LeftFoot_RightBack_ + value_LeftFoot_RightFront_

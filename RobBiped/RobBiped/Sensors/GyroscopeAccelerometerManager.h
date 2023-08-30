@@ -55,14 +55,14 @@ private:
 	
 	float gx_deg_s_, gy_deg_s_, gz_deg_s_;
 
-	// Inclination angle of sensor, obtained from accelerometer
-	float accel_ang_x_;
-	float accel_ang_y_;
+	// Rotation angles of sensor, obtained from accelerometer
+	float accel_rotang_x_;
+	float accel_rotang_y_;
 
-	// Rotation of sensor, obtained from gyroscope
-	int64_t tiempo_prev_, dt_;
-	float ang_deg_x_, ang_deg_y_;
-	float ang_deg_x_prev_, ang_deg_y_prev_;
+	// Rotation angles of sensor, obtained from gyroscope/accelerometer fusion
+	uint32_t tiempo_prev_, dt_;
+	float rotang_deg_x_, rotang_deg_y_;
+	float rotang_deg_x_prev_, rotang_deg_y_prev_;
 	
 	// Constant for complementary filter
 	double Kf = 0.98;

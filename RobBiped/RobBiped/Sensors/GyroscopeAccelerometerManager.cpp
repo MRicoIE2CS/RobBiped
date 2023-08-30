@@ -83,36 +83,36 @@ void GyroscopeAccelerometerManager::calculate_accelerometer_angle()
 	double sum_of_squares_yz = pow(ay_m_s2_,2) + pow(az_m_s2_,2);
 	double sum_of_squares_xz = pow(ax_m_s2_,2) + pow(az_m_s2_,2);
 	if ( (0.0 == sum_of_squares_yz) || (0.0 == sum_of_squares_xz) ) return; // Avoid division by zero or NaN
-	accel_ang_x_ = atan( ax_m_s2_/ sqrt( sum_of_squares_yz ) ) * (180.0/3.14);	// In degrees
-	accel_ang_y_ = atan( ay_m_s2_/ sqrt( sum_of_squares_xz ) ) * (180.0/3.14);	// In degrees
+	accel_rotang_x_ = atan( ay_m_s2_/ sqrt( sum_of_squares_xz ) ) * (180.0/PI);	// In degrees
+	accel_rotang_y_ = atan( -ax_m_s2_/ sqrt( sum_of_squares_yz ) ) * (180.0/PI);	// In degrees
 }
 
 void GyroscopeAccelerometerManager::complementary_filter_for_angle()
 {
-	auto currentMillis = millis();
+	uint32_t currentMillis = millis();
 	dt_ = currentMillis - tiempo_prev_;
 	tiempo_prev_ = currentMillis;
 
-	ang_deg_x_ = Kf * (gx_deg_s_ * dt_ / 1000.0 + ang_deg_x_prev_) + (1-Kf) * accel_ang_x_;
-	ang_deg_y_ = Kf * (gy_deg_s_ * dt_ / 1000.0 + ang_deg_y_prev_) + (1-Kf) * accel_ang_y_;
+	rotang_deg_x_ = Kf * ((gx_deg_s_) * (float)dt_ / 1000.0 + rotang_deg_x_prev_) + (1-Kf) * accel_rotang_x_;
+	rotang_deg_y_ = Kf * ((gy_deg_s_) * (float)dt_ / 1000.0 + rotang_deg_y_prev_) + (1-Kf) * accel_rotang_y_;
 
-	ang_deg_x_prev_ = ang_deg_x_;
-	ang_deg_y_prev_ = ang_deg_y_;
+	rotang_deg_x_prev_ = rotang_deg_x_;
+	rotang_deg_y_prev_ = rotang_deg_y_;
 }
 
 void GyroscopeAccelerometerManager::gain_adjust()
 {
 	// Empirical adjustments
 	// TODO: Get this out, to the configurations file
-	if (ang_deg_x_ > 0.0)
+	if (rotang_deg_x_ > 0.0)
 	{
 		ax_m_s2_ = ax_m_s2_ * (9.807/9.09);
 	}
-	if (ang_deg_x_ < 0.0)
+	if (rotang_deg_x_ < 0.0)
 	{
 		ax_m_s2_ = ax_m_s2_ * (9.807/10.45);
 	}
-	if (ang_deg_y_ < 0.0)
+	if (rotang_deg_y_ < 0.0)
 	{
 		ay_m_s2_ = ay_m_s2_ * (9.807/9.92);
 	}
@@ -281,10 +281,10 @@ void GyroscopeAccelerometerManager::print_values()
 // 	Serial.print(accel_ang_y_); Serial.print("\t");
 
 	// This angle is obtained by complementary filter
-	Serial.print("Pitch angle (x,y):\t");
-	Serial.print(-ang_deg_x_);
+	Serial.print("Pitch/Roll angles (x,y):\t");
+	Serial.print(get_value_angle_z_pitch_deg());
 	Serial.print(" , ");
-	Serial.println(-ang_deg_y_);
+	Serial.println(get_value_angle_z_roll_deg());
 }
 
 void GyroscopeAccelerometerManager::get_acc_values(float& _ax_m_s2, float& _ay_m_s2, float& _az_m_s2)
@@ -374,40 +374,40 @@ float GyroscopeAccelerometerManager::get_value_gz_deg_s()
 
 void GyroscopeAccelerometerManager::get_value_angle_z_pitch_deg(float& _ang_pitch)
 {
-	_ang_pitch = - ang_deg_x_;
+	_ang_pitch = rotang_deg_y_;
 }
 
 float GyroscopeAccelerometerManager::get_value_angle_z_pitch_deg()
 {
-	return - ang_deg_x_;
+	return rotang_deg_y_;
 }
 
 void GyroscopeAccelerometerManager::get_value_angle_z_roll_deg(float& _ang_roll)
 {
-	_ang_roll = - ang_deg_y_;
+	_ang_roll = - rotang_deg_x_;
 }
 
 float GyroscopeAccelerometerManager::get_value_angle_z_roll_deg()
 {
-	return - ang_deg_y_;
+	return - rotang_deg_x_;
 }
 
 void GyroscopeAccelerometerManager::get_value_angle_z_pitch_rad(float& _ang_pitch)
 {
-	_ang_pitch = - ang_deg_x_ * DEG_TO_RAD;
+	_ang_pitch = rotang_deg_y_ * DEG_TO_RAD;
 }
 
 float GyroscopeAccelerometerManager::get_value_angle_z_pitch_rad()
 {
-	return - ang_deg_x_ * DEG_TO_RAD;
+	return rotang_deg_y_ * DEG_TO_RAD;
 }
 
 void GyroscopeAccelerometerManager::get_value_angle_z_roll_rad(float& _ang_roll)
 {
-	_ang_roll = - ang_deg_y_ * DEG_TO_RAD;
+	_ang_roll = - rotang_deg_x_ * DEG_TO_RAD;
 }
 
 float GyroscopeAccelerometerManager::get_value_angle_z_roll_rad()
 {
-	return - ang_deg_y_ * DEG_TO_RAD;
+	return - rotang_deg_x_ * DEG_TO_RAD;
 }
