@@ -84,19 +84,21 @@ Vector2d Control::Foot_ZMPTracking::compute(double& _x_zmp_feedback, double& _y_
 //		Serial.println("Action::: " + (String)output_rad + "\tKp = " + (String)kp + "\tKi = " + (String)ki + "\tKd = " + (String)kd);
 	}
 
-	if (!controller_x_on & command_->commands.zmp_xtracking_toggle) switch_x_on();
-	if (controller_x_on & !command_->commands.zmp_xtracking_toggle) switch_x_off();
-	if (!controller_y_on & command_->commands.zmp_ytracking_toggle) switch_y_on();
-	if (controller_y_on & !command_->commands.zmp_ytracking_toggle) switch_y_off();
+	if (!controller_x_on && !controller_x_forced && command_->commands.zmp_xtracking_toggle) switch_x_on(false);
+	if (controller_x_on && !controller_x_forced && !command_->commands.zmp_xtracking_toggle) switch_x_off(false);
+	if (!controller_y_on && !controller_y_forced && command_->commands.zmp_ytracking_toggle) switch_y_on(false);
+	if (controller_y_on && !controller_y_forced && !command_->commands.zmp_ytracking_toggle) switch_y_off(false);
 
 	if (controller_x_on)
 	{
 		output_rad(0) = compute_x(_x_zmp_feedback);
 	}
+	//else output_rad(0) = 0.0;
 	if (controller_y_on)
 	{
 		output_rad(1) = compute_y(_y_zmp_feedback);
 	}
+	//else output_rad(1) = 0.0;
 
 	return output_rad;
 }
@@ -139,24 +141,28 @@ bool Control::Foot_ZMPTracking::is_y_on()
 	return controller_y_on;
 }
 
-bool Control::Foot_ZMPTracking::switch_x_on()
+bool Control::Foot_ZMPTracking::switch_x_on(bool _force_it)
 {
 	controller_x_on = true;
+	controller_x_forced = _force_it;
 }
 
-bool Control::Foot_ZMPTracking::switch_y_on()
+bool Control::Foot_ZMPTracking::switch_y_on(bool _force_it)
 {
 	controller_y_on = true;
+	controller_x_forced = _force_it;
 }
 
-bool Control::Foot_ZMPTracking::switch_x_off()
+bool Control::Foot_ZMPTracking::switch_x_off(bool _force_it)
 {
 	controller_x_on = false;
 	pid_x_.sleep();
+	controller_y_forced = _force_it;
 }
 
-bool Control::Foot_ZMPTracking::switch_y_off()
+bool Control::Foot_ZMPTracking::switch_y_off(bool _force_it)
 {
 	controller_y_on = false;
 	pid_y_.sleep();
+	controller_y_forced = _force_it;
 }

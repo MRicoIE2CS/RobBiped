@@ -42,6 +42,23 @@ double Control::inverse_deadband(const double &_sign_variable, const double &_u,
 	else return _u;
 }
 
+double Control::smoooth_inverse_deadband(const double &_u, const double _offset_for_zero, const double _positive_compensation, const double _negative_compensation)
+{
+	if (0.0 == _negative_compensation && 0.0 == _positive_compensation) return _u;
+
+	if ((_u + _offset_for_zero) > 0.0)
+	{
+		if ((_u + _offset_for_zero) < _positive_compensation) return _u + (_u + _offset_for_zero);
+		else return _u + _positive_compensation;
+	}
+	else if ((_u + _offset_for_zero) < 0.0)
+	{
+		if ((_u + _offset_for_zero) > _negative_compensation) return _u + (_u + _offset_for_zero);
+		else return _u + _negative_compensation;
+	}
+	else return _u;
+}
+
 double Control::two_points_interpolate(double &_input, double &_x, double &_pre_x, double &_y, double &_pre_y)
 {
 	if (0.0 == _x - _pre_x) return 0.0;	// Avoid division by 0

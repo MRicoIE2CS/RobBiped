@@ -92,7 +92,49 @@ class Executor {
 		// State20: Test: Y offline trajectory tracking with X-axis balance
 		bool state20_first_time = true;
 		bool state20_finished = false;
+		uint32_t state20_sin_period = 4000;
 		void state20_execution();
+
+		// State30: Test: Y offline trajectory tracking with walking phases change
+		// ""
+		bool state30_first_time = true;
+		bool state30_finished = false;
+		double state30_leg_lifting_distance_mm = 40.0;
+		uint32_t state30_leg_lifting_time_ms = 500;
+		double state30_leg_lifting_target = 0.0;
+		bool state30_lifting_finished = false;
+		bool state30_lifting_leg = false;
+		bool state30_lowering_leg = false;
+		bool state30_lowering_leg_finished = false;
+		bool state30_swing_leg_started = false;
+		bool state30_swing_leg_finished = false;
+		Control::LinearTrajectoryInterpolator state30_lifting_leg_interpolator;
+		void state30_execution();
+
+		// State40: Test: ZMP tracking
+		bool state40_first_time = true;
+		bool state40_finished = false;
+		bool state40_left_leg_lifted = false;
+		bool state40_right_leg_lifted = false;
+		uint32_t state40_delay_for_buttons = 1000;
+		uint32_t state40_last_millis_for_buttons = millis();
+		double state40_desired_hip_height = 280.0;
+		double state40_desired_step_width = 100.0;
+		double state40_distance_to_lift = 40.0;
+		void state40_execution();
+
+		// State50: Test: ZMP tracking
+		bool state50_first_time = true;
+		bool state50_finished = false;
+		bool state50_left_leg_lifted = false;
+		bool state50_right_leg_lifted = false;
+		uint32_t state50_delay_for_buttons = 1000;
+		uint32_t state50_last_millis_for_buttons = millis();
+		double state50_desired_hip_height = 280.0;
+		double state50_desired_step_width = 100.0;
+		double state50_distance_to_lift = 55.0;
+		double state50_distance_addition = 40.0;
+		void state50_execution();
 
 		// Other state machine flags
 		bool application_on = false;
@@ -103,20 +145,25 @@ class Executor {
 		
 		// Sin periodic signal
 		SignalGenerator sin_signal;
-		uint32_t sin_period = 2500;
+		uint32_t sin_period = 4000;
 
 		// Kinematic objects and definitions
 		double right_foot_center_ = 0.0;
-		GlobalKinematics::PosePhases initial_phase_ = GlobalKinematics::PosePhases::DSP_right;
+		GlobalKinematics::WalkingPhase initial_phase_ = GlobalKinematics::WalkingPhase::DSP_left;
 		// Defined desired hip height
 		double desired_hip_height_ = 260.0;
 		// Defined desired step width
 		double desired_step_width_ = 150.0;
+		// Step distance
+		double step_distance_ = 85;
 		
 		// Control tasks' objects
 		double torso_upright_pitch_control_action = 0.0;
 		double torso_setpoint_ = 0.00;
 		ExpFilter torso_pitch_exp_filter_;
+
+		// Time variable just for printing
+		uint32_t debug_millis = millis();
 
 		// Waiting object
 		Control::Waiting waiting_;

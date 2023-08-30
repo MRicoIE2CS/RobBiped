@@ -65,6 +65,7 @@ struct Configs
 		double calibration_RightFoot_LeftBack_cell = 0.048;
 		double calibration_RightFoot_RightBack_cell = 0.048;
 		struct Location {
+			// Warning: This dimentions should be the same as the ones defined in Configs::kinematics.feet_dimensions
 			int16_t frontBack_separation = 115; //103;
 			int16_t leftRight_separation = 60; //37;
 			}location_mm;
@@ -99,8 +100,19 @@ struct Configs
 		double Kfilter_CM_location = 0.98;//0.955;	// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
 		double Kfilter_CM_velocity = 0.99;	// Constant of the complement filter for the estimation of the CM location [0.0-1.0]
 		// Hip height limits
-		double limit_up_hip_height = 300;
+		double limit_up_hip_height = 305;
 		double limit_down_hip_height = 235;
+		struct FeetDimensions {
+			// Warning: This dimentions should be the same as the ones defined in Configs::force_sensors.location_mm
+			int16_t frontBack_separation = 115;
+			int16_t leftRight_separation = 60;
+			}feet_dimensions;
+		struct HipRollCompensation {
+			double negative_compensation;
+			double positive_compensation;
+			};
+		HipRollCompensation left_hip_roll_compensation = { 0.075, 0.05 };
+		HipRollCompensation right_hip_roll_compensation = { -0.05, -0.075 };
 		}kinematics;
 
 	struct Control {
@@ -120,12 +132,12 @@ struct Configs
 			double Tra_x = 0.005;	// Rising time of ZMP actuation dynamics
 			double Tra_y = 0.005;	// Rising time of ZMP actuation dynamics
 			// dx: for Tra_x=0.005 [ 14, 230, 120] [ 90, 300, 200] 
-			double d0_x = 90;
+			double d0_x = 300;
 			double d1_x = 300;
 			double d2_x = 200;
-			double d0_y = 1;
-			double d1_y = 1;
-			double d2_y = 1;
+			double d0_y = 300;
+			double d1_y = 900;
+			double d2_y = 300;
 			}cm_tracking;
 
 		struct TorsoPosture {
@@ -151,7 +163,7 @@ struct Configs
 		struct ZMPTracking_x {
 			struct FeedforwardCurve {
 				std::vector<double> curve_points_x = { -55, -45, 45, 55 };
-				std::vector<double> curve_points_y = { 0.2, 0.1, -0.1, -0.2 };//{ 0.2, 0.05, -0.05, -0.1 };//{ 0.3, 0.1, -0.05, -0.2 };//{ 0.1, 0.05, -0.05, -0.1 };
+				std::vector<double> curve_points_y = { 0.3, 0.1, -0.1, -0.3 };
 				}feedforward_curve;
 			struct DeadbandCompensation {
 				// Limiting value at which desired ZMP requires negative or positive DB compensation
@@ -162,7 +174,7 @@ struct Configs
 			DeadbandCompensation leftfoot_deadband_compensation = { 0.0, 0.05, 0.07 };
 			DeadbandCompensation rightfoot_deadband_compensation = { 0.0, 0.05, 0.07 };
 			struct PID {
-				double kp = 0.0;//0.0005;
+				double kp = 0.001;//0.0005;
 				double ki = 0.0;
 				double kd = 0.0;
 				// Anti-windup constant
@@ -181,18 +193,18 @@ struct Configs
 				std::vector<double> curve_points_x;
 				std::vector<double> curve_points_y;
 				};
-			FeedforwardCurve left_feedforward_curve = {{ -30, -10, 20, 30 }, { 0.1, 0.0, -0.02, -0.05 }};
-			FeedforwardCurve right_feedforward_curve = {{ -30, -20, 10, 30 }, { 0.05, 0.02, 0.0, -0.1 }};
+			FeedforwardCurve left_feedforward_curve = {{ -30, -10, 10, 20, 30 }, { 0.02, 0.01, -0.01, -0.02, -0.06 }};
+			FeedforwardCurve right_feedforward_curve = {{ -30, -20, -10, 10, 30 }, { 0.15, 0.1, 0.05, -0.008, -0.05 }};
 			struct DeadbandCompensation {
 				// Limiting value at which desired ZMP requires negative or positive DB compensation
 				double db_delimiting_value;
 				double negative_db_compensation_rad;
 				double positive_db_compensation_rad;
 				};
-			DeadbandCompensation leftfoot_deadband_compensation = { -10, 0.08, 0.1 };//{ -10, -0.025, 0.025 };
-			DeadbandCompensation rightfoot_deadband_compensation = { 10, -0.1, -0.08 };//{ 10, -0.025, 0.025 };
+			DeadbandCompensation leftfoot_deadband_compensation = { -10, 0.08, 0.1 };//{ -10, 0.08, 0.1 };//{ -10, -0.025, 0.025 };
+			DeadbandCompensation rightfoot_deadband_compensation = { 10, -0.1, -0.08 };//{ 10, -0.1, -0.08 };//{ 10, -0.025, 0.025 };
 			struct PID {
-				double kp = 0.0012;
+				double kp = 0.001;//0.001;
 				double ki = 0.0;
 				double kd = 0.0;
 				// Anti-windup constant

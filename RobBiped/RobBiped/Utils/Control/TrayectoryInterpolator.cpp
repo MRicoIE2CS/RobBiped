@@ -29,7 +29,13 @@ bool Control::LinearTrajectoryInterpolator::configure_trayectory(const double& _
 	target_ = _target;
 	initial_value_ = _initial_value;
 	transition_time_ms_ = _transition_time_ms;
+	reset();
 	return true;
+}
+
+void Control::LinearTrajectoryInterpolator::update_target(const double& _target)
+{
+	target_ = _target;
 }
 
 bool Control::LinearTrajectoryInterpolator::compute_output(double& _output)
@@ -45,7 +51,9 @@ bool Control::LinearTrajectoryInterpolator::compute_output(double& _output)
 	}
 	else
 	{
-		double calculated_value = initial_value_ + slope_ * (millis() - initial_millis_);
+		uint32_t current_millis = millis() - initial_millis_;
+		slope_ = (target_ - initial_value_) / (transition_time_ms_ - current_millis);
+		double calculated_value = initial_value_ + slope_ * (current_millis);
 
 		if (is_target_reached(calculated_value))
 		{
@@ -55,6 +63,7 @@ bool Control::LinearTrajectoryInterpolator::compute_output(double& _output)
 		else
 		{
 			_output = calculated_value;
+			initial_value_ = _output;
 			return true;
 		}
 	}

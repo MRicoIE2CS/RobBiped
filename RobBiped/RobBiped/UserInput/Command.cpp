@@ -118,9 +118,9 @@ void Command::listen_for_commands()
 			else commands.zmp_ytracking_toggle = true;
 		}
 	// APPLICATION TOGGLE
-		else if (command.equals("app.tgl")){
-			if (commands.application_toggle) commands.application_toggle = false;
-			else commands.application_toggle = true;
+		else if (command.equals("kinematics")){
+			if (commands.kinematics) commands.kinematics = false;
+			else commands.kinematics = true;
 		}
 	// GET UP AND DOWN ROUTINE
 		else if (command.equals("get.up")){
@@ -133,12 +133,29 @@ void Command::listen_for_commands()
 				else commands.test_x_balance_toggle = true;
 		}
 	// Y OFFLINE TRAJECTORY TRACKING TEST, (state number 20)
-		else if (command.equals("ytrack")){
-			if (commands.test_y_offline_tracking_toggle) commands.test_y_offline_tracking_toggle = false;
-			else commands.test_y_offline_tracking_toggle = true;
+		else if (command.equals("DSPsin")){
+			if (commands.test_y_sin_DSP) commands.test_y_sin_DSP = false;
+			else commands.test_y_sin_DSP = true;
 		}
-		else if (command.equals("off"))
-		{
+	// WALK, (state number 30)
+		else if (command.equals("walk")){
+			if (commands.walk) commands.walk = false;
+			else commands.walk = true;
+		}
+	// ZMP TRACKING TEST, (state number 40)
+		else if (command.equals("zmptr_test")){
+			if (commands.test_zmp_tracking) commands.test_zmp_tracking = false;
+			else commands.test_zmp_tracking = true;
+		}
+	// SSP BALANCE TEST, (state number 50)
+		else if (command.equals("SSPbalance")){
+			if (commands.test_SSP_balance) commands.test_SSP_balance = false;
+			else commands.test_SSP_balance = true;
+		}
+	// Reset timer comand
+		else if (command.equals("time")){
+			if (commands.reset_time) commands.reset_time = false;
+			else commands.reset_time = true;
 		}
 	}
 }

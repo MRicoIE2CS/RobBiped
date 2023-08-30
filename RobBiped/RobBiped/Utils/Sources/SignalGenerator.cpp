@@ -22,7 +22,7 @@ double SignalGenerator::generate_trajectory(){
 
 	uint64_t current_millis = millis();
 
-	double nextOutput = offset_ + amplitude_ * sin( (2 * PI / (double)period_ms_) * (double)(current_millis - initial_time_) + phase_shift_rad_);
+	double nextOutput = offset_ + (amplitude_ / 2.0) * sin( (2.0 * PI / (double)period_ms_) * (double)(current_millis - initial_time_) + phase_shift_rad_);
 
 	return nextOutput;
 }

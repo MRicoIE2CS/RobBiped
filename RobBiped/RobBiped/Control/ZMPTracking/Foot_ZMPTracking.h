@@ -69,6 +69,8 @@ class Foot_ZMPTracking : public I_PeriodicTask
 		// ON state of the controller
 		bool controller_x_on = false;
 		bool controller_y_on = false;
+		bool controller_x_forced = false;
+		bool controller_y_forced = false;
 
 		// Read serial commands
 		void read_commands();
@@ -104,10 +106,10 @@ class Foot_ZMPTracking : public I_PeriodicTask
 
 		Vector2d get_control_action();
 
-		bool switch_x_on();
-		bool switch_y_on();
-		bool switch_x_off();
-		bool switch_y_off();
+		bool switch_x_on(bool _force_it);
+		bool switch_y_on(bool _force_it);
+		bool switch_x_off(bool _force_it);
+		bool switch_y_off(bool _force_it);
 
 		bool is_x_on();
 		bool is_y_on();

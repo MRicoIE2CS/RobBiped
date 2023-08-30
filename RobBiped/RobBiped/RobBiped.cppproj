@@ -624,6 +624,12 @@
     <Compile Include="Kinematics_Dynamics\CoM_location.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Kinematics_Dynamics\WalkingPhasesManager.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kinematics_Dynamics\WalkingPhasesManager.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Main\Configs.h">
       <SubType>compile</SubType>
     </Compile>
@@ -661,6 +667,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Kinematics_Dynamics\GlobalKinematics.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Main\TestsRoutines.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Main\WalkingRoutine.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="RobBiped.ino">

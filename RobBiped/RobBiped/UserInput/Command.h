@@ -39,6 +39,7 @@ struct Command
 		bool servo_onoff_toggle = false;
 		bool servo_calibration_onoff_toggle = false;
 		bool servo_selection_button_emulation = false;
+		bool show_alarm_angle_limit = true;				// True by default!
 		bool force_tare_left = false;
 		bool force_tare_right = false;
 		bool force_auto_tare = false;
@@ -57,11 +58,14 @@ struct Command
 		bool zmp_tracking_deb_toggle = false;
 		bool zmp_xtracking_toggle = false;
 		bool zmp_ytracking_toggle = false;
-		bool application_toggle = false;
+		bool kinematics = false;
 		bool get_up_toggle = false;
 		bool test_x_balance_toggle = false;
-		bool test_y_offline_tracking_toggle = false;
-		bool show_alarm_angle_limit = true;				// True by default!
+		bool test_y_sin_DSP = false;
+		bool test_zmp_tracking = false;
+		bool test_SSP_balance = false;
+		bool reset_time = false;
+		bool walk = false;
 	}commands;
 	
 private:
