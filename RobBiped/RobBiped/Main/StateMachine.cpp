@@ -40,7 +40,7 @@ void Executor::state_machine_switch()
 	switch (state_number)
 	{
 		case 0:
-			if (command_->commands.application_toggle)
+			if (command_->commands.kinematics)
 			{
 				state_number = 1;
 				state1_first_time = true;
@@ -59,7 +59,7 @@ void Executor::state_machine_switch()
 				state10_first_time = true;
 				break;
 			}
-			if (command_->commands.test_y_offline_tracking_toggle)
+			if (command_->commands.test_y_sin_DSP)
 			{
 				state_number = 20;
 				state20_first_time = true;
@@ -72,6 +72,18 @@ void Executor::state_machine_switch()
 				global_kinematics_.force_current_walking_phase(GlobalKinematics::WalkingPhase::DSP_left);
 				break;
 			}
+			if (command_->commands.test_zmp_tracking)
+			{
+				state_number = 40;
+				state40_first_time = true;
+				break;
+			}
+			if (command_->commands.test_SSP_balance)
+			{
+				state_number = 50;
+				state50_first_time = true;
+				break;
+			}
 			break;
 		case 1:
 			if (state1_phase && state1_finished)
@@ -80,7 +92,7 @@ void Executor::state_machine_switch()
 // 				waiting_first_time_ = true;
 				break;
 			}
-			if (!command_->commands.application_toggle)
+			if (!command_->commands.kinematics)
 			{
 				state_number = 0;
 				state0_first_time = true;
@@ -120,7 +132,7 @@ void Executor::state_machine_switch()
 				//state_number++;
 				break;
 			}
-			if (!command_->commands.test_y_offline_tracking_toggle)
+			if (!command_->commands.test_y_sin_DSP)
 			{
 				state_number = 0;
 				state0_first_time = true;
@@ -138,6 +150,42 @@ void Executor::state_machine_switch()
 				state_number = 0;
 				state0_first_time = true;
 				global_kinematics_.force_current_walking_phase(GlobalKinematics::WalkingPhase::DSP_left);
+				break;
+			}
+			break;
+		case 40:
+			if (state40_finished)
+			{
+				//state_number++;
+				break;
+			}
+			if (!command_->commands.test_zmp_tracking)
+			{
+				state_number = 0;
+				state0_first_time = true;
+				// Unforce ZMP controllers' enable
+				left_foot_ZMP_tracking_controller_.switch_x_off(false);
+				right_foot_ZMP_tracking_controller_.switch_x_off(false);
+				left_foot_ZMP_tracking_controller_.switch_y_off(false);
+				right_foot_ZMP_tracking_controller_.switch_y_off(false);
+				break;
+			}
+			break;
+		case 50:
+			if (state50_finished)
+			{
+				//state_number++;
+				break;
+			}
+			if (!command_->commands.test_SSP_balance)
+			{
+				state_number = 0;
+				state0_first_time = true;
+				// Unforce ZMP controllers' enable
+				left_foot_ZMP_tracking_controller_.switch_x_off(false);
+				right_foot_ZMP_tracking_controller_.switch_x_off(false);
+				left_foot_ZMP_tracking_controller_.switch_y_off(false);
+				right_foot_ZMP_tracking_controller_.switch_y_off(false);
 				break;
 			}
 			break;
@@ -167,6 +215,12 @@ void Executor::state_machine_execution()
 			break;
 		case 30:
 			state30_execution();
+			break;
+		case 40:
+			state40_execution();
+			break;
+		case 50:
+			state50_execution();
 			break;
 	}
 }

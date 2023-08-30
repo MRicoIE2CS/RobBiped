@@ -50,7 +50,7 @@ bool InverseKinematics::get_supporting_leg_joints_angles_from_desired_length_and
 
 	if (ret_val)
 	{
-		// TODO: Check if all this could be substituted by simply _final_effector_target_angle = _first_joint_target_angle - _second_joint_target_angle;
+		// TODO: Check if all this could be substituted by simply _final_effector_target_angle = - (_first_joint_target_angle + _second_joint_target_angle);
 		// Denavit-Hartenberg table
 		std::vector<Vector4d> DH_table;
 		Vector4d DH_row_1;
