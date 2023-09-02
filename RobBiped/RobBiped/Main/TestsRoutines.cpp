@@ -157,17 +157,17 @@
 		 // Get desired leg lengths computed from DSP kinematics
 		 double left_leg_length;
 		 double right_leg_length;
-		 global_kinematics_.get_computed_leg_lengths(left_leg_length, right_leg_length);
+		 global_kinematics_.get_computed_prismatic_lengths(left_leg_length, right_leg_length);
 
 		 // Get left leg's pitch angle setpoints from DSP kinematics
-		 left_leg_length = left_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
+		 //left_leg_length = left_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
 		 double ankle_pitch_angle;
 		 double knee_pitch_angle;
 		 double hip_pitch_angle;
 		 global_kinematics_.get_joint_angles_for_prismatic_length(left_leg_length, 0.0, ankle_pitch_angle, knee_pitch_angle, hip_pitch_angle);
 
 		 // Get right leg's pitch angle setpoints from DSP kinematics
-		 right_leg_length = right_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
+		 //right_leg_length = right_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
 		 global_kinematics_.get_joint_angles_for_prismatic_length(right_leg_length, 0.0, ankle_pitch_angle, knee_pitch_angle, hip_pitch_angle);
 
 		 // Compute CM tracking control: The output is the ZMP setpoint
@@ -275,17 +275,17 @@ void Executor::state20_execution()
 		// Get desired leg lengths computed from DSP kinematics
 		double left_leg_length;
 		double right_leg_length;
-		global_kinematics_.get_computed_leg_lengths(left_leg_length, right_leg_length);
+		global_kinematics_.get_computed_prismatic_lengths(left_leg_length, right_leg_length);
 
 		// Get left leg's pitch angle setpoints from DSP kinematics
-		left_leg_length = left_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
+		//left_leg_length = left_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
 		double left_ankle_pitch_angle, right_ankle_pitch_angle;
 		double left_knee_pitch_angle, right_knee_pitch_angle;
 		double left_hip_pitch_angle, right_hip_pitch_angle;
 		global_kinematics_.get_joint_angles_for_prismatic_length(left_leg_length, 0.0, left_ankle_pitch_angle, left_knee_pitch_angle, left_hip_pitch_angle);
 
 		// Get right leg's pitch angle setpoints from DSP kinematics
-		right_leg_length = right_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
+		//right_leg_length = right_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
 		global_kinematics_.get_joint_angles_for_prismatic_length(right_leg_length, 0.0, right_ankle_pitch_angle, right_knee_pitch_angle, right_hip_pitch_angle);
 
 		// Compute CM tracking control: The output is the ZMP setpoint
@@ -399,7 +399,7 @@ void Executor::state40_execution()
 		// Get desired leg lengths computed from DSP kinematics
 		double left_leg_length;
 		double right_leg_length;
-		global_kinematics_.get_computed_leg_lengths(left_leg_length, right_leg_length);
+		global_kinematics_.get_computed_prismatic_lengths(left_leg_length, right_leg_length);
 		
 		{
 		uint32_t current_millis = millis();
@@ -426,14 +426,14 @@ void Executor::state40_execution()
 		}
 
 		// Get left leg's pitch angle setpoints from DSP kinematics
-		left_leg_length = left_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
+		//left_leg_length = left_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
 		double left_ankle_pitch_angle, right_ankle_pitch_angle;
 		double left_knee_pitch_angle, right_knee_pitch_angle;
 		double left_hip_pitch_angle, right_hip_pitch_angle;
 		global_kinematics_.get_joint_angles_for_prismatic_length(left_leg_length, 0.0, left_ankle_pitch_angle, left_knee_pitch_angle, left_hip_pitch_angle);
 
 		// Get right leg's pitch angle setpoints from DSP kinematics
-		right_leg_length = right_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
+		//right_leg_length = right_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
 		global_kinematics_.get_joint_angles_for_prismatic_length(right_leg_length, 0.0, right_ankle_pitch_angle, right_knee_pitch_angle, right_hip_pitch_angle);
 		
 		// Setting a ZMP reference to track from the potentiometer2 signal.
@@ -577,7 +577,7 @@ void Executor::state50_execution()
 		// Get desired leg lengths computed from DSP kinematics
 		double left_leg_length;
 		double right_leg_length;
-		global_kinematics_.get_computed_leg_lengths(left_leg_length, right_leg_length);
+		global_kinematics_.get_computed_prismatic_lengths(left_leg_length, right_leg_length);
 		
 		{
 			uint32_t current_millis = millis();
@@ -604,14 +604,14 @@ void Executor::state50_execution()
 		}
 
 		// Get left leg's pitch angle setpoints from DSP kinematics
-		left_leg_length = left_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
+		//left_leg_length = left_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
 		double left_ankle_pitch_angle, right_ankle_pitch_angle;
 		double left_knee_pitch_angle, right_knee_pitch_angle;
 		double left_hip_pitch_angle, right_hip_pitch_angle;
 		global_kinematics_.get_joint_angles_for_prismatic_length(left_leg_length, 0.0, left_ankle_pitch_angle, left_knee_pitch_angle, left_hip_pitch_angle);
 
 		// Get right leg's pitch angle setpoints from DSP kinematics
-		right_leg_length = right_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
+		//right_leg_length = right_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
 		global_kinematics_.get_joint_angles_for_prismatic_length(right_leg_length, 0.0, right_ankle_pitch_angle, right_knee_pitch_angle, right_hip_pitch_angle);
 
 		// Compute CM tracking control: The output is the ZMP setpoint
