@@ -83,10 +83,11 @@ class GlobalKinematics : public I_PeriodicTask {
 		void compute_lateral_DSP_home_kinematics();
 
 		// Computed lateral roll angle setpoints
-		double left_foot_roll_setpoint_, right_foot_roll_setpoint_;
+		double left_hip_roll_setpoint_, right_foot_roll_setpoint_;
 		// Computed leg length setpoints
-		// These lengths include all length of the leg, without foot roll joint height (from hip roll joint to foot roll joint)
-		double left_leg_length_setpoint_, right_leg_length_setpoint_;
+		double left_prismatic_length_setpoint_, right_prismatic_length_setpoint_;
+		// Computed frontal angle for latter prismatic joints computation
+		double right_low_frontal_angle_prismatic_, left_low_frontal_angle_prismatic_;
 
 		// Check whether global ZMP is over left footprint
 		bool is_zmp_over_left_footprint();
@@ -120,12 +121,16 @@ class GlobalKinematics : public I_PeriodicTask {
 
 		// Sets desired hip center position, and computes the necessary roll angle setpoint, and necessary leg lengths, if successful
 		bool compute_lateral_DSP_kinematics(const double _desired_hip_center_position);
+		// Sets desired hip XY position, and computes the necessary roll angle setpoint, and necessary leg lengths
+		bool compute_bidimensional_DSP_kinematics(const double _desired_hip_center_Y_position, const double _desired_hip_X_position);
 		// Returns the last computed roll angles
 		void get_computed_angles(double &_left_foot_roll_setpoint, double &_right_foot_roll_setpoint);
 		// Returns the last computed leg lengths. Distance from hip roll joint to ankle roll joint
-		void get_computed_leg_lengths(double &_left_leg_length_setpoint, double &_right_leg_length_setpoint);
+		//void get_computed_leg_lengths(double &_left_leg_length_setpoint, double &_right_leg_length_setpoint);
 		// Returns the last computed prismatic lengths. Distances from hip pitch joint to ankle pitch joint
 		bool get_computed_prismatic_lengths(double &_left_prismatic_length_setpoint, double &_right_prismatic_length_setpoint);
+		// Returns the computed frontal angles for prismatic joint
+		bool get_frontal_prismatic_angles(double &_left_prismatic_angle_setpoint, double &_right_prismatic_angle_setpoint);
 		// Transforms the desired leg length, from roll joints of hip and ankle, in desired prismatic distance, from pitch joints of hip and ankle
 		bool get_prismatic_lenght(const double &_desired_leg_length, double &_desired_prismatic_length);
 

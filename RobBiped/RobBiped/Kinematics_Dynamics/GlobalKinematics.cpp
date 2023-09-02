@@ -113,33 +113,80 @@ bool GlobalKinematics::compute_lateral_DSP_kinematics(const double _desired_hip_
 
 	right_foot_roll_setpoint_ = atan2( (_desired_hip_center_position - right_foot_center_y_ - config_->d_hip_width / 2.0) ,
 										(desired_hip_height_ - config_->height_foot) );
-	left_foot_roll_setpoint_ = atan2( (desired_step_width_ - _desired_hip_center_position - right_foot_center_y_ - config_->d_hip_width / 2.0) ,
+	left_hip_roll_setpoint_ = atan2( (desired_step_width_ - _desired_hip_center_position - right_foot_center_y_ - config_->d_hip_width / 2.0) ,
 										(desired_hip_height_ - config_->height_foot) );
 	
-	left_leg_length_setpoint_ = (desired_hip_height_ - config_->height_foot) / cos(left_foot_roll_setpoint_);
-	right_leg_length_setpoint_ = (desired_hip_height_ - config_->height_foot) / cos(right_foot_roll_setpoint_);
+	left_prismatic_length_setpoint_ = (desired_hip_height_ - config_->height_foot) / cos(left_hip_roll_setpoint_);
+	right_prismatic_length_setpoint_ = (desired_hip_height_ - config_->height_foot) / cos(right_foot_roll_setpoint_);
+	
+	get_prismatic_lenght(left_prismatic_length_setpoint_, left_prismatic_length_setpoint_);
+	get_prismatic_lenght(right_prismatic_length_setpoint_, right_prismatic_length_setpoint_);
+
+	return true;
+}
+
+bool GlobalKinematics::compute_bidimensional_DSP_kinematics(const double _desired_hip_center_Y_position, const double _desired_hip_X_position)
+{
+	// 	if (_desired_hip_center_position < right_foot_center_y_
+	// 		|| _desired_hip_center_position > left_foot_center_y_)
+	// 	{
+	// 		return false;
+	// 	}
+
+	// TODO: Verification to avoid non reachable postures, depending on configuration, desired hip height and desired step width
+	
+	double h_leg_roll_projection = (desired_hip_height_ - config_->height_foot);
+
+	right_foot_roll_setpoint_ = atan2( (_desired_hip_center_Y_position - right_foot_center_y_ - config_->d_hip_width / 2.0) ,
+										h_leg_roll_projection );
+	left_hip_roll_setpoint_ = atan2( (desired_step_width_ - _desired_hip_center_Y_position - right_foot_center_y_ - config_->d_hip_width / 2.0) ,
+										h_leg_roll_projection );
+	
+// 	double h_right_leg_roll_projection = h_leg_roll_projection / cos(right_foot_roll_setpoint_);
+// 	double h_left_leg_roll_projection = h_leg_roll_projection / cos(left_hip_roll_setpoint_);
+	
+	double h_right_leg_pitch_projection = h_leg_roll_projection - (config_->height_ankle + config_->height_hip) * right_foot_roll_setpoint_;
+	double h_left_leg_pitch_projection = h_leg_roll_projection - (config_->height_ankle + config_->height_hip) * left_hip_roll_setpoint_;
+	
+	right_low_frontal_angle_prismatic_ = atan2( _desired_hip_X_position - right_foot_center_x_ , h_right_leg_pitch_projection );
+	left_low_frontal_angle_prismatic_ = atan2( _desired_hip_X_position - left_foot_center_x_ , h_right_leg_pitch_projection );
+	
+	double right_prismatic_length_pitch_projection_ = h_right_leg_pitch_projection / cos(right_low_frontal_angle_prismatic_);
+	double left_prismatic_length_pitch_projection_ = h_left_leg_pitch_projection / cos(left_low_frontal_angle_prismatic_);
+	
+	left_prismatic_length_setpoint_ = left_prismatic_length_pitch_projection_ * cos(left_hip_roll_setpoint_);
+	right_prismatic_length_setpoint_ = right_prismatic_length_pitch_projection_ * cos(right_foot_roll_setpoint_);
 
 	return true;
 }
 
 void GlobalKinematics::get_computed_angles(double &_left_foot_roll_setpoint, double &_right_foot_roll_setpoint)
 {
-	_left_foot_roll_setpoint = left_foot_roll_setpoint_;
+	_left_foot_roll_setpoint = left_hip_roll_setpoint_;
 	_right_foot_roll_setpoint = right_foot_roll_setpoint_;
 }
 
-void GlobalKinematics::get_computed_leg_lengths(double &_left_leg_length_setpoint, double &_right_leg_length_setpoint)
-{
-	_left_leg_length_setpoint = left_leg_length_setpoint_;
-	_right_leg_length_setpoint = right_leg_length_setpoint_;
-}
+// void GlobalKinematics::get_computed_leg_lengths(double &_left_leg_length_setpoint, double &_right_leg_length_setpoint)
+// {
+// 	_left_leg_length_setpoint = left_prismatic_length_setpoint_;
+// 	_right_leg_length_setpoint = right_prismatic_length_setpoint_;
+// }
 
 bool GlobalKinematics::get_computed_prismatic_lengths(double &_left_prismatic_length_setpoint, double &_right_prismatic_length_setpoint)
 {
-	bool retcode1 = get_prismatic_lenght(left_leg_length_setpoint_, _left_prismatic_length_setpoint);
-	bool retcode2 = get_prismatic_lenght(right_leg_length_setpoint_, _right_prismatic_length_setpoint);
-	if (retcode1 && retcode2) return true;
-	else return false;
+	_left_prismatic_length_setpoint = left_prismatic_length_setpoint_;
+	_right_prismatic_length_setpoint = right_prismatic_length_setpoint_;
+// 	bool retcode1 = get_prismatic_lenght(left_prismatic_length_setpoint_, _left_prismatic_length_setpoint);
+// 	bool retcode2 = get_prismatic_lenght(right_leg_length_setpoint_, _right_prismatic_length_setpoint);
+// 	if (retcode1 && retcode2) return true;
+// 	else return false;
+	return true;
+}
+
+bool GlobalKinematics::get_frontal_prismatic_angles(double &_left_prismatic_angle_setpoint, double &_right_prismatic_angle_setpoint)
+{
+	_left_prismatic_angle_setpoint = left_low_frontal_angle_prismatic_;
+	_right_prismatic_angle_setpoint = right_low_frontal_angle_prismatic_;
 }
 
 bool GlobalKinematics::get_prismatic_lenght(const double &_desired_leg_length, double &_desired_prismatic_length)
