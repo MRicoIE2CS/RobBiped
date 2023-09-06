@@ -76,8 +76,8 @@ class GlobalKinematics : public I_PeriodicTask {
 		double home_leg_length_;
 
 		// Coordinates in ground, for each feet
-		double right_foot_center_x_, left_foot_center_x_ = 0.0;
-		double right_foot_center_y_, left_foot_center_y_ = 0.0;
+		double right_foot_center_x_ = 0.0, left_foot_center_x_ = 0.0;
+		double right_foot_center_y_ = 0.0, left_foot_center_y_ = 0.0;
 
 		// Computes the necessary roll angle and leg lengths at home position, for the desired hip height and step width
 		void compute_lateral_DSP_home_kinematics();
@@ -93,9 +93,15 @@ class GlobalKinematics : public I_PeriodicTask {
 		bool is_zmp_over_left_footprint();
 		// Check whether global ZMP is over right footprint
 		bool is_zmp_over_right_footprint();
+		// Check whether CM could be over left side of the walk
+		bool could_com_be_by_left_side(const double &_CM_reference);
+		// Check whether CM could be over right side of the walk
+		bool could_com_be_by_right_side(const double &_CM_reference);
 		// Flags to know if any foot have been lifted during SSP
 		bool has_left_foot_been_lifted = false;
 		bool has_right_foot_been_lifted = false;
+		ExpFilter zmp_over_left_footprint_filter;
+		ExpFilter zmp_over_right_footprint_filter;
 		// Flag for if there has been a phase change within this execution period
 		bool has_there_been_a_phase_change_ = false;
 
@@ -124,7 +130,7 @@ class GlobalKinematics : public I_PeriodicTask {
 		// Sets desired hip XY position, and computes the necessary roll angle setpoint, and necessary leg lengths
 		bool compute_bidimensional_DSP_kinematics(const double _desired_hip_center_Y_position, const double _desired_hip_X_position);
 		// Returns the last computed roll angles
-		void get_computed_angles(double &_left_foot_roll_setpoint, double &_right_foot_roll_setpoint);
+		void get_computed_angles(double &_left_hip_roll_setpoint, double &_right_foot_roll_setpoint);
 		// Returns the last computed leg lengths. Distance from hip roll joint to ankle roll joint
 		//void get_computed_leg_lengths(double &_left_leg_length_setpoint, double &_right_leg_length_setpoint);
 		// Returns the last computed prismatic lengths. Distances from hip pitch joint to ankle pitch joint
@@ -163,7 +169,7 @@ class GlobalKinematics : public I_PeriodicTask {
 		Vector3d get_CoM_acceleration();
 
 		// Checks whether to change the walking phase between DSP and SSP
-		bool check_walking_phase();
+		bool check_walking_phase(const double &_CM_reference);
 		// Returns the current walking phase
 		WalkingPhase get_current_walking_phase();
 		// Sets the current walking phase
@@ -172,6 +178,10 @@ class GlobalKinematics : public I_PeriodicTask {
 		bool has_there_been_a_phase_change();
 		// Flag that indicates if the lifting leg maneuver has been performed during SSP
 		bool lifting_maneuver_performed = false;
+		
+		// Increment the position of the feet
+		void new_left_step(double _distance);
+		void new_right_step(double _distance);
 	};
 
 #endif
