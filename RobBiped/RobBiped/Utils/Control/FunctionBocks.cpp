@@ -57,6 +57,25 @@ double Control::smoooth_inverse_deadband(const double &_u, const double _offset_
 		else return _u + _negative_compensation;
 	}
 	else return _u;
+	
+// 	if (0.0 == _negative_compensation && 0.0 == _positive_compensation) return _u;
+// 
+// 	double middle_compensation = (_positive_compensation - _negative_compensation) / 2.0;
+// 	double centered_vin = _u +_offset_for_zero;
+// 	
+// 	if (centered_vin >= _positive_compensation - middle_compensation)
+// 	{
+// 		return centered_vin + _positive_compensation;
+// 	}
+// 	else if (centered_vin <= _negative_compensation - middle_compensation)
+// 	{
+// 		return centered_vin + _negative_compensation;
+// 	}
+// 	else
+// 	{
+// 		double slope = 2 * (_positive_compensation - _negative_compensation) / (_positive_compensation - _negative_compensation);
+// 		return middle_compensation + slope * centered_vin;
+// 	}
 }
 
 double Control::two_points_interpolate(double &_input, double &_x, double &_pre_x, double &_y, double &_pre_y)
