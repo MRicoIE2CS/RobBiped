@@ -35,6 +35,9 @@ class LinearTrajectoryInterpolator : public I_PeriodicTask {
 
 		// Final target of the trajectory.
 		double target_;
+		
+		// Reaching threshold
+		double reach_threshold_mm_ = 0.1;
 
 		// Transition time for the trajectory.
 		uint64_t transition_time_ms_;
