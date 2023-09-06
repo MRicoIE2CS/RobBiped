@@ -64,18 +64,23 @@ class Executor {
 		/////____________ APPLICATION EXCLUSIVE OBJECTS AND METHODS: __//
 
 		// State machine related objects and methods
-		// TODO: Create new class "State" that unites all necessities from a state
 		uint8_t state_number = 0;
 		void state_machine_switch();
 		void state_machine_execution();
 		void read_commands();
 		void always_executes();
+
 		bool state0_first_time = true;
 		bool state0_finished = false;
+		double state0_distance_addition = 15.0;
+		double state0_desired_hip_height = 285.0;
 		void state0_execution();
+
 		bool state1_first_time = true;
 		uint8_t state1_phase = 0;
 		bool state1_finished = false;
+		double state1_distance_addition = 30.0;
+		double state1_desired_hip_height = 295.0;
 		void state1_execution();
 
 		// State2: Go UP and DOWN routine
@@ -89,18 +94,25 @@ class Executor {
 		bool state10_finished = false;
 		void state10_execution();
 
-		// State20: Test: Y offline trajectory tracking with X-axis balance
+		// State20: Test: DSP Yaxis SIN trajectory tracking with X-axis balance
 		bool state20_first_time = true;
 		bool state20_finished = false;
-		uint32_t state20_sin_period = 4000;
+		double state20_desired_hip_height = 285.0;
+		double state20_desired_step_width = 100.0;
+		double state20_distance_addition = 15.0;
+		SignalGenerator state20_sin_signal;
+		uint32_t state20_sin_period = 60000;
 		void state20_execution();
 
 		// State30: Test: Y offline trajectory tracking with walking phases change
 		// ""
 		bool state30_first_time = true;
 		bool state30_finished = false;
-		double state30_leg_lifting_distance_mm = 40.0;
-		uint32_t state30_leg_lifting_time_ms = 500;
+		double state30_desired_hip_height = 285.0;
+		double state30_desired_step_width = 100.0;
+		double state30_desired_step_length = 85.0;
+		double state30_leg_lifting_distance_mm = 10.0;
+		uint32_t state30_leg_lifting_time_ms = 1000;
 		double state30_leg_lifting_target = 0.0;
 		bool state30_lifting_finished = false;
 		bool state30_lifting_leg = false;
@@ -108,6 +120,7 @@ class Executor {
 		bool state30_lowering_leg_finished = false;
 		bool state30_swing_leg_started = false;
 		bool state30_swing_leg_finished = false;
+		bool state30_lifting_leg_controller_reset = false;
 		Control::LinearTrajectoryInterpolator state30_lifting_leg_interpolator;
 		void state30_execution();
 
@@ -123,17 +136,17 @@ class Executor {
 		double state40_distance_to_lift = 40.0;
 		void state40_execution();
 
-		// State50: Test: ZMP tracking
+		// State50: Test: SSP BALANCE
 		bool state50_first_time = true;
 		bool state50_finished = false;
 		bool state50_left_leg_lifted = false;
 		bool state50_right_leg_lifted = false;
 		uint32_t state50_delay_for_buttons = 1000;
 		uint32_t state50_last_millis_for_buttons = millis();
-		double state50_desired_hip_height = 280.0;
+		double state50_desired_hip_height = 295.0;
 		double state50_desired_step_width = 100.0;
-		double state50_distance_to_lift = 55.0;
-		double state50_distance_addition = 40.0;
+		double state50_distance_to_lift = 40.0;
+		double state50_distance_addition = 15.0;
 		void state50_execution();
 
 		// Other state machine flags
@@ -142,18 +155,15 @@ class Executor {
 
 		ExpFilter some_exp_filter_;
 		ExpFilter some_exp_filter_2_;
-		
-		// Sin periodic signal
-		SignalGenerator sin_signal;
-		uint32_t sin_period = 4000;
+		ExpFilter some_exp_filter_3_;
 
 		// Kinematic objects and definitions
-		double right_foot_center_ = 0.0;
+		double right_foot_center_ = config_.kinematics.right_foot_pos.y;
 		GlobalKinematics::WalkingPhase initial_phase_ = GlobalKinematics::WalkingPhase::DSP_left;
 		// Defined desired hip height
 		double desired_hip_height_ = 260.0;
 		// Defined desired step width
-		double desired_step_width_ = 150.0;
+		double desired_step_width_ = 100.0;//150.0;
 		// Step distance
 		double step_distance_ = 85;
 		
@@ -164,6 +174,7 @@ class Executor {
 
 		// Time variable just for printing
 		uint32_t debug_millis = millis();
+		uint32_t last_print_millis = millis();
 
 		// Waiting object
 		Control::Waiting waiting_;

@@ -69,8 +69,8 @@ struct Configs
 			int16_t frontBack_separation = 115; //103;
 			int16_t leftRight_separation = 60; //37;
 			}location_mm;
-		uint32_t touch_detection_up_threshold_gr = 175;
-		uint32_t touch_detection_down_threshold_gr = 125;
+		uint32_t touch_detection_up_threshold_gr = 200;
+		uint32_t touch_detection_down_threshold_gr = 150;
 		}force_sensors;		// Dependent on static const Configuration::hx711_number
 
 	struct GyroscpeAccelerometer {
@@ -111,8 +111,15 @@ struct Configs
 			double negative_compensation;
 			double positive_compensation;
 			};
-		HipRollCompensation left_hip_roll_compensation = { 0.075, 0.05 };
-		HipRollCompensation right_hip_roll_compensation = { -0.05, -0.075 };
+		HipRollCompensation left_hip_roll_compensation = { 0.2, 0.2 };
+		HipRollCompensation right_hip_roll_compensation = { -0.125, -0.15 };
+		uint32_t ms_of_zmp_over_footprint_filter_time = 250;
+		struct InitialPosition {
+			double x;
+			double y;
+			};
+		InitialPosition left_foot_pos = {100.0, 0.0};//{100.0, 0.0};
+		InitialPosition right_foot_pos = {0.0, 0.0};//{0.0, 0.0};
 		}kinematics;
 
 	struct Control {
@@ -131,7 +138,6 @@ struct Configs
 			uint32_t paths_sampletime_ms = 10;
 			double Tra_x = 0.005;	// Rising time of ZMP actuation dynamics
 			double Tra_y = 0.005;	// Rising time of ZMP actuation dynamics
-			// dx: for Tra_x=0.005 [ 14, 230, 120] [ 90, 300, 200] 
 			double d0_x = 300;
 			double d1_x = 300;
 			double d2_x = 200;
@@ -144,15 +150,15 @@ struct Configs
 			// PID constants
 			double kp = 0.01;
 			double ki = 0.0;
-			double kd = 0.0;//0.1;//0.25;
+			double kd = 0.0;
 			// Anti-windup constant
 			double k_windup = 0.5;
 			// Setpoint weighting constants [0.0 - 1.0]
 			double proportional_setpoint_weight = 1.0;
 			double derivative_setpoint_weight = 0.0;
 			// Deadband compensation
-			double negative_db_compensation_rad = -0.0;//-0.05;
-			double positive_db_compensation_rad = 0.05;//0.05;
+			double negative_db_compensation_rad = -0.0;
+			double positive_db_compensation_rad = 0.05;
 			// Derivative filter time constant
 			uint32_t derivative_time_constant_ms_ = 40;
 			// Saturation limits
@@ -204,7 +210,7 @@ struct Configs
 			DeadbandCompensation leftfoot_deadband_compensation = { -10, 0.08, 0.1 };//{ -10, 0.08, 0.1 };//{ -10, -0.025, 0.025 };
 			DeadbandCompensation rightfoot_deadband_compensation = { 10, -0.1, -0.08 };//{ 10, -0.1, -0.08 };//{ 10, -0.025, 0.025 };
 			struct PID {
-				double kp = 0.001;//0.001;
+				double kp = 0.0;//0.001;
 				double ki = 0.0;
 				double kd = 0.0;
 				// Anti-windup constant

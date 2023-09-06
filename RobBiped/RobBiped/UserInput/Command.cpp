@@ -152,7 +152,7 @@ void Command::listen_for_commands()
 			if (commands.test_SSP_balance) commands.test_SSP_balance = false;
 			else commands.test_SSP_balance = true;
 		}
-	// Reset timer comand
+	// Reset timer command
 		else if (command.equals("time")){
 			if (commands.reset_time) commands.reset_time = false;
 			else commands.reset_time = true;

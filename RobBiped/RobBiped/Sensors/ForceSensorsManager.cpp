@@ -94,15 +94,19 @@ bool ForceSensorsManager::update()
 	{
  		value_LeftFoot_LeftBack_ = filter_LeftFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(0u)) * *calibration_LeftFoot_LeftBack_cell_;
 		value_LeftFoot_LeftBack_ = (value_LeftFoot_LeftBack_ < 0) ? 0 : value_LeftFoot_LeftBack_;
+		//value_LeftFoot_LeftBack_ = multiple_hx711_.get_Ax64_channel_value(0u) * *calibration_LeftFoot_LeftBack_cell_;
 
 		value_LeftFoot_LeftFront_ = filter_LeftFoot_LeftFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(1u)) * *calibration_LeftFoot_LeftFront_cell_;
 		value_LeftFoot_LeftFront_ = (value_LeftFoot_LeftFront_ < 0) ? 0 : value_LeftFoot_LeftFront_;
+		//value_LeftFoot_LeftFront_ = multiple_hx711_.get_Ax64_channel_value(1u) * *calibration_LeftFoot_LeftFront_cell_;
 
 		value_LeftFoot_RightBack_ = filter_LeftFoot_RightBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(2u)) * *calibration_LeftFoot_RightBack_cell_;
 		value_LeftFoot_RightBack_ = (value_LeftFoot_RightBack_ < 0) ? 0 : value_LeftFoot_RightBack_;
+		//value_LeftFoot_RightBack_ = multiple_hx711_.get_Ax64_channel_value(2u) * *calibration_LeftFoot_RightBack_cell_;
 
 		value_LeftFoot_RightFront_ = filter_LeftFoot_RightFront_.filter_pr(multiple_hx711_.get_Ax64_channel_value(3u)) * *calibration_LeftFoot_RightFront_cell_;
 		value_LeftFoot_RightFront_ = (value_LeftFoot_RightFront_ < 0) ? 0 : value_LeftFoot_RightFront_;
+		//value_LeftFoot_RightFront_ = multiple_hx711_.get_Ax64_channel_value(3u) * *calibration_LeftFoot_RightFront_cell_;
 
 		value_RightFoot_LeftBack_ = filter_RightFoot_LeftBack_.filter_pr(multiple_hx711_.get_Ax64_channel_value(4u)) * *calibration_RightFoot_LeftBack_cell_;
 		value_RightFoot_LeftBack_ = (value_RightFoot_LeftBack_ < 0) ? 0 : value_RightFoot_LeftBack_;
