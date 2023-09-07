@@ -87,7 +87,7 @@ double Control::TorsoPosture::compute(double& _current_torso_pitch_angle_rad)
 
 	if (controller_on)
 	{
-		pid_.compute_output(setpoint_rad_, _current_torso_pitch_angle_rad, output_rad, -_current_torso_pitch_angle_rad);
+		pid_.compute_output(setpoint_rad_, _current_torso_pitch_angle_rad, output_rad, _current_torso_pitch_angle_rad);
 	}
 
 	return output_rad;

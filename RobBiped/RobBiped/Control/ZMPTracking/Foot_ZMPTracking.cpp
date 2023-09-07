@@ -156,6 +156,7 @@ bool Control::Foot_ZMPTracking::switch_y_on(bool _force_it)
 bool Control::Foot_ZMPTracking::switch_x_off(bool _force_it)
 {
 	controller_x_on = false;
+	if (_force_it) command_->commands.zmp_xtracking_toggle = false;
 	pid_x_.sleep();
 	controller_y_forced = _force_it;
 }
@@ -163,6 +164,17 @@ bool Control::Foot_ZMPTracking::switch_x_off(bool _force_it)
 bool Control::Foot_ZMPTracking::switch_y_off(bool _force_it)
 {
 	controller_y_on = false;
+	if (_force_it) command_->commands.zmp_ytracking_toggle = false;
 	pid_y_.sleep();
 	controller_y_forced = _force_it;
+}
+
+void Control::Foot_ZMPTracking::reset_value_x()
+{
+	output_rad(0) = 0.0;
+}
+
+void Control::Foot_ZMPTracking::reset_value_y()
+{
+	output_rad(1) = 0.0;
 }

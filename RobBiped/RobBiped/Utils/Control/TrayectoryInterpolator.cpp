@@ -72,7 +72,9 @@ bool Control::LinearTrajectoryInterpolator::compute_output(double& _output)
 bool Control::LinearTrajectoryInterpolator::is_target_reached(double& _calculated_value)
 {
 	if (((0 < slope_) && (_calculated_value > target_))
-	   || ((0 > slope_) && (_calculated_value < target_)))
+	   || ((0 > slope_) && (_calculated_value < target_))
+	   || (((_calculated_value - target_) <= reach_threshold_mm_) && ((_calculated_value - target_) >= -reach_threshold_mm_))
+		)
 	{
 		return true;
 	}

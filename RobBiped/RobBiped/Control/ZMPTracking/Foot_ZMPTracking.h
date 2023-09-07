@@ -113,6 +113,10 @@ class Foot_ZMPTracking : public I_PeriodicTask
 
 		bool is_x_on();
 		bool is_y_on();
+		
+		// Reset output value externally
+		void reset_value_x();
+		void reset_value_y();
 };
 
 }
