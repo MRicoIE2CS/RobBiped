@@ -110,7 +110,7 @@ class GlobalKinematics : public I_PeriodicTask {
 		void assoc_config(Configuration::Configs::Kinematics &_config);
 		void assoc_sensors(ForceSensorsManager &_force_sensors_manager, GyroscopeAccelerometerManager &_gyroscope_accelerometer_manager);
 
-		void init(double _centerof_right_foot, WalkingPhase _phase, double _desired_hip_height, double _desired_step_width);
+		void init(WalkingPhase _phase, double _desired_hip_height, double _desired_step_width);
 
 		// Sets desired hip height
 		bool set_desired_hip_height(double _desired_hip_height);
@@ -136,7 +136,7 @@ class GlobalKinematics : public I_PeriodicTask {
 		// Returns the last computed prismatic lengths. Distances from hip pitch joint to ankle pitch joint
 		bool get_computed_prismatic_lengths(double &_left_prismatic_length_setpoint, double &_right_prismatic_length_setpoint);
 		// Returns the computed frontal angles for prismatic joint
-		bool get_frontal_prismatic_angles(double &_left_prismatic_angle_setpoint, double &_right_prismatic_angle_setpoint);
+		bool get_computed_frontal_prismatic_angles(double &_left_prismatic_angle_setpoint, double &_right_prismatic_angle_setpoint);
 		// Transforms the desired leg length, from roll joints of hip and ankle, in desired prismatic distance, from pitch joints of hip and ankle
 		bool get_prismatic_lenght(const double &_desired_leg_length, double &_desired_prismatic_length);
 
@@ -180,8 +180,8 @@ class GlobalKinematics : public I_PeriodicTask {
 		bool lifting_maneuver_performed = false;
 		
 		// Increment the position of the feet
-		void new_left_step(double _distance);
-		void new_right_step(double _distance);
+		void get_modfiable_left_frontal_position(double *&_position);
+		void get_modfiable_right_frontal_position(double *&_position);
 	};
 
 #endif

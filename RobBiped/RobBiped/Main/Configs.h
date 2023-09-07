@@ -118,7 +118,7 @@ struct Configs
 			double x;
 			double y;
 			};
-		InitialPosition left_foot_pos = {100.0, 0.0};//{100.0, 0.0};
+		InitialPosition left_foot_pos = {85.0, 100.0};		// This one is not used, specific desired_step_width is used instead
 		InitialPosition right_foot_pos = {0.0, 0.0};//{0.0, 0.0};
 		}kinematics;
 
@@ -157,7 +157,7 @@ struct Configs
 			double proportional_setpoint_weight = 1.0;
 			double derivative_setpoint_weight = 0.0;
 			// Deadband compensation
-			double negative_db_compensation_rad = -0.0;
+			double negative_db_compensation_rad = 0.1;
 			double positive_db_compensation_rad = 0.05;
 			// Derivative filter time constant
 			uint32_t derivative_time_constant_ms_ = 40;

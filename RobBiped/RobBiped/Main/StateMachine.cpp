@@ -152,9 +152,12 @@ void Executor::state_machine_switch()
 				global_kinematics_.force_current_walking_phase(GlobalKinematics::WalkingPhase::DSP_left);
 				// Unforce ZMP controllers' enable
 				left_foot_ZMP_tracking_controller_.switch_x_off(false);
-				right_foot_ZMP_tracking_controller_.switch_x_off(false);
 				left_foot_ZMP_tracking_controller_.switch_y_off(false);
+				left_foot_ZMP_tracking_controller_.reset_value_x(); left_foot_ZMP_tracking_controller_.reset_value_y();
+				right_foot_ZMP_tracking_controller_.switch_x_off(false);
 				right_foot_ZMP_tracking_controller_.switch_y_off(false);
+				right_foot_ZMP_tracking_controller_.reset_value_x(); right_foot_ZMP_tracking_controller_.reset_value_y();
+				global_kinematics_.init(initial_phase_, desired_hip_height_, desired_step_width_);
 				break;
 			}
 			break;
@@ -277,21 +280,20 @@ void Executor::state0_execution()
 
 	if (force_sensors_manager_.has_been_updated)
 	{
-// 		// Potentiometer value sets the desired hip height
-// 		double potentiometer_value2 = some_exp_filter_2_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer2) / 4095.0);
-// 		// Desired hip height
-// 		double desired_hip_height = config_.kinematics.limit_down_hip_height + (config_.kinematics.limit_up_hip_height - config_.kinematics.limit_down_hip_height) * potentiometer_value2;
-// 		Serial.println("desired_hip_height: \t" + (String)desired_hip_height);
-// 
-// 		global_kinematics_.set_desired_hip_height(desired_hip_height);
+		// Potentiometer value sets the desired hip height
+		double potentiometer_value2 = some_exp_filter_2_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer2) / 4095.0);
+		double DSP_CM_setpoint_x_ = config_.kinematics.right_foot_pos.x + (2.0*state0_desired_step_length - state0_desired_step_length) * potentiometer_value2;
+		Serial.println("DSP_CM_setpoint_x_: \t" + (String)DSP_CM_setpoint_x_);
 		
 		// Potentiometer value sets the CM setpoint in Double Support Phase, along the Y-axis
 		double potentiometer_value1 = some_exp_filter_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0);
 		// Desired CM position
-		double DSP_CM_setpoint_ = right_foot_center_ - state0_distance_addition + (desired_step_width_ + 2.0*state0_distance_addition) * potentiometer_value1;
+		double DSP_CM_setpoint_y_ = right_foot_center_ - state0_distance_addition + (state0_desired_step_width + 2.0*state0_distance_addition) * potentiometer_value1;
+		Serial.println("DSP_CM_setpoint_y_: \t" + (String)DSP_CM_setpoint_y_);
 
 		// Compute DSP kinematics
-		bool retcode_compute_lateral_DSP_kinematics = global_kinematics_.compute_lateral_DSP_kinematics(DSP_CM_setpoint_);
+		//bool retcode_compute_lateral_DSP_kinematics = global_kinematics_.compute_lateral_DSP_kinematics(DSP_CM_setpoint_);
+		global_kinematics_.compute_bidimensional_DSP_kinematics(DSP_CM_setpoint_y_, DSP_CM_setpoint_x_);
 
 		// Get roll angle setpoints from DSP kinematics
 		double left_roll_angle;
@@ -302,17 +304,24 @@ void Executor::state0_execution()
 		double left_leg_length;
 		double right_leg_length;
 		global_kinematics_.get_computed_prismatic_lengths(left_leg_length, right_leg_length);
+Serial.println("left_leg_length: \t" + (String)left_leg_length);
+Serial.println("right_leg_length: \t" + (String)right_leg_length);
+
+		// Get frontal angle setpoints for prismatic lengths from DSP kinematics
+		double left_frontal_angle;
+		double right_frontal_angle;
+		global_kinematics_.get_computed_frontal_prismatic_angles(left_frontal_angle, right_frontal_angle);
 
 		// Get left leg's pitch angle setpoints from DSP kinematics
 		//left_leg_length = left_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
 		double left_ankle_pitch_angle, right_ankle_pitch_angle;
 		double left_knee_pitch_angle, right_knee_pitch_angle;
 		double left_hip_pitch_angle, right_hip_pitch_angle;
-		global_kinematics_.get_joint_angles_for_prismatic_length(left_leg_length, 0.0, left_ankle_pitch_angle, left_knee_pitch_angle, left_hip_pitch_angle);
+		global_kinematics_.get_joint_angles_for_prismatic_length(left_leg_length, left_frontal_angle, left_ankle_pitch_angle, left_knee_pitch_angle, left_hip_pitch_angle);
 
 		// Get right leg's pitch angle setpoints from DSP kinematics
 		//right_leg_length = right_leg_length - config_.kinematics.height_hip - config_.kinematics.height_ankle;
-		global_kinematics_.get_joint_angles_for_prismatic_length(right_leg_length, 0.0, right_ankle_pitch_angle, right_knee_pitch_angle, right_hip_pitch_angle);
+		global_kinematics_.get_joint_angles_for_prismatic_length(right_leg_length, right_frontal_angle, right_ankle_pitch_angle, right_knee_pitch_angle, right_hip_pitch_angle);
 
 		// Compute CM tracking control: The output is the ZMP setpoint
 		Vector2d ZMP_ref_xy = cm_tracking_controller_.compute_ZMP_setpoint();
@@ -372,7 +381,7 @@ void Executor::state0_execution()
 			controllers_on += (right_foot_ZMP_tracking_controller_.is_x_on()) ? "1" : "0";
 			controllers_on += (right_foot_ZMP_tracking_controller_.is_y_on()) ? "1" : "0";
 			//Serial.println("Yaxis-> timestamp, setpoint, CM, vCM, aCM, ZMP: \t" + (String)(millis() - debug_millis) + "\t" + (String)DSP_CM_setpoint_ + "\t" + (String)CM(1) + "\t" + (String)vCM(1) + "\t" + (String)aCM(1) + "\t" + (String)ZMP(1));
-			Serial.println("Yaxis-> timestamp, setpoint, CM, vCM, aCM, ZMP, {lx_on ly_on rx_on ry_on}: \t" + (String)(millis() - debug_millis) + "\t" + (String)DSP_CM_setpoint_ + "\t" + (String)some_exp_filter_3_.filter(CM(1)) + "\t" + (String)vCM(1) + "\t" + (String)aCM(1) + "\t" + (String)ZMP(1) + "\t" + controllers_on);
+			Serial.println("Yaxis-> timestamp, setpoint, CM, vCM, aCM, ZMP, {lx_on ly_on rx_on ry_on}: \t" + (String)(millis() - debug_millis) + "\t" + (String)DSP_CM_setpoint_y_ + "\t" + (String)some_exp_filter_3_.filter(CM(1)) + "\t" + (String)vCM(1) + "\t" + (String)aCM(1) + "\t" + (String)ZMP(1) + "\t" + controllers_on);
 			
 			last_print_millis = millis();
 		}

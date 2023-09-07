@@ -29,18 +29,18 @@
 		 
 		 global_kinematics_.set_desired_hip_height(state1_desired_hip_height);
 
-		 global_kinematics_.set_desired_step_width(desired_step_width_);
+		 global_kinematics_.set_desired_step_width(state1_desired_step_width);
 	 }
 
 	 if (force_sensors_manager_.has_been_updated)
 	 {
-// 		 // Potentiometer value sets the CM setpoint in Double Support Phase, along the Y-axis
-// 		 double potentiometer_value = some_exp_filter_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0);
-// 		 // Desired hip height
-// 		 double desired_hip_height = config_.kinematics.limit_down_hip_height + (config_.kinematics.limit_up_hip_height - config_.kinematics.limit_down_hip_height) * potentiometer_value;
-// 		 Serial.println("desired_hip_height: \t" + (String)desired_hip_height);
-// 
-// 		 global_kinematics_.set_desired_hip_height(desired_hip_height);
+		 // Potentiometer value sets the CM setpoint in Double Support Phase, along the Y-axis
+		 double potentiometer_value = some_exp_filter_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer1) / 4095.0);
+		 // Desired hip height
+		 double desired_hip_height = config_.kinematics.limit_down_hip_height + (config_.kinematics.limit_up_hip_height - config_.kinematics.limit_down_hip_height) * potentiometer_value;
+		 Serial.println("desired_hip_height: \t" + (String)desired_hip_height);
+
+		 global_kinematics_.set_desired_hip_height(desired_hip_height);
 		 
 		 // Potentiometer value sets the CM setpoint in Double Support Phase, along the Y-axis
 		 double potentiometer_value2 = some_exp_filter_2_.filter(user_input_.get_analog_value(UserInput::AnalogInputList::potentiometer2) / 4095.0);

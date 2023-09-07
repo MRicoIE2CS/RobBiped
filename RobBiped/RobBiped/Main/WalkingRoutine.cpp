@@ -18,18 +18,21 @@
 
 #include "Executor.h"
 
+#include <functional>
 
 bool lifting_leg_maneouver(double *base_leg_length, double &state30_leg_lifting_target, double *leg_length,
 							Control::LinearTrajectoryInterpolator &state30_lifting_leg_interpolator,
-							double &state30_leg_lifting_distance_mm, uint32_t &state30_leg_lifting_time_ms,
+							Control::LinearTrajectoryInterpolator &state30_forwarding_leg_interpolator,
+							double &state30_leg_lifting_distance_mm, uint32_t &state30_leg_lifting_time_ms, uint32_t &state30_leg_lowering_time_ms,
 							bool &state30_lifting_leg, bool &state30_lifting_finished,
-							bool &state30_lowering_leg, bool &state30_lowering_leg_finished)
+							bool &state30_lowering_leg, bool &state30_lowering_leg_finished,
+							double *leg_frontal_position, double &state30_leg_frontal_target, double state30_desired_step_length)
 {
 	double output = 0.0;
 	bool maneouver_finished = false;
 	if (!state30_lifting_finished && !state30_lifting_leg)
 	{
-		Serial.print("state30_lifting_leg\n");
+//		Serial.print("state30_lifting_leg\n");
 		state30_lifting_leg = true;
 		state30_leg_lifting_target = *base_leg_length - state30_leg_lifting_distance_mm;
 		state30_lifting_leg_interpolator.configure_trayectory(*base_leg_length, state30_leg_lifting_target, state30_leg_lifting_time_ms);
@@ -38,6 +41,8 @@ bool lifting_leg_maneouver(double *base_leg_length, double &state30_leg_lifting_
 // 				Serial.println("base_left_leg_length:\t" + (String)*base_leg_length);
 // 				Serial.println("state30_leg_lifting_target:\t" + (String)state30_leg_lifting_target);
 // 				Serial.println("output:\t" + (String)output);
+		state30_leg_frontal_target = *leg_frontal_position + state30_desired_step_length;
+		state30_forwarding_leg_interpolator.configure_trayectory(*leg_frontal_position, state30_leg_frontal_target, state30_leg_lifting_time_ms+state30_leg_lowering_time_ms);
 	}
 	else if (!state30_lifting_finished && state30_lifting_leg)
 	{
@@ -51,7 +56,7 @@ bool lifting_leg_maneouver(double *base_leg_length, double &state30_leg_lifting_
 	{
 		Serial.print("state30_lowering_leg\n");
 		state30_lowering_leg = true;
-		state30_lifting_leg_interpolator.configure_trayectory(state30_leg_lifting_target, *base_leg_length, 2 * state30_leg_lifting_time_ms);
+		state30_lifting_leg_interpolator.configure_trayectory(state30_leg_lifting_target, *base_leg_length, state30_leg_lowering_time_ms);
 		state30_lowering_leg = state30_lifting_leg_interpolator.compute_output(output);
 // 				Serial.print("Start lowering with\n");
 // 				Serial.println("state30_leg_lifting_target:\t" + (String)state30_leg_lifting_target);
@@ -69,11 +74,16 @@ bool lifting_leg_maneouver(double *base_leg_length, double &state30_leg_lifting_
 		{
 //			Serial.print("state30_lowering_leg_finished\n");
 			state30_lowering_leg_finished = true;
-			//global_kinematics_.lifting_maneuver_performed = true;
 			maneouver_finished = true;
 		}
 	}
 	else maneouver_finished = true;
+	
+	double forwarding_output;
+	state30_forwarding_leg_interpolator.compute_output(forwarding_output);
+	*leg_frontal_position = forwarding_output;
+	if (maneouver_finished) *leg_frontal_position = state30_leg_frontal_target;
+	
 	*leg_length = output;
 	return maneouver_finished;
 }
@@ -106,20 +116,9 @@ void Executor::state30_execution()
 		left_foot_ZMP_tracking_controller_.set_setpoint_y_mm(0.0);
 		right_foot_ZMP_tracking_controller_.set_setpoint_y_mm(0.0);
 
-		// This makes the start in DSP with both feet aligned
-		cm_tracking_controller_.set_mode(Control::CMTracking::Mode::OnlineReference, Control::CMTracking::Mode::OfflineReference);
-//		cm_tracking_controller_.set_mode(Control::CMTracking::Mode::OnlineReference, Control::CMTracking::Mode::OnlineReference);
 		// X-axis keeps balance of the CM over the X-axis
 		cm_tracking_controller_.set_CM_x_online_reference(0.0);
 		cm_tracking_controller_.set_CM_y_online_reference(0.0);
-
-		// TODO
-		// TODO: Start advanced in x direction to comply with the pregenerated trajectory
-		// TODO
-		//  right_foot_center_ = step_distance_;
-		// global_kinematics_.init(  . . .  );
-		// global_kinematics_.init_CoM_location();
-		// Use state30_not_yet_lifted_a_foot to don't move in X direction in first movement to the right, when the robot still has not lifted any foot to make a step
 
 		// Initializations
 		GlobalKinematics::WalkingPhase walking_phase = GlobalKinematics::WalkingPhase::DSP_left;
@@ -146,6 +145,7 @@ void Executor::state30_execution()
 
 		// Get current reference point for the CM position
 		Vector2d CM_position_reference = cm_tracking_controller_.get_CM_last_reference_location();
+		Serial.println("CM_position_reference_X: \t" + (String)CM_position_reference(0));
 		
 		// Apply parametric curve related to the relation of CM position to hip_center position
 		double DSP_CM_setpoint_ = (CM_position_reference(1) - 13.941) / 0.7096;
@@ -159,65 +159,50 @@ void Executor::state30_execution()
 		bool phase_changed = global_kinematics_.has_there_been_a_phase_change();
 		GlobalKinematics::WalkingPhase walking_phase = global_kinematics_.get_current_walking_phase();
 
-		// AUTOMATIC DE/ACTIVATION OF ZMP TRACKING CONTROLLERS
-		if (!force_sensors_manager_.is_left_foot_touching_ground()) {
-			if (left_foot_ZMP_tracking_controller_.is_x_on()) left_foot_ZMP_tracking_controller_.switch_x_off(true);
-			//if (left_foot_ZMP_tracking_controller_.is_y_on()) left_foot_ZMP_tracking_controller_.switch_y_off(true);
-		}
-		else {
-			if (!left_foot_ZMP_tracking_controller_.is_x_on()) left_foot_ZMP_tracking_controller_.switch_x_on(true);
-			//if (!left_foot_ZMP_tracking_controller_.is_y_on()) left_foot_ZMP_tracking_controller_.switch_y_on(true);
-		}
-		if (!force_sensors_manager_.is_right_foot_touching_ground()) {
-			if (right_foot_ZMP_tracking_controller_.is_x_on()) right_foot_ZMP_tracking_controller_.switch_x_off(true);
-			//if (right_foot_ZMP_tracking_controller_.is_y_on()) right_foot_ZMP_tracking_controller_.switch_y_off(true);
-		}
-		else {
-			if (!right_foot_ZMP_tracking_controller_.is_x_on()) right_foot_ZMP_tracking_controller_.switch_x_on(true);
-			//if (!right_foot_ZMP_tracking_controller_.is_y_on()) right_foot_ZMP_tracking_controller_.switch_y_on(true);
-		}
+// 		// AUTOMATIC ACTIVATION OF ZMP TRACKING CONTROLLERS
+// 		if (!left_foot_ZMP_tracking_controller_.is_x_on()) left_foot_ZMP_tracking_controller_.switch_x_on(true);
+// 		if (!left_foot_ZMP_tracking_controller_.is_y_on()) left_foot_ZMP_tracking_controller_.switch_y_on(true);
+// 		if (!right_foot_ZMP_tracking_controller_.is_x_on()) right_foot_ZMP_tracking_controller_.switch_x_on(true);
+// 		if (!right_foot_ZMP_tracking_controller_.is_y_on()) right_foot_ZMP_tracking_controller_.switch_y_on(true);
 
 		// PHASE JUMP ACTIONS
 		// If the walking phase has changed in current execution period
-		if (phase_changed)
-		{
-			Serial.print("PHASE CHANGED\t");
-			// TODO
-			// TODO: Change to Offline Tracking when going walking in X direction
-			// TODO
-			if (GlobalKinematics::WalkingPhase::DSP_left == walking_phase)
-			{
-				Serial.print("DSP_left\n");
-				//global_kinematics_.lifting_maneuver_performed = false;
-				//cm_tracking_controller_.set_mode(Control::CMTracking::Mode::OnlineReference, Control::CMTracking::Mode::OfflineReference);
-			}
-			else if (GlobalKinematics::WalkingPhase::DSP_right == walking_phase)
-			{
-				Serial.print("DSP_right\n");
-				//global_kinematics_.lifting_maneuver_performed = false;
-				//cm_tracking_controller_.set_mode(Control::CMTracking::Mode::OnlineReference, Control::CMTracking::Mode::OfflineReference);
-			}
-			else if (GlobalKinematics::WalkingPhase::SSP_left == walking_phase)
-			{
-				Serial.print("SSP_left\n");
-				//global_kinematics_.lifting_maneuver_performed = false;
-				//cm_tracking_controller_.set_mode(Control::CMTracking::Mode::OnlineReference, Control::CMTracking::Mode::OfflineReference);
-				//state30_lifting_finished = false;
-			}
-			else if (GlobalKinematics::WalkingPhase::SSP_right == walking_phase)
-			{
-				Serial.print("SSP_right\n");
-				//global_kinematics_.lifting_maneuver_performed = false;
-				//cm_tracking_controller_.set_mode(Control::CMTracking::Mode::OnlineReference, Control::CMTracking::Mode::OfflineReference);
-				//state30_lifting_finished = false;
-			}
-		}
+// 		if (phase_changed)
+// 		{
+// 			Serial.print("PHASE CHANGED\t");
+// 			// TODO
+// 			// TODO: Change to Offline Tracking when going walking in X direction
+// 			// TODO
+// 			if (GlobalKinematics::WalkingPhase::DSP_left == walking_phase)
+// 			{
+// 				Serial.print("DSP_left\n");
+// 				//cm_tracking_controller_.set_mode(Control::CMTracking::Mode::OnlineReference, Control::CMTracking::Mode::OfflineReference);
+// 			}
+// 			else if (GlobalKinematics::WalkingPhase::DSP_right == walking_phase)
+// 			{
+// 				Serial.print("DSP_right\n");
+// 				//cm_tracking_controller_.set_mode(Control::CMTracking::Mode::OnlineReference, Control::CMTracking::Mode::OfflineReference);
+// 			}
+// 			else if (GlobalKinematics::WalkingPhase::SSP_left == walking_phase)
+// 			{
+// 				Serial.print("SSP_left\n");
+// 				//cm_tracking_controller_.set_mode(Control::CMTracking::Mode::OnlineReference, Control::CMTracking::Mode::OfflineReference);
+// 				//state30_lifting_finished = false;
+// 			}
+// 			else if (GlobalKinematics::WalkingPhase::SSP_right == walking_phase)
+// 			{
+// 				Serial.print("SSP_right\n");
+// 				//cm_tracking_controller_.set_mode(Control::CMTracking::Mode::OnlineReference, Control::CMTracking::Mode::OfflineReference);
+// 				//state30_lifting_finished = false;
+// 			}
+// 		}
 
 		// COMPUTATIONS COMMON TO ALL PHASES
 
 		// Compute DSP kinematics
-		bool retcode_compute_lateral_DSP_kinematics = global_kinematics_.compute_lateral_DSP_kinematics(DSP_CM_setpoint_);
-		//bool retcode_compute_lateral_DSP_kinematics = global_kinematics_.compute_bidimensional_DSP_kinematics(DSP_CM_setpoint_, CM_position_reference(0));
+		//bool retcode_compute_lateral_DSP_kinematics = global_kinematics_.compute_lateral_DSP_kinematics(DSP_CM_setpoint_);
+		bool retcode_compute_lateral_DSP_kinematics = global_kinematics_.compute_bidimensional_DSP_kinematics(DSP_CM_setpoint_, CM_position_reference(0)*state30_forward_step_length_multiplicity);
+Serial.print("CM_position_reference(0)*state30_forward_step_length_multiplicity\n");Serial.println(CM_position_reference(0)*state30_forward_step_length_multiplicity);
 
 		// Get roll angle setpoints from DSP kinematics
 		double base_left_roll_angle;
@@ -232,33 +217,28 @@ void Executor::state30_execution()
 		double right_leg_length = base_right_leg_length;
 		
 		double left_frontal_prismatic_angle, right_frontal_prismatic_angle;
-		global_kinematics_.get_frontal_prismatic_angles(left_frontal_prismatic_angle, right_frontal_prismatic_angle);
+		global_kinematics_.get_computed_frontal_prismatic_angles(left_frontal_prismatic_angle, right_frontal_prismatic_angle);
 
 		// CM tracking control: Get the necessary ZMP setpoint
 		Vector2d ZMP_ref_xy = cm_tracking_controller_.get_ZMP_setpoint();
-
-// // DEBUG
-// left_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
-// right_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
-// // Apply new ZMP setpoint for Y-axis ZMP tracking controllers
-// left_foot_ZMP_tracking_controller_.set_setpoint_y_mm(ZMP_ref_xy(1));
-// right_foot_ZMP_tracking_controller_.set_setpoint_y_mm(ZMP_ref_xy(1));
 
 		// PHASE SPECIFIC ACTIONS
 		if (GlobalKinematics::WalkingPhase::DSP_left == walking_phase)
 		{
 //Serial.print("DSP_left\n");
-			// Apply new ZMP setpoint for X-axis ZMP tracking controllers
-			left_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
-			right_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
-			// Apply new ZMP setpoint for Y-axis ZMP tracking controllers
+			// Apply new ZMP setpoint for left foot ZMP tracking controllers
+			left_foot_ZMP_tracking_controller_.set_setpoint_x_mm(0.0);
 			left_foot_ZMP_tracking_controller_.set_setpoint_y_mm(0.0);
+//			left_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
+//			left_foot_ZMP_tracking_controller_.set_setpoint_y_mm(ZMP_ref_xy(1));
+			// Apply new ZMP setpoint for right foot ZMP tracking controllers
+			right_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
 			right_foot_ZMP_tracking_controller_.set_setpoint_y_mm(ZMP_ref_xy(1));
 
 			// LIFTING LEG MANEUVER END
 			if (state30_swing_leg_started && state30_swing_leg_finished)
 			{
-Serial.print("LIFTING LEG MANEUVER END DSP_left\n");
+//Serial.print("LIFTING LEG MANEUVER END DSP_left\n");
 				state30_swing_leg_started = false;
 				state30_swing_leg_finished = false;
 				state30_lifting_finished = false;
@@ -272,17 +252,19 @@ Serial.print("LIFTING LEG MANEUVER END DSP_left\n");
 		else if (GlobalKinematics::WalkingPhase::DSP_right == walking_phase)
 		{
 //Serial.print("DSP_right\n");
-			// Apply new ZMP setpoint for X-axis ZMP tracking controllers
+			// Apply new ZMP setpoint for left foot ZMP tracking controllers
 			left_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
-			right_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
-			// Apply new ZMP setpoint for Y-axis ZMP tracking controllers
 			left_foot_ZMP_tracking_controller_.set_setpoint_y_mm(ZMP_ref_xy(1));
+			// Apply new ZMP setpoint for right foot ZMP tracking controllers
+			right_foot_ZMP_tracking_controller_.set_setpoint_x_mm(0.0);
 			right_foot_ZMP_tracking_controller_.set_setpoint_y_mm(0.0);
+// 			right_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
+// 			right_foot_ZMP_tracking_controller_.set_setpoint_y_mm(ZMP_ref_xy(1));
 
 			// LIFTING LEG MANEUVER END
 			if (state30_swing_leg_started && state30_swing_leg_finished)
 			{
-Serial.print("LIFTING LEG MANEUVER END DSP_right\n");
+//Serial.print("LIFTING LEG MANEUVER END DSP_right\n");
 				state30_swing_leg_started = false;
 				state30_swing_leg_finished = false;
 				state30_lifting_finished = false;
@@ -296,12 +278,14 @@ Serial.print("LIFTING LEG MANEUVER END DSP_right\n");
 		else if (GlobalKinematics::WalkingPhase::SSP_left == walking_phase)
 		{
 //Serial.print("SSP_left\n");
-			// Apply new ZMP setpoint for X-axis ZMP tracking controllers
+			// Apply new ZMP setpoint for left foot ZMP tracking controllers
 			left_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
-			right_foot_ZMP_tracking_controller_.set_setpoint_x_mm(0.0);
-			// Apply new ZMP setpoint for Y-axis ZMP tracking controllers
 			left_foot_ZMP_tracking_controller_.set_setpoint_y_mm(ZMP_ref_xy(1));
-			right_foot_ZMP_tracking_controller_.set_setpoint_y_mm(0.0);
+			// Apply new ZMP setpoint for right foot ZMP tracking controllers
+ 			right_foot_ZMP_tracking_controller_.set_setpoint_x_mm(0.0);
+ 			right_foot_ZMP_tracking_controller_.set_setpoint_y_mm(0.0);
+// 			right_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
+// 			right_foot_ZMP_tracking_controller_.set_setpoint_y_mm(ZMP_ref_xy(1));
 
 			// LIFTING LEG MANEUVER
 			state30_swing_leg_started = true;
@@ -309,11 +293,13 @@ Serial.print("LIFTING LEG MANEUVER END DSP_right\n");
 		else if (GlobalKinematics::WalkingPhase::SSP_right == walking_phase)
 		{
 //Serial.print("SSP_right\n");
-			// Apply new ZMP setpoint for X-axis ZMP tracking controllers
-			left_foot_ZMP_tracking_controller_.set_setpoint_x_mm(0.0);
+			// Apply new ZMP setpoint for left foot ZMP tracking controllers
+ 			left_foot_ZMP_tracking_controller_.set_setpoint_x_mm(0.0);
+ 			left_foot_ZMP_tracking_controller_.set_setpoint_y_mm(0.0);
+// 			left_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
+// 			left_foot_ZMP_tracking_controller_.set_setpoint_y_mm(ZMP_ref_xy(1));
+			// Apply new ZMP setpoint for right foot ZMP tracking controllers
 			right_foot_ZMP_tracking_controller_.set_setpoint_x_mm(ZMP_ref_xy(0));
-			// Apply new ZMP setpoint for Y-axis ZMP tracking controllers
-			left_foot_ZMP_tracking_controller_.set_setpoint_y_mm(0.0);
 			right_foot_ZMP_tracking_controller_.set_setpoint_y_mm(ZMP_ref_xy(1));
 
 			// LIFTING LEG MANEUVER
@@ -324,10 +310,13 @@ Serial.print("LIFTING LEG MANEUVER END DSP_right\n");
 		if (state30_swing_leg_started && !state30_swing_leg_finished)
 		{
 			double *base_leg_legth, *leg_length;
+			double *pointer_leg_frontal_position;
 			if (GlobalKinematics::WalkingPhase::SSP_right == walking_phase || GlobalKinematics::WalkingPhase::DSP_left == walking_phase)
 			{
 				base_leg_legth = &base_left_leg_length;
 				leg_length = &left_leg_length;
+				global_kinematics_.get_modfiable_left_frontal_position(pointer_leg_frontal_position);
+Serial.print("LEFTpointer_leg_frontal_position\n");Serial.println(*pointer_leg_frontal_position);
 				// Reset lifting leg's ankle controller when it is lifted
 				if (!state30_swing_leg_finished && state30_lifting_finished && !state30_lifting_leg_controller_reset)
 				{
@@ -340,6 +329,8 @@ Serial.print("LIFTING LEG MANEUVER END DSP_right\n");
 			{
 				base_leg_legth = &base_right_leg_length;
 				leg_length = &right_leg_length;
+				global_kinematics_.get_modfiable_right_frontal_position(pointer_leg_frontal_position);
+Serial.print("RIGHTpointer_leg_frontal_position\n");Serial.println(*pointer_leg_frontal_position);
 				// Reset lifting leg's ankle controller when it is lifted
 				if (!state30_swing_leg_finished && state30_lifting_finished && !state30_lifting_leg_controller_reset)
 				{
@@ -349,9 +340,12 @@ Serial.print("LIFTING LEG MANEUVER END DSP_right\n");
 				}
 			}
 			
-			state30_swing_leg_finished = lifting_leg_maneouver(base_leg_legth, state30_leg_lifting_target, leg_length, state30_lifting_leg_interpolator,
-															state30_leg_lifting_distance_mm, state30_leg_lifting_time_ms, state30_lifting_leg, state30_lifting_finished,
-															state30_lowering_leg, state30_lowering_leg_finished);
+			state30_swing_leg_finished = lifting_leg_maneouver(base_leg_legth, state30_leg_lifting_target, leg_length,
+															state30_lifting_leg_interpolator, state30_forwarding_leg_interpolator,
+															state30_leg_lifting_distance_mm, state30_leg_lifting_time_ms, state30_leg_lowering_time_ms,
+															state30_lifting_leg, state30_lifting_finished,
+															state30_lowering_leg, state30_lowering_leg_finished,
+															pointer_leg_frontal_position, state30_leg_frontal_target, 2.0 * state30_desired_step_length * state30_forward_step_length_multiplicity);
 			// Maneuver finished
 			if (state30_swing_leg_finished) global_kinematics_.lifting_maneuver_performed = true;
 		}
@@ -363,10 +357,10 @@ Serial.print("LIFTING LEG MANEUVER END DSP_right\n");
 		double left_knee_pitch_angle, right_knee_pitch_angle;
 		double left_hip_pitch_angle, right_hip_pitch_angle;
 		// TODO: Apply frontal inclination
-		global_kinematics_.get_joint_angles_for_prismatic_length(left_leg_length, 0.0, left_ankle_pitch_angle, left_knee_pitch_angle, left_hip_pitch_angle);
+		global_kinematics_.get_joint_angles_for_prismatic_length(left_leg_length, left_frontal_prismatic_angle, left_ankle_pitch_angle, left_knee_pitch_angle, left_hip_pitch_angle);
 
 		// Get right leg's pitch angle setpoints from DSP kinematics
-		global_kinematics_.get_joint_angles_for_prismatic_length(right_leg_length, 0.0, right_ankle_pitch_angle, right_knee_pitch_angle, right_hip_pitch_angle);
+		global_kinematics_.get_joint_angles_for_prismatic_length(right_leg_length, right_frontal_prismatic_angle, right_ankle_pitch_angle, right_knee_pitch_angle, right_hip_pitch_angle);
 
 		// Get local ZMP measurements
 		Vector2d current_left_ZMP = force_sensors_manager_.get_values_ZMP_LeftFoot();

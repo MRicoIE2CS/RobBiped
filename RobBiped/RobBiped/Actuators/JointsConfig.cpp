@@ -103,7 +103,7 @@ void JointsManager::joints_config(){
 
 // RIGHT KNEE
 	jointInitializer.invert_angle_sign(false);
-	jointInitializer.calibration_set_zero(false, 0.855);//0.825);
+	jointInitializer.calibration_set_zero(false, 1.05);//0.855);//0.825);
 	jointInitializer.calibration_set_min_angle(false, -2.2);
 	jointInitializer.calibration_set_max_angle(false, 0.25);
 	PCA9685_1_servo_map_[13] = jointInitializer;

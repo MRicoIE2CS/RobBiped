@@ -34,10 +34,12 @@ void GlobalKinematics::assoc_sensors(ForceSensorsManager &_force_sensors_manager
 	gyroscope_accelerometer_manager_ = &_gyroscope_accelerometer_manager;
 }
 
-void GlobalKinematics::init(double _centerof_right_foot, WalkingPhase _phase, double _desired_hip_height, double _desired_step_width)
+void GlobalKinematics::init(WalkingPhase _phase, double _desired_hip_height, double _desired_step_width)
 {
-	right_foot_center_y_ = _centerof_right_foot;
+	right_foot_center_y_ = config_->right_foot_pos.y;
+	right_foot_center_x_ = config_->right_foot_pos.x;
 	left_foot_center_y_ = right_foot_center_y_ + _desired_step_width;
+	left_foot_center_x_ = config_->left_foot_pos.x;
 	phase_ = _phase;
 	set_desired_hip_height(_desired_hip_height);
 	set_desired_step_width(_desired_step_width);
@@ -55,7 +57,7 @@ void GlobalKinematics::init(double _centerof_right_foot, WalkingPhase _phase, do
 
 bool GlobalKinematics::set_desired_hip_height(double _desired_hip_height)
 {
-	// Limit for hip heigth
+	// Limit for hip height
 	bool retcode_OK = true;
 	double desired_hip_height = _desired_hip_height;
 	if (_desired_hip_height < config_->limit_down_hip_height)
@@ -145,11 +147,8 @@ bool GlobalKinematics::compute_bidimensional_DSP_kinematics(const double _desire
 	left_hip_roll_setpoint_ = atan2( (desired_step_width_ - _desired_hip_center_Y_position - right_foot_center_y_ - config_->d_hip_width / 2.0) ,
 										h_leg_roll_projection );
 	
-// 	double h_right_leg_roll_projection = h_leg_roll_projection / cos(right_foot_roll_setpoint_);
-// 	double h_left_leg_roll_projection = h_leg_roll_projection / cos(left_hip_roll_setpoint_);
-	
-	double h_right_leg_pitch_projection = h_leg_roll_projection - (config_->height_ankle + config_->height_hip) * right_foot_roll_setpoint_;
-	double h_left_leg_pitch_projection = h_leg_roll_projection - (config_->height_ankle + config_->height_hip) * left_hip_roll_setpoint_;
+	double h_right_leg_pitch_projection = h_leg_roll_projection - (config_->height_ankle + config_->height_hip) * cos(right_foot_roll_setpoint_);
+	double h_left_leg_pitch_projection = h_leg_roll_projection - (config_->height_ankle + config_->height_hip) * cos(left_hip_roll_setpoint_);
 	
 	right_low_frontal_angle_prismatic_ = atan2( _desired_hip_X_position - right_foot_center_x_ , h_right_leg_pitch_projection );
 	left_low_frontal_angle_prismatic_ = atan2( _desired_hip_X_position - left_foot_center_x_ , h_right_leg_pitch_projection );
@@ -186,7 +185,7 @@ bool GlobalKinematics::get_computed_prismatic_lengths(double &_left_prismatic_le
 	return true;
 }
 
-bool GlobalKinematics::get_frontal_prismatic_angles(double &_left_prismatic_angle_setpoint, double &_right_prismatic_angle_setpoint)
+bool GlobalKinematics::get_computed_frontal_prismatic_angles(double &_left_prismatic_angle_setpoint, double &_right_prismatic_angle_setpoint)
 {
 	_left_prismatic_angle_setpoint = left_low_frontal_angle_prismatic_;
 	_right_prismatic_angle_setpoint = right_low_frontal_angle_prismatic_;
@@ -499,12 +498,12 @@ bool GlobalKinematics::has_there_been_a_phase_change()
 	return has_there_been_a_phase_change_;
 }
 
-void GlobalKinematics::new_left_step(double _distance)
+void GlobalKinematics::get_modfiable_left_frontal_position(double *&_position)
 {
-	left_foot_center_x_ += _distance;
+	_position = &left_foot_center_x_;
 }
 
-void GlobalKinematics::new_right_step(double _distance)
+void GlobalKinematics::get_modfiable_right_frontal_position(double *&_position)
 {
-	right_foot_center_x_ += _distance;
+	_position = &right_foot_center_x_;
 }

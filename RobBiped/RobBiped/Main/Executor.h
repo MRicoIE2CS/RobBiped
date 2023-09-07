@@ -73,12 +73,15 @@ class Executor {
 		bool state0_first_time = true;
 		bool state0_finished = false;
 		double state0_distance_addition = 15.0;
-		double state0_desired_hip_height = 285.0;
+		double state0_desired_step_width = 100.0;
+		double state0_desired_hip_height = 275.0;
+		double state0_desired_step_length = 85.0;
 		void state0_execution();
 
 		bool state1_first_time = true;
 		uint8_t state1_phase = 0;
 		bool state1_finished = false;
+		double state1_desired_step_width = 150.0;
 		double state1_distance_addition = 30.0;
 		double state1_desired_hip_height = 295.0;
 		void state1_execution();
@@ -105,14 +108,16 @@ class Executor {
 		void state20_execution();
 
 		// State30: Test: Y offline trajectory tracking with walking phases change
-		// ""
+		// "walk"
 		bool state30_first_time = true;
 		bool state30_finished = false;
-		double state30_desired_hip_height = 285.0;
+		double state30_desired_hip_height = 275.0;
 		double state30_desired_step_width = 100.0;
 		double state30_desired_step_length = 85.0;
-		double state30_leg_lifting_distance_mm = 10.0;
-		uint32_t state30_leg_lifting_time_ms = 1000;
+		double state30_forward_step_length_multiplicity = 1.0;
+		double state30_leg_lifting_distance_mm = 30.0;
+		uint32_t state30_leg_lifting_time_ms = 400;
+		uint32_t state30_leg_lowering_time_ms = 500;
 		double state30_leg_lifting_target = 0.0;
 		bool state30_lifting_finished = false;
 		bool state30_lifting_leg = false;
@@ -122,6 +127,8 @@ class Executor {
 		bool state30_swing_leg_finished = false;
 		bool state30_lifting_leg_controller_reset = false;
 		Control::LinearTrajectoryInterpolator state30_lifting_leg_interpolator;
+		double state30_leg_frontal_target = 0.0;
+		Control::LinearTrajectoryInterpolator state30_forwarding_leg_interpolator;
 		void state30_execution();
 
 		// State40: Test: ZMP tracking
@@ -169,7 +176,7 @@ class Executor {
 		
 		// Control tasks' objects
 		double torso_upright_pitch_control_action = 0.0;
-		double torso_setpoint_ = 0.00;
+		double torso_setpoint_ = 0.2;
 		ExpFilter torso_pitch_exp_filter_;
 
 		// Time variable just for printing
